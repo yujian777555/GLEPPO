@@ -4,13 +4,40 @@
   "default_branch": "main",
   "updated_at": "2026-10-26",
   "phase": "P0_PROJECT_BOOTSTRAP",
-  "state": "IN_PROGRESS",
+  "state": "P0.1_AUDIT_COMPLETE",
   "implementation_status": "NOT_STARTED",
   "experimental_status": "NO_EXPERIMENTS",
-  "current_hypothesis": "A PPO-trained controller may learn useful evolutionary decisions for LLM-agent improvement from real execution feedback and generalize to held-out task families.",
+  "current_hypothesis": "A PPO-trained controller whose state includes population and real agent task-execution feedback can learn evolution decisions (operator choice or parent selection) that improve LLM-agent task success and transfer to held-out task families, beating fixed, random, adaptive-rule, and bandit baselines.",
   "hypothesis_status": "UNVALIDATED",
-  "current_task": "P0.1: audit the GLEET paper and official implementation, verify license, and conduct a mechanism-level related-work review.",
-  "next_gate": "G1_BASELINE_AUDIT",
+  "p0_1_audit": {
+    "status": "COMPLETE",
+    "date": "2026-10-26",
+    "gleet_paper": "arXiv:2404.08239, GECCO 2024 (Ma et al.)",
+    "gleet_code": "MetaEvo/GLEET @ e7159273d4dc7ea78ef3ae3a701069cfd4d61191",
+    "gleet_license": "NO_LICENSE_FILE — no code reuse permitted",
+    "related_work_verified_entries": 14,
+    "related_work_unverified_entries": 5,
+    "candidate_mechanisms": [
+      "M1_ECOS_execution_conditioned_operator_selection",
+      "M2_FMPS_failure_mode_conditioned_parent_selection"
+    ],
+    "gate_decision": "GO",
+    "gate_conditions": [
+      "C1: no GLEET code copy — independent implementation only",
+      "C2: pick exactly one decision family (M1 or M2) before implementation",
+      "C3: bandit (B3) and FM-rewrite (B5) baselines mandatory in effectiveness experiments",
+      "C4: deeper literature collision check before publication-level novelty claims",
+      "C5: if PPO fails to beat bandit on held-out families, STOP this hypothesis"
+    ],
+    "artifacts": [
+      "research/GLEET_BASELINE_AUDIT.md",
+      "research/CANDIDATE_MECHANISMS.md",
+      "research/P0.1_EXECUTOR_REPORT.md",
+      "docs/LITERATURE_LEDGER.md"
+    ]
+  },
+  "current_task": "Phase 1: define agent genotype, task environment, evaluator, and train/val/held-out task-family split; select M1 or M2 as the single primary decision family.",
+  "next_gate": "G1_BASELINE_AUDIT (PASSED 2026-10-26) -> G2_NOVELTY_GATE partial (ledger updated; full collision re-check required later) -> G3_ENVIRONMENT_GATE",
   "project_isolation": {
     "source_of_truth": "yujian777555/GLEPPO",
     "cross_project_code_reuse": false,
@@ -20,9 +47,10 @@
   "acceptance_rules": [
     "Real agent execution outcomes ground primary evaluation.",
     "No novelty claims before mechanism-level related-work audit.",
-    "Compare PPO against fixed, random, and strong adaptive baselines.",
+    "Compare PPO against fixed, random, and strong adaptive baselines including bandit.",
     "Use train/validation/held-out test separation and multiple seeds.",
-    "Limited-budget allocation is not the central contribution."
+    "Limited-budget allocation is not the central contribution.",
+    "GLEET code must not be copied (no license)."
   ],
   "bootstrap_base_commit": "e7e8e4aac243df2ac690d8b3b4351d32ea4023e3"
 }

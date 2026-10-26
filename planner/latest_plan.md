@@ -1,36 +1,35 @@
-# Planner Latest Plan — GLEPPO P0.1
+# Planner Latest Plan — GLEPPO P0.1 (OUTCOME)
 
-**Status:** READY FOR EXECUTION  
-**Scope:** GLEPPO repository only. This is a read-only source/literature audit; do not implement the controller yet.
+**Status:** EXECUTED 2026-10-26  
+**Scope:** GLEPPO repository only. Read-only source/literature audit; no controller implementation.
 
-## Executor prompt (copy verbatim)
+## Executor prompt (as executed)
 
-You are the Executor for the independent GLEPPO research project. The only project repository you may modify is `yujian777555/GLEPPO`. Do not access, copy from, or merge code, data, experiment results, status, or plans from any unrelated user project. Public papers and their official repositories may be inspected as research sources.
+The P0.1 prompt in git history (commit before this update) was executed as specified: GLEET paper + code audit, license verification, mechanism-level related-work review, at most two candidate mechanisms, documentation-only updates, commit + push to main.
 
-### Objective
-Audit the original GLEET method as a candidate training baseline and determine what must change for a defensible PPO-trained controller for evolutionary improvement of LLM agents.
+## Outcome
 
-### Required work
-1. Read the GLEET paper and inspect its official code repository: https://github.com/MetaEvo/GLEET.
-2. Verify the official repository license before proposing any code reuse. Do not copy code in this phase.
-3. Trace the algorithm in code: state construction, policy/action outputs, reward, PPO rollout/update, training-instance sampling, evaluation and saved checkpoints. Cite exact file paths and relevant symbols/line ranges where available.
-4. Review the related-work starting points in `docs/LITERATURE_LEDGER.md`, then add only verified, relevant papers on RL-assisted EA control and LLM-agent evolution. Record mechanism-level overlap rather than title-level similarity.
-5. Separate verified facts from unverified assumptions. Do not claim experiments were run unless you ran them and saved reproducible evidence.
-6. Recommend at most two candidate mechanisms for GLEPPO. For each, specify state, action, reward, training split, strong baselines, novelty risks, and a falsifiable go/no-go test.
-7. Update only GLEPPO's `docs/LITERATURE_LEDGER.md`, create `research/GLEET_BASELINE_AUDIT.md`, and update `status.json` plus this plan with the actual outcome.
-8. Commit and push the documentation changes to GLEPPO's `main`, then report the commit SHA, changed files, and evidence.
+**Gate decision: GO** (with conditions C1–C5). Full rationale: `research/P0.1_EXECUTOR_REPORT.md`.
 
-### Acceptance criteria
-- No implementation changes.
-- No unrelated repositories accessed or mixed in.
-- Every factual method claim has a paper/code source.
-- GLEET paper and code are distinguished; no unsupported claims about reproduction.
-- License status is explicit.
-- The report ends with a clear GO / REVISE / STOP recommendation and reasons.
-- `status.json` matches the actual repository state.
+| Deliverable | Path | State |
+|---|---|---|
+| GLEET baseline audit | `research/GLEET_BASELINE_AUDIT.md` | done — paper+code, license=no-reuse, paper-vs-code discrepancies recorded |
+| Candidate mechanisms | `research/CANDIDATE_MECHANISMS.md` | done — M1 ECOS, M2 FMPS, each with state/action/reward/split/baselines/GO-NO-GO |
+| Literature ledger | `docs/LITERATURE_LEDGER.md` | done — 14 V + 5 U entries; gap statement with bounds |
+| Executor report | `research/P0.1_EXECUTOR_REPORT.md` | done — GO decision + conditions |
+| status.json | `status.json` | updated |
 
-### Forbidden
-- Do not implement PPO or an agent-evolution environment yet.
-- Do not use limited-budget allocation as the central contribution.
-- Do not treat “PPO applied to agent evolution” as sufficient novelty.
-- Do not fabricate test results, training runs, costs, commits, or citations.
+## What the next executor must NOT do
+
+- Do not implement M1+M2 together. Pick one decision family first (C2).
+- Do not copy GLEET code (C1).
+- Do not claim novelty from "PPO on agent evolution".
+- Do not skip bandit (B3) or FM-rewrite (B5) baselines in any effectiveness experiment (C3).
+- Do not proceed to publication claims without a deeper literature collision check (C4).
+
+## Next task (Phase 1 kickoff)
+
+1. Define minimal LLM-agent genotype whose edits change real execution behavior (G3).
+2. Define task families A/B (train/val) and held-out family C; fix evaluator before any controller training.
+3. Select M1 **or** M2 as the primary decision family; freeze the other as backup.
+4. Write the Phase 1 design note into `docs/` and update `status.json`.

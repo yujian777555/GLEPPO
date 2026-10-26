@@ -1,47 +1,50 @@
-# Planner Latest Plan — GLEPPO Phase 1 Design
+# Planner Latest Plan — GLEPPO Phase 1 (OUTCOME)
 
-**Status:** READY FOR EXECUTION  
+**Status:** EXECUTED 2026-10-26  
 **Repository:** `yujian777555/GLEPPO` only  
-**Scope:** design-only. No controller code, no environment implementation, no model/API calls, and no training in this task.
+**Scope:** design-only. No controller code, no environment implementation, no model/API calls, and no training.
 
-## Planner decision
+## Planner decision (preserved)
 
 Select **M1 — Execution-Conditioned Operator Selection (ECOS)** as the sole active candidate for Phase 1. Freeze M2 (FMPS) as inactive; do not implement or develop it in parallel.
 
 Rationale: M1's discrete operator action is simpler to isolate and audit. This is a tractability choice, not a novelty claim. The central risk is that a contextual bandit can solve the problem as well as PPO. The Phase 1 design must make this a serious, falsifiable gate.
 
-## Executor prompt (copy verbatim)
+## Executor prompt (as executed)
 
-You are the Executor for the independent GLEPPO research project. The only user project repository you may modify is `yujian777555/GLEPPO`. Do not import, access, copy, or mix code, data, results, plans, or status from any unrelated user project. Public papers and official repositories may be inspected as research sources.
+The Phase 1 executor prompt in `docs/PHASE1_DESIGN_PROTOCOL.md` and this plan's previous version was executed as specified: read charter/protocol/P0.1 artifacts, define genotype and operators, freeze M1-only decision family, specify MDP with delayed-effect justification, reward/evaluation semantics, task-family split with manifest/hash freeze, fair baselines including identical-state contextual bandit and FM-rewrite, feasibility/cost method, GO/REVISE/STOP.
 
-### Objective
+## Outcome
 
-Produce a build-ready design for M1 ECOS: a PPO-trained controller that selects among a small fixed set of agent-variation operators using population state and actual LLM-agent execution feedback. Decide whether the proposed sequential problem genuinely warrants PPO over a contextual bandit before any implementation.
+**Decision: GO** (to Phase 2), with hard condition **PC1** (myopia diagnostic before any PPO training) and stop rules **SR1–SR5**.
 
-### Required work
+| Deliverable | Path | State |
+|---|---|---|
+| Phase 1 design | `research/PHASE1_DESIGN.md` | done (written against `docs/PHASE1_DESIGN_PROTOCOL.md`) |
+| Design protocol | `docs/PHASE1_DESIGN_PROTOCOL.md` | from planner; preserved |
+| status.json | `status.json` | updated (merged planner framing + executor outcome) |
+| this plan | `planner/latest_plan.md` | updated with outcome |
 
-1. Read `docs/PROJECT_CHARTER.md`, `docs/PHASE1_DESIGN_PROTOCOL.md`, `research/CANDIDATE_MECHANISMS.md`, and the P0.1 audit/report. Preserve P0.1 conditions C1–C5.
-2. Define a minimal, inspectable agent genotype and fixed runtime. Specify legal edits, operator input/output schemas, validity checks, and concrete examples of behavior-changing edits.
-3. Freeze M1 as the only active decision family. Define a small operator set; hold parent selection, survivor selection, population size, and offspring count fixed.
-4. Define the MDP precisely. Prefer one operator action per generation. Explain the delayed state consequences that PPO could learn beyond contextual bandits. If this rationale is not credible, recommend STOP before implementation.
-5. Specify primary task-success metric, reward, invalid-offspring accounting, stochasticity handling, train/validation/held-out task-family split, leakage prevention, and manifest/hash protocol.
-6. Pre-register fair baselines: fixed, random, adaptive rule, UCB1/EXP3, a contextual bandit using the same state features, FM-rewrite, and PPO; assess whether a value-based RL baseline is needed.
-7. Provide a realistic pilot-cost model in terms of candidate evaluations, model calls, and environment steps. Clearly mark unknown quantities that require a later pilot; do not invent a precise cost estimate.
-8. Audit licenses and split suitability for any proposed public task benchmark. Do not assume a dataset is licensed or has valid train/test splits from its name alone.
-9. Create `research/PHASE1_DESIGN.md`, update `status.json` and this plan with the actual outcome, then commit and push documentation-only changes to `main`.
-10. End with a clear GO / REVISE / STOP decision and list unresolved risks.
+## Key design locks (summary)
 
-### Acceptance criteria
+- Genotype: declarative `system_prompt + tools + workflow` (not free-form code); fixed model/tools/interpreter; canonical serialization defined.
+- Operators K=5: `prompt_local_edit`, `prompt_critique_rewrite`, `tool_subset_edit`, `workflow_step_edit`, `crossover`. FM-rewrite is **baseline B5**, not in K. Each operator has a specified I/O schema, LLM-call count, and failure handling.
+- Frozen evolution: μ=8, λ=4, T=15, tournament-2 parents, (μ+λ) elitist survivors; **one operator per generation**.
+- MDP: state = execution-outcome + population/operator-history + progress blocks; reward = population-best improvement + validity; **γ=0.95**; episode = one evolution run on one task.
+- PPO vs bandit: delayed effects (diversity investment, scaffolding, stagnation escape) make the problem sequential; **myopia diagnostic must pass (PC1)** or **STOP (SR1)**. Identical-state LinUCB/neural-CE are kill baselines. Value-based Q-learning included as B6.
+- Families: train A/B (arithmetic, tool-composition), val A′/B′ (disjoint seeds/templates), **held-out C** (structured constraints); hash-frozen manifests; golds never in controller process. Generated tasks used deliberately (no public-benchmark license assumption).
+- Baselines B0–B6 mandatory.
 
-- M1 is the sole active candidate; M2 is frozen.
-- Design is specific enough to implement without guessing.
-- Contextual bandit is treated as the main falsification baseline.
-- The held-out family is untouched during design-time tuning.
-- No code implementation, model/API calls, training, or experiments.
-- No claims of novelty or performance beyond the bounded P0.1 evidence.
-- No unrelated repositories or project artifacts used.
-- Report the final commit SHA, changed files, and any source-access limitations.
+## Next executor (Phase 2) must
 
-### Stop rule
+1. `docs/RUNTIME_LOCK.md` (model + decoding + tools).
+2. Genotype/interpreter/5 operators + **G3 causality** report.
+3. Task generators + `data/manifest.json` freeze.
+4. Evolution loop with frozen selection rules.
+5. **Myopia diagnostic → PC1 gate** before any PPO code.
+6. Baselines B0–B6 in one harness.
+7. PPO trainer only after PC1 pass (independent code; no GLEET).
 
-If the design cannot identify a credible sequential-control advantage for PPO over a contextual bandit, recommend STOP for the PPO hypothesis rather than enlarging the action space, adding M2, or stacking more mechanisms.
+## Forbidden (unchanged)
+
+- No GLEET code copy. No M2. No third mechanism. No budget-allocation novelty. No unproven novelty claims. No fabricated costs/results.

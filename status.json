@@ -1,0 +1,28 @@
+{
+  "project": "GLEPPO",
+  "repository": "yujian777555/GLEPPO",
+  "default_branch": "main",
+  "updated_at": "2026-10-26",
+  "phase": "P0_PROJECT_BOOTSTRAP",
+  "state": "IN_PROGRESS",
+  "implementation_status": "NOT_STARTED",
+  "experimental_status": "NO_EXPERIMENTS",
+  "current_hypothesis": "A PPO-trained controller may learn useful evolutionary decisions for LLM-agent improvement from real execution feedback and generalize to held-out task families.",
+  "hypothesis_status": "UNVALIDATED",
+  "current_task": "P0.1: audit the GLEET paper and official implementation, verify license, and conduct a mechanism-level related-work review.",
+  "next_gate": "G1_BASELINE_AUDIT",
+  "project_isolation": {
+    "source_of_truth": "yujian777555/GLEPPO",
+    "cross_project_code_reuse": false,
+    "cross_project_data_or_results_reuse": false,
+    "cross_project_status_or_plan_reuse": false
+  },
+  "acceptance_rules": [
+    "Real agent execution outcomes ground primary evaluation.",
+    "No novelty claims before mechanism-level related-work audit.",
+    "Compare PPO against fixed, random, and strong adaptive baselines.",
+    "Use train/validation/held-out test separation and multiple seeds.",
+    "Limited-budget allocation is not the central contribution."
+  ],
+  "latest_known_commit": "e7e8e4aac243df2ac690d8b3b4351d32ea4023e3"
+}

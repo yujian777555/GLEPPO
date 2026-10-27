@@ -4,10 +4,10 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_R5_REMEDIATION",
-  "state": "REQUEST_CHANGES_PC1_NOT_APPROVED",
-  "reviewed_commit": "5486f0f762f0a00fd155e5649d6d089f4ffa550a",
-  "implementation_status": "R20_R24_IMPROVED_R26_R32_BLOCKERS_OPEN",
-  "experimental_status": "PC1_NOT_EXECUTED_PRODUCTION_BACKEND_PENDING",
+  "state": "R26_R32_FIXED_AWAITING_SIXTH_REVIEW",
+  "reviewed_commit": "915c960",
+  "implementation_status": "PC1_PATH_GATED_HARNESS_NO_CONTROLLERS",
+  "experimental_status": "SYNTHETIC_TESTS_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BLOCKED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Execute planner/latest_plan.md Phase 2A-R5: fix negative ledger deltas and atomic budget updates; reconcile registered analysis against full 45,440-slot plan; validate state/task/episode/cluster provenance; require registered provenance before statistics; fix seed/cache key normalization; create canonical proposed protocol artifact and document consistency test; accurately describe or implement the gated runner.",
-  "next_gate": "FIX_R26_R32 -> FOCUSED_AND_FULL_TESTS -> SIXTH_INDEPENDENT_REVIEW -> PLANNER_PROTOCOL_APPROVAL -> PRODUCTION_RUNTIME_LOCK_AND_SMOKE_G3 -> PC1_APPROVAL",
+  "current_task": "Await sixth independent review + Planner protocol approval. After both + production gate: deploy backend, real-model smoke/G3, then PC1.",
+  "next_gate": "SIXTH_REVIEW + PLANNER_PROTOCOL_APPROVAL -> PRODUCTION_SMOKE_G3 -> PC1 -> ONLY_THEN_CONTROLLER_TRAINING",
   "hard_rules": [
     "No registered PC1 execution before Planner protocol approval, independent review approval and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -172,5 +172,30 @@
     },
     "cost_review": "R24 appears corrected in current main: SMOKE_RAW.json and COST_BASELINE.md both report 0.019 s, 32+96=128 planned slots, 112 actual replicas.",
     "source_reviewed_commit": "5486f0f762f0a00fd155e5649d6d089f4ffa550a"
+  },
+  "remediation_r5": {
+    "date": "2026-10-27",
+    "verdict_requested": "SIXTH_INDEPENDENT_REVIEW",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "production_backend_deployed": false,
+    "fixed": {
+      "R26": "PC1_PROTOCOL_R4_PROPOSED.md created; code version pc1-proposed-v1-r5; doc-code consistency test",
+      "R27": "non-negative validation + atomic budget updates; duplicate check_cap removed",
+      "R28": "full 45440 reconciliation; exact registered shape (100 states, 40 clusters, 3Q+1E)",
+      "R29": "provenance cross-validation against plan; unknown-episode test with full fixture",
+      "R30": "registered provenance required (manifest/runtime/evaluator); input hash verified on replay",
+      "R31": "SyntheticGateHarness (not runner); approval gate checks protocol_status+hash+metadata",
+      "R32": "tagged seed encoding (NONE/EMPTY); JSON-array cache key"
+    },
+    "tests": {
+      "unit": "169/169 PASS",
+      "zero_cost": "PASS",
+      "protocol_consistency": "PASS",
+      "dry_run": "PASS (2040 units)",
+      "manifest": "OK",
+      "smoke": "slot_arithmetic_ok=true",
+      "cost_check": "PASS"
+    }
   }
 }

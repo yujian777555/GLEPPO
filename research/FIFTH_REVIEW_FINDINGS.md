@@ -146,3 +146,45 @@ This review was read-only. The reviewer did not run the 135 tests. The Executor-
 ## Final decision
 
 **REQUEST CHANGES — PC1 NOT APPROVED / NOT EXECUTED.** R20/R23/R24 have improved, but R26–R32 remain blocking issues. The proposed protocol still needs explicit Planner approval, the budget and provenance checks need to fail closed, and the gate/accounting harness must not be represented as a complete collector.
+
+---
+
+# Remediation Log (Executor, 2026-10-27 Phase 2A-R5)
+
+**Base commit (fifth review):** `915c960` (after fast-forward from `5486f0f`)
+**PC1 status:** NOT EXECUTED / NOT APPROVED. This log does NOT self-approve.
+
+| Finding | Fix | Tests |
+|---|---|---|
+| **R27** negative budget bypass | `_validate_nonneg` rejects non-int/negative before mutation; atomic all-or-nothing updates; cap check before mutation; duplicate `check_cap` removed | `TestR27NegativeBudget` (8) |
+| **R28** budget not fully reconciled | registered mode requires exact 45,440 total; collection slots added explicitly; exact 100 states / 40 clusters / 3Q+1E per (s,a); `reconcile()` called | `TestR28FullReconciliation` (3) |
+| **R29** provenance not cross-validated | registered mode validates episode/cluster/task/family against plan; full 40-cluster fixture for unknown-episode test | `TestR29ProvenanceMapping` (3) |
+| **R30** registered provenance absent | non-empty manifest_hash/runtime/evaluator_version required before stats; input_record_hash verified on replay | `TestR30RegisteredProvenance` (4) |
+| **R32** None vs "" cache collision | tagged encoding ("NONE"/"EMPTY"/value); JSON-array cache key serialization | `TestR32SeedCacheNormalization` (4) |
+| **R26** no canonical protocol doc | `research/PC1_PROTOCOL_R4_PROPOSED.md` created with PROPOSED/NOT APPROVED; code version renamed to `pc1-proposed-v1-r5`; doc-code consistency test parses document JSON | `TestR26ProtocolDocument` (5) |
+| **R31** runner is accounting stub | renamed to `SyntheticGateHarness`; `ApprovalGate` checks protocol_status + hash + approver/date; `ProductionRuntimeGate` binds runtime revision; booleans alone cannot authorize proposed protocol | `TestR31GateSemantics` (6) |
+
+## Test evidence (2026-10-27)
+
+- **Full unit suite: 169/169 PASS** (37 core + 25 R8-R11 + 35 R12-R17 + 38 R19-R25 + 34 R26-R32)
+- **Zero-cost protocol check: PASS**
+- **Protocol consistency check: PASS**
+- **Dry-run plan: within_cap=True, total=45,440, schedule=2040**
+- **Manifest verification: OK** (digests unchanged)
+- **Smoke: planned_init=32, planned_offspring=96, planned_total=128, actual=112, slot_arithmetic_ok=true**
+- **Cost consistency: PASS** (COST_BASELINE aligned to SMOKE_RAW.json)
+
+## PC1 execution status
+
+`execute_registered_pc1()` raises `PC1ExecutionRefused`. `create_default_gated_runner()` has all gates closed. `SyntheticGateHarness` is a gate/accounting harness, NOT a full collection/rollout runner. Registered PC1 is NOT APPROVED and NOT EXECUTED.
+
+## Open blockers
+
+1. Production backend PENDING_DEPLOYMENT.
+2. Sixth independent review required.
+3. Planner approval of PC1_PROTOCOL_R4_PROPOSED (status=PROPOSED).
+4. C4 literature collision re-check outstanding.
+
+## Request
+
+Sixth independent review of this remediation. Executor does NOT mark PC1 approved or executed.

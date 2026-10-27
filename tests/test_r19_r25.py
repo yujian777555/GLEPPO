@@ -15,7 +15,7 @@ from gleppo.interpreter import Interpreter
 from gleppo.pc1 import (
     BudgetLedger, StateActionRecord, PC1ExecutionRefused,
     ApprovalGate, ProductionRuntimeGate, ProtocolVersionGate,
-    GatedPC1Runner, create_default_gated_runner,
+    SyntheticGateHarness, create_default_gated_runner,
     CANONICAL_PROTOCOL, PROTOCOL_VERSION, PROTOCOL_STATUS,
     protocol_consistency_check,
     compute_r_hat, compute_q_hat, run_pc1_analysis,
@@ -380,8 +380,8 @@ class TestR25GatedRunner(unittest.TestCase):
             runner.execute_unit("u1", "wrong-version", 10, 8, 0)
 
     def test_over_budget_denied(self):
-        runner = GatedPC1Runner(
-            approval_gate=ApprovalGate(approved=True),
+        runner = SyntheticGateHarness(
+            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", approver="test", approval_date="2026-01-01"),
             production_gate=ProductionRuntimeGate(ready=True),
             protocol_gate=ProtocolVersionGate(),
         )
@@ -389,8 +389,8 @@ class TestR25GatedRunner(unittest.TestCase):
             runner.execute_unit("u1", PROTOCOL_VERSION, HARD_CAP_SLOTS + 1, 0, 0)
 
     def test_synthetic_execution_with_all_gates(self):
-        runner = GatedPC1Runner(
-            approval_gate=ApprovalGate(approved=True),
+        runner = SyntheticGateHarness(
+            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", approver="test", approval_date="2026-01-01"),
             production_gate=ProductionRuntimeGate(ready=True),
             protocol_gate=ProtocolVersionGate(),
         )
@@ -400,8 +400,8 @@ class TestR25GatedRunner(unittest.TestCase):
         self.assertEqual(runner.ledger.planned_slots, 20)
 
     def test_collection_episode_budget_check(self):
-        runner = GatedPC1Runner(
-            approval_gate=ApprovalGate(approved=True),
+        runner = SyntheticGateHarness(
+            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", approver="test", approval_date="2026-01-01"),
             production_gate=ProductionRuntimeGate(ready=True),
             protocol_gate=ProtocolVersionGate(),
         )

@@ -21,7 +21,7 @@ from typing import Callable, Dict, List, Optional, Sequence, Tuple
 
 from .reward import generation_reward, discounted_return, GAMMA
 
-PROTOCOL_VERSION = "pc1-frozen-v1-r4"
+PROTOCOL_VERSION = "pc1-proposed-v1-r5"
 ESTIMATOR_VERSION = "est-v1-r_hat=q_first+extra,q_hat=q_rollout_only"
 PROTOCOL_STATUS = "PROPOSED_AWAITING_PLANNER_APPROVAL"
 
@@ -135,41 +135,81 @@ class BudgetLedger:
     agent_llm_turns: int = 0
     notes: List[str] = field(default_factory=list)
 
+    @staticmethod
+    def _validate_nonneg(name: str, val) -> int:
+        """R27: reject non-integer or negative values before any mutation."""
+        if not isinstance(val, int) or isinstance(val, bool):
+            raise ValueError(f"R27: {name} must be int, got {type(val).__name__}")
+        if val < 0:
+            raise ValueError(f"R27: {name} must be non-negative, got {val}")
+        return val
+
     def record_evaluation(self, planned_slots: int, replicas_run_delta: int,
                           cache_bundle_delta: int, valid: int = 1, invalid: int = 0,
                           op_llm_calls: int = 0, agent_turns: int = 0) -> None:
-        self.planned_slots += planned_slots
-        self.actual_replicas_run += replicas_run_delta
-        self.cache_hit_bundles += cache_bundle_delta
-        self.valid_offspring += valid
-        self.invalid_offspring += invalid
-        self.operator_llm_calls += op_llm_calls
-        self.agent_llm_turns += agent_turns
+        """R27: validate all inputs; atomic update (all-or-nothing)."""
+        ps = self._validate_nonneg("planned_slots", planned_slots)
+        rd = self._validate_nonneg("replicas_run_delta", replicas_run_delta)
+        cb = self._validate_nonneg("cache_bundle_delta", cache_bundle_delta)
+        v = self._validate_nonneg("valid", valid)
+        inv = self._validate_nonneg("invalid", invalid)
+        llm = self._validate_nonneg("op_llm_calls", op_llm_calls)
+        turns = self._validate_nonneg("agent_turns", agent_turns)
+        # R27: check cap BEFORE mutation; reject if would exceed
+        if self.planned_slots + ps > HARD_CAP_SLOTS:
+            raise ValueError(
+                f"R27: planned_slots {self.planned_slots}+{ps} would exceed cap {HARD_CAP_SLOTS}")
+        self.planned_slots += ps
+        self.actual_replicas_run += rd
+        self.cache_hit_bundles += cb
+        self.valid_offspring += v
+        self.invalid_offspring += inv
+        self.operator_llm_calls += llm
+        self.agent_llm_turns += turns
 
     def record_collection(self, planned_slots: int, replicas_run_delta: int,
                           cache_bundle_delta: int) -> None:
-        """R21: explicit state-collection accounting."""
-        self.planned_collection_slots += planned_slots
-        self.planned_slots += planned_slots
-        self.actual_replicas_run += replicas_run_delta
-        self.cache_hit_bundles += cache_bundle_delta
+        """R27: collection accounting with same validation."""
+        ps = self._validate_nonneg("planned_slots", planned_slots)
+        rd = self._validate_nonneg("replicas_run_delta", replicas_run_delta)
+        cb = self._validate_nonneg("cache_bundle_delta", cache_bundle_delta)
+        if self.planned_slots + ps > HARD_CAP_SLOTS:
+            raise ValueError(
+                f"R27: collection {self.planned_slots}+{ps} would exceed cap {HARD_CAP_SLOTS}")
+        self.planned_collection_slots += ps
+        self.planned_slots += ps
+        self.actual_replicas_run += rd
+        self.cache_hit_bundles += cb
 
     def record_q_slot(self, planned_slots: int, replicas_run_delta: int,
                       cache_bundle_delta: int) -> None:
-        self.planned_q_slots += planned_slots
-        self.record_evaluation(planned_slots, replicas_run_delta, cache_bundle_delta, valid=1)
+        ps = self._validate_nonneg("planned_slots", planned_slots)
+        self.planned_q_slots += ps
+        self.record_evaluation(ps, replicas_run_delta, cache_bundle_delta, valid=1)
 
     def record_extra_slot(self, planned_slots: int, replicas_run_delta: int,
                           cache_bundle_delta: int) -> None:
-        self.planned_extra_slots += planned_slots
-        self.record_evaluation(planned_slots, replicas_run_delta, cache_bundle_delta, valid=0)
+        ps = self._validate_nonneg("planned_slots", planned_slots)
+        self.planned_extra_slots += ps
+        self.record_evaluation(ps, replicas_run_delta, cache_bundle_delta, valid=0)
 
     def check_cap(self) -> bool:
-        return self.planned_slots <= HARD_CAP_SLOTS
+        """R27: cap check includes non-negative invariant."""
+        return (self.planned_slots <= HARD_CAP_SLOTS
+                and self.planned_slots >= 0
+                and self.actual_replicas_run >= 0)
 
     def reconcile(self, expected_total: int) -> List[str]:
-        """R21: return list of inconsistencies (empty = OK)."""
+        """R27: full invariant check (non-negative, component sum, cap)."""
         errors = []
+        for name, val in [("planned_slots", self.planned_slots),
+                          ("actual_replicas_run", self.actual_replicas_run),
+                          ("cache_hit_bundles", self.cache_hit_bundles),
+                          ("planned_collection_slots", self.planned_collection_slots),
+                          ("planned_q_slots", self.planned_q_slots),
+                          ("planned_extra_slots", self.planned_extra_slots)]:
+            if val < 0:
+                errors.append(f"{name} is negative: {val}")
         if self.planned_slots != expected_total:
             errors.append(f"planned_slots {self.planned_slots} != expected {expected_total}")
         component_sum = self.planned_collection_slots + self.planned_q_slots + self.planned_extra_slots
@@ -178,9 +218,6 @@ class BudgetLedger:
         if self.planned_slots > HARD_CAP_SLOTS:
             errors.append(f"planned_slots {self.planned_slots} exceeds cap {HARD_CAP_SLOTS}")
         return errors
-
-    def check_cap(self) -> bool:
-        return self.planned_slots <= HARD_CAP_SLOTS
 
     def summary(self) -> dict:
         return {
@@ -293,29 +330,30 @@ def validate_records(records: List[StateActionRecord],
             raise ValueError(f"R13: state {sid} missing actions {sorted(missing)}")
 
     if require_registered_shape:
-        if len(states) < N_STATES:
-            raise ValueError(f"R13: need >= {N_STATES} states for registered PC1, got {len(states)}")
-        # R21: exact registered counts (not just >=)
+        # R28: EXACT registered state count
+        if len(states) != N_STATES:
+            raise ValueError(f"R28: need exactly {N_STATES} states, got {len(states)}")
+        # R28: exact per-state-action sample counts
         for sid in states:
             for a in range(N_ACTIONS):
                 qc = q_counts.get((sid, a), 0)
                 if qc != Q_ROLLOUTS:
                     raise ValueError(
-                        f"R21: state {sid} action {a}: {qc} q_rollout records, need exactly {Q_ROLLOUTS}")
+                        f"R28: state {sid} action {a}: {qc} q_rollout, need exactly {Q_ROLLOUTS}")
                 ec = extra_counts.get((sid, a), 0)
                 if ec != EXTRA_IMMEDIATE:
                     raise ValueError(
-                        f"R21: state {sid} action {a}: {ec} extra_immediate records, need exactly {EXTRA_IMMEDIATE}")
-        # R22: registered 40-episode cluster requirement
-        if len(clusters) < N_STATE_COLLECTION_EPISODES:
+                        f"R28: state {sid} action {a}: {ec} extra_immediate, need exactly {EXTRA_IMMEDIATE}")
+        # R28/R29: exactly 40 registered clusters
+        if len(clusters) != N_STATE_COLLECTION_EPISODES:
             raise ValueError(
-                f"R22: need >= {N_STATE_COLLECTION_EPISODES} independent clusters, got {len(clusters)}")
-        # R22: task_id and episode_id must be present for registered analysis
+                f"R28/R29: need exactly {N_STATE_COLLECTION_EPISODES} clusters, got {len(clusters)}")
+        # R29: provenance must be present
         for rec in records:
             if not rec.task_id:
-                raise ValueError(f"R22: record state={rec.state_id} missing task_id")
+                raise ValueError(f"R29: record state={rec.state_id} missing task_id")
             if not rec.episode_id:
-                raise ValueError(f"R22: record state={rec.state_id} missing episode_id")
+                raise ValueError(f"R29: record state={rec.state_id} missing episode_id")
 
 
 # ===========================================================================
@@ -442,7 +480,15 @@ def run_pc1_analysis(records: List[StateActionRecord],
                      manifest_hash: str = "",
                      runtime_revision: str = "",
                      evaluator_version: str = "") -> "PC1Result":
-    """R13: validate first, fail closed. R21: reconcile budget. R23: replayable evidence."""
+    """R13: validate first, fail closed. R28: full reconciliation. R30: provenance."""
+    # R30: registered provenance must be non-empty BEFORE any statistics
+    if require_registered_shape:
+        if not manifest_hash or not manifest_hash.strip():
+            raise ValueError("R30: registered analysis requires non-empty manifest_hash")
+        if not runtime_revision or not runtime_revision.strip():
+            raise ValueError("R30: registered analysis requires non-empty runtime_revision")
+        if not evaluator_version or not evaluator_version.strip():
+            raise ValueError("R30: registered analysis requires non-empty evaluator_version")
     # R21: reject invalid totals
     if planned_slots_total <= 0:
         raise ValueError(f"R21: planned_slots_total must be positive, got {planned_slots_total}")
@@ -451,18 +497,33 @@ def run_pc1_analysis(records: List[StateActionRecord],
 
     validate_records(records, require_registered_shape=require_registered_shape)
 
-    # R21: reconcile caller total with record-derived budget
+    # R28: full budget reconciliation with explicit collection component
     ledger = BudgetLedger()
     for rec in records:
         if rec.sample_role == ROLE_Q:
             ledger.record_q_slot(rec.planned_slots, rec.actual_replicas_run, rec.cache_hit_bundles)
         else:
             ledger.record_extra_slot(rec.planned_slots, rec.actual_replicas_run, rec.cache_hit_bundles)
-    # R21: component sum must not exceed caller total (collection slots not in records)
-    record_planned = ledger.planned_slots
+    # R28: collection slots are NOT in diagnostic records; add them explicitly
+    # In registered mode, planned_slots_total must equal Q+extra+collection = 45,440
+    record_planned = ledger.planned_slots  # Q + extra only
     if record_planned > planned_slots_total:
         raise ValueError(
-            f"R21: record planned slots {record_planned} exceed caller total {planned_slots_total}")
+            f"R28: record planned slots {record_planned} exceed caller total {planned_slots_total}")
+    if require_registered_shape:
+        # R28: reconcile to exact registered total
+        collection_slots = PLANNED_COLLECTION_SLOTS
+        expected_total = PLANNED_TOTAL_SLOTS  # 45,440
+        if planned_slots_total != expected_total:
+            raise ValueError(
+                f"R28: planned_slots_total {planned_slots_total} != registered {expected_total}")
+        ledger.record_collection(collection_slots, 0, 0)
+        if ledger.planned_slots != expected_total:
+            raise ValueError(
+                f"R28: ledger total {ledger.planned_slots} != registered {expected_total}")
+        if record_planned != PLANNED_Q_SLOTS + PLANNED_EXTRA_SLOTS:
+            raise ValueError(
+                f"R28: record planned {record_planned} != Q+extra {PLANNED_Q_SLOTS + PLANNED_EXTRA_SLOTS}")
 
     r_hat = compute_r_hat(records)
     q_hat = compute_q_hat(records)
@@ -719,9 +780,16 @@ def deserialize_records(sanitized: List[dict]) -> List[StateActionRecord]:
     ) for d in sanitized]
 
 def replay_from_artifact(path: str) -> "PC1Result":
-    """R23: reload records and RECOMPUTE statistics (not just return old values)."""
+    """R23/R30: reload records, verify input hash, RECOMPUTE statistics."""
     ev = load_evidence_artifact(path)
     records = deserialize_records(ev["records"])
+    # R30: verify input record hash before recomputing
+    rec_json = json.dumps([_sanitize_record(r) for r in records], sort_keys=True)
+    actual_hash = hashlib.sha256(rec_json.encode()).hexdigest()[:32]
+    expected_hash = ev.get("input_record_hash", "")
+    if expected_hash and actual_hash != expected_hash:
+        raise ValueError(
+            f"R30: input record hash mismatch: expected {expected_hash}, got {actual_hash}")
     return run_pc1_analysis(
         records,
         planned_slots_total=ev["planned_slots_total"],
@@ -738,29 +806,53 @@ def replay_from_artifact(path: str) -> "PC1Result":
 
 @dataclass
 class ApprovalGate:
-    """R25: independent-review approval gate. Default: NOT approved."""
+    """R31: approval gate requiring protocol status + hash + Planner metadata.
+
+    Boolean `approved` alone is NOT sufficient. The gate requires:
+    - protocol_status == "APPROVED"
+    - canonical protocol hash matches expected
+    - non-empty approver and approval_date
+    Default: all fields unset → deny.
+    """
     approved: bool = False
     approver: str = ""
     approval_date: str = ""
+    protocol_status: str = ""
+    protocol_hash: str = ""
+    expected_protocol_hash: str = ""
 
     def check(self) -> None:
         if not self.approved:
             raise PC1ExecutionRefused(
-                "R25: independent review approval gate is NOT satisfied. "
-                "Record explicit Planner approval before execution.")
+                "R31: approval gate NOT satisfied (approved=False).")
+        if self.protocol_status != "APPROVED":
+            raise PC1ExecutionRefused(
+                f"R31: protocol status is '{self.protocol_status}', need 'APPROVED'. "
+                "A proposed protocol cannot be executed even if boolean flags are set.")
+        if not self.approver or not self.approval_date:
+            raise PC1ExecutionRefused(
+                "R31: approval metadata incomplete (need approver + approval_date).")
+        if self.expected_protocol_hash and self.protocol_hash != self.expected_protocol_hash:
+            raise PC1ExecutionRefused(
+                f"R31: protocol hash mismatch: expected {self.expected_protocol_hash}, "
+                f"got {self.protocol_hash}")
 
 
 @dataclass
 class ProductionRuntimeGate:
-    """R25: production runtime gate. Default: NOT ready."""
+    """R31: production runtime gate. Binds to a concrete runtime-lock revision."""
     ready: bool = False
     runtime_revision: str = ""
+    required_revision: str = ""
 
     def check(self) -> None:
         if not self.ready:
             raise PC1ExecutionRefused(
-                "R25: production runtime gate is NOT satisfied. "
-                "Deploy production backend before execution.")
+                "R31: production runtime gate NOT ready.")
+        if self.required_revision and self.runtime_revision != self.required_revision:
+            raise PC1ExecutionRefused(
+                f"R31: runtime revision mismatch: need '{self.required_revision}', "
+                f"got '{self.runtime_revision}'")
 
 
 @dataclass
@@ -774,12 +866,17 @@ class ProtocolVersionGate:
                 f"R25: protocol version mismatch: expected {self.required_version}, got {actual_version}")
 
 
-class GatedPC1Runner:
-    """R25: gated collection/rollout runner. Default-deny.
+class SyntheticGateHarness:
+    """R31: synthetic gate/accounting harness (NOT a full collection/rollout runner).
 
-    All gates must be explicitly satisfied before any execution unit runs.
-    Budget is checked before every unit. Only usable with synthetic/fake backends
-    in this phase — registered PC1 remains blocked.
+    This class provides gate checks and budget accounting for synthetic testing
+    of the execution path. It does NOT load tasks, invoke evaluators, execute
+    rollouts, or write raw artifacts. The full collection/rollout runner is
+    NOT YET IMPLEMENTED and requires Planner protocol approval + production
+    runtime before implementation.
+
+    All gates default-deny. Boolean flags alone cannot authorize a proposed
+    protocol — the approval gate checks protocol status, hash, and approval metadata.
     """
 
     def __init__(self, approval_gate: ApprovalGate,
@@ -828,9 +925,9 @@ class GatedPC1Runner:
                 }}
 
 
-def create_default_gated_runner() -> GatedPC1Runner:
+def create_default_gated_runner() -> SyntheticGateHarness:
     """R25: default runner with ALL gates closed (default-deny)."""
-    return GatedPC1Runner(
+    return SyntheticGateHarness(
         approval_gate=ApprovalGate(approved=False),
         production_gate=ProductionRuntimeGate(ready=False),
         protocol_gate=ProtocolVersionGate(),

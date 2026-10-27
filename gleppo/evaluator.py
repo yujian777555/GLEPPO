@@ -59,24 +59,41 @@ class Evaluator:
         with (task_id, state_id, rollout_id, replicate_id, replica_index).
         Action and genotype NEVER enter the seed.
         """
-        base = eval_seed_override if eval_seed_override is not None else "AUTO"
-        return ("SEED", base, task_id, state_id, str(rollout_id), str(replicate_id), str(replica_index))
+        # R32: tagged encoding distinguishes None from ""
+        if eval_seed_override is None:
+            base_tag = "NONE"
+        elif eval_seed_override == "":
+            base_tag = "EMPTY"
+        else:
+            base_tag = eval_seed_override
+        return ("SEED", base_tag, task_id, state_id, str(rollout_id), str(replicate_id), str(replica_index))
 
     def _cache_key(self, g: Genotype, task: dict, state_id: str, rollout_id: str,
                    replicate_id: int, eval_seed_override: Optional[str]) -> str:
-        """R16: cache key includes every field that affects the effective seed
-        PLUS genotype identity, task, runtime, evaluator version."""
-        return "|".join([
+        """R32: cache key uses tagged encoding for eval_seed to distinguish
+        None (absent) from "" (explicit empty). Includes all seed-affecting
+        fields plus genotype identity, task, runtime, evaluator version."""
+        # R32: tagged encoding — None -> "TAG:NONE", "" -> "TAG:EMPTY", else "TAG:" + value
+        if eval_seed_override is None:
+            seed_tag = "TAG:NONE"
+        elif eval_seed_override == "":
+            seed_tag = "TAG:EMPTY"
+        else:
+            seed_tag = "TAG:" + eval_seed_override
+        # R32: collision-safe serialization using JSON array encoding
+        import json as _json
+        key_parts = _json.dumps([
             behavior_hash(g),
             task["task_id"],
             state_id,
             str(rollout_id),
             str(replicate_id),
-            eval_seed_override or "",
+            seed_tag,
             self.runtime_revision,
             EVALUATOR_VERSION,
             getattr(getattr(self.interpreter, "llm", None), "name", "unknown"),
-        ])
+        ], separators=(",", ":"))
+        return key_parts
 
     def evaluate(self, g: Genotype, task: dict, allow_family: tuple = ("A", "B"),
                  replicate_id: int = 0,

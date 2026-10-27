@@ -1,0 +1,81 @@
+{
+  "created_at": "2026-10-27T02:48:44Z",
+  "generator": "gleppo.tasks.generate_split",
+  "manifest_version": "manifest-v1",
+  "splits": {
+    "test_C": {
+      "family": "C",
+      "n": 100,
+      "path": "test_C.jsonl",
+      "seed_start": 0,
+      "sha256": "dcc6b61288fc8ae1918df29b3b029d158a22871f2fbcedb8aca7c59bc257215d",
+      "templates": [
+        "TC1",
+        "TC2",
+        "TC3",
+        "TC4",
+        "TC5"
+      ]
+    },
+    "train_A": {
+      "family": "A",
+      "n": 200,
+      "path": "train_A.jsonl",
+      "seed_start": 0,
+      "sha256": "de26ad08a26d8fdf79294c324e1fbfdba887fc1d3f16ae7b8e2844d4415c370c",
+      "templates": [
+        "TA1",
+        "TA2",
+        "TA3",
+        "TA4",
+        "TA5",
+        "TA6",
+        "TA7"
+      ]
+    },
+    "train_B": {
+      "family": "B",
+      "n": 200,
+      "path": "train_B.jsonl",
+      "seed_start": 0,
+      "sha256": "07e8339e2c0e7b1d458fc19d25a536c5d5ba67733eaea8fe98b293bf962d06f5",
+      "templates": [
+        "TB1",
+        "TB2",
+        "TB3",
+        "TB4",
+        "TB5"
+      ]
+    },
+    "val_A": {
+      "family": "A",
+      "n": 50,
+      "path": "val_A.jsonl",
+      "seed_start": 1000,
+      "sha256": "348b0acac230a1b8d4256eb338b4cb7cb35bdac4144ddc64b5958d5cd0a0170d",
+      "templates": [
+        "TA1",
+        "TA2",
+        "TA3",
+        "TA4",
+        "TA5",
+        "TA6",
+        "TA7"
+      ]
+    },
+    "val_B": {
+      "family": "B",
+      "n": 50,
+      "path": "val_B.jsonl",
+      "seed_start": 1000,
+      "sha256": "ed9ae9827bf3d5e65f583c4f3e624714c1107121cf7ae9b79da0f59ea5fff2b9",
+      "templates": [
+        "TB1",
+        "TB2",
+        "TB3",
+        "TB4",
+        "TB5"
+      ]
+    }
+  }
+}

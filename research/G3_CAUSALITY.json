@@ -1,0 +1,1984 @@
+{
+  "date": "2026-10-27T02:51:16Z",
+  "mode": "STUB_LL M_v1 (docs/RUNTIME_LOCK.md §4) — structural causality, not production-model validation",
+  "n_parents": 4,
+  "n_tasks": 8,
+  "n_eval": 2,
+  "families_used": [
+    "A",
+    "B"
+  ],
+  "family_c_accessed": false,
+  "operators": {
+    "prompt_local_edit": {
+      "valid": 4,
+      "invalid": 0,
+      "hash_changed": 4,
+      "behavior_changed": 4,
+      "no_op": 0,
+      "pass": true,
+      "diffs": [
+        {
+          "parent": 0,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "fd678adf056e8ce183df727d1edb1141096f6e39493d7fdcc2957ab434ae1959",
+          "child_hash": "9fe0d7b8e2d2145292fdb706234932f4b721e930e84258191b800c36c0082a37",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "calculate step by step and then transform the result. Final answer: {{answer}} V",
+          "genotype_diff_keys": [
+            "system_prompt"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|gce1c",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "wrong_answer",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g3ab2",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|gce1c",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "wrong_answer",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g3ab2",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "parent": 1,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
+          "child_hash": "8ec8e6cae73495acf2f440f30d791d28fb637b8b4c76097c6d7acf9709d152b1",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "calculate step by step and then transform the result. Final answer: {{answer}} V",
+          "genotype_diff_keys": [
+            "system_prompt"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g256e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "wrong_answer",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|ga50e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g256e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "wrong_answer",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|ga50e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
+          "child_hash": "fefefb9aa81e1e51f2223dd0dde7c13d83422457d7cdd6bb30222f07eaab8ad8",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "calculate step by step and then transform the result. Final answer: {{answer}} V",
+          "genotype_diff_keys": [
+            "system_prompt"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g73a2",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "wrong_answer",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|gbbcc",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g73a2",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "wrong_answer",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|gbbcc",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "child_hash": "2e21054d9545a699b6a6482b096e2b842d62a6fa08a0122e169d58be7b09d650",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "calculate step by step and then transform the result. Final answer: {{answer}} V",
+          "genotype_diff_keys": [
+            "system_prompt"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g2e75",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "wrong_answer",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g75ce",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g2e75",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "wrong_answer",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g75ce",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "prompt_critique_rewrite": {
+      "valid": 4,
+      "invalid": 0,
+      "hash_changed": 4,
+      "behavior_changed": 4,
+      "no_op": 0,
+      "pass": true,
+      "diffs": [
+        {
+          "parent": 0,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "fd678adf056e8ce183df727d1edb1141096f6e39493d7fdcc2957ab434ae1959",
+          "child_hash": "ce224fd4ff05cc371a40c14d535347ad2b0546e1caf4165af62347f7799ae8cf",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Compute step by step with careful tool inputs and then transform the result. (re",
+          "genotype_diff_keys": [
+            "system_prompt"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|gce1c",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|gd435",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|gce1c",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|gd435",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "parent": 1,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
+          "child_hash": "3f76833d406b1f639dbaa0e02383637d8c0ebe744f7b239651db039dc8ea9eac",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Calculate intermediate values explicitly, compute each sub-expression, then tran",
+          "genotype_diff_keys": [
+            "system_prompt"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g256e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|ged2e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g256e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|ged2e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
+          "child_hash": "7d6569c940b0cf28be12c7d09d605f47954fda27baff468665c5f8f5b3a31548",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Format output as exact JSON keys requested. Transform and structure the answer. ",
+          "genotype_diff_keys": [
+            "system_prompt"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g73a2",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "tool_error",
+                "turns": 1,
+                "tool_calls": 1,
+                "answer_head": "",
+                "trace_types": [
+                  "meta",
+                  "llm",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g73a2",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "tool_error",
+                "turns": 1,
+                "tool_calls": 1,
+                "answer_head": "",
+                "trace_types": [
+                  "meta",
+                  "llm",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "child_hash": "d419c9a4c2b0a8c2e73d95cf42d20c820105ec9b60cb59f45819718d1dd852d4",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Compute briefly. Step by step, short turns. (ref: sample error) Final answer: {{",
+          "genotype_diff_keys": [
+            "system_prompt"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g2e75",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|ge582",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g2e75",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|ge582",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "tool_subset_edit": {
+      "valid": 2,
+      "invalid": 2,
+      "hash_changed": 2,
+      "behavior_changed": 2,
+      "no_op": 0,
+      "pass": true,
+      "diffs": [
+        {
+          "parent": 0,
+          "valid": false,
+          "errors": [
+            "step 2: tool str_ops not in enabled tools"
+          ]
+        },
+        {
+          "parent": 1,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
+          "child_hash": "6c2efaa828cc95a99436b1d1379ecb6abfc6ba2f2b468e9a7686ced992db6819",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "genotype_diff_keys": [
+            "tools"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g256e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g7cd7",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g256e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g7cd7",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "valid": false,
+          "errors": [
+            "step 2: tool str_ops not in enabled tools"
+          ]
+        },
+        {
+          "parent": 3,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "child_hash": "d418709d6d38bb0ee958bbf5981ff3a1e7f0f773939a7d7a2a9635fb00e51670",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "genotype_diff_keys": [
+            "tools"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g2e75",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|gb243",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g2e75",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|gb243",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "workflow_step_edit": {
+      "valid": 4,
+      "invalid": 0,
+      "hash_changed": 2,
+      "behavior_changed": 2,
+      "no_op": 2,
+      "pass": true,
+      "diffs": [
+        {
+          "parent": 0,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "fd678adf056e8ce183df727d1edb1141096f6e39493d7fdcc2957ab434ae1959",
+          "child_hash": "dc3712282a2f0df505f9c740376d8dfbddee815a40ed91c44bd8d0c5c0ad6c02",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "genotype_diff_keys": [
+            "workflow"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 4.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|gce1c",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 4,
+                "tool_calls": 2,
+                "answer_head": "Final answer: 37|g034d",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "llm"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 4.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|gce1c",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 4,
+                "tool_calls": 2,
+                "answer_head": "Final answer: 88|g034d",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "llm"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "parent": 1,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
+          "child_hash": "ce43500dc4fdd15380b64a9bc6816e2983f0cc75e521b0e5066b5727034cae71",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "genotype_diff_keys": [
+            "workflow"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g256e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g1d86",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g256e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g1d86",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "valid": true,
+          "hash_changed": false,
+          "behavior_changed": false,
+          "parent_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
+          "child_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "genotype_diff_keys": [],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "valid": true,
+          "hash_changed": false,
+          "behavior_changed": false,
+          "parent_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "child_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "genotype_diff_keys": [],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "crossover": {
+      "valid": 4,
+      "invalid": 0,
+      "hash_changed": 4,
+      "behavior_changed": 4,
+      "no_op": 0,
+      "pass": true,
+      "diffs": [
+        {
+          "parent": 0,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "fd678adf056e8ce183df727d1edb1141096f6e39493d7fdcc2957ab434ae1959",
+          "child_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "genotype_diff_keys": [
+            "system_prompt"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|gce1c",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g256e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|gce1c",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g256e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "parent": 1,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
+          "child_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "genotype_diff_keys": [
+            "system_prompt"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g256e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g73a2",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g256e",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g73a2",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
+          "child_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "genotype_diff_keys": [
+            "system_prompt"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g73a2",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g2e75",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g73a2",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g2e75",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "parent_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "child_hash": "fd678adf056e8ce183df727d1edb1141096f6e39493d7fdcc2957ab434ae1959",
+          "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
+          "genotype_diff_keys": [
+            "system_prompt"
+          ],
+          "samples": [
+            {
+              "task": "A-g3-00",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|g2e75",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 37|gce1c",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            },
+            {
+              "task": "A-g3-01",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 3.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|g2e75",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": true,
+                "failure_category": "",
+                "turns": 3,
+                "tool_calls": 3,
+                "answer_head": "Final answer: 88|gce1c",
+                "trace_types": [
+                  "meta",
+                  "tool",
+                  "llm",
+                  "tool",
+                  "tool"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

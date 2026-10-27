@@ -1,0 +1,71 @@
+{
+  "mode": "PRODUCTION_QWEN25_7B",
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "n_tasks": 4,
+  "budget": {
+    "max_generations": 512,
+    "max_wall_clock_s": 1800
+  },
+  "actual_generations": 24,
+  "actual_wall_clock_s": 258.9824,
+  "tasks": [
+    {
+      "task_id": "A-0000",
+      "family": "A",
+      "best_success": 0.0,
+      "wall_clock_s": 85.1341,
+      "planned_init_slots": 8,
+      "planned_total_slots": 32,
+      "actual_replicas_run": 28,
+      "cache_hit_bundles": 0,
+      "valid_offspring": 10,
+      "invalid_offspring": 2
+    },
+    {
+      "task_id": "A-0001",
+      "family": "A",
+      "best_success": 0.0,
+      "wall_clock_s": 66.0288,
+      "planned_init_slots": 8,
+      "planned_total_slots": 32,
+      "actual_replicas_run": 28,
+      "cache_hit_bundles": 0,
+      "valid_offspring": 10,
+      "invalid_offspring": 2
+    },
+    {
+      "task_id": "B-0000",
+      "family": "B",
+      "best_success": 0.0,
+      "wall_clock_s": 64.8127,
+      "planned_init_slots": 8,
+      "planned_total_slots": 32,
+      "actual_replicas_run": 28,
+      "cache_hit_bundles": 0,
+      "valid_offspring": 10,
+      "invalid_offspring": 2
+    },
+    {
+      "task_id": "B-0001",
+      "family": "B",
+      "best_success": 0.0,
+      "wall_clock_s": 43.0065,
+      "planned_init_slots": 8,
+      "planned_total_slots": 32,
+      "actual_replicas_run": 28,
+      "cache_hit_bundles": 0,
+      "valid_offspring": 10,
+      "invalid_offspring": 2
+    }
+  ],
+  "llm_stats": {
+    "model": "qwen2.5-7b-instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "requests": 114,
+    "total_tokens": 10348,
+    "failures": 0,
+    "mean_latency_s": 2.314189028321651,
+    "max_latency_s": 4.23584508895874
+  },
+  "family_c_accessed": false
+}

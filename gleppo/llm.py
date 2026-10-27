@@ -134,10 +134,115 @@ class StubLLM:
 
 
 class ProductionLLM:
-    """Placeholder. Must be implemented only after RUNTIME_LOCK production fields are filled."""
+    """Real model inference via Transformers + Qwen2.5-7B-Instruct.
 
-    name = "production-pending"
-    version = "production-pending"
+    Must be explicitly instantiated and injected via Interpreter(llm=...).
+    Records model revision, request counts, tokens, latency in self.stats.
+    """
+
+    name = "qwen2.5-7b-instruct"
+    version = "a09a35458c702b33eeacc393d103063234e8bc28"
+
+    def __init__(self, model_path: str = "", device: str = "cuda:0",
+                 max_new_tokens: int = 512, temperature: float = 0.7):
+        import torch
+        from transformers import AutoModelForCausalLM, AutoTokenizer
+        self.model_path = model_path or "/202532803004/datasets/hf/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28"
+        self.device = device
+        self.max_new_tokens = max_new_tokens
+        self.temperature = temperature
+        self.stats = {
+            "requests": 0, "total_tokens": 0, "failures": 0,
+            "latencies": [], "revision": self.version,
+        }
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_path)
+        self.model = AutoModelForCausalLM.from_pretrained(
+            self.model_path, dtype=torch.bfloat16, device_map=device,
+        )
+        self.model.eval()
 
     def reply(self, system_prompt: str, user_message: str, trace: List[dict], seed_parts: tuple) -> LLMReply:
-        raise RuntimeError("ProductionLLM not deployed; see docs/RUNTIME_LOCK.md")
+        import time
+        import torch
+        self.stats["requests"] += 1
+        t0 = time.time()
+
+        # Build messages from system_prompt + user_message + trace context
+        messages = [{"role": "system", "content": system_prompt}]
+        # Include trace context (tool outputs, errors) but NEVER gold labels
+        for entry in trace:
+            if entry.get("type") == "tool" and entry.get("ok"):
+                messages.append({"role": "user", "content": f"[tool:{entry.get('detail','')}] {entry.get('output','')[:200]}"})
+            elif entry.get("type") == "tool" and not entry.get("ok"):
+                messages.append({"role": "user", "content": f"[tool error: {entry.get('detail','')}] {entry.get('output','')[:200]}"})
+        messages.append({"role": "user", "content": user_message})
+
+        try:
+            result = self.tokenizer.apply_chat_template(
+                messages, add_generation_prompt=True, return_tensors="pt"
+            )
+            if hasattr(result, 'input_ids'):
+                input_ids = result.input_ids.to(self.device)
+            elif isinstance(result, dict):
+                input_ids = result['input_ids'].to(self.device)
+            else:
+                input_ids = result.to(self.device)
+
+            # Set seed for reproducibility
+            seed_val = abs(hash(str(seed_parts))) % (2**31)
+            torch.manual_seed(seed_val)
+
+            with torch.no_grad():
+                output = self.model.generate(
+                    input_ids,
+                    max_new_tokens=self.max_new_tokens,
+                    temperature=self.temperature,
+                    do_sample=True,
+                    top_p=0.95,
+                    pad_token_id=self.tokenizer.eos_token_id,
+                )
+
+            generated = output[0][input_ids.shape[1]:]
+            text = self.tokenizer.decode(generated, skip_special_tokens=True).strip()
+
+            latency = time.time() - t0
+            self.stats["latencies"].append(latency)
+            self.stats["total_tokens"] += len(generated)
+
+            # Parse for tool call or answer
+            return self._parse_response(text, g_tools=[])
+        except Exception as e:
+            self.stats["failures"] += 1
+            return LLMReply(kind="answer", text=f"Final answer: ERROR:{str(e)[:50]}")
+
+    def _parse_response(self, text: str, g_tools: list) -> LLMReply:
+        """Parse model output for tool call or answer. Strict JSON for tool calls."""
+        import json
+        import re
+        text = text.strip()
+        # Try to parse as JSON tool call
+        if text.startswith("{"):
+            try:
+                obj = json.loads(text)
+                if "tool" in obj and "payload" in obj:
+                    return LLMReply(kind="call_tool", tool=obj["tool"], tool_payload=str(obj["payload"]))
+            except json.JSONDecodeError:
+                pass
+        # Check for tool call pattern: TOOL:name PAYLOAD:xxx
+        m = re.match(r"TOOL:(\w+)\s+PAYLOAD:(.+)", text, re.DOTALL)
+        if m:
+            return LLMReply(kind="call_tool", tool=m.group(1), tool_payload=m.group(2).strip())
+        # Default: answer
+        return LLMReply(kind="answer", text=text)
+
+    def get_stats(self) -> dict:
+        import statistics
+        lats = self.stats["latencies"]
+        return {
+            "model": self.name, "revision": self.version,
+            "requests": self.stats["requests"],
+            "total_tokens": self.stats["total_tokens"],
+            "failures": self.stats["failures"],
+            "mean_latency_s": statistics.mean(lats) if lats else 0,
+            "max_latency_s": max(lats) if lats else 0,
+        }

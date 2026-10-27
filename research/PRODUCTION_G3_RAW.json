@@ -1,0 +1,978 @@
+{
+  "date": "2026-10-27T12:26:48Z",
+  "mode": "PRODUCTION_QWEN25_7B",
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "backend": "qwen2.5-7b-instruct",
+  "n_parents": 4,
+  "tasks": [
+    {
+      "task_id": "A-g3-prod-00",
+      "family": "A"
+    },
+    {
+      "task_id": "B-g3-prod-00",
+      "family": "B"
+    }
+  ],
+  "n_replicas": 2,
+  "family_c_accessed": false,
+  "operators": {
+    "prompt_local_edit": {
+      "valid": 4,
+      "invalid": 0,
+      "hash_changed": 4,
+      "behavior_changed": 0,
+      "pass": false,
+      "diffs": [
+        {
+          "parent": 0,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "fd678adf056e8ce183df727d1edb1141096f6e39493d7fdcc2957ab434ae1959",
+          "child_hash": "9fe0d7b8e2d2145292fdb706234932f4b721e930e84258191b800c36c0082a37",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 1,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
+          "child_hash": "8ec8e6cae73495acf2f440f30d791d28fb637b8b4c76097c6d7acf9709d152b1",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
+          "child_hash": "fefefb9aa81e1e51f2223dd0dde7c13d83422457d7cdd6bb30222f07eaab8ad8",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "child_hash": "2e21054d9545a699b6a6482b096e2b842d62a6fa08a0122e169d58be7b09d650",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "prompt_critique_rewrite": {
+      "valid": 4,
+      "invalid": 0,
+      "hash_changed": 4,
+      "behavior_changed": 0,
+      "pass": false,
+      "diffs": [
+        {
+          "parent": 0,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "fd678adf056e8ce183df727d1edb1141096f6e39493d7fdcc2957ab434ae1959",
+          "child_hash": "ce224fd4ff05cc371a40c14d535347ad2b0546e1caf4165af62347f7799ae8cf",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 1,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
+          "child_hash": "3f76833d406b1f639dbaa0e02383637d8c0ebe744f7b239651db039dc8ea9eac",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
+          "child_hash": "7d6569c940b0cf28be12c7d09d605f47954fda27baff468665c5f8f5b3a31548",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "child_hash": "d419c9a4c2b0a8c2e73d95cf42d20c820105ec9b60cb59f45819718d1dd852d4",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "tool_subset_edit": {
+      "valid": 2,
+      "invalid": 2,
+      "hash_changed": 2,
+      "behavior_changed": 0,
+      "pass": false,
+      "diffs": [
+        {
+          "parent": 1,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
+          "child_hash": "6c2efaa828cc95a99436b1d1379ecb6abfc6ba2f2b468e9a7686ced992db6819",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "child_hash": "d418709d6d38bb0ee958bbf5981ff3a1e7f0f773939a7d7a2a9635fb00e51670",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "workflow_step_edit": {
+      "valid": 4,
+      "invalid": 0,
+      "hash_changed": 2,
+      "behavior_changed": 0,
+      "pass": false,
+      "diffs": [
+        {
+          "parent": 0,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "fd678adf056e8ce183df727d1edb1141096f6e39493d7fdcc2957ab434ae1959",
+          "child_hash": "dc3712282a2f0df505f9c740376d8dfbddee815a40ed91c44bd8d0c5c0ad6c02",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 1,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
+          "child_hash": "ce43500dc4fdd15380b64a9bc6816e2983f0cc75e521b0e5066b5727034cae71",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "valid": true,
+          "hash_changed": false,
+          "behavior_changed": false,
+          "parent_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
+          "child_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "valid": true,
+          "hash_changed": false,
+          "behavior_changed": false,
+          "parent_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "child_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "crossover": {
+      "valid": 4,
+      "invalid": 0,
+      "hash_changed": 4,
+      "behavior_changed": 0,
+      "pass": false,
+      "diffs": [
+        {
+          "parent": 0,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "fd678adf056e8ce183df727d1edb1141096f6e39493d7fdcc2957ab434ae1959",
+          "child_hash": "c7fd30570e401bb0f326aea459a8684ac78979fc9fa81256255e1e015f368243",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 1,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
+          "child_hash": "f20acbb002c61fceb596cc506c6b9758ccace04efb906862e17ccf4ed7905144",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
+          "child_hash": "d90c5816e4127252196f760aa86ddfa458facb636ad273605ccdc18e85c1d626",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "valid": true,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "parent_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "child_hash": "fd18199b744231bcf65442c845f9fc812d27e43081d824bde985505655e64fe9",
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "llm_stats": {
+    "model": "qwen2.5-7b-instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "requests": 144,
+    "total_tokens": 13487,
+    "failures": 0,
+    "mean_latency_s": 2.2388582858774395,
+    "max_latency_s": 3.928248643875122
+  },
+  "total_generations": 72,
+  "total_wall_clock_s": 322.4321,
+  "g3_overall": "FAIL"
+}

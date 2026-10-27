@@ -145,3 +145,25 @@ The production backend remains `PENDING_DEPLOYMENT`. No real-model smoke/G3 evid
 - **Dry-run: within_cap=True, total=45,440**
 - **Manifest: VERIFY OK**
 - **Smoke: 32+96=128, actual=112, 0.0209 s**
+
+---
+
+# Remediation Log (Executor, 2026-10-27 Phase 2A-R10-C2)
+
+**Base commit:** `da10ac5`
+**PC1 status:** NOT EXECUTED / NOT APPROVED.
+
+| Finding | Fix | Tests |
+|---|---|---|
+| **R57** missing R54-R56 tests | `tests/test_r54_r59.py` (22 tests) covering approval gate, plan binding, strict types | `test_r54_r59.py` |
+| **R58** dynamic protocol hash | `REGISTERED_PROTOCOL_CONTENT_HASH` independently pinned; save/load verify against registered constant; fail-closed on parse errors | `TestR58RegisteredProtocolHash` |
+| **R59** generic APPROVE action | `APPROVE_PC1_PROTOCOL` action + `protocol_document_id` in HMAC payload; cross-protocol replay rejected | `TestR54ApprovalGate` + `TestR59DocumentID` |
+
+## Test evidence (2026-10-27)
+
+- **Full unit suite: 254/254 PASS** (232 old + 22 new R57-R59)
+- **Zero-cost protocol check: PASS**
+- **Protocol consistency check: PASS** (doc_hash=baa9e834)
+- **Dry-run: within_cap=True, total=45,440**
+- **Manifest: VERIFY OK**
+- **Smoke: 32+96=128, actual=112, 0.0232 s**

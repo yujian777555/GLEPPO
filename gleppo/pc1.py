@@ -964,6 +964,11 @@ def generate_plan_mapping() -> Tuple[Dict[str, dict], str]:
     return mapping, plan_hash
 
 
+# R58: registered protocol content hash — INDEPENDENTLY PINNED
+# This must match the protocol document's content hash (excluding lifecycle fields).
+# Changes require a reviewed protocol amendment.
+REGISTERED_PROTOCOL_CONTENT_HASH = "baa9e8341db0ecece258aa3aef43210b"  # independently pinned
+
 # R51: registered canonical plan identity — INDEPENDENTLY PINNED
 REGISTERED_PLAN_ID = "pc1-plan-v1"
 REGISTERED_PLAN_VERSION = "1.0"
@@ -998,13 +1003,15 @@ def get_plan_mapping() -> Tuple[Dict[str, dict], str]:
 def save_plan_artifact(path: str) -> str:
     """R41: serialize plan mapping to deterministic artifact, return hash."""
     mapping, plan_hash = get_plan_mapping()
-    # R55: bind protocol content hash into the plan artifact
+    # R58: use REGISTERED hash; fail-closed on parse errors
     from .pc1 import compute_protocol_hash as _cph, parse_protocol_document as _ppd
-    try:
-        _doc = _ppd()
-        _proto_hash = _cph(_doc)
-    except Exception:
-        _proto_hash = ""
+    _doc = _ppd()  # R58: must succeed — no silent empty hash
+    _proto_hash = _cph(_doc)
+    if _proto_hash != REGISTERED_PROTOCOL_CONTENT_HASH:
+        raise ValueError(
+            f"R58: protocol content hash mismatch: computed={_proto_hash}, "
+            f"registered={REGISTERED_PROTOCOL_CONTENT_HASH}. "
+            f"Protocol amendment required to change the registered hash.")
     artifact = {
         "plan_id": REGISTERED_PLAN_ID,
         "plan_version": REGISTERED_PLAN_VERSION,
@@ -1050,20 +1057,14 @@ def load_plan_artifact(path: str, require_registered: bool = True) -> Tuple[Dict
             raise ValueError(
                 f"R51: plan_version mismatch: got '{artifact.get('plan_version')}', "
                 f"expected '{REGISTERED_PLAN_VERSION}'")
-        # R55: verify protocol content hash binding
-        from .pc1 import compute_protocol_hash as _cph, parse_protocol_document as _ppd
-        try:
-            _doc = _ppd()
-            _current_proto_hash = _cph(_doc)
-        except Exception:
-            _current_proto_hash = ""
+        # R58: verify protocol content hash against REGISTERED constant
         stored_proto_hash = artifact.get("protocol_content_hash", "")
         if not stored_proto_hash:
-            raise ValueError("R55: plan artifact missing protocol_content_hash")
-        if stored_proto_hash != _current_proto_hash:
+            raise ValueError("R58: plan artifact missing protocol_content_hash")
+        if stored_proto_hash != REGISTERED_PROTOCOL_CONTENT_HASH:
             raise ValueError(
-                f"R55: protocol_content_hash mismatch: artifact='{stored_proto_hash}', "
-                f"current='{_current_proto_hash}'")
+                f"R58: protocol_content_hash mismatch: artifact='{stored_proto_hash}', "
+                f"registered='{REGISTERED_PROTOCOL_CONTENT_HASH}'")
     return mapping, actual_hash
 
 
@@ -1170,8 +1171,9 @@ class TrustedApprovalArtifact:
     approval_date: str = ""
     protocol_hash: str = ""
     protocol_version: str = ""
-    approval_action: str = ""      # R54: must be "APPROVE"
-    authorization_status: str = "" # R54: must be "APPROVED"
+    approval_action: str = ""      # R59: must be "APPROVE_PC1_PROTOCOL"
+    authorization_status: str = "" # R59: must be "APPROVED"
+    protocol_document_id: str = "" # R59: must match canonical document ID
     signature: str = ""   # HMAC-SHA256 over canonical approval fields
 
     def _canonical_payload(self) -> str:
@@ -1179,6 +1181,7 @@ class TrustedApprovalArtifact:
             self.artifact_id, self.approver, self.approval_date,
             self.protocol_hash, self.protocol_version,
             self.approval_action, self.authorization_status,
+            self.protocol_document_id,
         ], separators=(",", ":"), ensure_ascii=False)
 
     @staticmethod
@@ -1226,13 +1229,20 @@ class TrustedApprovalArtifact:
             raise PC1ExecutionRefused(
                 f"R50: protocol_version mismatch: got '{self.protocol_version}', "
                 f"expected '{expected_version}'")
-        # R54: approval action and authorization status must match
-        if self.approval_action != "APPROVE":
+        # R59: approval action and authorization status must match exactly
+        if self.approval_action != "APPROVE_PC1_PROTOCOL":
             raise PC1ExecutionRefused(
-                f"R54: approval_action '{self.approval_action}' != 'APPROVE'")
+                f"R59: approval_action '{self.approval_action}' != 'APPROVE_PC1_PROTOCOL'")
         if self.authorization_status != "APPROVED":
             raise PC1ExecutionRefused(
-                f"R54: authorization_status '{self.authorization_status}' != 'APPROVED'")
+                f"R59: authorization_status '{self.authorization_status}' != 'APPROVED'")
+        # R59: verify protocol document identity
+        if not self.protocol_document_id or not self.protocol_document_id.strip():
+            raise PC1ExecutionRefused("R59: protocol_document_id is empty")
+        expected_doc_id = "PC1_PROTOCOL_R4_PROPOSED"
+        if self.protocol_document_id != expected_doc_id:
+            raise PC1ExecutionRefused(
+                f"R59: protocol_document_id '{self.protocol_document_id}' != '{expected_doc_id}'")
 
 
 @dataclass

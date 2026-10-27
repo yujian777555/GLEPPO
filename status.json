@@ -4,8 +4,8 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_R10_REMEDIATION",
-  "state": "R54_R56_FIXED_AWAITING_TARGETED_REVIEW",
-  "reviewed_commit": "024a816",
+  "state": "R57_R59_FIXED_AWAITING_TARGETED_REVIEW",
+  "reviewed_commit": "da10ac5",
   "implementation_status": "PC1_PATH_GATED_NO_CONTROLLERS",
   "experimental_status": "SYNTHETIC_EXPERIMENTS_ONLY_PC1_NOT_EXECUTED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
@@ -33,7 +33,7 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Await targeted review of R54-R56. Then production backend + real-model smoke/G3.",
+  "current_task": "Await targeted review of R57-R59. Then production backend + real-model smoke/G3.",
   "next_gate": "TARGETED_REVIEW -> PRODUCTION_SMOKE_G3 -> PC1",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
@@ -406,6 +406,26 @@
     },
     "tests": {
       "unit": "232/232 PASS",
+      "zero_cost": "PASS",
+      "protocol_consistency": "PASS",
+      "dry_run": "PASS",
+      "manifest": "OK",
+      "smoke": "ok"
+    }
+  },
+  "remediation_r10c2": {
+    "date": "2026-10-27",
+    "verdict_requested": "TARGETED_REVIEW_R57_R59",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "fixed": {
+      "R57": "tests/test_r54_r59.py with 22 regression tests",
+      "R58": "REGISTERED_PROTOCOL_CONTENT_HASH independently pinned; fail-closed save/load",
+      "R59": "APPROVE_PC1_PROTOCOL action + protocol_document_id in HMAC payload"
+    },
+    "tests": {
+      "unit": "254/254 PASS",
+      "new_r57_r59": "22/22 PASS",
       "zero_cost": "PASS",
       "protocol_consistency": "PASS",
       "dry_run": "PASS",

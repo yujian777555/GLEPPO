@@ -3,11 +3,11 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-27",
-  "phase": "PHASE2A_R7_REMEDIATION",
-  "state": "R39_R42_FIXED_AWAITING_EIGHTH_REVIEW",
-  "reviewed_commit": "2474253",
-  "implementation_status": "PC1_PATH_GATED_NO_CONTROLLERS",
-  "experimental_status": "SYNTHETIC_EXPERIMENTS_ONLY_PC1_NOT_EXECUTED",
+  "phase": "PHASE2A_R8_REMEDIATION",
+  "state": "REQUEST_CHANGES_PC1_NOT_APPROVED",
+  "reviewed_commit": "e7355a7c0c6eb1d9e66d3f66fba3a9ac6b1e8e03",
+  "implementation_status": "R39_R42_IMPROVED_R43_R45_BLOCKERS_OPEN",
+  "experimental_status": "SYNTHETIC_STUB_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BACKEND_PENDING",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Await eighth independent review + Planner protocol approval.",
-  "next_gate": "EIGHTH_REVIEW -> PLANNER_APPROVAL -> PRODUCTION_SMOKE_G3 -> PC1",
+  "current_task": "Execute planner/latest_plan.md Phase 2A-R8: reject invented approval records while the protocol is proposed; bind registered analysis to the exact verified persisted plan artifact; enforce exact reward/estimator/seed protocol semantics and reject duplicate JSON keys.",
+  "next_gate": "FIX_R43_R45 -> FOCUSED_AND_FULL_TESTS -> NINTH_INDEPENDENT_REVIEW -> PLANNER_PROTOCOL_APPROVAL -> PRODUCTION_RUNTIME_DEPLOYMENT_AND_SMOKE_G3 -> PC1_APPROVAL",
   "hard_rules": [
     "No registered PC1 execution before Planner protocol approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -281,6 +281,23 @@
       "dry_run": "PASS",
       "manifest": "OK",
       "smoke": "ok"
+    }
+  },
+  "eighth_review": {
+    "verdict": "REQUEST_CHANGES",
+    "report": "research/EIGHTH_REVIEW_FINDINGS.md",
+    "reviewer_scope": "read-only source, protocol, and test audit; reviewer did not execute repository tests or experiments",
+    "github_ci": "No combined status entries and no workflow runs returned for reviewed commit; reported 232/232 tests were not independently reproduced.",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "family_c_accessed": false,
+    "production_backend_deployed": false,
+    "source_reviewed_commit": "e7355a7c0c6eb1d9e66d3f66fba3a9ac6b1e8e03",
+    "cost_review": "SMOKE_RAW.json and COST_BASELINE.md agree on 0.0263 s stub smoke, 128 planned slots, 112 actual replicas, and zero cache-hit bundles.",
+    "findings": {
+      "R43": "ApprovalGate validates caller-supplied PlannerApprovalRecord against the current document hash but does not require the canonical document itself to be approved or verify the record against a trusted approval artifact. The gate's expected_protocol_hash is unused. Current protocol remains PROPOSED_NOT_APPROVED; an invented APPROVED record with the current hash can pass the record-level validation. Date validation checks format only, not calendar validity.",
+      "R44": "run_pc1_analysis verifies plan_hash against get_plan_mapping() and validate_records independently uses get_plan_mapping(); it does not require or consume the persisted plan artifact. save/load/tamper tests therefore do not prove registered analysis used the artifact identified by evidence.",
+      "R45": "protocol_consistency_check uses substring heuristics for seed contract, reward formula and estimator semantics. The protocol JSON block duplicates code_version and status keys; default json.loads silently accepts duplicate keys."
     }
   }
 }

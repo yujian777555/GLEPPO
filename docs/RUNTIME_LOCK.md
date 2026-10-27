@@ -1,6 +1,7 @@
 # GLEPPO Runtime Lock
 
 **Locked:** 2026-10-27 (Phase 2A)  
+**Revision R10:** 2026-10-27 (Phase 2A-R2) — seed rules aligned with code; see §2.1 Seed hierarchy.  
 **Scope:** all GLEPPO experiments (G3, smoke, PC1, baselines, PPO, final eval) must use this lock. Any change requires a new lock file version and invalidates comparability.
 
 ---
@@ -20,13 +21,27 @@
 
 ## 2. Decoding profiles (frozen)
 
-| Profile | Use | temperature | top_p | max_tokens | seed rule |
+| Profile | Use | temperature | top_p | max_tokens | seed rule (see §2.1) |
 |---|---|---|---|---|---|
-| `agent` | agent execution turns | 0.7 | 0.95 | 512 | `hash("agent", task_id, eval_rep, agent_id, turn)` |
-| `op_proposal` | operator LLM proposals (op2 real mode) | 0.8 | 0.95 | 640 | `hash("op", operator_name, parent_hash, gen, draw)` |
-| `fm_rewrite` | baseline B5 only | 0.8 | 0.95 | 800 | `hash("fm", parent_hash, gen, draw)` |
+| `agent` | agent execution turns | 0.7 | 0.95 | 512 | `SEED(state_id, task_id, rollout_id, replicate_id, replica_index)` via `Evaluator.effective_seed_parts` |
+| `op_proposal` | operator LLM proposals (op2 real mode) | 0.8 | 0.95 | 640 | `SHA256("op", operator_name, parent_hash, gen, draw)` via `stable_seed` |
+| `fm_rewrite` | baseline B5 only | 0.8 | 0.95 | 800 | `SHA256("fm", parent_hash, gen, draw)` via `stable_seed` |
 
 StubLLM is fully deterministic given the same seed inputs; temperature settings apply only in production mode.
+
+### 2.1 Seed hierarchy (R10 revision — matches `gleppo/` code)
+
+**No path uses Python's built-in `hash(...)`** — all seeding goes through SHA256 (`gleppo.evolution.stable_seed` or `gleppo.evaluator.Evaluator.effective_seed_parts`).
+
+| RNG stream | Derivation | Depends on genotype/action? |
+|---|---|---|
+| **Evolution / control RNG** (tournament, operator schedule) | `stable_seed(cfg.seed, seed, task_id, episode_id)` → `random.Random` | No |
+| **Action / operator proposal RNG** (op2 critique-rewrite, crossover mate draw) | `stable_seed(...)` per call; deterministic in stub | No (mate comes from frozen tournament) |
+| **Common paired evaluation RNG (CRN)** | `Evaluator.effective_seed_parts(state_id, task_id, rollout_id, replicate_id, replica_index)` — tuple `("SEED", state_id, task_id, rollout_id, replicate_id, replica_index)` | **No** — identical for any genotype/action under the same CRN tuple |
+| **Inner evaluation replica index** | `replica_index ∈ [0, n_eval)` appended to the CRN tuple | No |
+| **FM-rewrite baseline RNG** (B5) | `stable_seed("fm", parent_hash, gen, draw)` | Uses parent hash (not shared across actions) |
+
+**Cache key** (not an RNG seed) includes genotype identity: `behavior_hash | task_id | replicate_id | eval_seed | runtime_revision | evaluator_version | llm.name`. Cache hits are **bundle-level** (1 bundle = `n_eval` replicas, 0 ran).
 
 ## 3. Tools (deterministic)
 
@@ -87,12 +102,12 @@ No per-run variation of these counts is allowed.
 
 Production hardware/quantization must be appended to this file when the real backend is deployed.
 
-## 8. Cache
+## 8. Cache (R10 revision)
 
-In-memory dict keyed by `sha256(genotype_behavior_hash + task_id + eval_rep + decoding_profile)`.  
+In-memory dict keyed by `behavior_hash | task_id | replicate_id | eval_seed | runtime_revision | EVALUATOR_VERSION | llm.name` (see `gleppo/evaluator.py:_cache_key`).  
 Process-local; never written to disk in 2A; never includes Family C keys (C is never executed).  
-Cache hits are counted in cost reports.
+Cache hits are **bundle-level** (1 hit returns `n_eval` replicas, 0 actual CTX). Cache hits never count as independent samples.
 
 ## 9. Immutability
 
-Changes to any row above require a new `RUNTIME_LOCK.md` revision, a note in `research/COST_BASELINE.md`, and re-running G3 for operators whose causal effects could change.
+Changes to any row above require a new `RUNTIME_LOCK.md` revision, a note in `research/COST_BASELINE.md`, and re-running G3 for operators whose causal effects could change. Seed-rule changes must be reflected in `gleppo/` code and tests in the same commit.

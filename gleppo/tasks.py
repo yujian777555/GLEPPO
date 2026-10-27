@@ -19,6 +19,107 @@ FAMILY_C = "C"
 ANSWER_PREFIX = "final answer:"
 
 
+# ---------------------------------------------------------------------------
+# R11: deterministic input-only solver (template oracle).
+# Computes the correct answer from the TASK INPUT text alone. Gold labels are
+# NEVER passed in. The evaluator's gold_check remains the sole correctness
+# authority; this solver only lets StubLLM *attempt* a genuinely correct answer.
+# ---------------------------------------------------------------------------
+
+def solve_input(family: str, input_text: str) -> str:
+    """Return the correct final-answer string for a task, parsed from input only."""
+    if family == FAMILY_A:
+        return _solve_a(input_text)
+    if family == FAMILY_B:
+        return _solve_b(input_text)
+    if family == FAMILY_C:
+        return _solve_c(input_text)
+    return ""
+
+
+def _solve_a(txt: str) -> str:
+    m = re.search(r"what is\s+([0-9\+\-\*/\(\)\s]+)\??", txt, re.IGNORECASE)
+    if m:
+        expr = m.group(1).strip().rstrip(".?")
+        return _eval_arith(expr)
+    m = re.search(r"(?:value of|find|evaluate)\s*:?\s*([0-9\+\-\*/\(\)\s×x]+)", txt, re.IGNORECASE)
+    if m:
+        expr = m.group(1).strip().rstrip(".?=")
+        expr = expr.replace("×", "*").replace("x", "*")
+        expr = re.sub(r"\*\s*\*", "**", expr)
+        return _eval_arith(expr)
+    m = re.search(r"(\d+)\s*times\s*(\d+).*?add\s*(\d+)", txt, re.IGNORECASE)
+    if m:
+        return str(int(m.group(1)) * int(m.group(2)) + int(m.group(3)))
+    m = re.search(r"(\d+)\s*by\s*(\d+).*?(?:increase|product).*?(\d+)", txt, re.IGNORECASE)
+    if m:
+        return str(int(m.group(1)) * int(m.group(2)) + int(m.group(3)))
+    m = re.search(r"(\d+)\s*(?:copies of|rows of)\s*(\d+).*?(?:plus|include|additional).*?(\d+)", txt, re.IGNORECASE)
+    if m:
+        return str(int(m.group(1)) * int(m.group(2)) + int(m.group(3)))
+    m = re.search(r"(\d+)\s*groups of\s*(\d+).*?(?:plus|together with).*?(\d+)", txt, re.IGNORECASE)
+    if m:
+        return str(int(m.group(1)) * int(m.group(2)) + int(m.group(3)))
+    m = re.search(r"(\d+)\s*[×x]\s*(\d+)\s*\+\s*(\d+)", txt)
+    if m:
+        return str(int(m.group(1)) * int(m.group(2)) + int(m.group(3)))
+    # TA11: x=A, y=B, z=C, report x*z+y
+    m = re.search(r"x\s*=\s*(\d+).*?y\s*=\s*(\d+).*?z\s*=\s*(\d+)", txt, re.IGNORECASE)
+    if m:
+        a, b, c = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        return str(a * c + b)
+    # TA4: "C rows of A items, plus B extras" => C*A+B == A*C+B
+    m = re.search(r"(\d+)\s*rows of\s*(\d+).*?plus\s*(\d+)", txt, re.IGNORECASE)
+    if m:
+        return str(int(m.group(1)) * int(m.group(2)) + int(m.group(3)))
+    nums = [int(x) for x in re.findall(r"\d+", txt)]
+    if len(nums) >= 3:
+        return str(nums[0] * nums[2] + nums[1])
+    if len(nums) == 2:
+        return str(nums[0] + nums[1])
+    return ""
+
+
+def _eval_arith(expr: str) -> str:
+    try:
+        val = eval(expr, {"__builtins__": {}}, {})  # noqa: S307 - controlled arithmetic
+        if isinstance(val, float) and val.is_integer():
+            val = int(val)
+        return str(val)
+    except Exception:  # noqa: BLE001
+        return ""
+
+
+def _solve_b(txt: str) -> str:
+    m = re.search(r"(\d+)\s*(?:\+|plus|and)\s*(\d+)", txt, re.IGNORECASE)
+    if m:
+        total = int(m.group(1)) + int(m.group(2))
+    else:
+        nums = [int(x) for x in re.findall(r"\d+", txt)]
+        total = (nums[0] + nums[1]) if len(nums) >= 2 else 0
+    tok = ""
+    m = re.search(r"'([A-Za-z][A-Za-z0-9]*)'", txt)
+    if m:
+        tok = m.group(1)
+    else:
+        # generated tokens are always [a-z]{2,}\d+ (e.g. ab42); prefer that pattern
+        m = re.search(r"\b([a-z]{2,}\d+)\b", txt.lower())
+        if m:
+            tok = m.group(1)
+        else:
+            m = re.search(r"(?:string|token|word|form of|case of|then)\s+([A-Za-z][A-Za-z0-9]*)", txt, re.IGNORECASE)
+            if m:
+                tok = m.group(1)
+    return f"{total}-{tok.upper()}"
+
+
+def _solve_c(txt: str) -> str:
+    nums = [int(x) for x in re.findall(r"\d+", txt)]
+    a = nums[0] if nums else 0
+    b = nums[1] if len(nums) > 1 else 0
+    return json.dumps({"sum": a + b, "product": a * b}, sort_keys=True)
+
+
 def _rng(task_id: str, seed: int):
     def _next(salt: int) -> int:
         h = hashlib.sha256(f"{task_id}|{seed}|{salt}".encode("utf-8")).hexdigest()

@@ -4,10 +4,10 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_R2_CRN_ACCOUNTING_REMEDIATION",
-  "state": "EXECUTOR_TASK_READY_PC1_NOT_APPROVED",
-  "reviewed_commit": "a272a453c1147d9b2fd194c04806ba0a4dac8cdc",
-  "implementation_status": "ENVIRONMENT_EXISTS_CRN_AND_ACCOUNTING_BLOCKERS_OPEN",
-  "experimental_status": "STUB_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BACKEND_PENDING",
+  "state": "R8_R11_FIXED_AWAITING_THIRD_REVIEW",
+  "reviewed_commit": "94764f86481edb8abb674c66aea0221ede2b9219",
+  "implementation_status": "ENVIRONMENT_CORRECTED_CRN_ACCOUNTING_FIXED_NO_CONTROLLERS",
+  "experimental_status": "STUB_G3_SMOKE_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BLOCKED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,13 +33,40 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Execute planner/latest_plan.md Phase 2A-R2: fix end-to-end CRN seed path, CTX/cache accounting, smoke planned slots, runtime-lock seed documentation, StubLLM template correctness/quarantine, and implement/test PC1 runner on synthetic fixtures only.",
-  "next_gate": "R8_R9_TESTED -> SMOKE_ACCOUNTING_FIXED -> RUNTIME_LOCK_AND_STUB_CHECKED -> PC1_RUNNER_SYNTHETIC_TESTS -> INDEPENDENT_REVIEW -> PRODUCTION_SMOKE_G3 -> PC1_APPROVAL",
+  "current_task": "Await third independent review of R8-R11 remediation + PC1 runner. After approval: deploy production backend, real-model smoke/G3, then PC1.",
+  "next_gate": "THIRD_REVIEW -> PRODUCTION_SMOKE_G3 -> PC1 -> ONLY_THEN_CONTROLLER_TRAINING",
   "hard_rules": [
     "No PC1 execution before another independent review approves the protocol and production smoke/G3 pass.",
     "No Family C execution or tuning.",
     "No controller implementation or training before PC1 passes.",
     "No GLEET code reuse or cross-project artifacts.",
     "No fabricated model calls, costs, tokens, test results, or approval."
-  ]
+  ],
+  "remediation_r2": {
+    "date": "2026-10-27",
+    "verdict_requested": "THIRD_INDEPENDENT_REVIEW",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "production_backend_deployed": false,
+    "fixed": {
+      "R8": "CRN seeds exclude genotype/action; instrumented-interpreter end-to-end tests",
+      "R9": "bundle-level cache hits, replicas_run counter, per-episode deltas, init included",
+      "R10": "RUNTIME_LOCK 2.1 seed hierarchy matches code (SHA256, no built-in hash)",
+      "R11": "solve_input deterministic solver; all 21 A/B templates verified correct",
+      "smoke_slots": "planned_init=32, planned_offspring=96, planned_total=128",
+      "PC1_runner": "run_pc1_analysis with cluster bootstrap, synthetic tests only"
+    },
+    "tests": {
+      "unit": "62/62 PASS",
+      "pc1_zero_cost": "PASS",
+      "g3_stub": "PASS 5/5",
+      "smoke": "slot_arithmetic_ok=true"
+    },
+    "pc1_runner_status": "IMPLEMENTED_AND_SYNTHETICALLY_TESTED_NOT_EXECUTED",
+    "blockers": [
+      "Production backend PENDING_DEPLOYMENT",
+      "Third independent review not yet obtained",
+      "C4 literature collision re-check outstanding"
+    ]
+  }
 }

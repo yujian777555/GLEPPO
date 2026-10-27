@@ -57,10 +57,11 @@ class EpisodeResult:
     logs: List[GenerationLog] = field(default_factory=list)
     best_success: float = 0.0
     final_best_hash: str = ""
-    # R7 accounting
-    planned_slots: int = 0          # conservative upper bound (λ*n_eval*T + init)
-    actual_ctx: int = 0             # uncached candidate-task executions
-    cache_hits: int = 0
+    # R7/R9 accounting — units documented in research/COST_BASELINE.md
+    planned_slots: int = 0          # conservative upper bound (init + lambda*n_eval*T)
+    planned_init_slots: int = 0     # R9: init slots reported separately
+    actual_ctx: int = 0             # uncached replica executions that actually ran
+    cache_hits: int = 0             # BUNDLE-level hits (one bundle = n_eval replicas), per-episode
     invalid_offspring: int = 0
     valid_offspring: int = 0
 
@@ -78,17 +79,17 @@ def tournament_select(pop: List[Individual], k: int, rng: random.Random) -> Indi
 
 def init_population(cfg: EvolutionConfig, evaluator: Evaluator, task: dict,
                     rng: random.Random, episode_id: str = "0") -> Tuple[List[Individual], int, int]:
-    """Returns (pop, actual_ctx_increment, cache_hits_increment)."""
+    """Returns (pop, actual_replicas_run, cache_hit_bundles). R9: counter deltas."""
     pop: List[Individual] = []
-    actual = 0
     hits0 = evaluator.cache_hits
+    reps0 = evaluator.replicas_executed
     for i in range(cfg.mu):
         g = make_valid_genotype()
         g.system_prompt = g.system_prompt + f" Variant {i}."
         g.meta = {"init_index": i}
         ev = evaluator.evaluate(g, task, allow_family=("A", "B"),
-                                replicate_id=stable_seed(episode_id, "init", i) % 100000)
-        actual += cfg.n_eval   # each evaluate() does n_eval executions (if not cached)
+                                replicate_id=stable_seed(episode_id, "init", i) % 100000,
+                                state_id=f"{episode_id}-init", rollout_id="init")
         pop.append(
             Individual(
                 geno=g,
@@ -98,7 +99,7 @@ def init_population(cfg: EvolutionConfig, evaluator: Evaluator, task: dict,
                 failure=ev.failure_category,
             )
         )
-    return pop, actual, evaluator.cache_hits - hits0
+    return pop, evaluator.replicas_executed - reps0, evaluator.cache_hits - hits0
 
 
 def evolve_generation(
@@ -111,14 +112,15 @@ def evolve_generation(
     t: int,
     failure_hint: dict,
     episode_id: str = "0",
-) -> Tuple[List[Individual], GenerationLog]:
+) -> Tuple[List[Individual], GenerationLog, int, int]:
+    """Returns (survivors, log, replicas_run_delta, cache_hit_bundle_delta)."""
     parents = [tournament_select(pop, cfg.tournament_k, rng) for _ in range(cfg.lam)]
     offspring: List[Individual] = []
     valid_count = 0
     invalid_count = 0
     deltas: List[float] = []
-    actual = 0
     hits0 = evaluator.cache_hits
+    reps0 = evaluator.replicas_executed
 
     for j, p in enumerate(parents):
         mate = tournament_select(pop, cfg.tournament_k, rng) if operator_name == "crossover" else None
@@ -132,8 +134,8 @@ def evolve_generation(
         ev = evaluator.evaluate(
             child, task, allow_family=("A", "B"),
             replicate_id=stable_seed(episode_id, t, j, operator_name) % 100000,
+            state_id=f"{episode_id}", rollout_id=f"g{t}",
         )
-        actual += cfg.n_eval
         valid_count += 1
         deltas.append(ev.success - p.success)
         offspring.append(
@@ -173,7 +175,8 @@ def evolve_generation(
         op_delta_mean=op_delta,
         planned_slots=cfg.lam * cfg.n_eval,
     )
-    return survivors, log
+    # R9: return deltas, not assumptions
+    return survivors, log, evaluator.replicas_executed - reps0, evaluator.cache_hits - hits0
 
 
 def evolve(
@@ -187,11 +190,12 @@ def evolve(
     """Run one evolution episode. operator_schedule(t, pop, history) -> operator name."""
     eid = episode_id or f"{task['task_id']}-{seed}"
     rng = random.Random(stable_seed(cfg.seed, seed, task["task_id"], eid))
-    pop, init_ctx, init_hits = init_population(cfg, evaluator, task, rng, eid)
+    pop, init_reps, init_hits = init_population(cfg, evaluator, task, rng, eid)
     res = EpisodeResult()
-    res.actual_ctx += init_ctx
-    res.cache_hits += init_hits
-    res.planned_slots += cfg.mu * cfg.n_eval   # R7: init slots counted
+    res.actual_ctx += init_reps      # R9: actual replica executions
+    res.cache_hits += init_hits      # R9: per-episode bundle-hit delta
+    res.planned_init_slots = cfg.mu * cfg.n_eval
+    res.planned_slots += res.planned_init_slots
     history: List[dict] = []
 
     for t in range(cfg.T):
@@ -202,15 +206,16 @@ def evolve(
         op = operator_schedule(t, pop, history)
         if op not in OPERATOR_NAMES:
             raise ValueError(op)
-        pop, log = evolve_generation(pop, op, cfg, evaluator, task, rng, t, failure_hint, eid)
+        pop, log, gen_reps, gen_hits = evolve_generation(
+            pop, op, cfg, evaluator, task, rng, t, failure_hint, eid)
         res.logs.append(log)
         history.append({"t": t, "op": op, "best": log.best_success, "reward": log.reward})
         res.planned_slots += log.planned_slots
-        res.actual_ctx += log.valid_count * cfg.n_eval
+        res.actual_ctx += gen_reps   # R9: actual replica executions from counter delta
+        res.cache_hits += gen_hits   # R9: per-episode bundle-hit delta
         res.invalid_offspring += log.invalid_count
         res.valid_offspring += log.valid_count
 
-    res.cache_hits = evaluator.cache_hits - init_hits + init_hits
     res.best_success = max(x.success for x in pop)
     best_ind = max(pop, key=lambda x: x.success)
     res.final_best_hash = best_ind.behavior_hash

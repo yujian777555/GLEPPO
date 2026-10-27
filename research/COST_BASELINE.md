@@ -1,4 +1,4 @@
-# GLEPPO Cost Baseline (Phase 2A)
+# GLEPPO Cost Baseline (Phase 2A / 2A-R2 revision)
 
 **Date:** 2026-10-27  
 **Mode:** **STUB_LL M_v1** (deterministic, stdlib only, no network). Production LLM tokens/latency are **UNMEASURED** until a real backend is deployed under `docs/RUNTIME_LOCK.md`.  
@@ -13,21 +13,41 @@
 
 ---
 
-## 2. Smoke test (measured, training families only)
+## 2. Smoke test (measured 2026-10-27 R2, training families only)
 
 | Parameter | Value |
 |---|---|
-| Tasks | 4 (`train_A`×2, `train_B`×2) |
-| Evolution config | μ=4, λ=2, T=6, n_eval=2 (reduced from main μ=8/λ=4/T=15/n_eval=3) |
-| Operators schedule | round-robin over K=5 |
-| Wall-clock (total) | **0.012 s** (stub; not representative of real LLM latency) |
-| CTX upper bound | **96** (4 tasks × 6 gens × 2 × 2) |
+| Tasks | 4 (train_A x2, train_B x2) |
+| Evolution config | mu=4, lam=2, T=6, n_eval=2 |
+| Wall-clock (total) | **0.021 s** (stub; not representative of real LLM latency) |
+
+### 2.1 Planned-slot arithmetic (Task C - explicit)
+
+| Component | Formula | Slots |
+|---|---|---|
+| **Initialization slots** | n_tasks x mu x n_eval = 4 x 4 x 2 | **32** |
+| **Offspring slots** | n_tasks x T x lam x n_eval = 4 x 6 x 2 x 2 | **96** |
+| **Total planned slots** | 32 + 96 | **128** |
+
+slot_arithmetic_ok: true in research/SMOKE_RAW.json.
+
+### 2.2 Actual execution counters (R9)
+
+| Counter | Value |
+|---|---|
+| Actual replicas run (uncached CTX) | **112** |
+| Cache-hit bundles | **0** |
 | Valid offspring | 40 |
-| Invalid offspring | 8 (**16.7%**) — dropped, never parent-cloned |
-| Evaluator cache | 38 misses / 18 hits |
+| Invalid offspring | 8 (16.7%) - dropped, never parent-cloned |
+| Evaluator cache misses | 56 |
 | Family C access | **0** (guard enforced) |
 | LLM tokens | **UNMEASURED** (StubLLM) |
-| Hardware | Windows host, Python 3.10.1, stdlib only, single process |
+
+R9 units: planned_*_slots = conservative planned replica slots (hard-cap unit);
+actual_replicas_run = uncached replica executions that ran;
+cache_hit_bundles = cached evaluation bundles (1 bundle = n_eval replicas, 0 ran).
+Planned slots are NOT actual CTX. 112 actual < 128 planned because 8 invalid
+offspring consumed 0 evaluator CTX (planned slots still counted conservatively).
 
 Per-task best success on smoke (stub oracle): A-0000 1.0, A-0001 1.0, B-0000 1.0, B-0001 1.0.
 

@@ -184,3 +184,184 @@ def zero_cost_protocol_check() -> dict:
             "inconclusive_rule": "SR1 STOP",
         },
     }
+
+# ===========================================================================
+# PC1 runner (synthetic-testable). DO NOT EXECUTE the registered PC1 experiment
+# until an independent review approves. Unit tests use synthetic fixtures only.
+# ===========================================================================
+
+from dataclasses import dataclass as _dc
+import math as _math
+import random as _random
+
+
+@_dc
+class StateActionRecord:
+    """One (state, action) observation. Immutable metadata for replay."""
+    state_id: str
+    cluster_id: str          # independent collection-episode ID
+    action: int
+    rollout_id: int
+    replicate_id: int
+    crn_seed: str
+    # per-generation rewards under the FROZEN generation_reward (len == HORIZON)
+    gen_rewards: List[float]
+    planned_slots: int
+    invalid_count: int = 0
+    cache_hit_bundles: int = 0
+    actual_replicas_run: int = 0
+
+
+@_dc
+class PC1Result:
+    D: float
+    advantage: float
+    D_ci: Tuple[float, float]
+    adv_ci: Tuple[float, float]
+    n_states: int
+    n_clusters: int
+    decision: str            # "PASS" | "FAIL" | "INCONCLUSIVE" -> SR1 on fail/inconclusive
+    planned_slots_total: int
+    raw_evidence: dict
+
+
+def _argmax_by(d: Dict[int, float]) -> int:
+    """Tie-break deterministically on the smallest action id."""
+    return min(d.items(), key=lambda kv: (-kv[1], kv[0]))[0]
+
+
+def compute_r_hat(records: List[StateActionRecord]) -> Dict[Tuple[str, int], float]:
+    """r_hat(s,a) = mean of the FIRST generation reward (same frozen reward as Q)."""
+    sums: Dict[Tuple[str, int], List[float]] = {}
+    for rec in records:
+        if not rec.gen_rewards:
+            continue
+        sums.setdefault((rec.state_id, rec.action), []).append(rec.gen_rewards[0])
+    return {k: sum(v) / len(v) for k, v in sums.items()}
+
+
+def compute_q_hat(records: List[StateActionRecord], gamma: float = GAMMA) -> Dict[Tuple[str, int], float]:
+    """Q_hat(s,a) = mean h-step discounted return under the fixed random continuation."""
+    sums: Dict[Tuple[str, int], List[float]] = {}
+    for rec in records:
+        ret = discounted_return(rec.gen_rewards[:HORIZON], gamma=gamma)
+        sums.setdefault((rec.state_id, rec.action), []).append(ret)
+    return {k: sum(v) / len(v) for k, v in sums.items()}
+
+
+def _per_state_stats(r_hat: Dict, q_hat: Dict) -> List[dict]:
+    states = sorted({k[0] for k in q_hat})
+    rows = []
+    for s in states:
+        r_vals = {a: r_hat.get((s, a), 0.0) for a in range(N_ACTIONS)}
+        q_vals = {a: q_hat.get((s, a), 0.0) for a in range(N_ACTIONS)}
+        a_r = _argmax_by(r_vals)
+        a_q = _argmax_by(q_vals)
+        rows.append({
+            "state_id": s,
+            "a_r": a_r,
+            "a_q": a_q,
+            "disagree": int(a_r != a_q),
+            "advantage": q_vals[a_q] - q_vals[a_r],
+        })
+    return rows
+
+
+def _cluster_bootstrap(rows: List[dict], clusters: Dict[str, List[dict]],
+                       n_boot: int = 10000, seed: int = 20261027) -> dict:
+    """Resample collection-episode CLUSTERS (not rows). 10,000 resamples."""
+    rng = _random.Random(seed)
+    cluster_ids = sorted(clusters.keys())
+    Ds: List[float] = []
+    advs: List[float] = []
+    for _ in range(n_boot):
+        sampled = [cluster_ids[rng.randrange(len(cluster_ids))] for _ in cluster_ids]
+        boot_rows: List[dict] = []
+        for cid in sampled:
+            boot_rows.extend(clusters[cid])
+        if not boot_rows:
+            continue
+        Ds.append(sum(r["disagree"] for r in boot_rows) / len(boot_rows))
+        advs.append(sum(r["advantage"] for r in boot_rows) / len(boot_rows))
+    Ds.sort()
+    advs.sort()
+    lo_i = int(0.025 * len(Ds))
+    hi_i = int(0.975 * len(Ds)) - 1
+    return {
+        "D_ci": (Ds[lo_i], Ds[hi_i]),
+        "adv_ci": (advs[lo_i], advs[hi_i]),
+    }
+
+
+def run_pc1_analysis(records: List[StateActionRecord],
+                     planned_slots_total: int,
+                     strata_fn: Optional[Callable[[str], str]] = None) -> PC1Result:
+    """Analyze PC1 records. Does NOT run any environment/model.
+
+    Thresholds frozen: D >= 0.15 AND advantage >= 0.02; CI margins 0.10 / 0.01.
+    INCONCLUSIVE or FAIL => caller applies SR1 STOP.
+    """
+    if planned_slots_total > HARD_CAP_SLOTS:
+        raise ValueError(
+            f"planned slots {planned_slots_total} exceed hard cap {HARD_CAP_SLOTS}")
+
+    r_hat = compute_r_hat(records)
+    q_hat = compute_q_hat(records)
+    rows = _per_state_stats(r_hat, q_hat)
+    if not rows:
+        raise ValueError("no state records")
+
+    D = sum(r["disagree"] for r in rows) / len(rows)
+    adv = sum(r["advantage"] for r in rows) / len(rows)
+
+    clusters: Dict[str, List[dict]] = {}
+    by_state: Dict[str, str] = {rec.state_id: rec.cluster_id for rec in records}
+    for r in rows:
+        cid = by_state.get(r["state_id"], "unknown")
+        clusters.setdefault(cid, []).append(r)
+
+    ci = _cluster_bootstrap(rows, clusters)
+    D_ci = ci["D_ci"]
+    adv_ci = ci["adv_ci"]
+
+    # Pass rule: point estimates meet thresholds AND CIs exclude margins
+    point_ok = (D >= THRESHOLD_D) and (adv >= THRESHOLD_ADVANTAGE)
+    ci_ok = (D_ci[0] > MARGIN_D) and (adv_ci[0] > MARGIN_ADV)
+    if point_ok and ci_ok:
+        decision = "PASS"
+    elif (D_ci[1] < THRESHOLD_D) and (adv_ci[1] < THRESHOLD_ADVANTAGE):
+        decision = "FAIL"
+    else:
+        decision = "INCONCLUSIVE"
+
+    strata: Dict[str, dict] = {}
+    if strata_fn is not None:
+        for r in rows:
+            bin_name = strata_fn(r["state_id"])
+            strata.setdefault(bin_name, {"n": 0, "disagree": 0, "adv": 0.0})
+            strata[bin_name]["n"] += 1
+            strata[bin_name]["disagree"] += r["disagree"]
+            strata[bin_name]["adv"] += r["advantage"]
+        for v in strata.values():
+            v["D"] = v["disagree"] / max(1, v["n"])
+            v["advantage"] = v["adv"] / max(1, v["n"])
+
+    return PC1Result(
+        D=D, advantage=adv,
+        D_ci=D_ci, adv_ci=adv_ci,
+        n_states=len(rows), n_clusters=len(clusters),
+        decision=decision,
+        planned_slots_total=planned_slots_total,
+        raw_evidence={
+            "protocol_version": PROTOCOL_VERSION,
+            "thresholds": {"D": THRESHOLD_D, "advantage": THRESHOLD_ADVANTAGE,
+                           "margin_D": MARGIN_D, "margin_adv": MARGIN_ADV},
+            "r_hat": {f"{k[0]}|{k[1]}": v for k, v in r_hat.items()},
+            "q_hat": {f"{k[0]}|{k[1]}": v for k, v in q_hat.items()},
+            "rows": rows,
+            "strata": strata,
+            "planned_slots_total": planned_slots_total,
+            "n_records": len(records),
+            "decision_rule": "PASS if D>=0.15 and adv>=0.02 and CI margins excluded; else FAIL if CI below thresholds; else INCONCLUSIVE->SR1",
+        },
+    )

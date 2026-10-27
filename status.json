@@ -3,11 +3,11 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-27",
-  "phase": "PHASE2A_R5_REMEDIATION",
-  "state": "R26_R32_FIXED_AWAITING_SIXTH_REVIEW",
-  "reviewed_commit": "915c960",
-  "implementation_status": "PC1_PATH_GATED_HARNESS_NO_CONTROLLERS",
-  "experimental_status": "SYNTHETIC_TESTS_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BLOCKED",
+  "phase": "PHASE2A_R6_REMEDIATION",
+  "state": "REQUEST_CHANGES_PC1_NOT_APPROVED",
+  "reviewed_commit": "1441882ab8cd12e26c4b0dc22626d34d18f8e0dd",
+  "implementation_status": "R26_R32_IMPROVED_R33_R38_BLOCKERS_OPEN",
+  "experimental_status": "PC1_NOT_EXECUTED_FAMILY_C_NOT_ACCESSED_PRODUCTION_BACKEND_PENDING",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,10 +33,10 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Await sixth independent review + Planner protocol approval. After both + production gate: deploy backend, real-model smoke/G3, then PC1.",
-  "next_gate": "SIXTH_REVIEW + PLANNER_PROTOCOL_APPROVAL -> PRODUCTION_SMOKE_G3 -> PC1 -> ONLY_THEN_CONTROLLER_TRAINING",
+  "current_task": "Execute planner/latest_plan.md Phase 2A-R6: fix Q/extra ledger atomicity and role-specific slots; collision-free seed/cache identities; plan-backed provenance; protocol/plan hashes in registered evidence; complete protocol-document consistency; and fail-closed approval/runtime gate bindings.",
+  "next_gate": "FIX_R33_R38 -> FOCUSED_AND_FULL_TESTS -> SEVENTH_INDEPENDENT_REVIEW -> PLANNER_PROTOCOL_APPROVAL -> PRODUCTION_RUNTIME_SMOKE_G3 -> PC1_APPROVAL",
   "hard_rules": [
-    "No registered PC1 execution before Planner protocol approval, independent review approval and production-runtime smoke/G3.",
+    "No registered PC1 execution before Planner protocol approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
     "No controller implementation or training before PC1 passes.",
     "No GLEET code reuse or cross-project artifacts.",
@@ -197,5 +197,24 @@
       "smoke": "slot_arithmetic_ok=true",
       "cost_check": "PASS"
     }
+  },
+  "sixth_review": {
+    "verdict": "REQUEST_CHANGES",
+    "report": "research/SIXTH_REVIEW_FINDINGS.md",
+    "reviewer_scope": "read-only source, protocol, and test audit; reviewer did not execute repository tests or experiments",
+    "github_ci": "No combined status checks or workflow runs were returned for reviewed commit; Executor-reported 169/169 tests were not independently reproduced.",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "production_backend_deployed": false,
+    "findings": {
+      "R33": "record_q_slot and record_extra_slot mutate component counters before record_evaluation validates replica/cache deltas or cap; rejection can leave partial mutation. Per-record planned slots are not checked against Q=24 and extra=8.",
+      "R34": "Seed/cache tags collide for literal override values 'NONE' and 'EMPTY' with None/empty variants; crn_seed uses delimiter-joined fields.",
+      "R35": "validate_records checks non-empty task/episode and cluster counts but does not validate records against a verified state-to-task/episode/cluster/family plan. Existing tests can pass for earlier conflict reasons and have a weak assertion.",
+      "R36": "Protocol document test compares only a subset of fields; protocol_consistency_check compares constants to a Python dict built from the same constants. Canonical document hash is not computed/persisted.",
+      "R37": "Registered analysis requires manifest/runtime/evaluator but not protocol hash or verified plan mapping hash; raw evidence omits those binding hashes.",
+      "R38": "ApprovalGate skips hash equality if expected hash is empty; ProductionRuntimeGate skips revision equality if required revision is empty. Approval status is caller-supplied rather than bound to verified approved artifact."
+    },
+    "cost_review": "Current SMOKE_RAW.json and COST_BASELINE.md agree on 0.0235 s, 128 planned smoke slots, and 112 actual replica executions.",
+    "source_reviewed_commit": "1441882ab8cd12e26c4b0dc22626d34d18f8e0dd"
   }
 }

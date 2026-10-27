@@ -1057,14 +1057,28 @@ def load_plan_artifact(path: str, require_registered: bool = True) -> Tuple[Dict
             raise ValueError(
                 f"R51: plan_version mismatch: got '{artifact.get('plan_version')}', "
                 f"expected '{REGISTERED_PLAN_VERSION}'")
-        # R58: verify protocol content hash against REGISTERED constant
+        # R60: 3-way hash verification — current protocol + registered + artifact
         stored_proto_hash = artifact.get("protocol_content_hash", "")
         if not stored_proto_hash:
-            raise ValueError("R58: plan artifact missing protocol_content_hash")
+            raise ValueError("R60: plan artifact missing protocol_content_hash")
+        # Re-parse current protocol document and compute its content hash
+        try:
+            _doc = parse_protocol_document()
+            _current_hash = compute_protocol_hash(_doc)
+        except Exception as e:
+            raise ValueError(f"R60: cannot parse current protocol document: {e}")
+        # All three must match: current computed, registered, artifact stored
         if stored_proto_hash != REGISTERED_PROTOCOL_CONTENT_HASH:
             raise ValueError(
-                f"R58: protocol_content_hash mismatch: artifact='{stored_proto_hash}', "
-                f"registered='{REGISTERED_PROTOCOL_CONTENT_HASH}'")
+                f"R60: artifact protocol_content_hash '{stored_proto_hash}' != "
+                f"registered '{REGISTERED_PROTOCOL_CONTENT_HASH}'")
+        if _current_hash != REGISTERED_PROTOCOL_CONTENT_HASH:
+            raise ValueError(
+                f"R60: current protocol hash '{_current_hash}' != "
+                f"registered '{REGISTERED_PROTOCOL_CONTENT_HASH}' — protocol changed without amendment")
+        if stored_proto_hash != _current_hash:
+            raise ValueError(
+                f"R60: artifact hash '{stored_proto_hash}' != current hash '{_current_hash}'")
     return mapping, actual_hash
 
 

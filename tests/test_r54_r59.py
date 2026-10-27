@@ -287,15 +287,41 @@ class TestR58RegisteredProtocolHash(unittest.TestCase):
         self.assertEqual(computed, REGISTERED_PROTOCOL_CONTENT_HASH)
 
     def test_save_fails_on_hash_mismatch(self):
-        """R58: save_plan_artifact raises if computed != registered."""
-        # This is implicitly tested by the roundtrip; if hash mismatched, save would raise
+        """R61: save_plan_artifact raises when current protocol hash != registered."""
+        # Use a temp protocol doc with modified content so computed hash != registered
+        doc = parse_protocol_document()
+        doc["n_states"] = 999  # change a decision-critical field
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as f:
+            f.write("# T\n\n```json\n" + json.dumps(doc) + "\n```\n")
+            bad_path = f.name
+        # Temporarily monkey-patch parse_protocol_document to return the bad doc
+        import gleppo.pc1 as pc1_mod
+        orig_parse = pc1_mod.parse_protocol_document
+        try:
+            pc1_mod.parse_protocol_document = lambda path=None: doc
+            with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
+                path = f.name
+            with self.assertRaises(ValueError):
+                save_plan_artifact(path)
+            # Verify no valid artifact was written
+            if os.path.exists(path):
+                with open(path) as f:
+                    content = f.read()
+                self.assertNotIn("plan_hash", content, "no valid artifact should be written")
+            os.unlink(path)
+        finally:
+            pc1_mod.parse_protocol_document = orig_parse
+            os.unlink(bad_path)
+
+    def test_save_load_roundtrip_normal(self):
+        """R61: valid protocol allows normal save/load/roundtrip."""
         with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             path = f.name
-        try:
-            h = save_plan_artifact(path)
-            self.assertTrue(h)  # should succeed with matching hash
-        finally:
-            os.unlink(path)
+        h1 = save_plan_artifact(path)
+        m2, h2 = load_plan_artifact(path)
+        self.assertEqual(h1, h2)
+        self.assertEqual(len(m2), N_STATES)
+        os.unlink(path)
 
 
 # ===== R59: protocol document ID =====

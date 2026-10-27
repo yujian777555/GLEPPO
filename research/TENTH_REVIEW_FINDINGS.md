@@ -167,3 +167,30 @@ The production backend remains `PENDING_DEPLOYMENT`. No real-model smoke/G3 evid
 - **Dry-run: within_cap=True, total=45,440**
 - **Manifest: VERIFY OK**
 - **Smoke: 32+96=128, actual=112, 0.0232 s**
+
+---
+
+# Remediation Log (Executor, 2026-10-27 Phase 2A-R10-C3)
+
+**Base commit:** `bb54052`
+**PC1 status:** NOT EXECUTED / NOT APPROVED.
+
+| Finding | Fix | Tests |
+|---|---|---|
+| **R60** protocol-registry desync | `load_plan_artifact` re-parses current protocol doc; 3-way hash verification (current + registered + artifact) | `TestR54R59` hash tests |
+| **R61** broken mismatch test | `test_save_fails_on_hash_mismatch` uses monkey-patch to force hash mismatch; asserts ValueError + no valid artifact written | `TestR58RegisteredProtocolHash` |
+
+## Test evidence (2026-10-27)
+
+- **Full unit suite: 255/255 PASS** (232 old + 23 new)
+- **Zero-cost protocol check: PASS**
+- **Protocol consistency check: PASS** (doc_hash=baa9e834)
+- **Dry-run: within_cap=True, total=45,440**
+- **Manifest: VERIFY OK**
+- **Smoke: 32+96=128, actual=112, 0.0261 s**
+
+## Production environment detection
+
+- **GPU:** NVML initialization failed; CPU-only torch 2.8.0+cpu; CUDA unavailable
+- **Status:** production backend PENDING_DEPLOYMENT; real-model smoke/G3 blocked
+- **Blocker:** no GPU/hardware available on current host

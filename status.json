@@ -3,50 +3,34 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-27",
-  "phase": "PHASE2_ENVIRONMENT_BUILD",
-  "state": "PHASE2A_ENV_IMPLEMENTED_G3_PASS",
-  "implementation_status": "ENVIRONMENT_ONLY_NO_CONTROLLERS",
-  "experimental_status": "SMOKE_ONLY_NO_EFFECTIVENESS_CLAIMS",
+  "phase": "PHASE2A_CORRECTNESS_REMEDIATION",
+  "state": "PC1_NOT_APPROVED_REQUEST_CHANGES",
+  "implementation_status": "ENVIRONMENT_SKELETON_EXISTS_REVIEW_BLOCKERS_OPEN",
+  "experimental_status": "STUB_SMOKE_ONLY_NO_VALID_EFFECTIVENESS_EVIDENCE",
+  "reviewed_commit": "315796399116c4e1ec540f42d3e78a061043fb7e",
   "current_hypothesis": "A PPO-trained controller may learn sequential operator-selection decisions for LLM-agent evolution from population state and real execution feedback, and transfer to held-out task families.",
   "hypothesis_status": "UNVALIDATED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN_NOT_TO_BE_DEVELOPED_IN_PARALLEL",
-  "phase2a": {
-    "status": "COMPLETE",
-    "date": "2026-10-27",
-    "mode": "STUB_LLM_v1 (docs/RUNTIME_LOCK.md); production backend PENDING_DEPLOYMENT",
-    "decision": "GO_TO_PC1_REVIEW",
-    "artifacts": [
-      "research/PHASE2_PREFLIGHT.md",
-      "docs/RUNTIME_LOCK.md",
-      "gleppo/ (genotype, tools, llm, interpreter, operators, tasks, evaluator, evolution, features, manifest)",
-      "tests/test_core.py (29 tests)",
-      "scripts/build_manifest.py",
-      "scripts/run_g3_causality.py",
-      "scripts/run_smoke.py",
-      "data/manifest.json (SHA256 frozen)",
-      "research/G3_CAUSALITY.md",
-      "research/G3_CAUSALITY.json",
-      "research/SMOKE_RAW.json",
-      "research/COST_BASELINE.md"
-    ],
-    "tests": {"unit": "29/29 PASS", "g3": "PASS (5/5 operators show behavior change)", "smoke": "4 tasks, 96 CTX, 0 Family-C access"},
-    "manifest_digests": {
-      "train_A": "de26ad08a26d8fdf...",
-      "train_B": "07e8339e2c0e7b1d...",
-      "val_A": "348b0acac230a1b8...",
-      "val_B": "ed9ae9827bf3d5e6...",
-      "test_C": "dcc6b61288fc8ae1... (written for freeze; never executed)"
-    },
-    "pc1_status": "NOT_EXECUTED_PENDING_INDEPENDENT_REVIEW of research/PHASE2_PREFLIGHT.md",
-    "frozen_parameters": {
-      "mu": 8, "lambda": 4, "T": 15, "tournament_k": 2, "gamma": 0.95, "n_eval_main": 3,
-      "operators_K": 5,
-      "state_dim": 32
-    }
+  "independent_review": {
+    "verdict": "REQUEST_CHANGES",
+    "report": "research/PC1_INDEPENDENT_REVIEW.md",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "production_backend_deployed": false,
+    "blockers": [
+      "A/B checkers do not compare actual answers with gold; Family C validates keys but not values.",
+      "80 sampled states conflicts with Phase 1 minimum of 100; amendment rationale is inaccurate.",
+      "PC1 immediate reward estimate omits validity and population-mean reward terms/clipping used by Q.",
+      "Cache and seed behavior do not support independent Monte Carlo replicates and the declared CRN design.",
+      "Python built-in hash(task_id) makes evolution seed process-dependent.",
+      "Train/validation template IDs are identical metadata labels, not distinct generation templates.",
+      "Diversity features compute Jaccard similarity rather than the registered Jaccard distance.",
+      "PC1 slot arithmetic omits initial population evaluations and mixes planned slots with actual CTX."
+    ]
   },
-  "current_task": "Independent review of research/PHASE2_PREFLIGHT.md (PC1 cost amendment). Only after approval: run PC1 under the amended protocol. No PPO/Q-learning/bandit controller implementation or training before PC1 pass.",
-  "next_gate": "PC1_PREFLIGHT_REVIEW -> PC1_MYOPIA_GATE -> ONLY_THEN_CONTROLLER_TRAINING",
+  "current_task": "Phase 2A-R1: fix evaluator correctness, template split, feature semantics, stable RNG, PC1 replicate/cache/CRN semantics, reward identity, and cost amendment; then request second independent review.",
+  "next_gate": "CORRECTNESS_FIXES_AND_TESTS -> PRODUCTION_SMOKE_AND_G3 -> SECOND_PC1_REVIEW -> PC1 -> ONLY_THEN_CONTROLLER_TRAINING",
   "project_isolation": {
     "source_of_truth": "yujian777555/GLEPPO",
     "cross_project_code_reuse": false,
@@ -65,17 +49,15 @@
     "SR1: if myopia diagnostic fails or remains inconclusive at the hard cap, STOP the PPO hypothesis.",
     "SR2: if PPO does not beat identical-state LinUCB and neural contextual bandit on Family C, STOP.",
     "SR3: if fitness-only state matches full ECOS, revise or stop the execution-feedback claim.",
-    "SR4: genotype/operator causality must pass after at most one operator-library revision. [PASSED stub mode 2026-10-27]",
+    "SR4: genotype/operator causality must pass after at most one operator-library revision.",
     "SR5: if cost smoke is infeasible after one scale revision, STOP."
   ],
   "acceptance_rules": [
-    "Real LLM-agent execution outcomes ground primary evaluation.",
-    "No novelty claims before mechanism-level literature review and deeper collision check.",
+    "Real task correctness, not strategy-keyword checks, must ground the primary metric.",
+    "No PC1 execution or controller training before the second independent review approves the corrected protocol.",
+    "Use disjoint train/validation templates and hash-frozen manifests; do not execute Family C during development.",
     "Compare PPO against fixed, random, adaptive, contextual-bandit, FM-rewrite, and Q-learning baselines.",
-    "Use disjoint train/validation/held-out task-family splits and hash-frozen manifests.",
     "Limited-budget allocation is not the central contribution.",
-    "No controller training or effectiveness claims before PC1 passes.",
-    "No GLEET code reuse and no cross-project artifacts.",
-    "Family C must not be executed during development or tuning."
+    "No GLEET code reuse and no cross-project artifacts."
   ]
 }

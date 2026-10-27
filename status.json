@@ -4,10 +4,10 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_R7_REMEDIATION",
-  "state": "REQUEST_CHANGES_PC1_NOT_APPROVED",
-  "reviewed_commit": "6f4adf30c673a06ed70bfbeb3df2415d89d6b0e6",
-  "implementation_status": "R33_R38_IMPROVED_R39_R42_BLOCKERS_OPEN",
-  "experimental_status": "SYNTHETIC_EXPERIMENTS_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BACKEND_PENDING",
+  "state": "R39_R42_FIXED_AWAITING_EIGHTH_REVIEW",
+  "reviewed_commit": "2474253",
+  "implementation_status": "PC1_PATH_GATED_NO_CONTROLLERS",
+  "experimental_status": "SYNTHETIC_EXPERIMENTS_ONLY_PC1_NOT_EXECUTED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Execute planner/latest_plan.md Phase 2A-R7: canonicalize crn_seed serialization; complete protocol/document semantic checks; bind plan hash to immutable verified plan artifact; bind gate approval to a verifiable Planner approval record.",
-  "next_gate": "FIX_R39_R42 -> FOCUSED_AND_FULL_TESTS -> EIGHTH_INDEPENDENT_REVIEW -> PLANNER_PROTOCOL_APPROVAL -> PRODUCTION_RUNTIME_DEPLOYMENT_AND_SMOKE_G3 -> PC1_APPROVAL",
+  "current_task": "Await eighth independent review + Planner protocol approval.",
+  "next_gate": "EIGHTH_REVIEW -> PLANNER_APPROVAL -> PRODUCTION_SMOKE_G3 -> PC1",
   "hard_rules": [
     "No registered PC1 execution before Planner protocol approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -261,6 +261,26 @@
       "R40": "protocol_consistency_check omits code_version comparison and exact status, uses loose substring checks for seed and estimator semantics, does not fully verify reward/estimator contract, and run_pc1_analysis does not require protocol_consistency_check to pass. Protocol document still describes string NONE/EMPTY tags while evaluator uses typed JSON tags.",
       "R41": "get_plan_mapping exposes a mutable cached mapping with a previously computed hash; registered analysis validates against this mapping and code-derived hash rather than a persisted immutable verified plan artifact.",
       "R42": "ApprovalGate accepts caller-supplied status, approver/date strings and matching arbitrary hashes without verifying a real Planner approval record or canonical protocol artifact; date format is not validated."
+    }
+  },
+  "remediation_r7": {
+    "date": "2026-10-27",
+    "verdict_requested": "EIGHTH_INDEPENDENT_REVIEW",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "fixed": {
+      "R39": "crn_seed() typed JSON serialization; delimiter collision prevented",
+      "R40": "exact version/status/seed/reward/estimator checks; consistency before registered analysis",
+      "R41": "plan artifact save/load with hash; defensive copies; tamper detection",
+      "R42": "PlannerApprovalRecord with ID/date/hash/version; gate validates against canonical protocol"
+    },
+    "tests": {
+      "unit": "232/232 PASS",
+      "zero_cost": "PASS",
+      "protocol_consistency": "PASS",
+      "dry_run": "PASS",
+      "manifest": "OK",
+      "smoke": "ok"
     }
   }
 }

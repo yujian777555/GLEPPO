@@ -139,6 +139,9 @@ Default is **deny**. Boolean flags alone do not authorize execution.
   "estimator_r_hat": "mean of Q-rollout first rewards + extra immediate rewards",
   "estimator_q_hat": "h-step discounted return of q_rollout records only",
   "cluster_unit": "collection_episode",
-  "seed_contract": "SEED|base_tag|task_id|state_id|rollout_id|replicate_id|replica_index"
+  "seed_contract": "crn-v2 typed JSON serialization",
+  "reward_formula": "clip(d_best + 0.1*valid_rate + 0.25*d_mean, -0.5, 1.0)",
+  "code_version": "pc1-proposed-v1-r5",
+  "status": "PROPOSED_NOT_APPROVED"
 }
 ```

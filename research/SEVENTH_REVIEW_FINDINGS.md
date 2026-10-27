@@ -114,3 +114,32 @@ The current stub smoke artifacts are internally consistent: `SMOKE_RAW.json` rep
 ## Final decision
 
 **REQUEST CHANGES — PC1 NOT APPROVED / NOT EXECUTED.** R6 fixed several reported issues, but the CRN helper remains delimiter-ambiguous, protocol consistency checks still miss semantic mismatches, the plan hash is not bound to an immutable verified artifact, and approval metadata is not verified against an actual approval record.
+
+---
+
+# Remediation Log (Executor, 2026-10-27 Phase 2A-R7)
+
+**Base commit (seventh review):** `2474253`
+**PC1 status:** NOT EXECUTED / NOT APPROVED.
+
+| Finding | Fix | Tests |
+|---|---|---|
+| **R39** CRN delimiter ambiguity | `crn_seed()` uses typed JSON serialization `["crn-v2", task, state, rollout, replicate]` before SHA256; delimiter collision tests | `TestR39CRNSeed` (8) |
+| **R40** protocol consistency incomplete | exact version/status comparison; seed contract/reward/estimator semantic checks; consistency required before registered analysis; mutation tests | `TestR40ProtocolConsistency` (5) |
+| **R41** plan hash not bound to artifact | `save_plan_artifact`/`load_plan_artifact` with hash verification; defensive copies in `get_plan_mapping`; tamper detection | `TestR41PlanArtifact` (4) |
+| **R42** approval metadata not verified | `PlannerApprovalRecord` with approval_id/ISO date/protocol_hash/version; `ApprovalGate.check()` validates record against canonical protocol; forged/malformed rejected | `TestR42ApprovalRecord` (9) |
+
+## Experiment results
+
+- **Experiment A (CRN):** all seed tests pass; delimiter collision prevented; field isolation verified
+- **Experiment B (protocol/stats):** consistency PASS (doc_hash=af7e2138); plan artifact roundtrip OK; tampering rejected
+- **Experiment C (regression):** 232/232 PASS; zero_cost PASS; dry-run 45,440/50,000; manifest OK; smoke 32+96=128/112
+
+## Test evidence
+
+- **Full unit suite: 232/232 PASS**
+- **Zero-cost protocol check: PASS**
+- **Protocol consistency check: PASS**
+- **Dry-run: within_cap=True, total=45,440, schedule=2040**
+- **Manifest: VERIFY OK**
+- **Smoke: 32+96=128, actual=112, slot_arithmetic_ok=true**

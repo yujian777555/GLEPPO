@@ -13,6 +13,7 @@ from gleppo.evaluator import Evaluator
 from gleppo.genotype import make_valid_genotype
 from gleppo.interpreter import Interpreter
 from gleppo.pc1 import (
+    PlannerApprovalRecord, parse_protocol_document, compute_protocol_hash,
     BudgetLedger, StateActionRecord, PC1ExecutionRefused,
     ApprovalGate, ProductionRuntimeGate, ProtocolVersionGate,
     SyntheticGateHarness, create_default_gated_runner,
@@ -359,6 +360,7 @@ class TestR24CostConsistency(unittest.TestCase):
 
 # ===== R25: gated runner =====
 class TestR25GatedRunner(unittest.TestCase):
+    _real_hash = compute_protocol_hash(parse_protocol_document())
     def test_default_deny(self):
         runner = create_default_gated_runner()
         with self.assertRaises(PC1ExecutionRefused):
@@ -385,7 +387,7 @@ class TestR25GatedRunner(unittest.TestCase):
 
     def test_over_budget_denied(self):
         runner = SyntheticGateHarness(
-            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", approver="test", approval_date="2026-01-01", protocol_hash="h1", expected_protocol_hash="h1"),
+            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", protocol_hash=self._real_hash, expected_protocol_hash=self._real_hash, approval_record=PlannerApprovalRecord(approval_id="A1", approver="test", approval_date="2026-01-01", protocol_hash=self._real_hash, protocol_status="APPROVED", protocol_version=PROTOCOL_VERSION)),
             production_gate=ProductionRuntimeGate(ready=True, runtime_revision="r1", required_revision="r1"),
             protocol_gate=ProtocolVersionGate(),
         )
@@ -394,7 +396,7 @@ class TestR25GatedRunner(unittest.TestCase):
 
     def test_synthetic_execution_with_all_gates(self):
         runner = SyntheticGateHarness(
-            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", approver="test", approval_date="2026-01-01", protocol_hash="h1", expected_protocol_hash="h1"),
+            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", protocol_hash=self._real_hash, expected_protocol_hash=self._real_hash, approval_record=PlannerApprovalRecord(approval_id="A1", approver="test", approval_date="2026-01-01", protocol_hash=self._real_hash, protocol_status="APPROVED", protocol_version=PROTOCOL_VERSION)),
             production_gate=ProductionRuntimeGate(ready=True, runtime_revision="r1", required_revision="r1"),
             protocol_gate=ProtocolVersionGate(),
         )
@@ -405,7 +407,7 @@ class TestR25GatedRunner(unittest.TestCase):
 
     def test_collection_episode_budget_check(self):
         runner = SyntheticGateHarness(
-            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", approver="test", approval_date="2026-01-01", protocol_hash="h1", expected_protocol_hash="h1"),
+            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", protocol_hash=self._real_hash, expected_protocol_hash=self._real_hash, approval_record=PlannerApprovalRecord(approval_id="A1", approver="test", approval_date="2026-01-01", protocol_hash=self._real_hash, protocol_status="APPROVED", protocol_version=PROTOCOL_VERSION)),
             production_gate=ProductionRuntimeGate(ready=True, runtime_revision="r1", required_revision="r1"),
             protocol_gate=ProtocolVersionGate(),
         )

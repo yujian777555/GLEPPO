@@ -140,8 +140,26 @@ def protocol_consistency_check(path: Optional[str] = None) -> dict:
     checks["doc_estimator_q_hat"] = ("q_rollout records only" in doc.get("estimator_q_hat", ""),
                                      doc.get("estimator_q_hat", "")[:50])
     checks["doc_cluster_unit"] = (doc.get("cluster_unit") == "collection_episode", doc.get("cluster_unit", ""))
-    checks["doc_seed_contract"] = ("SEED" in doc.get("seed_contract", ""), doc.get("seed_contract", "")[:50])
-    checks["doc_status_proposed"] = ("PROPOSED" in doc.get("status", ""), doc.get("status", ""))
+    checks["doc_seed_contract"] = ("crn" in doc.get("seed_contract", "").lower()
+                                    or "json" in doc.get("seed_contract", "").lower()
+                                    or "SEED" in doc.get("seed_contract", ""),
+                                    doc.get("seed_contract", "")[:50])
+    # R40: exact status and version comparisons (not loose substring)
+    checks["doc_status_exact"] = (doc.get("status") == "PROPOSED_NOT_APPROVED", doc.get("status", ""))
+    checks["doc_code_version"] = (doc.get("code_version") == PROTOCOL_VERSION,
+                                  f"{doc.get('code_version')} vs {PROTOCOL_VERSION}")
+    # R40: seed contract must match typed JSON encoding
+    seed = doc.get("seed_contract", "")
+    checks["doc_seed_typed"] = ("crn-v2" in seed or "typed" in seed.lower() or "json" in seed.lower(),
+                                seed[:60])
+    # R40: reward formula check
+    reward = doc.get("reward_formula", "")
+    checks["doc_reward_formula"] = ("clip" in reward and "valid_rate" in reward, reward[:60])
+    # R40: estimator completeness
+    checks["doc_est_complete"] = (
+        "first" in doc.get("estimator_r_hat", "").lower()
+        and "discounted" in doc.get("estimator_q_hat", "").lower(),
+        f"{doc.get('estimator_r_hat', '')[:30]}...{doc.get('estimator_q_hat', '')[:30]}")
 
     all_ok = all(ok for ok, _ in checks.values())
     return {"all_pass": all_ok,
@@ -155,8 +173,15 @@ def protocol_consistency_check(path: Optional[str] = None) -> dict:
 # ===========================================================================
 
 def crn_seed(task_id: str, state_id: str, rollout_id: int, replicate_id: int = 0) -> str:
-    """R20: paired CRN key includes task and outer replicate. Excludes action/genotype."""
-    return hashlib.sha256(f"CRN|{task_id}|{state_id}|{rollout_id}|{replicate_id}".encode()).hexdigest()[:16]
+    """R39: canonical typed JSON CRN key. Excludes action/genotype.
+
+    Uses versioned JSON serialization to prevent delimiter ambiguity.
+    Same (task_id, state_id, rollout_id, replicate_id) -> same seed.
+    Any field change -> different seed. Action/genotype never enter.
+    """
+    payload = ["crn-v2", str(task_id), str(state_id), int(rollout_id), int(replicate_id)]
+    canonical = json.dumps(payload, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
 
 
 def operator_rng_seed(operator: str, state_id: str, action: int, rollout_id: int, draw: int) -> int:
@@ -561,8 +586,11 @@ def run_pc1_analysis(records: List[StateActionRecord],
                      protocol_hash: str = "",
                      plan_hash: str = "") -> "PC1Result":
     """R13: validate first, fail closed. R28: full reconciliation. R30: provenance."""
-    # R30/R37: registered provenance must be non-empty BEFORE any statistics
+    # R40: protocol consistency must pass before registered analysis
     if require_registered_shape:
+        consistency = protocol_consistency_check()
+        if not consistency.get("all_pass", False):
+            raise ValueError("R40: protocol_consistency_check failed — document/code mismatch")
         if not manifest_hash or not manifest_hash.strip():
             raise ValueError("R30: registered analysis requires non-empty manifest_hash")
         if not runtime_revision or not runtime_revision.strip():
@@ -590,6 +618,12 @@ def run_pc1_analysis(records: List[StateActionRecord],
         raise ValueError(f"R21: planned slots {planned_slots_total} exceed hard cap {HARD_CAP_SLOTS}")
 
     validate_records(records, require_registered_shape=require_registered_shape)
+
+    # R40: protocol consistency must pass before registered statistics
+    if require_registered_shape:
+        consistency = protocol_consistency_check()
+        if not consistency.get("all_pass", False):
+            raise ValueError("R40: protocol_consistency_check failed — document/code mismatch")
 
     # R28: full budget reconciliation with explicit collection component
     ledger = BudgetLedger()
@@ -863,14 +897,44 @@ def generate_plan_mapping() -> Tuple[Dict[str, dict], str]:
     return mapping, plan_hash
 
 
-# Singleton cache for the plan mapping
+# R41: immutable plan mapping — defensive copies, no stale hash
 _PLAN_MAPPING_CACHE: Optional[Tuple[Dict[str, dict], str]] = None
 
 def get_plan_mapping() -> Tuple[Dict[str, dict], str]:
+    """R41: returns (deep_copy_of_mapping, hash). Caller mutations cannot affect cache."""
     global _PLAN_MAPPING_CACHE
     if _PLAN_MAPPING_CACHE is None:
         _PLAN_MAPPING_CACHE = generate_plan_mapping()
-    return _PLAN_MAPPING_CACHE
+    mapping, plan_hash = _PLAN_MAPPING_CACHE
+    # R41: return defensive copy so caller mutations don't corrupt cache
+    return {k: dict(v) for k, v in mapping.items()}, plan_hash
+
+
+def save_plan_artifact(path: str) -> str:
+    """R41: serialize plan mapping to deterministic artifact, return hash."""
+    mapping, plan_hash = get_plan_mapping()
+    artifact = {
+        "plan_hash": plan_hash,
+        "mapping": mapping,
+    }
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(artifact, f, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return plan_hash
+
+
+def load_plan_artifact(path: str) -> Tuple[Dict[str, dict], str]:
+    """R41: load and verify plan artifact. Recomputes hash, rejects tampering."""
+    with open(path, encoding="utf-8") as f:
+        artifact = json.load(f)
+    mapping = artifact.get("mapping", {})
+    stored_hash = artifact.get("plan_hash", "")
+    # R41: recompute hash from actual content
+    canonical = json.dumps(mapping, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    actual_hash = hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:32]
+    if stored_hash != actual_hash:
+        raise ValueError(
+            f"R41: plan artifact hash mismatch: stored={stored_hash}, actual={actual_hash}")
+    return mapping, actual_hash
 
 
 def validate_provenance_against_plan(records: List[StateActionRecord],
@@ -964,6 +1028,46 @@ def replay_from_artifact(path: str) -> "PC1Result":
 # ===========================================================================
 
 @dataclass
+class PlannerApprovalRecord:
+    """R42: structured approval record. Must be generated only after real authorization."""
+    approval_id: str = ""
+    approver: str = ""
+    approval_date: str = ""        # ISO format: YYYY-MM-DD
+    protocol_hash: str = ""
+    protocol_status: str = ""      # must be "APPROVED"
+    protocol_version: str = ""
+
+    def validate(self, expected_protocol_hash: str, expected_version: str) -> None:
+        """R42: validate record against canonical protocol. Fail-closed."""
+        import re as _re
+        if not self.approval_id or not self.approval_id.strip():
+            raise PC1ExecutionRefused("R42: approval_id is empty")
+        if not self.approver or not self.approver.strip():
+            raise PC1ExecutionRefused("R42: approver is empty")
+        if not self.approval_date or not self.approval_date.strip():
+            raise PC1ExecutionRefused("R42: approval_date is empty")
+        # R42: validate ISO date format
+        if not _re.match(r"^\d{4}-\d{2}-\d{2}$", self.approval_date):
+            raise PC1ExecutionRefused(
+                f"R42: approval_date '{self.approval_date}' is not ISO format YYYY-MM-DD")
+        if self.protocol_status != "APPROVED":
+            raise PC1ExecutionRefused(
+                f"R42: protocol_status='{self.protocol_status}', need 'APPROVED'")
+        if not self.protocol_hash or not self.protocol_hash.strip():
+            raise PC1ExecutionRefused("R42: protocol_hash is empty")
+        if self.protocol_hash != expected_protocol_hash:
+            raise PC1ExecutionRefused(
+                f"R42: protocol_hash mismatch: got '{self.protocol_hash}', "
+                f"expected '{expected_protocol_hash}'")
+        if not self.protocol_version or not self.protocol_version.strip():
+            raise PC1ExecutionRefused("R42: protocol_version is empty")
+        if self.protocol_version != expected_version:
+            raise PC1ExecutionRefused(
+                f"R42: protocol_version mismatch: got '{self.protocol_version}', "
+                f"expected '{expected_version}'")
+
+
+@dataclass
 class ApprovalGate:
     """R31: approval gate requiring protocol status + hash + Planner metadata.
 
@@ -980,26 +1084,29 @@ class ApprovalGate:
     protocol_hash: str = ""
     expected_protocol_hash: str = ""
 
+    approval_record: Optional[PlannerApprovalRecord] = None
+
     def check(self) -> None:
-        """R38: fail-closed — all fields must be non-empty and consistent."""
+        """R42: verify against structured PlannerApprovalRecord. Fail-closed."""
         if not self.approved:
-            raise PC1ExecutionRefused("R38: approved=False")
+            raise PC1ExecutionRefused("R42: approved=False")
         if self.protocol_status != "APPROVED":
             raise PC1ExecutionRefused(
-                f"R38: protocol_status='{self.protocol_status}', need 'APPROVED'")
-        if not self.approver or not self.approver.strip():
-            raise PC1ExecutionRefused("R38: approver is empty")
-        if not self.approval_date or not self.approval_date.strip():
-            raise PC1ExecutionRefused("R38: approval_date is empty")
-        # R38: protocol hash must be non-empty AND match expected
+                f"R42: protocol_status='{self.protocol_status}', need 'APPROVED'")
+        # R42: must have a structured approval record
+        if self.approval_record is None:
+            raise PC1ExecutionRefused("R42: no PlannerApprovalRecord provided")
+        # R42: validate the record against canonical protocol
+        doc = parse_protocol_document()
+        expected_hash = compute_protocol_hash(doc)
+        expected_version = doc.get("code_version", PROTOCOL_VERSION)
+        self.approval_record.validate(expected_hash, expected_version)
+        # R42: also verify gate-level hash consistency
         if not self.protocol_hash or not self.protocol_hash.strip():
-            raise PC1ExecutionRefused("R38: protocol_hash is empty")
-        if not self.expected_protocol_hash or not self.expected_protocol_hash.strip():
-            raise PC1ExecutionRefused("R38: expected_protocol_hash is empty")
-        if self.protocol_hash != self.expected_protocol_hash:
+            raise PC1ExecutionRefused("R42: gate protocol_hash is empty")
+        if self.protocol_hash != self.approval_record.protocol_hash:
             raise PC1ExecutionRefused(
-                f"R38: protocol hash mismatch: got '{self.protocol_hash}', "
-                f"expected '{self.expected_protocol_hash}'")
+                f"R42: gate hash '{self.protocol_hash}' != record hash '{self.approval_record.protocol_hash}'")
 
 
 @dataclass

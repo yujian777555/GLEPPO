@@ -46,11 +46,21 @@ def behavior_signature(g, task, interp, n_rep=2, paired_seed_base=None):
         tools += res.tool_calls
         turns += res.turns
         fails[res.failure_category] = fails.get(res.failure_category, 0) + 1
+        # R62: save full execution trace (exclude prompt_sig from comparison)
+        safe_trace = []
+        for entry in res.trace:
+            safe_trace.append({
+                "type": entry.get("type"),
+                "ok": entry.get("ok"),
+                "detail": entry.get("detail"),
+                "output": str(entry.get("output", ""))[:200],
+            })
         traces.append({
             "rep": r, "success": res.success,
             "failure_category": res.failure_category,
             "turns": res.turns, "tool_calls": res.tool_calls,
-            "answer_head": res.answer[:120],
+            "answer_head": res.answer[:200],
+            "trace": safe_trace,
         })
     return {
         "success_rate": succ / n_rep,

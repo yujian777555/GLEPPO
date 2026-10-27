@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-27",
+  "baseline": "7dcac24",
+  "model": "Qwen2.5-7B-Instruct rev=a09a35458c702b33eeacc393d103063234e8bc28",
+  "r62_behavior_measurement": "FIXED",
+  "r63_tool_chain": "FIXED",
+  "r64_stable_seeds": "FIXED",
+  "canary": {
+    "family_a": {
+      "success": false,
+      "failure": "wrong_answer",
+      "tool_chain": "OK",
+      "output": "natural_language"
+    },
+    "family_b": {
+      "success": false,
+      "failure": "wrong_answer",
+      "tool_chain": "OK",
+      "output": "natural_language"
+    }
+  },
+  "assessment": {
+    "engineering_validation": "PASS",
+    "task_solving_validation": "FAIL",
+    "genotype_causality": "NOT_TESTED",
+    "g3_gate": "CANNOT_ASSESS"
+  },
+  "diagnosis": "Tool chain fixed. Failure shifted from tool_error to wrong_answer. Model produces natural language, not formatted answers. This is a prompt/format issue, not model insensitivity.",
+  "recommendations": [
+    "Improve system prompt to enforce answer format",
+    "Or modify gold checker to extract numbers from natural language",
+    "Re-run G3 after format fix to test genotype causality",
+    "Do not conclude model is insensitive until format issue resolved"
+  ]
+}

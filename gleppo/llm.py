@@ -188,8 +188,11 @@ class ProductionLLM:
             else:
                 input_ids = result.to(self.device)
 
-            # Set seed for reproducibility
-            seed_val = abs(hash(str(seed_parts))) % (2**31)
+            # R64: stable SHA256-based seed (not Python hash())
+            import hashlib
+            import json
+            seed_str = json.dumps(list(seed_parts), separators=(",", ":"), ensure_ascii=False)
+            seed_val = int(hashlib.sha256(seed_str.encode()).hexdigest()[:8], 16) % (2**31)
             torch.manual_seed(seed_val)
 
             with torch.no_grad():
@@ -209,30 +212,36 @@ class ProductionLLM:
             self.stats["latencies"].append(latency)
             self.stats["total_tokens"] += len(generated)
 
-            # Parse for tool call or answer
-            return self._parse_response(text, g_tools=[])
+            # R63: parse with real tool registry
+            return self._parse_response(text)
         except Exception as e:
             self.stats["failures"] += 1
             return LLMReply(kind="answer", text=f"Final answer: ERROR:{str(e)[:50]}")
 
-    def _parse_response(self, text: str, g_tools: list) -> LLMReply:
-        """Parse model output for tool call or answer. Strict JSON for tool calls."""
+    def _parse_response(self, text: str) -> LLMReply:
+        """R63: parse with real tool registry validation."""
         import json
         import re
+        from .tools import TOOL_REGISTRY
         text = text.strip()
-        # Try to parse as JSON tool call
+        # Try JSON tool call
         if text.startswith("{"):
             try:
                 obj = json.loads(text)
                 if "tool" in obj and "payload" in obj:
-                    return LLMReply(kind="call_tool", tool=obj["tool"], tool_payload=str(obj["payload"]))
+                    tool_name = obj["tool"]
+                    if tool_name not in TOOL_REGISTRY:
+                        return LLMReply(kind="answer", text=f"ERROR: invalid tool '{tool_name}'")
+                    return LLMReply(kind="call_tool", tool=tool_name, tool_payload=str(obj["payload"]))
             except json.JSONDecodeError:
                 pass
-        # Check for tool call pattern: TOOL:name PAYLOAD:xxx
+        # TOOL:name PAYLOAD:xxx
         m = re.match(r"TOOL:(\w+)\s+PAYLOAD:(.+)", text, re.DOTALL)
         if m:
-            return LLMReply(kind="call_tool", tool=m.group(1), tool_payload=m.group(2).strip())
-        # Default: answer
+            tool_name = m.group(1)
+            if tool_name not in TOOL_REGISTRY:
+                return LLMReply(kind="answer", text=f"ERROR: invalid tool '{tool_name}'")
+            return LLMReply(kind="call_tool", tool=tool_name, tool_payload=m.group(2).strip())
         return LLMReply(kind="answer", text=text)
 
     def get_stats(self) -> dict:

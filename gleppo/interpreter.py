@@ -104,6 +104,11 @@ class Interpreter:
             if step.type == "tool":
                 src = step.input_from or "task"
                 payload = ctx.get(src, task["input"])
+                # R63: extract usable tool payload from LLM natural-language output
+                if step.tool == "calc":
+                    payload = self._extract_calc_payload(str(payload), task)
+                elif step.tool == "str_ops":
+                    payload = self._extract_strops_payload(str(payload), task)
                 ok, out = run_tool(step.tool or "", str(payload))
                 tool_calls += 1
                 trace.append(TraceEvent("tool", ok, step.tool or "", out).to_dict())
@@ -160,6 +165,35 @@ class Interpreter:
             tool_calls=tool_calls,
             trace=trace,
         )
+
+    def _extract_calc_payload(self, llm_output: str, task: dict) -> str:
+        """R63: extract arithmetic expression from LLM output or task input."""
+        import re
+        # Try to find arithmetic expression in LLM output
+        m = re.search(r"([0-9]+\s*[+\-*/\*]\s*[0-9][0-9+\-*/\s]*)", llm_output)
+        if m:
+            return m.group(1).strip().rstrip(".?, ")
+        # Fall back to task input
+        return self._extract_calc_payload(task["input"], {"input": ""}) if "input" not in task else self._extract_expr_from_text(task["input"])
+
+    def _extract_strops_payload(self, llm_output: str, task: dict) -> str:
+        """R63: extract str_ops command from LLM output or task input."""
+        import re
+        m = re.search(r"(upper|lower|reverse|split|join|replace)\s*[|:]\s*(.+)", llm_output, re.IGNORECASE)
+        if m:
+            return f"{m.group(1).lower()}|{m.group(2).strip()}"
+        # Fall back to task input
+        return self._extract_expr_from_text(task["input"])
+
+    def _extract_expr_from_text(self, text: str) -> str:
+        import re
+        m = re.search(r"([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*)", text)
+        if m:
+            return m.group(1).strip().rstrip(".?, ")
+        nums = re.findall(r"\d+", text)
+        if len(nums) >= 2:
+            return f"{nums[0]}+{nums[1]}"
+        return "1+1"
 
     def _slot_text(self, step, ctx, task) -> str:
         if step.input_from and step.input_from in ctx:

@@ -17,7 +17,7 @@ from .genotype import Genotype, behavior_hash
 from .interpreter import Interpreter, ExecutionResult
 from .tasks import attach_checker
 
-EVALUATOR_VERSION = "eval-v1.3-unified-seed"
+EVALUATOR_VERSION = "eval-v1.4-r20-crn-unified"
 
 
 @dataclass
@@ -55,16 +55,12 @@ class Evaluator:
     def effective_seed_parts(state_id: str, task_id: str, rollout_id: str,
                              replicate_id: int, replica_index: int,
                              eval_seed_override: Optional[str] = None) -> Tuple[str, ...]:
-        """The ONE seed contract for paired evaluation RNG.
-
-        When eval_seed_override is provided, it fully replaces the derived tuple
-        (the caller is responsible for uniqueness). Otherwise the seed depends on
-        (state_id, task_id, rollout_id, replicate_id, replica_index) and NEVER on
-        genotype or action.
+        """R20: ONE seed contract. eval_seed_override is a BASE CRN key combined
+        with (task_id, state_id, rollout_id, replicate_id, replica_index).
+        Action and genotype NEVER enter the seed.
         """
-        if eval_seed_override is not None:
-            return ("SEED_OVERRIDE", eval_seed_override, str(replica_index))
-        return ("SEED", state_id, task_id, str(rollout_id), str(replicate_id), str(replica_index))
+        base = eval_seed_override if eval_seed_override is not None else "AUTO"
+        return ("SEED", base, task_id, state_id, str(rollout_id), str(replicate_id), str(replica_index))
 
     def _cache_key(self, g: Genotype, task: dict, state_id: str, rollout_id: str,
                    replicate_id: int, eval_seed_override: Optional[str]) -> str:

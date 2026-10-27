@@ -4,10 +4,10 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_R4_PROTOCOL_AND_PC1_AUDITABILITY",
-  "state": "REQUEST_CHANGES_PC1_NOT_APPROVED",
-  "reviewed_commit": "4c727997a71d4eb1cd34c1612fe1d275009d859f",
-  "implementation_status": "R12_R18_IMPROVEMENTS_ACKNOWLEDGED_R19_R25_BLOCKERS_OPEN",
-  "experimental_status": "PC1_NOT_EXECUTED_PRODUCTION_BACKEND_PENDING",
+  "state": "R19_R25_FIXED_AWAITING_FIFTH_REVIEW",
+  "reviewed_commit": "58b997df4ce7150dda800983a02515ac996bc20d",
+  "implementation_status": "PC1_PATH_FULLY_GATED_NO_CONTROLLERS",
+  "experimental_status": "SYNTHETIC_TESTS_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BLOCKED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Execute planner/latest_plan.md Phase 2A-R4: resolve R19-R25 protocol freeze, CRN override uniqueness, fail-closed budget reconciliation, collection-cluster provenance, replayable raw evidence, source-consistent cost accounting, and genuinely gated collection/rollout orchestration. Do not execute registered PC1.",
-  "next_gate": "FIX_R19_R25 -> FOCUSED_AND_FULL_TESTS -> FOURTH_REVIEW_REMEDIATION_REVIEW -> PRODUCTION_RUNTIME_LOCK_AND_SMOKE_G3 -> PC1_APPROVAL",
+  "current_task": "Await fifth independent review + Planner protocol approval. After both + production gate: deploy backend, real-model smoke/G3, then PC1.",
+  "next_gate": "FIFTH_REVIEW + PLANNER_PROTOCOL_APPROVAL -> PRODUCTION_SMOKE_G3 -> PC1 -> ONLY_THEN_CONTROLLER_TRAINING",
   "hard_rules": [
     "No registered PC1 execution before independent approval and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -126,6 +126,31 @@
       "R23": "raw_evidence omits D, advantage, D_ci, adv_ci, input artifact hash; provenance fields may be empty; replay_command references undefined records_from_raw and no round-trip test exists.",
       "R24": "SMOKE_RAW.json records 0.0188s while COST_BASELINE.md states 0.021s; report still labels 45,440 planned slots as CTX in sections 4/6.",
       "R25": "Current PC1 implementation is dry-run schedule + analysis + unconditional refusal; no actual gated collection/rollout orchestration exists."
+    }
+  },
+  "remediation_r4": {
+    "date": "2026-10-27",
+    "verdict_requested": "FIFTH_INDEPENDENT_REVIEW",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "production_backend_deployed": false,
+    "fixed": {
+      "R19": "CANONICAL_PROTOCOL + protocol_consistency_check; status=PROPOSED_AWAITING_PLANNER_APPROVAL",
+      "R20": "effective_seed_parts includes task/state/rollout/replicate even with override; crn_seed includes task_id+replicate_id",
+      "R21": "reject negative/over-cap; exact sample counts; BudgetLedger collection/q/extra components + reconcile",
+      "R22": "task_id+episode_id provenance; dry-run state-to-episode mapping; 40-cluster requirement",
+      "R23": "D/adv/CIs in evidence; save/load/replay round-trip",
+      "R24": "COST_BASELINE aligned to SMOKE_RAW.json; CTX labels fixed",
+      "R25": "GatedPC1Runner with ApprovalGate/ProductionRuntimeGate/ProtocolVersionGate (default-deny)"
+    },
+    "tests": {
+      "unit": "135/135 PASS",
+      "zero_cost": "PASS",
+      "protocol_consistency": "PASS",
+      "dry_run": "PASS (2040 units)",
+      "manifest": "OK",
+      "smoke": "slot_arithmetic_ok=true",
+      "cost_check": "PASS"
     }
   }
 }

@@ -228,7 +228,7 @@ class TestPC1RunnerSynthetic(unittest.TestCase):
                         state_id=f"s{si}", cluster_id=cid, action=a,
                         rollout_id=r, replicate_id=0,
                         crn_seed=f"CRN|s{si}|{r}",
-                        sample_role=ROLE_Q,
+                        sample_role=ROLE_Q, task_id="T1", episode_id="col000",
                         effective_seed_parts=("SEED", f"s{si}", "A", str(r), "0", "0"),
                         gen_rewards=gen,
                         planned_slots=4 * 2,
@@ -248,14 +248,14 @@ class TestPC1RunnerSynthetic(unittest.TestCase):
 
     def test_disagreement_detected(self):
         recs = self._make_records()
-        res = run_pc1_analysis(recs, planned_slots_total=1000, require_registered_shape=False)
+        res = run_pc1_analysis(recs, planned_slots_total=50000, require_registered_shape=False)
         # a_r = 0 (highest r_hat=0.10), a_q = 1 (highest Q) -> disagreement expected
         self.assertGreater(res.D, 0.0)
         self.assertGreater(res.advantage, 0.0)
 
     def test_cluster_bootstrap_keeps_clusters_together(self):
         recs = self._make_records(n_states=6, n_clusters=3)
-        res = run_pc1_analysis(recs, planned_slots_total=1000, require_registered_shape=False)
+        res = run_pc1_analysis(recs, planned_slots_total=50000, require_registered_shape=False)
         self.assertEqual(res.n_clusters, 3)
         self.assertEqual(res.n_states, 6)
         self.assertEqual(len(res.D_ci), 2)
@@ -281,7 +281,7 @@ class TestPC1RunnerSynthetic(unittest.TestCase):
                     recs.append(StateActionRecord(
                         state_id=f"s{si}", cluster_id=f"c{si}", action=a,
                         rollout_id=r, replicate_id=0, crn_seed=f"CRN|s{si}|{r}",
-                        sample_role=ROLE_Q,
+                        sample_role=ROLE_Q, task_id="T1", episode_id="col000",
                         effective_seed_parts=("SEED", f"s{si}", "A", str(r), "0", "0"),
                         gen_rewards=gen, planned_slots=8))
         res = run_pc1_analysis(recs, planned_slots_total=45000, require_registered_shape=False)
@@ -298,17 +298,17 @@ class TestPC1RunnerSynthetic(unittest.TestCase):
                     recs.append(StateActionRecord(
                         state_id=f"s{si}", cluster_id=f"c{si}", action=a,
                         rollout_id=r, replicate_id=0, crn_seed=f"CRN|s{si}|{r}",
-                        sample_role=ROLE_Q,
+                        sample_role=ROLE_Q, task_id="T1", episode_id="col000",
                         effective_seed_parts=("SEED", f"s{si}", "A", str(r), "0", "0"),
                         gen_rewards=[0.05, 0.05, 0.05], planned_slots=8))
-        res = run_pc1_analysis(recs, planned_slots_total=1000, require_registered_shape=False)
+        res = run_pc1_analysis(recs, planned_slots_total=50000, require_registered_shape=False)
         self.assertEqual(res.D, 0.0)
         self.assertEqual(res.advantage, 0.0)
         self.assertIn(res.decision, ("FAIL", "INCONCLUSIVE"))
 
     def test_raw_evidence_replayable_fields(self):
         recs = self._make_records()
-        res = run_pc1_analysis(recs, planned_slots_total=1000, require_registered_shape=False)
+        res = run_pc1_analysis(recs, planned_slots_total=50000, require_registered_shape=False)
         ev = res.raw_evidence
         self.assertIn("protocol_version", ev)
         self.assertIn("r_hat", ev)

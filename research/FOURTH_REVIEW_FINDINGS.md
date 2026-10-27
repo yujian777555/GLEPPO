@@ -153,3 +153,45 @@ The schedule's 2,040 entries are aggregate units (40 collection episodes + 1,500
 ## Final decision
 
 **REQUEST CHANGES — PC1 NOT APPROVED / NOT EXECUTED.** The R12–R18 work is a meaningful improvement, but protocol approval, CRN uniqueness, hard-budget reconciliation, cluster provenance, replayable evidence, cost-source consistency, and the actual gated collection/rollout runner remain unresolved.
+
+---
+
+# Remediation Log (Executor, 2026-10-27 Phase 2A-R4)
+
+**Base commit (fourth review):** `58b997df4ce7150dda800983a02515ac996bc20d`
+**PC1 status:** NOT EXECUTED / NOT APPROVED. This log does NOT self-approve.
+
+| Finding | Fix | Tests |
+|---|---|---|
+| **R19** protocol not frozen | `CANONICAL_PROTOCOL` dict + `protocol_consistency_check()`; `PROTOCOL_STATUS=PROPOSED_AWAITING_PLANNER_APPROVAL` | `TestR19ProtocolFreeze` (5) |
+| **R20** CRN override drops task/replicate | `effective_seed_parts` always includes (base, task, state, rollout, replicate, replica); `crn_seed` includes task_id + replicate_id | `TestR20CRNContract` (8) |
+| **R21** budget bypassable | reject negative/over-cap totals; exact sample counts in registered mode; `BudgetLedger` has collection/q/extra components + `reconcile()` | `TestR21BudgetFailClosed` (7) |
+| **R22** weak cluster provenance | `task_id` + `episode_id` in records; dry-run maps states to 40 episodes; registered mode requires 40 clusters | `TestR22ClusterProvenance` (5) |
+| **R23** evidence not replayable | D/adv/CIs in evidence; `save/load/deserialize/replay_from_artifact`; round-trip test | `TestR23EvidenceReplay` (5) |
+| **R24** cost conflicts with raw | COST_BASELINE aligned to SMOKE_RAW.json wall_clock; CTX labels fixed | `TestR24CostConsistency` (1) |
+| **R25** runner is only planner+refusal | `GatedPC1Runner` with `ApprovalGate`/`ProductionRuntimeGate`/`ProtocolVersionGate` (default-deny); budget check per unit; `execute_registered_pc1` still refuses | `TestR25GatedRunner` (8) |
+
+## Test evidence (2026-10-27)
+
+- **Full unit suite: 135/135 PASS** (37 core + 25 R8/R9/R11/PC1 + 35 R12-R17 + 38 R19-R25)
+- **Zero-cost protocol check: PASS**
+- **Protocol consistency check: PASS**
+- **Dry-run plan: within_cap=True, total=45,440, schedule=2040 units**
+- **Manifest verification: OK** (digests unchanged)
+- **Smoke: planned_init=32, planned_offspring=96, planned_total=128, actual=112, slot_arithmetic_ok=true**
+- **Cost consistency: PASS** (COST_BASELINE matches SMOKE_RAW.json)
+
+## PC1 execution status
+
+`execute_registered_pc1()` raises `PC1ExecutionRefused`. `create_default_gated_runner()` has all gates closed. Registered PC1 is NOT APPROVED and NOT EXECUTED. Only synthetic tests and dry-run plan generation were run.
+
+## Open blockers
+
+1. Production backend PENDING_DEPLOYMENT.
+2. Fifth independent review required.
+3. Planner approval of the protocol amendment (PROTOCOL_STATUS=PROPOSED).
+4. C4 literature collision re-check outstanding.
+
+## Request
+
+Independent review of this remediation. Executor does NOT mark PC1 approved or executed.

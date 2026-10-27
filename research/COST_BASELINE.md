@@ -19,7 +19,7 @@
 |---|---|
 | Tasks | 4 (train_A x2, train_B x2) |
 | Evolution config | mu=4, lam=2, T=6, n_eval=2 |
-| Wall-clock (total) | **0.021 s** (stub; not representative of real LLM latency) |
+| Wall-clock (total) | **0.019 s** (stub; not representative of real LLM latency) |
 
 ### 2.1 Planned-slot arithmetic (Task C - explicit)
 
@@ -75,7 +75,7 @@ Production LLM cost of `prompt_critique_rewrite` = 2 completions per application
 
 Marked `EXT`. They use the smoke ratio and Phase 1 formulas; they are **not** observed values.
 
-| Scenario | Formula | CTX (EXT) | LLM agent turns (EXT) |
+| Scenario | Formula | Planned slots (EXT, not measured CTX) | LLM agent turns (EXT) |
 |---|---|---|---|
 | Main evolution ROL (μ=8, λ=4, T=15, n_eval=3) | 15×4×3 | **180** | 180 × turns/task (TBD) |
 | Smoke→main scale factor | 180/96 | 1.875× | — |
@@ -94,11 +94,11 @@ Marked `EXT`. They use the smoke ratio and Phase 1 formulas; they are **not** ob
 
 | Category | Stub (measured) | Production |
 |---|---|---|
-| Agent execution CTX (planned offspring slots) | 96 (offspring only; total smoke planned = 128 incl. init) | TBD |
+| Agent execution (planned offspring slots, not actual CTX) | 96 (offspring only; total smoke planned = 128 incl. init) | TBD |
 | Agent LLM turns | n/a (stub) | TBD |
 | Operator proposal LLM calls | 0 | TBD (0–2/app) |
 | Tokens in/out | UNMEASURED | TBD |
-| Latency | 0.021 s (stub smoke; not production) | TBD |
+| Latency | 0.019 s (stub smoke; not production) | TBD |
 | Peak memory | not profiled | TBD |
 | Failure rate (invalid offspring) | 16.7% | expected similar (structural) |
 
@@ -107,8 +107,8 @@ Marked `EXT`. They use the smoke ratio and Phase 1 formulas; they are **not** ob
 ## 6. Implications for PC1 and Phase 3
 
 1. **PC1 remains unexecuted** pending independent review of `research/PHASE2_PREFLIGHT.md` (protocol §1.1).
-2. Structural overhead is trivial in stub mode; the real cost driver is **agent-execution LLM calls** (CTX × turns/episode). PC1's 45,440 CTX at even 4 turns/episode ≈ 190k completions — must be budgeted against the actual deployment backend before running.
-3. If production smoke shows turns/episode >8 or latency making 45,440 CTX infeasible, **SR5** applies: one scale revision, then STOP. Do not silently reduce n_eval in main experiments.
+2. Structural overhead is trivial in stub mode; the real cost driver is **agent-execution LLM calls** (CTX × turns/episode). PC1's 45,440 planned slots at even 4 turns/episode ≈ 190k completions — must be budgeted against the actual deployment backend before running.
+3. If production smoke shows turns/episode >8 or latency making 45,440 planned slots infeasible, **SR5** applies: one scale revision, then STOP. Do not silently reduce n_eval in main experiments.
 
 ---
 

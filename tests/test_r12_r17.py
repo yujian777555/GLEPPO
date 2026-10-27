@@ -36,7 +36,7 @@ class InstrumentedInterpreter(Interpreter):
 class TestR12BudgetLedger(unittest.TestCase):
     def test_init_evaluation(self):
         bl = BudgetLedger()
-        bl.record_init(mu=4, n_eval=2, replicas_run_delta=8, cache_bundle_delta=0)
+        bl.record_evaluation(planned_slots=8, replicas_run_delta=8, cache_bundle_delta=0, valid=4)
         self.assertEqual(bl.planned_slots, 8)
         self.assertEqual(bl.actual_replicas_run, 8)
         self.assertEqual(bl.cache_hit_bundles, 0)
@@ -55,7 +55,7 @@ class TestR12BudgetLedger(unittest.TestCase):
 
     def test_multiple_generations(self):
         bl = BudgetLedger()
-        bl.record_init(mu=4, n_eval=2, replicas_run_delta=6, cache_bundle_delta=1)
+        bl.record_evaluation(planned_slots=8, replicas_run_delta=6, cache_bundle_delta=1, valid=4)
         bl.record_evaluation(planned_slots=8, replicas_run_delta=8, cache_bundle_delta=0, valid=4)
         bl.record_evaluation(planned_slots=8, replicas_run_delta=4, cache_bundle_delta=2, valid=2, invalid=2)
         self.assertEqual(bl.planned_slots, 8 + 8 + 8)
@@ -98,8 +98,8 @@ def _make_rec(si, a, r=0, role=ROLE_Q, rewards=None, cluster=None):
     return StateActionRecord(
         state_id=f"s{si:03d}", cluster_id=cluster or f"c{si:03d}",
         action=a, rollout_id=r, replicate_id=0,
-        crn_seed=crn_seed(f"s{si:03d}", r),
-        sample_role=role,
+        crn_seed=crn_seed("T1", f"s{si:03d}", r),
+        sample_role=role, task_id="T1", episode_id="col000",
         effective_seed_parts=("SEED", f"s{si:03d}", "A", str(r), "0", "0"),
         gen_rewards=rewards if rewards is not None else [0.05] * n,
     )
@@ -320,7 +320,8 @@ class TestR17Evidence(unittest.TestCase):
         self.assertIn("evaluator_version", ev)
         self.assertIn("records", ev)
         self.assertIn("bootstrap", ev)
-        self.assertIn("replay_command", ev)
+        self.assertIn("D", ev)
+        self.assertIn("input_record_hash", ev)
         self.assertEqual(ev["manifest_hash"], "abc123")
 
     def test_evidence_records_have_required_fields(self):

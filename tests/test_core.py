@@ -203,11 +203,11 @@ class TestR4SeedsCache(unittest.TestCase):
         self.assertGreaterEqual(ev.cache_hits, 1)
 
     def test_crn_seed_shared_across_actions(self):
-        self.assertEqual(crn_seed("s1", 0), crn_seed("s1", 0))
-        self.assertNotEqual(crn_seed("s1", 0), crn_seed("s1", 1))
+        self.assertEqual(crn_seed("T1", "s1", 0), crn_seed("T1", "s1", 0))
+        self.assertNotEqual(crn_seed("T1", "s1", 0), crn_seed("T1", "s1", 1))
 
     def test_replicate_seeds_distinct(self):
-        self.assertNotEqual(crn_seed("s", 0), crn_seed("s", 1))
+        self.assertNotEqual(crn_seed("T1", "s", 0), crn_seed("T1", "s", 1))
 
 
 # ===== R3: reward identity =====

@@ -3,11 +3,11 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-27",
-  "phase": "PHASE2A_R4_PROTOCOL_AND_PC1_AUDITABILITY",
-  "state": "R19_R25_FIXED_AWAITING_FIFTH_REVIEW",
-  "reviewed_commit": "58b997df4ce7150dda800983a02515ac996bc20d",
-  "implementation_status": "PC1_PATH_FULLY_GATED_NO_CONTROLLERS",
-  "experimental_status": "SYNTHETIC_TESTS_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BLOCKED",
+  "phase": "PHASE2A_R5_REMEDIATION",
+  "state": "REQUEST_CHANGES_PC1_NOT_APPROVED",
+  "reviewed_commit": "5486f0f762f0a00fd155e5649d6d089f4ffa550a",
+  "implementation_status": "R20_R24_IMPROVED_R26_R32_BLOCKERS_OPEN",
+  "experimental_status": "PC1_NOT_EXECUTED_PRODUCTION_BACKEND_PENDING",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,10 +33,10 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Await fifth independent review + Planner protocol approval. After both + production gate: deploy backend, real-model smoke/G3, then PC1.",
-  "next_gate": "FIFTH_REVIEW + PLANNER_PROTOCOL_APPROVAL -> PRODUCTION_SMOKE_G3 -> PC1 -> ONLY_THEN_CONTROLLER_TRAINING",
+  "current_task": "Execute planner/latest_plan.md Phase 2A-R5: fix negative ledger deltas and atomic budget updates; reconcile registered analysis against full 45,440-slot plan; validate state/task/episode/cluster provenance; require registered provenance before statistics; fix seed/cache key normalization; create canonical proposed protocol artifact and document consistency test; accurately describe or implement the gated runner.",
+  "next_gate": "FIX_R26_R32 -> FOCUSED_AND_FULL_TESTS -> SIXTH_INDEPENDENT_REVIEW -> PLANNER_PROTOCOL_APPROVAL -> PRODUCTION_RUNTIME_LOCK_AND_SMOKE_G3 -> PC1_APPROVAL",
   "hard_rules": [
-    "No registered PC1 execution before independent approval and production-runtime smoke/G3.",
+    "No registered PC1 execution before Planner protocol approval, independent review approval and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
     "No controller implementation or training before PC1 passes.",
     "No GLEET code reuse or cross-project artifacts.",
@@ -152,5 +152,25 @@
       "smoke": "slot_arithmetic_ok=true",
       "cost_check": "PASS"
     }
+  },
+  "fifth_review": {
+    "verdict": "REQUEST_CHANGES",
+    "report": "research/FIFTH_REVIEW_FINDINGS.md",
+    "reviewer_scope": "read-only source/protocol/test audit; reviewer did not execute repository tests or experiments",
+    "executor_reported_tests": "135/135 PASS; not independently reproduced by reviewer",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "production_backend_deployed": false,
+    "findings": {
+      "R26": "No independent canonical protocol artifact exists; code CANONICAL_PROTOCOL is constructed from constants, while PHASE2_PREFLIGHT still contains the older v2 design. Code says pc1-frozen-v1-r4 while status remains PROPOSED.",
+      "R27": "BudgetLedger accepts negative deltas; GatedPC1Runner only checks upper bound, so negative planned slots can lower the ledger and bypass the cap.",
+      "R28": "run_pc1_analysis only rejects record-derived slots greater than caller total; it omits collection slots from its ledger and does not call reconcile. Registered shape allows at least 100 states and at least 40 clusters instead of exact registered totals.",
+      "R29": "task_id/episode_id/cluster_id/family are not cross-validated against the registered state-to-episode plan. Unknown-episode test can pass due to insufficient cluster count instead of the intended provenance check.",
+      "R30": "Registered analysis does not require nonempty manifest/runtime/evaluator/protocol provenance before computation. Test for missing provenance fails earlier due to only two states.",
+      "R31": "GatedPC1Runner is an accounting harness: it increments counters and appends IDs without evaluator/task/rollout/reward/artifact orchestration; its gates do not check protocol status or approval metadata.",
+      "R32": "Cache key uses eval_seed_override or empty string, colliding for None and explicit empty override although effective seed derivation distinguishes them."
+    },
+    "cost_review": "R24 appears corrected in current main: SMOKE_RAW.json and COST_BASELINE.md both report 0.019 s, 32+96=128 planned slots, 112 actual replicas.",
+    "source_reviewed_commit": "5486f0f762f0a00fd155e5649d6d089f4ffa550a"
   }
 }

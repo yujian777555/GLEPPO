@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-27T02:51:16Z",
+  "date": "2026-10-27T03:14:47Z",
   "mode": "STUB_LL M_v1 (docs/RUNTIME_LOCK.md §4) — structural causality, not production-model validation",
   "n_parents": 4,
   "n_tasks": 8,
@@ -43,10 +43,10 @@
               },
               "child": {
                 "success_rate": 0.0,
-                "mean_tool_calls": 3.0,
-                "mean_turns": 3.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
                 "fails": {
-                  "wrong_answer": 2
+                  "tool_error": 2
                 }
               },
               "parent_trace": {
@@ -55,42 +55,78 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|gce1c",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "31a8576e"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
                 "success": false,
-                "failure_category": "wrong_answer",
-                "turns": 3,
-                "tool_calls": 3,
-                "answer_head": "Final answer: 37|g3ab2",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "failure_category": "tool_error",
+                "turns": 1,
+                "tool_calls": 1,
+                "answer_head": "",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "7d014d9a"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 13-IF"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": false,
+                    "detail": "calc",
+                    "output": "calc failed: invalid syntax (<unknown>, line 1)"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
-                "mean_tool_calls": 3.0,
-                "mean_turns": 3.0,
-                "fails": {
-                  "": 2
-                }
-              },
-              "child": {
                 "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
@@ -98,34 +134,86 @@
                   "wrong_answer": 2
                 }
               },
-              "parent_trace": {
-                "rep": 0,
-                "success": true,
-                "failure_category": "",
-                "turns": 3,
-                "tool_calls": 3,
-                "answer_head": "Final answer: 88|gce1c",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
-                ]
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
               },
-              "child_trace": {
+              "parent_trace": {
                 "rep": 0,
                 "success": false,
                 "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g3ab2",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "31a8576e"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "tool_error",
+                "turns": 1,
+                "tool_calls": 1,
+                "answer_head": "",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "7d014d9a"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 16-CALCULATE"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": false,
+                    "detail": "calc",
+                    "output": "calc failed: invalid syntax (<unknown>, line 1)"
+                  }
                 ]
               }
             }
@@ -156,10 +244,10 @@
               },
               "child": {
                 "success_rate": 0.0,
-                "mean_tool_calls": 3.0,
-                "mean_turns": 3.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
                 "fails": {
-                  "wrong_answer": 2
+                  "tool_error": 2
                 }
               },
               "parent_trace": {
@@ -168,42 +256,78 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g256e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
                 "success": false,
-                "failure_category": "wrong_answer",
-                "turns": 3,
-                "tool_calls": 3,
-                "answer_head": "Final answer: 37|ga50e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "failure_category": "tool_error",
+                "turns": 1,
+                "tool_calls": 1,
+                "answer_head": "",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "b1fe2a03"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 13-IF"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": false,
+                    "detail": "calc",
+                    "output": "calc failed: invalid syntax (<unknown>, line 1)"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
-                "mean_tool_calls": 3.0,
-                "mean_turns": 3.0,
-                "fails": {
-                  "": 2
-                }
-              },
-              "child": {
                 "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
@@ -211,34 +335,86 @@
                   "wrong_answer": 2
                 }
               },
-              "parent_trace": {
-                "rep": 0,
-                "success": true,
-                "failure_category": "",
-                "turns": 3,
-                "tool_calls": 3,
-                "answer_head": "Final answer: 88|g256e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
-                ]
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
               },
-              "child_trace": {
+              "parent_trace": {
                 "rep": 0,
                 "success": false,
                 "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|ga50e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "tool_error",
+                "turns": 1,
+                "tool_calls": 1,
+                "answer_head": "",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "b1fe2a03"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 16-CALCULATE"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": false,
+                    "detail": "calc",
+                    "output": "calc failed: invalid syntax (<unknown>, line 1)"
+                  }
                 ]
               }
             }
@@ -269,10 +445,10 @@
               },
               "child": {
                 "success_rate": 0.0,
-                "mean_tool_calls": 3.0,
-                "mean_turns": 3.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
                 "fails": {
-                  "wrong_answer": 2
+                  "tool_error": 2
                 }
               },
               "parent_trace": {
@@ -281,42 +457,78 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g73a2",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "a2986d9f"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
                 "success": false,
-                "failure_category": "wrong_answer",
-                "turns": 3,
-                "tool_calls": 3,
-                "answer_head": "Final answer: 37|gbbcc",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "failure_category": "tool_error",
+                "turns": 1,
+                "tool_calls": 1,
+                "answer_head": "",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "64606072"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 13-IF"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": false,
+                    "detail": "calc",
+                    "output": "calc failed: invalid syntax (<unknown>, line 1)"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
-                "mean_tool_calls": 3.0,
-                "mean_turns": 3.0,
-                "fails": {
-                  "": 2
-                }
-              },
-              "child": {
                 "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
@@ -324,34 +536,86 @@
                   "wrong_answer": 2
                 }
               },
-              "parent_trace": {
-                "rep": 0,
-                "success": true,
-                "failure_category": "",
-                "turns": 3,
-                "tool_calls": 3,
-                "answer_head": "Final answer: 88|g73a2",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
-                ]
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
               },
-              "child_trace": {
+              "parent_trace": {
                 "rep": 0,
                 "success": false,
                 "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|gbbcc",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "a2986d9f"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "tool_error",
+                "turns": 1,
+                "tool_calls": 1,
+                "answer_head": "",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "64606072"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 16-CALCULATE"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": false,
+                    "detail": "calc",
+                    "output": "calc failed: invalid syntax (<unknown>, line 1)"
+                  }
                 ]
               }
             }
@@ -382,10 +646,10 @@
               },
               "child": {
                 "success_rate": 0.0,
-                "mean_tool_calls": 3.0,
-                "mean_turns": 3.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
                 "fails": {
-                  "wrong_answer": 2
+                  "tool_error": 2
                 }
               },
               "parent_trace": {
@@ -394,42 +658,78 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g2e75",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "363b19da"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
                 "success": false,
-                "failure_category": "wrong_answer",
-                "turns": 3,
-                "tool_calls": 3,
-                "answer_head": "Final answer: 37|g75ce",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "failure_category": "tool_error",
+                "turns": 1,
+                "tool_calls": 1,
+                "answer_head": "",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "e7d4af0a"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 13-IF"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": false,
+                    "detail": "calc",
+                    "output": "calc failed: invalid syntax (<unknown>, line 1)"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
-                "mean_tool_calls": 3.0,
-                "mean_turns": 3.0,
-                "fails": {
-                  "": 2
-                }
-              },
-              "child": {
                 "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
@@ -437,34 +737,86 @@
                   "wrong_answer": 2
                 }
               },
-              "parent_trace": {
-                "rep": 0,
-                "success": true,
-                "failure_category": "",
-                "turns": 3,
-                "tool_calls": 3,
-                "answer_head": "Final answer: 88|g2e75",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
-                ]
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 1.0,
+                "fails": {
+                  "tool_error": 2
+                }
               },
-              "child_trace": {
+              "parent_trace": {
                 "rep": 0,
                 "success": false,
                 "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g75ce",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "363b19da"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
+                ]
+              },
+              "child_trace": {
+                "rep": 0,
+                "success": false,
+                "failure_category": "tool_error",
+                "turns": 1,
+                "tool_calls": 1,
+                "answer_head": "",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "e7d4af0a"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 16-CALCULATE"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": false,
+                    "detail": "calc",
+                    "output": "calc failed: invalid syntax (<unknown>, line 1)"
+                  }
                 ]
               }
             }
@@ -517,13 +869,41 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|gce1c",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "31a8576e"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
@@ -532,62 +912,146 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|gd435",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "7f27c929"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "parent_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|gce1c",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "31a8576e"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|gd435",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "7f27c929"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               }
             }
@@ -630,13 +1094,41 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g256e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
@@ -645,62 +1137,146 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|ged2e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "69acb232"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "parent_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g256e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|ged2e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "69acb232"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               }
             }
@@ -743,13 +1319,41 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g73a2",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "a2986d9f"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
@@ -759,21 +1363,39 @@
                 "turns": 1,
                 "tool_calls": 1,
                 "answer_head": "",
-                "trace_types": [
-                  "meta",
-                  "llm",
-                  "tool"
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "84bf610a"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 13-IF"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": false,
+                    "detail": "calc",
+                    "output": "calc failed: invalid syntax (<unknown>, line 1)"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
@@ -786,17 +1408,45 @@
               },
               "parent_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g73a2",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "a2986d9f"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               },
               "child_trace": {
@@ -806,10 +1456,28 @@
                 "turns": 1,
                 "tool_calls": 1,
                 "answer_head": "",
-                "trace_types": [
-                  "meta",
-                  "llm",
-                  "tool"
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "84bf610a"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 16-CALCULATE"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": false,
+                    "detail": "calc",
+                    "output": "calc failed: invalid syntax (<unknown>, line 1)"
+                  }
                 ]
               }
             }
@@ -852,13 +1520,41 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g2e75",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "363b19da"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
@@ -867,62 +1563,146 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|ge582",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "e38cdb9a"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "parent_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g2e75",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "363b19da"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|ge582",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "e38cdb9a"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               }
             }
@@ -982,13 +1762,41 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g256e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
@@ -997,62 +1805,148 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g7cd7",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "py_sandbox",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "parent_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g256e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g7cd7",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "py_sandbox",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               }
             }
@@ -1102,13 +1996,41 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g2e75",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "363b19da"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
@@ -1117,62 +2039,148 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|gb243",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "py_sandbox",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "363b19da"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "parent_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g2e75",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "363b19da"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|gb243",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "py_sandbox",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "363b19da"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               }
             }
@@ -1225,13 +2233,41 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|gce1c",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "31a8576e"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
@@ -1240,62 +2276,146 @@
                 "failure_category": "",
                 "turns": 4,
                 "tool_calls": 2,
-                "answer_head": "Final answer: 37|g034d",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "llm"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|llm|finalize",
+                    "prompt_sig": "31a8576e"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 2.0,
                 "mean_turns": 4.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "parent_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|gce1c",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "31a8576e"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 4,
                 "tool_calls": 2,
-                "answer_head": "Final answer: 88|g034d",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "llm"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|llm|finalize",
+                    "prompt_sig": "31a8576e"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  }
                 ]
               }
             }
@@ -1338,13 +2458,41 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g256e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
@@ -1353,62 +2501,146 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g1d86",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolcalc|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "parent_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g256e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g1d86",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolcalc|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  }
                 ]
               }
             }
@@ -1447,19 +2679,19 @@
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               }
             }
@@ -1498,19 +2730,19 @@
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               }
             }
@@ -1532,7 +2764,7 @@
           "hash_changed": true,
           "behavior_changed": true,
           "parent_hash": "fd678adf056e8ce183df727d1edb1141096f6e39493d7fdcc2957ab434ae1959",
-          "child_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
+          "child_hash": "c7fd30570e401bb0f326aea459a8684ac78979fc9fa81256255e1e015f368243",
           "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
           "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
           "genotype_diff_keys": [
@@ -1563,13 +2795,41 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|gce1c",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "31a8576e"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
@@ -1578,62 +2838,146 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g256e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "df0b3567"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "parent_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|gce1c",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "31a8576e"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g256e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "df0b3567"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               }
             }
@@ -1645,7 +2989,7 @@
           "hash_changed": true,
           "behavior_changed": true,
           "parent_hash": "e2afa7d12968192ab80c3beee4034b97a00a12b163c081c8f8d67b7463ee2808",
-          "child_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
+          "child_hash": "f20acbb002c61fceb596cc506c6b9758ccace04efb906862e17ccf4ed7905144",
           "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
           "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
           "genotype_diff_keys": [
@@ -1676,13 +3020,41 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g256e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
@@ -1691,62 +3063,146 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g73a2",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "d494332e"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "parent_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g256e",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "60f13b85"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g73a2",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "d494332e"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               }
             }
@@ -1758,7 +3214,7 @@
           "hash_changed": true,
           "behavior_changed": true,
           "parent_hash": "72ea3cc56832d94d22f55e26d50bc2313dbb4183ed60d0d869956f732b6ad4ca",
-          "child_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
+          "child_hash": "d90c5816e4127252196f760aa86ddfa458facb636ad273605ccdc18e85c1d626",
           "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
           "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
           "genotype_diff_keys": [
@@ -1789,13 +3245,41 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g73a2",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "a2986d9f"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
@@ -1804,62 +3288,146 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g2e75",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "33f95352"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "parent_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g73a2",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "a2986d9f"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g2e75",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "33f95352"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               }
             }
@@ -1871,7 +3439,7 @@
           "hash_changed": true,
           "behavior_changed": true,
           "parent_hash": "16a61f7e6ffbd3fca4fb429635086862ee1725ada29204cf4263a787b080fa4e",
-          "child_hash": "fd678adf056e8ce183df727d1edb1141096f6e39493d7fdcc2957ab434ae1959",
+          "child_hash": "fd18199b744231bcf65442c845f9fc812d27e43081d824bde985505655e64fe9",
           "parent_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
           "child_prompt_head": "Compute step by step and then transform the result. Final answer: {{answer}} Var",
           "genotype_diff_keys": [
@@ -1902,13 +3470,41 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|g2e75",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "363b19da"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               },
               "child_trace": {
@@ -1917,62 +3513,146 @@
                 "failure_category": "",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 37|gce1c",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 37",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "9d503069"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "37"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "37"
+                  }
                 ]
               }
             },
             {
               "task": "A-g3-01",
               "parent": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "child": {
-                "success_rate": 1.0,
+                "success_rate": 0.0,
                 "mean_tool_calls": 3.0,
                 "mean_turns": 3.0,
                 "fails": {
-                  "": 2
+                  "wrong_answer": 2
                 }
               },
               "parent_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|g2e75",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "363b19da"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               },
               "child_trace": {
                 "rep": 0,
-                "success": true,
-                "failure_category": "",
+                "success": false,
+                "failure_category": "wrong_answer",
                 "turns": 3,
                 "tool_calls": 3,
-                "answer_head": "Final answer: 88|gce1c",
-                "trace_types": [
-                  "meta",
-                  "tool",
-                  "llm",
-                  "tool",
-                  "tool"
+                "answer_head": "Final answer: 64",
+                "trace": [
+                  {
+                    "type": "meta",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize",
+                    "prompt_sig": "9d503069"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "llm",
+                    "ok": true,
+                    "detail": "analyze",
+                    "output": "Final answer: 64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "calc",
+                    "output": "64"
+                  },
+                  {
+                    "type": "tool",
+                    "ok": true,
+                    "detail": "str_ops",
+                    "output": "64"
+                  }
                 ]
               }
             }

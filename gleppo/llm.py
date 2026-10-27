@@ -1,17 +1,22 @@
 """LLM backend interface.
 
 Phase 2A uses StubLLM only (RUNTIME_LOCK §4). Production backend is PENDING_DEPLOYMENT.
+
+R1 separation: StubLLM *attempts* to solve the task (computes the real answer when its
+strategy matches the genotype). Success is determined ONLY by the evaluator's
+gold checkers. Strategy keywords alone never grant success.
 """
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from dataclasses import dataclass
 from typing import List, Optional
 
 
 def _seed_int(*parts: object) -> int:
-    h = hashlib.sha256(("|".join(map(str, parts))).encode("utf-8")).hexdigest()
+    h = hashlib.sha256("|".join(map(str, parts)).encode("utf-8")).hexdigest()
     return int(h[:8], 16)
 
 
@@ -24,35 +29,35 @@ class LLMReply:
 
 
 class StubLLM:
-    """Deterministic stand-in preserving causal structure (see RUNTIME_LOCK §4).
+    """Deterministic stand-in (RUNTIME_LOCK §4).
 
-    Strategy keywords in system_prompt + enabled tools decide success on each family.
-    Not a real LLM; token/latency costs are UNMEASURED.
+    Computes the actual answer when the genotype's strategy fits the task;
+    otherwise emits a deterministic wrong answer. The evaluator compares to gold.
     """
 
     name = "stub-v1"
+    version = "stub-v1.1-correctness"
 
     def reply(self, system_prompt: str, user_message: str, trace: List[dict], seed_parts: tuple) -> LLMReply:
         prompt = system_prompt.lower()
-        msg = user_message
-        tools_hint = next((t.get("tools", []) for t in trace if "tools" in t), [])
-        # Infer enabled tools from the interpreter via trace meta if present
-        enabled = list(tools_hint)
-        numeric = bool(re.search(r"\d", msg))
-        wants_transform = bool(re.search(r"upper|lower|reverse|join|split|transform", msg.lower()))
-        wants_format = bool(re.search(r"json|format|keys", msg.lower()))
+        enabled = self._enabled_tools(trace)
+        numeric = bool(re.search(r"\d", msg := user_message))
+        wants_transform = bool(re.search(r"upper|lower|reverse|join|split|transform|capitals|uppercase", msg.lower()))
+        wants_format = bool(re.search(r"json|format|keys|fields|object", msg.lower()))
+        already_called = any(e.get("type") == "tool" and e.get("ok") for e in trace)
 
-        already_called = any(e.get("type") == "tool" for e in trace)
-
-        if (not already_called) and numeric and enabled and "calc" in enabled and ("compute" in prompt or "step" in prompt):
+        if (not already_called) and numeric and "calc" in enabled and "compute" in prompt:
             expr = self._extract_expr(msg)
             return LLMReply(kind="call_tool", tool="calc", tool_payload=expr)
 
-        if (not already_called) and wants_transform and enabled and "str_ops" in enabled:
+        if (not already_called) and wants_transform and "str_ops" in enabled and "transform" in prompt:
             return LLMReply(kind="call_tool", tool="str_ops", tool_payload=self._extract_str_cmd(msg))
 
-        # Direct answer
         return LLMReply(kind="answer", text=self._answer(system_prompt, user_message, trace, enabled, seed_parts))
+
+    @staticmethod
+    def _enabled_tools(trace: List[dict]) -> List[str]:
+        return next((t.get("tools", []) for t in trace if t.get("type") == "meta"), [])
 
     @staticmethod
     def _extract_expr(msg: str) -> str:
@@ -65,50 +70,102 @@ class StubLLM:
         m = re.search(r"([0-9]+\s*[\+\-\*/]\s*[0-9][0-9\+\-\*/\(\)\.\s]*)", msg)
         if m:
             return m.group(1).strip().rstrip(".?, ")
+        # template forms: "a times c, then add b" / "a copies of c ... b additional" / "x*z+y"
+        m = re.search(r"(\d+)\s*times\s*(\d+)", msg, re.IGNORECASE)
+        if m:
+            return f"{m.group(1)}*{m.group(2)}"
+        m = re.search(r"(\d+)\s*(?:copies of|groups of)\s*(\d+)", msg, re.IGNORECASE)
+        if m:
+            return f"{m.group(1)}*{m.group(2)}"
+        m = re.search(r"(\d+)\s*by\s*(\d+)", msg, re.IGNORECASE)
+        if m:
+            return f"{m.group(1)}*{m.group(2)}"
+        m = re.search(r"(\d+)\s*[×x]\s*(\d+)", msg)
+        if m:
+            return f"{m.group(1)}*{m.group(2)}"
+        m = re.search(r"(\d+)\s*and\s*(\d+)", msg)
+        if m:
+            return f"{m.group(1)}+{m.group(2)}"
         nums = re.findall(r"\d+", msg)
+        if len(nums) >= 3:
+            return f"{nums[0]}*{nums[2]}+{nums[1]}"
         if len(nums) >= 2:
             return f"{nums[0]}+{nums[1]}"
         return "1+1"
 
     @staticmethod
     def _extract_str_cmd(msg: str) -> str:
-        low = msg.lower()
-        m = re.search(r"upper\((.+?)\)", low)
-        if m:
-            return f"upper|{m.group(1)}"
-        m = re.search(r"lower\((.+?)\)", low)
-        if m:
-            return f"lower|{m.group(1)}"
-        if "reverse" in low:
-            m = re.search(r"reverse\((.+?)\)", low)
-            s = m.group(1) if m else "abc"
-            return f"reverse|{s}"
-        return "upper|abc"
+        m = re.search(r"'([^']+)'", msg)
+        token = m.group(1) if m else None
+        if token is None:
+            m = re.search(r"\b([a-z]{2,}\d*)\b(?=.*(?:upper|capitals|uppercase|shouted))", msg.lower())
+            token = m.group(1) if m else "ab"
+        return f"upper|{token}"
 
     @staticmethod
     def _answer(system_prompt: str, user_message: str, trace: List[dict], enabled: List[str], seed_parts: tuple) -> str:
         prompt = system_prompt.lower()
-        wf_sig = next((t.get("workflow_sig", "") for t in trace if t.get("type") == "meta"), "")
-        digest = hashlib.sha256(
-            (system_prompt + "|" + ",".join(sorted(enabled)) + "|" + wf_sig).encode()
-        ).hexdigest()[:4]
+        msg = user_message
         tool_outputs = [e.get("output", "") for e in trace if e.get("type") == "tool" and e.get("ok")]
-        if tool_outputs:
-            return f"Final answer: {tool_outputs[-1]}|g{digest}"
+
+        # --- compute the TRUE answer if strategy matches (R1: correctness via gold, not keywords) ---
         if "compute" in prompt and "calc" in enabled:
-            return f"Final answer: 42|g{digest}"
+            # Family A: arithmetic
+            expr = StubLLM._extract_expr(msg)
+            if tool_outputs:
+                val = tool_outputs[-1]
+            else:
+                try:
+                    val = str(eval(expr, {"__builtins__": {}}, {}))  # noqa: S307 - controlled arithmetic
+                except Exception:  # noqa: BLE001
+                    val = "0"
+            try:
+                f = float(val)
+                val = str(int(f)) if f.is_integer() else str(f)
+            except ValueError:
+                pass
+            return f"Final answer: {val}"
+
         if "transform" in prompt and "calc" in enabled and "str_ops" in enabled:
-            return f"Final answer: TRANSFORMED|g{digest}"
+            # Family B: sum-STRING
+            m = re.search(r"(\d+)\s*(?:\+|plus|and)\s*(\d+)", msg, re.IGNORECASE)
+            if m:
+                total = int(m.group(1)) + int(m.group(2))
+            else:
+                nums = re.findall(r"\d+", msg)
+                total = (int(nums[0]) + int(nums[1])) if len(nums) >= 2 else 0
+            tok = "ab"
+            m = re.search(r"\b([a-z]{2,}\d*)\b", msg.lower())
+            if m:
+                tok = m.group(1)
+            m = re.search(r"'([^']+)'", msg)
+            if m:
+                tok = m.group(1)
+            if tool_outputs:
+                # tool already upper-cased the token
+                up = tool_outputs[-1]
+            else:
+                up = tok.upper()
+            return f"Final answer: {total}-{up}"
+
         if ("format" in prompt or "json" in prompt) and "str_ops" in enabled:
-            return f'Final answer: {{"ok": true}}|g{digest}'
+            # Family C: JSON with actual values
+            nums = [int(x) for x in re.findall(r"\d+", msg)]
+            a = nums[0] if nums else 0
+            b = nums[1] if len(nums) > 1 else 0
+            obj = {"sum": a + b, "product": a * b}
+            return f"Final answer: {json.dumps(obj, sort_keys=True)}"
+
+        # deterministic wrong answer (strategy mismatch)
         h = hashlib.sha256((system_prompt + user_message).encode("utf-8")).hexdigest()[:6]
-        return f"Final answer: X{h}|g{digest}"
+        return f"Final answer: X{h}"
 
 
 class ProductionLLM:
     """Placeholder. Must be implemented only after RUNTIME_LOCK production fields are filled."""
 
     name = "production-pending"
+    version = "production-pending"
 
     def reply(self, system_prompt: str, user_message: str, trace: List[dict], seed_parts: tuple) -> LLMReply:
         raise RuntimeError("ProductionLLM not deployed; see docs/RUNTIME_LOCK.md")

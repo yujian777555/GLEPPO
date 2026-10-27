@@ -114,3 +114,49 @@ This is a proposed amendment, not an approved experiment protocol. The executor 
 ## Final decision
 
 **REQUEST CHANGES. PC1 is not approved.** The idea is not rejected; the current evaluator and diagnostic protocol are not yet valid enough to test it. Do not deploy the production backend, run PC1, or start any controller training until the blockers above are fixed and re-reviewed.
+
+---
+
+# Remediation Log (Executor, 2026-10-27) ¡ª submitted for SECOND review
+
+**Base commit under review:** 315796399116c4e1ec540f42d3e78a061043fb7e  
+**Remediation commit:** (this commit) on main  
+**PC1 status:** NOT EXECUTED ¡¤ NOT SELF-APPROVED ¡¤ second review requested
+
+| Finding | Fix | Evidence (code / test) | Status |
+|---|---|---|---|
+| **R1** evaluator ignores gold | A/B/C checkers now compare normalized final answers / JSON values to gold; strategy keywords never grant success | gleppo/tasks.py:_check_family_a/b/c; adversarial tests TestR1EvaluatorCorrectness (wrong arithmetic, wrong string, wrong JSON values, malformed JSON, correct answers) | FIXED |
+| **R2** 80 states vs >=100 guard | Retracted the false "80 was allowed" claim; **N_states=100** restored | gleppo/pc1.py:N_STATES=100; esearch/PHASE2_PREFLIGHT.md ¡ì8; test TestR7Budget.test_states_at_least_100 | FIXED |
+| **R3** reward mismatch r_hat vs Q_hat | Single frozen gleppo/reward.py:generation_reward; both estimators use it; Q = h-step return under fixed random continuation | gleppo/pc1.py:myopic_reward_from_trace/q_hat_from_trace; zero-cost checks eward_identity_first_term, q_uses_same_first_term | FIXED |
+| **R4** cache/seed not independent | Cache key includes replicate_id+eval_seed+runtime+evaluator+LLM version; CRN seed shared across actions; replicate seeds distinct; built-in hash() replaced by SHA256 stable_seed; cross-process test | gleppo/evaluator.py:_cache_key; gleppo/pc1.py:crn_seed/replicate_seed; gleppo/evolution.py:stable_seed; tests TestR4SeedsCache (incl. PYTHONHASHSEED subprocess) | FIXED |
+| **R5** templates are labels only | Real template-specific generation rules (TA1-TA12 / TB1-TB9 / TC1-TC5); train/val template sets disjoint; manifests regenerated | gleppo/tasks.py:_A_TEMPLATES/_B_TEMPLATES/_C_TEMPLATES; tests TestR5Templates; digests below | FIXED |
+| **R6** Jaccard similarity vs distance | div_* now store **distance** = 1 - similarity | gleppo/features.py:jaccard_distance; tests TestR6JaccardDistance (identical=0, disjoint=1, partial=0.5) | FIXED |
+| **R7** budget omits init / mixes units | BudgetLedger separates planned slots / actual CTX / cache hits / invalids / LLM calls; init slots included; 45,440 planned <= 50,000 cap | gleppo/pc1.py:BudgetLedger + zero_cost_protocol_check; esearch/PHASE2_PREFLIGHT.md ¡ì9 | FIXED |
+
+## Test evidence (2026-10-27)
+
+- **Unit/regression tests: 37/37 PASS** (python -m unittest discover -s tests)
+- **Zero-cost PC1 protocol check: 10/10 PASS** (budget, CRN, reward identity, clipping)
+- **G3 causality (StubLLM): PASS 5/5** (behavior change per operator)
+- **Smoke (training families A/B only):** 4 tasks, 96 planned slots, invalid rate 16.7%, 0 Family-C access
+- **Manifests regenerated + SHA256 verified** (full digests in commit / status.json)
+
+## Regenerated manifest digests (full SHA256)
+
+`
+train_A  bc8e62255bebb3975a9c37b9422ab792a2891dfee783d9e060709f82a7cbc3f9
+train_B  c5b0d99d4cbde9c7a7ab73979061a706482618c871cbc4bd0ceb59c3157a9b9b
+val_A    01591cb93bd445ec879c706fe80f7c9924184536f0b280fea6d0b4558b40c5ee
+val_B    6300f14a85acb04c9496a2d3796d69c19f4889813b785855165ca1ca5dadbe79
+test_C   67109af7d01e262f6c03ea75e27959e5136e2ce1700c56957f27853320a6bcb9   (frozen only; NEVER executed)
+`
+
+## Open blockers (not fixable in this repo alone)
+
+1. **Production backend not deployed** ¡ª docs/RUNTIME_LOCK.md production fields are PENDING_DEPLOYMENT. Real-model G3, real-model smoke, and the LLM cost ceiling for PC1 cannot be measured until credentials/hardware are provided. **No fabricated model calls or token counts.**
+2. Second independent review of this remediation + esearch/PHASE2_PREFLIGHT.md v2 must approve before PC1.
+3. C4 literature collision re-check still outstanding (not a Phase 2A-R1 blocker).
+
+## Request
+
+Second independent review of the remediation table above and esearch/PHASE2_PREFLIGHT.md Amendment v2. Executor does **not** mark PC1 approved. After approval **and** a production smoke run, PC1 may execute under the 50,000 planned-slot cap and the separately set LLM inference ceiling.

@@ -1,62 +1,59 @@
-# Planner Latest Plan — GLEPPO Phase 2A-R1 Correctness Remediation
+# Planner Latest Plan — GLEPPO Phase 2A-R1 (OUTCOME)
 
-**Status:** REQUEST CHANGES — READY FOR EXECUTOR  
+**Status:** EXECUTED 2026-10-27 · awaiting SECOND independent review  
 **Repository:** `yujian777555/GLEPPO` only  
-**Reviewed main:** `315796399116c4e1ec540f42d3e78a061043fb7e`  
-**PC1 status:** NOT APPROVED / NOT EXECUTED  
-**Controller status:** No PPO, Q-learning, or bandit controller may be implemented or trained yet.
+**Base commit (under review):** `315796399116c4e1ec540f42d3e78a061043fb7e`  
+**PC1 status:** NOT APPROVED · NOT EXECUTED  
+**Controller status:** no PPO / Q-learning / bandit controllers implemented or trained
 
-## Independent review result
+## Task (as executed)
 
-See `research/PC1_INDEPENDENT_REVIEW.md`. The environment skeleton is useful, but PC1 cannot be approved because:
-1. A/B/C checkers do not verify actual answer correctness against gold.
-2. The proposed 80-state PC1 plan conflicts with Phase 1's ≥100-state guard.
-3. `r_hat` and `Q_hat` currently compare different reward definitions.
-4. The cache/seed path does not implement independent Monte Carlo replicates or the claimed common-random-number comparison.
-5. Train/validation template IDs are not genuinely disjoint templates.
-6. The three diversity features store Jaccard similarity where Phase 1 specifies distance.
-7. The 47,200-slot budget omits initial-population evaluations and does not separate planned slots from actual CTX/model calls.
+Phase 2A-R1 correctness remediation per `research/PC1_INDEPENDENT_REVIEW.md` R1–R7. No new mechanisms, no scope expansion.
 
-This is a methodology/evaluator correctness block, not a rejection of the GLEPPO hypothesis.
+## Outcome
 
-## Executor prompt (copy verbatim)
+**All R1–R7 findings fixed with regression tests. PC1 still not executed — second review requested.**
 
-You are the Executor for the independent GLEPPO research project. The only user project repository you may modify is `yujian777555/GLEPPO`. Do not access, import, copy, or mix code, data, results, plans, or status from any unrelated user project. Do not copy GLEET code.
+| Finding | Fix | Test evidence |
+|---|---|---|
+| R1 gold correctness | A/B/C checkers compare actual answers/values to gold | `TestR1EvaluatorCorrectness` (adversarial wrong answers fail) |
+| R2 state count | N_STATES=100 (>=100 honored); 80-claim retracted | `TestR7Budget` + zero-cost check |
+| R3 reward identity | `gleppo/reward.py` single frozen function for r_hat & Q_hat | zero-cost checks 2/2 |
+| R4 seeds/cache/CRN | SHA256 seeds, replicate-aware cache, CRN paired | `TestR4SeedsCache` incl. PYTHONHASHSEED subprocess |
+| R5 templates | Real distinct generation rules; disjoint train/val | `TestR5Templates` + regenerated manifests |
+| R6 Jaccard distance | div_* = 1 - similarity | `TestR6JaccardDistance` |
+| R7 budget units | `BudgetLedger`; init slots included; 45,440<=50,000 | zero-cost check + `BudgetLedger` |
 
-### Objective
+## Verification runs (2026-10-27)
 
-Resolve every blocking finding in `research/PC1_INDEPENDENT_REVIEW.md` before any production G3 or PC1 run. This is a correctness-remediation task, not a controller-training task.
+- `python -m unittest discover -s tests` → **37/37 PASS**
+- `gleppo.pc1.zero_cost_protocol_check()` → **10/10 PASS** (45,440 planned slots, CRN/reward identity OK)
+- `python scripts/run_g3_causality.py` → **PASS 5/5** (StubLLM structural causality)
+- `python scripts/run_smoke.py` → 4 tasks A/B, 96 planned slots, 0 Family-C access
+- `python scripts/build_manifest.py` → VERIFY OK
 
-### Required tasks
+## Manifest SHA256 (regenerated)
 
-1. **Evaluator correctness:** rewrite Family A/B checkers to compare normalized final answers against gold; rewrite Family C checker to parse JSON and verify actual values/constraints, not just key presence. Gold must remain evaluator-only. Add positive and adversarial negative tests for wrong arithmetic, wrong string transforms, wrong JSON values, malformed JSON, and correct answers.
-2. **Template validity:** make template IDs correspond to actual different prompt/input generation rules. Ensure train and validation template sets are disjoint. Regenerate manifests, record new full SHA256 digests, and explain that this occurs before any controller training. Do not execute Family C.
-3. **Feature semantics:** change the three registered diversity features to actual Jaccard distance (or submit an explicit reviewed schema amendment to similarity semantics). Add tests for identical/disjoint/partial overlap.
-4. **Deterministic seeds:** replace Python built-in `hash(task_id)` in evolution seeding with a stable SHA256-derived seed. Add a subprocess test proving repeatability across different `PYTHONHASHSEED` values.
-5. **PC1 replicate/cache/CRN path:** distinct Monte Carlo replicates must not reuse cache results; paired action comparisons must use the declared common random seeds across actions while distinct replicates use distinct seeds. Cache keys must account for effective replicate/seed and runtime/model revision. Record cache hits separately and never count a cache hit as a new sample.
-6. **Reward identity:** `r_hat(s,a)` and the first-step reward used in `Q_hat(s,a)` must use exactly the same frozen reward function, including all terms and clipping. Define Q as the h-step return under the fixed random continuation policy.
-7. **Budget amendment:** revise `research/PHASE2_PREFLIGHT.md` with an explicit counting-unit table, initial-population costs, random and heuristic state-collection costs, invalids/cache accounting, operator-proposal calls, model completions/tokens, and a hard cap. Do not claim the original registration allowed 80 states. The candidate 100-state / 3-rollout / h=3 / one extra immediate draw / 40 source-episode design in the independent review may be evaluated, but do not adopt it without documenting the rationale.
-8. **Production smoke gate:** only after the evaluator tests and template/manifest fixes pass, deploy the exact model/backend in a new runtime-lock revision, record device/dtype/quantization/revisions, run a small A/B smoke test, re-run G3, and measure actual LLM calls/tokens/latency. No Family C execution.
-9. **Review loop:** update tests, `research/PC1_INDEPENDENT_REVIEW.md` remediation table, `status.json`, and this plan with actual evidence. Commit and push. Do not self-mark PC1 approved; request a second independent review.
+```
+train_A bc8e62255bebb3975a9c37b9422ab792a2891dfee783d9e060709f82a7cbc3f9
+train_B c5b0d99d4cbde9c7a7ab73979061a706482618c871cbc4bd0ceb59c3157a9b9b
+val_A   01591cb93bd445ec879c706fe80f7c9924184536f0b280fea6d0b4558b40c5ee
+val_B   6300f14a85acb04c9496a2d3796d69c19f4889813b785855165ca1ca5dadbe79
+test_C  67109af7d01e262f6c03ea75e27959e5136e2ce1700c56957f27853320a6bcb9   (never executed)
+```
 
-### Forbidden
+## Production smoke / real-model G3 — BLOCKED
 
-- No PC1 execution.
-- No PPO, Q-learning, or bandit controller implementation/training.
-- No Family C execution or tuning.
-- No invented results, tokens, or costs.
-- No third mechanism, no M2, no GLEET code reuse, no cross-project artifacts.
+`docs/RUNTIME_LOCK.md` production backend is `PENDING_DEPLOYMENT` (no credentials/hardware). Real-model G3, token/latency measurements, and the PC1 LLM cost ceiling cannot be produced. **No fabricated model calls or costs.** StubLLM results are labeled stub-only and are not real-model evidence.
 
-### Acceptance criteria
+## Next steps (shortest path)
 
-- Every R1–R7 finding has a code-level fix and regression test or an explicit reviewed protocol amendment.
-- Actual answer correctness is enforced by the evaluator.
-- The split manifest is regenerated and verifies; train/validation templates are truly distinct.
-- PC1 reward/CRN/cache semantics are statistically coherent and reproducible across processes.
-- Cost cap is arithmetically correct and includes initialization plus state collection; model-call/runtime ceilings are separately measured.
-- All relevant tests pass; Family C remains untouched.
-- Report commit SHA, changed files, test output, full manifest digests, production smoke measurements, and unresolved risks.
+1. **Second independent review** of `research/PC1_INDEPENDENT_REVIEW.md` remediation table + `research/PHASE2_PREFLIGHT.md` Amendment v2.
+2. Deploy production backend → fill RUNTIME_LOCK production fields.
+3. Real-model A/B smoke + G3 (still no Family C) → set LLM inference ceiling.
+4. Execute **PC1** under 50,000 planned-slot cap and the separate LLM ceiling.
+5. Only if PC1 **PASS** → request controller implementation plan (random/fixed/adaptive/bandit/FM-rewrite/Q-learning/PPO).
 
-### Stop rules
+## Forbidden (unchanged)
 
-If actual scoring cannot be made reliable, do not proceed. If the amended PC1 is infeasible or inconclusive under the declared cap, apply SR1 and stop the PPO hypothesis. Do not relax thresholds after seeing PC1 results or stack mechanisms to rescue a failed hypothesis.
+No PC1 before second review. No controllers. No Family C execution. No GLEET code. No M2/third mechanism. No fabricated results.

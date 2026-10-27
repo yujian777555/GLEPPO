@@ -1,6 +1,6 @@
 # G3 Genotype-Causality Report
 
-**Date:** 2026-10-27T02:51:16Z
+**Date:** 2026-10-27T03:14:47Z
 **Mode:** STUB_LL M_v1 (docs/RUNTIME_LOCK.md §4) — structural causality, not production-model validation
 **Families used:** A/B only. Family C accessed: False
 **Parents:** 4 · **Tasks:** 8 (signature probe uses 2/operator/parent) · **Replicas:** 2

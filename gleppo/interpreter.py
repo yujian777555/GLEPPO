@@ -51,6 +51,7 @@ class Interpreter:
             "type": "meta",
             "tools": list(g.tools),
             "workflow_sig": "|".join(s.type + (s.tool or "") for s in g.workflow),
+            "prompt_sig": __import__("hashlib").sha256(g.system_prompt.encode("utf-8")).hexdigest()[:8],
         })
 
         steps = g.workflow

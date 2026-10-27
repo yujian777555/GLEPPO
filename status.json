@@ -4,33 +4,55 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_CORRECTNESS_REMEDIATION",
-  "state": "PC1_NOT_APPROVED_REQUEST_CHANGES",
-  "implementation_status": "ENVIRONMENT_SKELETON_EXISTS_REVIEW_BLOCKERS_OPEN",
-  "experimental_status": "STUB_SMOKE_ONLY_NO_VALID_EFFECTIVENESS_EVIDENCE",
+  "state": "R1_R7_FIXED_AWAITING_SECOND_REVIEW",
+  "implementation_status": "ENVIRONMENT_CORRECTED_NO_CONTROLLERS",
+  "experimental_status": "STUB_G3_SMOKE_ONLY_PRODUCTION_BLOCKED",
   "reviewed_commit": "315796399116c4e1ec540f42d3e78a061043fb7e",
   "current_hypothesis": "A PPO-trained controller may learn sequential operator-selection decisions for LLM-agent evolution from population state and real execution feedback, and transfer to held-out task families.",
   "hypothesis_status": "UNVALIDATED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN_NOT_TO_BE_DEVELOPED_IN_PARALLEL",
-  "independent_review": {
-    "verdict": "REQUEST_CHANGES",
-    "report": "research/PC1_INDEPENDENT_REVIEW.md",
+  "remediation": {
+    "date": "2026-10-27",
+    "verdict_requested": "SECOND_INDEPENDENT_REVIEW",
     "pc1_approved": false,
     "pc1_executed": false,
     "production_backend_deployed": false,
+    "fixed": {
+      "R1": "gold-answer correctness in A/B/C checkers + adversarial tests",
+      "R2": "N_STATES restored to 100 (>=100 registration honored); false 80-claim retracted",
+      "R3": "single frozen reward (gleppo/reward.py) used by r_hat and Q_hat first step",
+      "R4": "CRN/replicate seeds, cache keys include replicate+runtime, SHA256 stable_seed + cross-process test",
+      "R5": "real template-specific generation; train/val template sets disjoint; manifests regenerated",
+      "R6": "div_* = Jaccard DISTANCE (1-similarity) + identical/disjoint/partial tests",
+      "R7": "BudgetLedger separates planned slots / actual CTX / cache hits / invalids / LLM calls; init included"
+    },
+    "tests": {"unit": "37/37 PASS", "pc1_zero_cost": "10/10 PASS", "g3_stub": "PASS 5/5", "smoke": "4 tasks A/B, 0 Family-C access"},
+    "manifest_sha256": {
+      "train_A": "bc8e62255bebb3975a9c37b9422ab792a2891dfee783d9e060709f82a7cbc3f9",
+      "train_B": "c5b0d99d4cbde9c7a7ab73979061a706482618c871cbc4bd0ceb59c3157a9b9b",
+      "val_A": "01591cb93bd445ec879c706fe80f7c9924184536f0b280fea6d0b4558b40c5ee",
+      "val_B": "6300f14a85acb04c9496a2d3796d69c19f4889813b785855165ca1ca5dadbe79",
+      "test_C": "67109af7d01e262f6c03ea75e27959e5136e2ce1700c56957f27853320a6bcb9"
+    },
+    "pc1_budget_v2": {
+      "n_states": 100,
+      "q_rollouts": 3,
+      "horizon": 3,
+      "n_eval": 2,
+      "planned_slots": 45440,
+      "hard_cap_slots": 50000,
+      "headroom": 4560,
+      "thresholds_unchanged": "D>=0.15 AND advantage>=0.02; inconclusive=>SR1"
+    },
     "blockers": [
-      "A/B checkers do not compare actual answers with gold; Family C validates keys but not values.",
-      "80 sampled states conflicts with Phase 1 minimum of 100; amendment rationale is inaccurate.",
-      "PC1 immediate reward estimate omits validity and population-mean reward terms/clipping used by Q.",
-      "Cache and seed behavior do not support independent Monte Carlo replicates and the declared CRN design.",
-      "Python built-in hash(task_id) makes evolution seed process-dependent.",
-      "Train/validation template IDs are identical metadata labels, not distinct generation templates.",
-      "Diversity features compute Jaccard similarity rather than the registered Jaccard distance.",
-      "PC1 slot arithmetic omits initial population evaluations and mixes planned slots with actual CTX."
+      "Production backend PENDING_DEPLOYMENT - real-model G3/smoke and LLM cost ceiling cannot be measured; no fabricated calls",
+      "Second independent review of remediation + PHASE2_PREFLIGHT v2 not yet obtained",
+      "C4 literature collision re-check outstanding (non-blocking for 2A-R1)"
     ]
   },
-  "current_task": "Phase 2A-R1: fix evaluator correctness, template split, feature semantics, stable RNG, PC1 replicate/cache/CRN semantics, reward identity, and cost amendment; then request second independent review.",
-  "next_gate": "CORRECTNESS_FIXES_AND_TESTS -> PRODUCTION_SMOKE_AND_G3 -> SECOND_PC1_REVIEW -> PC1 -> ONLY_THEN_CONTROLLER_TRAINING",
+  "current_task": "Await second independent review. After approval: deploy production backend, run real-model smoke + G3, then PC1 under 50k planned-slot cap.",
+  "next_gate": "SECOND_PC1_REVIEW -> PRODUCTION_SMOKE_AND_G3 -> PC1 -> ONLY_THEN_CONTROLLER_TRAINING",
   "project_isolation": {
     "source_of_truth": "yujian777555/GLEPPO",
     "cross_project_code_reuse": false,
@@ -49,7 +71,7 @@
     "SR1: if myopia diagnostic fails or remains inconclusive at the hard cap, STOP the PPO hypothesis.",
     "SR2: if PPO does not beat identical-state LinUCB and neural contextual bandit on Family C, STOP.",
     "SR3: if fitness-only state matches full ECOS, revise or stop the execution-feedback claim.",
-    "SR4: genotype/operator causality must pass after at most one operator-library revision.",
+    "SR4: genotype/operator causality must pass after at most one operator-library revision. [PASSED stub mode]",
     "SR5: if cost smoke is infeasible after one scale revision, STOP."
   ],
   "acceptance_rules": [
@@ -58,6 +80,7 @@
     "Use disjoint train/validation templates and hash-frozen manifests; do not execute Family C during development.",
     "Compare PPO against fixed, random, adaptive, contextual-bandit, FM-rewrite, and Q-learning baselines.",
     "Limited-budget allocation is not the central contribution.",
-    "No GLEET code reuse and no cross-project artifacts."
+    "No GLEET code reuse and no cross-project artifacts.",
+    "Do not fabricate model calls, tokens, costs, or experimental results."
   ]
 }

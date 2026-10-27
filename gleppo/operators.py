@@ -125,13 +125,15 @@ def op_crossover(parent: Genotype, ctx: dict) -> Genotype:
     if mate is None:
         mate = parent
     child = parent.copy()
-    p_sent = re.split(r"(?<=[.!?])\s+", parent.system_prompt.strip())
-    m_sent = re.split(r"(?<=[.!?])\s+", mate.system_prompt.strip())
-    mixed = []
-    for i in range(max(len(p_sent), len(m_sent))):
-        src = p_sent if i % 2 == 0 else m_sent
-        if i < len(src):
-            mixed.append(src[i])
+    p_sent = [s for s in re.split(r"(?<=[.!?])\s+", parent.system_prompt.strip()) if s]
+    m_sent = [s for s in re.split(r"(?<=[.!?])\s+", mate.system_prompt.strip()) if s]
+    # Union preserving parent order first, then mate-only sentences.
+    # Guarantees the child differs from the parent whenever the mate contributes
+    # any sentence the parent lacks (G3-visible causality).
+    mixed = list(p_sent)
+    for s in m_sent:
+        if s not in mixed:
+            mixed.append(s)
     child.system_prompt = " ".join(mixed) if mixed else parent.system_prompt
     if "{{answer}}" not in child.system_prompt and "final answer" not in child.system_prompt.lower():
         child.system_prompt = child.system_prompt + " Final answer: {{answer}}"

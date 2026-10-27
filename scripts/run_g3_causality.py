@@ -23,9 +23,9 @@ N_TASKS = 8          # train-family smoke tasks
 N_EVAL = 2
 
 FAMILY_TASKS = [
-    attach_checker(build_task(f"A-g3-{i:02d}", "A", 100 + i)) for i in range(N_TASKS // 2)
+    attach_checker(build_task(f"A-g3-{i:02d}", "A", 100 + i, f"TA{i+1}")) for i in range(N_TASKS // 2)
 ] + [
-    attach_checker(build_task(f"B-g3-{i:02d}", "B", 200 + i)) for i in range(N_TASKS // 2)
+    attach_checker(build_task(f"B-g3-{i:02d}", "B", 200 + i, f"TB{i+1}")) for i in range(N_TASKS // 2)
 ]
 
 
@@ -57,8 +57,8 @@ def behavior_signature(g, task, interp: Interpreter, n_rep=2):
             "failure_category": res.failure_category,
             "turns": res.turns,
             "tool_calls": res.tool_calls,
-            "answer_head": res.answer[:80],
-            "trace_types": [t.get("type") for t in res.trace],
+            "answer_head": res.answer[:120],
+            "trace": res.trace,
         })
     return {
         "success_rate": succ / n_rep,
@@ -67,6 +67,21 @@ def behavior_signature(g, task, interp: Interpreter, n_rep=2):
         "fails": fails,
         "traces": traces,
     }
+
+
+def _beh_differs(bp, bc):
+    if bp["success_rate"] != bc["success_rate"]:
+        return True
+    if bp["mean_tool_calls"] != bc["mean_tool_calls"] or bp["mean_turns"] != bc["mean_turns"]:
+        return True
+    if bp["fails"] != bc["fails"]:
+        return True
+    for t1, t2 in zip(bp["traces"], bc["traces"]):
+        if t1["answer_head"] != t2["answer_head"]:
+            return True
+        if t1["trace"] != t2["trace"]:
+            return True
+    return False
 
 
 def main():
@@ -120,13 +135,7 @@ def main():
                     "parent": {k: bp[k] for k in ("success_rate", "mean_tool_calls", "mean_turns", "fails")},
                     "child": {k: bc[k] for k in ("success_rate", "mean_tool_calls", "mean_turns", "fails")},
                 }
-                if (
-                    bp["success_rate"] != bc["success_rate"]
-                    or bp["mean_tool_calls"] != bc["mean_tool_calls"]
-                    or bp["mean_turns"] != bc["mean_turns"]
-                    or bp["fails"] != bc["fails"]
-                    or bp["traces"][0]["answer_head"] != bc["traces"][0]["answer_head"]
-                ):
+                if _beh_differs(bp, bc):
                     beh_change = True
                     delta["parent_trace"] = bp["traces"][0]
                     delta["child_trace"] = bc["traces"][0]

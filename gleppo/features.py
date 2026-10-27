@@ -1,4 +1,7 @@
-"""Canonical 32-dim state vector (PHASE2_PREFLIGHT §4). Tested for shape/order/finiteness."""
+"""Canonical 32-dim state vector (PHASE2_PREFLIGHT §4). Tested for shape/order/finiteness.
+
+R6: diversity features are Jaccard DISTANCES (1 - similarity), not similarities.
+"""
 from __future__ import annotations
 
 import math
@@ -7,7 +10,6 @@ from typing import List, Sequence
 STATE_DIM = 32
 GAMMA = 0.95
 
-# block A: 0-11, block B: 12-23, block C: 24-31
 FEATURE_NAMES = [
     "best_success", "mean_success", "succ_gap",
     "fail_format_rate", "fail_tool_rate", "fail_wrong_rate", "fail_timeout_rate",
@@ -26,11 +28,16 @@ def _clip01(x: float) -> float:
     return max(0.0, min(1.0, x))
 
 
-def _jaccard(a: Sequence, b: Sequence) -> float:
+def jaccard_similarity(a: Sequence, b: Sequence) -> float:
     sa, sb = set(a), set(b)
     if not sa and not sb:
-        return 0.0
+        return 1.0
     return len(sa & sb) / max(1, len(sa | sb))
+
+
+def jaccard_distance(a: Sequence, b: Sequence) -> float:
+    """R6: distance = 1 - similarity. 0 = identical, 1 = disjoint."""
+    return 1.0 - jaccard_similarity(a, b)
 
 
 def _ngrams(s: str, n: int = 8) -> set:
@@ -60,7 +67,7 @@ def state_vector(
     stagnation: int,
     best_delta_since_start: float,
     improve_last_3_frac: float,
-    recency_gaps: List[int],  # gaps of last operators (1 = just used)
+    recency_gaps: List[int],
     offspring_valid_last: float,
 ) -> List[float]:
     """Return exactly STATE_DIM floats in the frozen feature order."""
@@ -75,9 +82,10 @@ def state_vector(
         pairs = 0
         for i in range(len(tool_sets)):
             for j in range(i + 1, len(tool_sets)):
-                div_tools += _jaccard(tool_sets[i], tool_sets[j])
-                div_wf += _jaccard(workflows[i], workflows[j])
-                div_pr += _jaccard(_ngrams(prompts[i]), _ngrams(prompts[j]))
+                # R6: Jaccard DISTANCE
+                div_tools += jaccard_distance(tool_sets[i], tool_sets[j])
+                div_wf += jaccard_distance(workflows[i], workflows[j])
+                div_pr += jaccard_distance(_ngrams(prompts[i]), _ngrams(prompts[j]))
                 pairs += 1
         div_tools /= pairs
         div_wf /= pairs
@@ -91,7 +99,7 @@ def state_vector(
             if c > 0:
                 p = c / total
                 ent -= p * math.log(p)
-        ent /= math.log(5.0) if 5.0 > 1 else 1.0
+        ent /= math.log(5.0)
 
     op_names = [
         "prompt_local_edit", "prompt_critique_rewrite", "tool_subset_edit",

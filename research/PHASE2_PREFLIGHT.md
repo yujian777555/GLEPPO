@@ -172,3 +172,87 @@ Nothing else in Phase 1 is changed. 亮=8, 了=4, T=15, K=5, 粒=0.95, thresholds 0
 - [ ] All Phase 1 deviations listed
 
 **Until boxes are checked and this file is acknowledged in a commit, PC1 stays unexecuted.**
+
+---
+
+# Amendment v2 (2026-10-27, post independent review R1-R7)
+
+**Status:** SUPERSEDES the v1 sampling/budget numbers in ′3 above. v1 numbers are preserved for audit trail only. PC1 remains **NOT EXECUTED**; this amendment is submitted for the **second** independent review.
+
+## 8. R2 correction ！ state count
+
+The v1 claim that "80 was allowed by the original guard (>=100)" is **WRONG** and is retracted. Phase 1 registered "at least 100 states". v2 restores the minimum:
+
+- **N_states = 100** (meets the original >=100 registration; no supersession needed).
+
+## 9. R7 correction ！ budget accounting (planned slots vs actual CTX)
+
+R7 finding accepted: v1 omitted initial-population evaluations and conflated planned slots with actual CTX. v2 accounting:
+
+| Component | Formula | Planned slots |
+|---|---|---|
+| Q rollouts | 100 states x 5 actions x 3 rollouts x h=3 gens x lambda=4 x n_eval=2 | **36,000** |
+| Extra r_hat draws | 100 x 5 x 1 x 1 gen x 4 x 2 | **4,000** |
+| State collection (40 episodes: 20 random + 20 heuristic) | 40 x (mu=8 x 2 + T=15 x 4 x 2) = 40 x (16+120) | **5,440** |
+| **Total planned slots** | | **45,440** |
+| **Hard cap (planned slots)** | | **50,000** |
+| Headroom | | **4,560** |
+
+Accounting registers (reported separately, never summed into "CTX" ambiguously):
+
+1. **Planned evaluation slots** ！ conservative upper bound (the hard-cap unit).
+2. **Actual uncached CTX** ！ real candidate-task executions.
+3. **Invalid offspring** ！ counted, 0 CTX (never parent-cloned).
+4. **Cache hits** ！ counted separately; **never** counted as new samples (R4).
+5. **Operator-proposal LLM calls** ！ op2 only in production (0-2/application).
+6. **Agent LLM turns / tokens / latency** ！ measured only in production smoke (currently UNMEASURED).
+
+Implemented in gleppo/pc1.py:BudgetLedger and gleppo/evolution.py:EpisodeResult.
+
+## 10. R3 correction ！ reward identity
+
+The frozen reward function is now a single module: gleppo/reward.py:generation_reward:
+
+`
+reward = clip( d_best + 0.1*valid_rate + 0.25*d_mean , -0.5, 1.0 )
+`
+
+- _hat(s,a) = mean of the **first** generation reward over draws (same function).
+- Q_hat(s,a) = h-step discounted return of the same per-generation rewards under the **fixed random continuation policy** (not optimal Q).
+- Validated by gleppo/pc1.py:zero_cost_protocol_check (checks eward_identity_first_term, q_uses_same_first_term).
+
+## 11. R4 correction ！ CRN, replicates, cache
+
+- CRN seed: sha256("CRN|state_id|rollout_id") ！ **shared across actions**, distinct across rollouts.
+- Replicate seed: sha256("REP|state_id|action|rollout_id|rep") ！ distinct per replicate.
+- Cache key: ehavior_hash | task_id | replicate_id | eval_seed | runtime_revision | evaluator_version | llm.name.
+- Distinct replicate_ids **never** share cache entries. Cache hits increment cache_hits, not independent_samples.
+- Evolution seeding uses stable_seed (SHA256), replacing built-in hash(). Cross-process test: 	ests/test_core.py:TestR4SeedsCache.test_stable_seed_process_independent.
+
+## 12. R6 correction ！ diversity = Jaccard **distance**
+
+div_tools / div_workflow / div_prompt now store 1 - Jaccard similarity (gleppo/features.py:jaccard_distance). Identical => 0, disjoint => 1. Tests cover identical/disjoint/partial overlap. State dimension contract (d=32) unchanged.
+
+## 13. Statistical plan (v2)
+
+- **Cluster bootstrap** by independent task/episode (not IID over correlated states), 10,000 resamples.
+- Paired action comparisons under shared CRN seeds.
+- Report: disagreement D, advantage E[Q_hat(s,a_Q) - Q_hat(s,a_r)], 95% CI, stratification by stagnation bin (0, 1-2, >=3).
+- Thresholds **unchanged**: D >= 0.15 AND advantage >= 0.02, with CI margins 0.10 / 0.01. INCONCLUSIVE => SR1 STOP.
+
+## 14. Reviewer checklist (second review)
+
+- [x] R1 gold correctness implemented + adversarial tests
+- [x] R2 states restored to 100 (>=100 registration honored)
+- [x] R3 reward identity module + zero-cost check
+- [x] R4 CRN/replicate/cache + cross-process seed test
+- [x] R5 real templates, disjoint train/val, manifests regenerated
+- [x] R6 Jaccard distance + tests
+- [x] R7 planned-slot vs CTX accounting + init costs
+- [x] Zero-cost protocol check PASS (10/10)
+- [ ] Second independent review approval
+- [ ] Production backend deployment (BLOCKED: credentials/environment)
+- [ ] Production G3 + smoke (BLOCKED on backend)
+- [ ] PC1 execution (BLOCKED on review + production smoke)
+
+**PC1 remains unexecuted until this v2 amendment is independently approved and a production-backend smoke run sets the LLM cost ceiling.**

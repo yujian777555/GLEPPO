@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-10-27T02:48:44Z",
+  "created_at": "2026-10-27T03:13:17Z",
   "generator": "gleppo.tasks.generate_split",
   "manifest_version": "manifest-v1",
   "splits": {
@@ -8,7 +8,7 @@
       "n": 100,
       "path": "test_C.jsonl",
       "seed_start": 0,
-      "sha256": "dcc6b61288fc8ae1918df29b3b029d158a22871f2fbcedb8aca7c59bc257215d",
+      "sha256": "67109af7d01e262f6c03ea75e27959e5136e2ce1700c56957f27853320a6bcb9",
       "templates": [
         "TC1",
         "TC2",
@@ -22,7 +22,7 @@
       "n": 200,
       "path": "train_A.jsonl",
       "seed_start": 0,
-      "sha256": "de26ad08a26d8fdf79294c324e1fbfdba887fc1d3f16ae7b8e2844d4415c370c",
+      "sha256": "bc8e62255bebb3975a9c37b9422ab792a2891dfee783d9e060709f82a7cbc3f9",
       "templates": [
         "TA1",
         "TA2",
@@ -38,7 +38,7 @@
       "n": 200,
       "path": "train_B.jsonl",
       "seed_start": 0,
-      "sha256": "07e8339e2c0e7b1d458fc19d25a536c5d5ba67733eaea8fe98b293bf962d06f5",
+      "sha256": "c5b0d99d4cbde9c7a7ab73979061a706482618c871cbc4bd0ceb59c3157a9b9b",
       "templates": [
         "TB1",
         "TB2",
@@ -52,15 +52,13 @@
       "n": 50,
       "path": "val_A.jsonl",
       "seed_start": 1000,
-      "sha256": "348b0acac230a1b8d4256eb338b4cb7cb35bdac4144ddc64b5958d5cd0a0170d",
+      "sha256": "01591cb93bd445ec879c706fe80f7c9924184536f0b280fea6d0b4558b40c5ee",
       "templates": [
-        "TA1",
-        "TA2",
-        "TA3",
-        "TA4",
-        "TA5",
-        "TA6",
-        "TA7"
+        "TA8",
+        "TA9",
+        "TA10",
+        "TA11",
+        "TA12"
       ]
     },
     "val_B": {
@@ -68,13 +66,12 @@
       "n": 50,
       "path": "val_B.jsonl",
       "seed_start": 1000,
-      "sha256": "ed9ae9827bf3d5e65f583c4f3e624714c1107121cf7ae9b79da0f59ea5fff2b9",
+      "sha256": "6300f14a85acb04c9496a2d3796d69c19f4889813b785855165ca1ca5dadbe79",
       "templates": [
-        "TB1",
-        "TB2",
-        "TB3",
-        "TB4",
-        "TB5"
+        "TB6",
+        "TB7",
+        "TB8",
+        "TB9"
       ]
     }
   }

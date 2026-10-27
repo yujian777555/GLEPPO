@@ -47,7 +47,7 @@ class InstrumentedInterpreter(Interpreter):
 def _make_rec(si, a, r=0, role=ROLE_Q, rewards=None, cluster=None,
               task_id="T1", episode_id="col000"):
     n = HORIZON if role == ROLE_Q else 1
-    return StateActionRecord(
+    rec = StateActionRecord(
         state_id=f"s{si:03d}", cluster_id=cluster or f"c{si:03d}",
         action=a, rollout_id=r, replicate_id=0,
         crn_seed=crn_seed(task_id, f"s{si:03d}", r),
@@ -55,6 +55,8 @@ def _make_rec(si, a, r=0, role=ROLE_Q, rewards=None, cluster=None,
         effective_seed_parts=("SEED", "NONE", task_id, f"s{si:03d}", str(r), "0", "0"),
         gen_rewards=rewards if rewards is not None else [0.05] * n,
     )
+    rec.planned_slots = 24 if role == ROLE_Q else 8
+    return rec
 
 
 # ===== R27: negative budget rejection =====

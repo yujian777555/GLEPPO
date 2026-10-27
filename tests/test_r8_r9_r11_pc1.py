@@ -230,8 +230,7 @@ class TestPC1RunnerSynthetic(unittest.TestCase):
                         crn_seed=f"CRN|s{si}|{r}",
                         sample_role=ROLE_Q, task_id="T1", episode_id="col000",
                         effective_seed_parts=("SEED", f"s{si}", "A", str(r), "0", "0"),
-                        gen_rewards=gen,
-                        planned_slots=4 * 2,
+                        gen_rewards=gen, planned_slots=24,
                     ))
         return recs
 
@@ -283,7 +282,7 @@ class TestPC1RunnerSynthetic(unittest.TestCase):
                         rollout_id=r, replicate_id=0, crn_seed=f"CRN|s{si}|{r}",
                         sample_role=ROLE_Q, task_id="T1", episode_id="col000",
                         effective_seed_parts=("SEED", f"s{si}", "A", str(r), "0", "0"),
-                        gen_rewards=gen, planned_slots=8))
+                        gen_rewards=gen, planned_slots=24))
         res = run_pc1_analysis(recs, planned_slots_total=45000, require_registered_shape=False)
         self.assertGreaterEqual(res.D, 0.15)
         self.assertGreaterEqual(res.advantage, 0.02)
@@ -300,7 +299,7 @@ class TestPC1RunnerSynthetic(unittest.TestCase):
                         rollout_id=r, replicate_id=0, crn_seed=f"CRN|s{si}|{r}",
                         sample_role=ROLE_Q, task_id="T1", episode_id="col000",
                         effective_seed_parts=("SEED", f"s{si}", "A", str(r), "0", "0"),
-                        gen_rewards=[0.05, 0.05, 0.05], planned_slots=8))
+                        gen_rewards=[0.05, 0.05, 0.05], planned_slots=24))
         res = run_pc1_analysis(recs, planned_slots_total=50000, require_registered_shape=False)
         self.assertEqual(res.D, 0.0)
         self.assertEqual(res.advantage, 0.0)

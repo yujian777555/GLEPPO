@@ -79,26 +79,75 @@ CANONICAL_PROTOCOL = {
 }
 
 
-def protocol_consistency_check() -> dict:
-    """R19: verify code constants match CANONICAL_PROTOCOL and registered values."""
+def parse_protocol_document(path: Optional[str] = None) -> dict:
+    """R36: parse the canonical JSON field block from PC1_PROTOCOL_R4_PROPOSED.md."""
+    import re as _re
+    if path is None:
+        import os as _os
+        path = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))),
+                             "research", "PC1_PROTOCOL_R4_PROPOSED.md")
+    with open(path, encoding="utf-8") as f:
+        content = f.read()
+    match = _re.search(r'```json\s*\n(\{[^`]+\})\s*\n```', content)
+    if not match:
+        raise ValueError(f"R36: no canonical JSON block found in {path}")
+    return json.loads(match.group(1))
+
+
+def compute_protocol_hash(doc: dict) -> str:
+    """R36: stable hash of the canonical protocol field block."""
+    canonical = json.dumps(doc, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:32]
+
+
+def protocol_consistency_check(path: Optional[str] = None) -> dict:
+    """R36: verify code constants match the ACTUAL protocol document (not just code dict)."""
     checks: Dict[str, Tuple[bool, str]] = {}
-    checks["protocol_version"] = (CANONICAL_PROTOCOL["protocol_version"] == PROTOCOL_VERSION, PROTOCOL_VERSION)
-    checks["n_states_100"] = (CANONICAL_PROTOCOL["n_states"] == N_STATES == 100, str(N_STATES))
-    checks["n_actions_5"] = (CANONICAL_PROTOCOL["n_actions"] == N_ACTIONS == 5, str(N_ACTIONS))
-    checks["q_rollouts_3"] = (CANONICAL_PROTOCOL["q_rollouts"] == Q_ROLLOUTS == 3, str(Q_ROLLOUTS))
-    checks["horizon_3"] = (CANONICAL_PROTOCOL["horizon"] == HORIZON == 3, str(HORIZON))
-    checks["extra_immediate_1"] = (CANONICAL_PROTOCOL["extra_immediate"] == EXTRA_IMMEDIATE == 1, str(EXTRA_IMMEDIATE))
-    checks["gamma"] = (CANONICAL_PROTOCOL["gamma"] == GAMMA, str(GAMMA))
-    checks["budget_total_45440"] = (PLANNED_TOTAL_SLOTS == 45440, str(PLANNED_TOTAL_SLOTS))
-    checks["hard_cap_50000"] = (HARD_CAP_SLOTS == 50000, str(HARD_CAP_SLOTS))
-    checks["threshold_D"] = (THRESHOLD_D == 0.15, str(THRESHOLD_D))
-    checks["threshold_adv"] = (THRESHOLD_ADVANTAGE == 0.02, str(THRESHOLD_ADVANTAGE))
-    checks["margin_D"] = (MARGIN_D == 0.10, str(MARGIN_D))
-    checks["margin_adv"] = (MARGIN_ADV == 0.01, str(MARGIN_ADV))
+    try:
+        doc = parse_protocol_document(path)
+    except Exception as e:
+        return {"all_pass": False,
+                "checks": {"doc_parse": {"ok": False, "detail": str(e)}}, "doc_hash": ""}
+
+    doc_hash = compute_protocol_hash(doc)
+
+    # R36: compare ALL decision-critical fields against code
+    checks["doc_n_states"] = (doc.get("n_states") == N_STATES, f"{doc.get('n_states')} vs {N_STATES}")
+    checks["doc_n_actions"] = (doc.get("n_actions") == N_ACTIONS, f"{doc.get('n_actions')} vs {N_ACTIONS}")
+    checks["doc_q_rollouts"] = (doc.get("q_rollouts") == Q_ROLLOUTS, f"{doc.get('q_rollouts')} vs {Q_ROLLOUTS}")
+    checks["doc_horizon"] = (doc.get("horizon") == HORIZON, f"{doc.get('horizon')} vs {HORIZON}")
+    checks["doc_extra_immediate"] = (doc.get("extra_immediate") == EXTRA_IMMEDIATE, f"{doc.get('extra_immediate')} vs {EXTRA_IMMEDIATE}")
+    checks["doc_gamma"] = (doc.get("gamma") == GAMMA, f"{doc.get('gamma')} vs {GAMMA}")
+    checks["doc_n_episodes"] = (doc.get("n_collection_episodes") == N_STATE_COLLECTION_EPISODES,
+                                f"{doc.get('n_collection_episodes')} vs {N_STATE_COLLECTION_EPISODES}")
+
+    thresh = doc.get("thresholds", {})
+    checks["doc_thresh_D"] = (thresh.get("D") == THRESHOLD_D, f"{thresh.get('D')} vs {THRESHOLD_D}")
+    checks["doc_thresh_adv"] = (thresh.get("advantage") == THRESHOLD_ADVANTAGE, f"{thresh.get('advantage')} vs {THRESHOLD_ADVANTAGE}")
+    checks["doc_margin_D"] = (thresh.get("margin_D") == MARGIN_D, f"{thresh.get('margin_D')} vs {MARGIN_D}")
+    checks["doc_margin_adv"] = (thresh.get("margin_adv") == MARGIN_ADV, f"{thresh.get('margin_adv')} vs {MARGIN_ADV}")
+
+    budget = doc.get("budget", {})
+    checks["doc_budget_q"] = (budget.get("q_slots") == PLANNED_Q_SLOTS, f"{budget.get('q_slots')} vs {PLANNED_Q_SLOTS}")
+    checks["doc_budget_extra"] = (budget.get("extra_slots") == PLANNED_EXTRA_SLOTS, f"{budget.get('extra_slots')} vs {PLANNED_EXTRA_SLOTS}")
+    checks["doc_budget_collection"] = (budget.get("collection_slots") == PLANNED_COLLECTION_SLOTS, f"{budget.get('collection_slots')} vs {PLANNED_COLLECTION_SLOTS}")
+    checks["doc_budget_total"] = (budget.get("total") == PLANNED_TOTAL_SLOTS == 45440, f"{budget.get('total')} vs {PLANNED_TOTAL_SLOTS}")
+    checks["doc_budget_cap"] = (budget.get("hard_cap") == HARD_CAP_SLOTS == 50000, f"{budget.get('hard_cap')} vs {HARD_CAP_SLOTS}")
+
+    # R36: estimator and contract strings
+    checks["doc_estimator_r_hat"] = ("Q-rollout first rewards + extra" in doc.get("estimator_r_hat", ""),
+                                     doc.get("estimator_r_hat", "")[:50])
+    checks["doc_estimator_q_hat"] = ("q_rollout records only" in doc.get("estimator_q_hat", ""),
+                                     doc.get("estimator_q_hat", "")[:50])
+    checks["doc_cluster_unit"] = (doc.get("cluster_unit") == "collection_episode", doc.get("cluster_unit", ""))
+    checks["doc_seed_contract"] = ("SEED" in doc.get("seed_contract", ""), doc.get("seed_contract", "")[:50])
+    checks["doc_status_proposed"] = ("PROPOSED" in doc.get("status", ""), doc.get("status", ""))
+
     all_ok = all(ok for ok, _ in checks.values())
     return {"all_pass": all_ok,
             "checks": {k: {"ok": ok, "detail": d} for k, (ok, d) in checks.items()},
-            "canonical": CANONICAL_PROTOCOL}
+            "doc_hash": doc_hash,
+            "doc": doc}
 
 
 # ===========================================================================
@@ -169,13 +218,13 @@ class BudgetLedger:
 
     def record_collection(self, planned_slots: int, replicas_run_delta: int,
                           cache_bundle_delta: int) -> None:
-        """R27: collection accounting with same validation."""
+        """R33: fully atomic collection accounting."""
         ps = self._validate_nonneg("planned_slots", planned_slots)
         rd = self._validate_nonneg("replicas_run_delta", replicas_run_delta)
         cb = self._validate_nonneg("cache_bundle_delta", cache_bundle_delta)
         if self.planned_slots + ps > HARD_CAP_SLOTS:
             raise ValueError(
-                f"R27: collection {self.planned_slots}+{ps} would exceed cap {HARD_CAP_SLOTS}")
+                f"R33: collection {self.planned_slots}+{ps} would exceed cap {HARD_CAP_SLOTS}")
         self.planned_collection_slots += ps
         self.planned_slots += ps
         self.actual_replicas_run += rd
@@ -183,15 +232,34 @@ class BudgetLedger:
 
     def record_q_slot(self, planned_slots: int, replicas_run_delta: int,
                       cache_bundle_delta: int) -> None:
+        """R33: fully atomic — validate all args before ANY mutation."""
         ps = self._validate_nonneg("planned_slots", planned_slots)
+        rd = self._validate_nonneg("replicas_run_delta", replicas_run_delta)
+        cb = self._validate_nonneg("cache_bundle_delta", cache_bundle_delta)
+        if self.planned_slots + ps > HARD_CAP_SLOTS:
+            raise ValueError(
+                f"R33: planned_slots {self.planned_slots}+{ps} would exceed cap {HARD_CAP_SLOTS}")
+        # All checks passed — commit all mutations atomically
         self.planned_q_slots += ps
-        self.record_evaluation(ps, replicas_run_delta, cache_bundle_delta, valid=1)
+        self.planned_slots += ps
+        self.actual_replicas_run += rd
+        self.cache_hit_bundles += cb
+        self.valid_offspring += 1
 
     def record_extra_slot(self, planned_slots: int, replicas_run_delta: int,
                           cache_bundle_delta: int) -> None:
+        """R33: fully atomic — validate all args before ANY mutation."""
         ps = self._validate_nonneg("planned_slots", planned_slots)
+        rd = self._validate_nonneg("replicas_run_delta", replicas_run_delta)
+        cb = self._validate_nonneg("cache_bundle_delta", cache_bundle_delta)
+        if self.planned_slots + ps > HARD_CAP_SLOTS:
+            raise ValueError(
+                f"R33: planned_slots {self.planned_slots}+{ps} would exceed cap {HARD_CAP_SLOTS}")
+        # All checks passed — commit all mutations atomically
         self.planned_extra_slots += ps
-        self.record_evaluation(ps, replicas_run_delta, cache_bundle_delta, valid=0)
+        self.planned_slots += ps
+        self.actual_replicas_run += rd
+        self.cache_hit_bundles += cb
 
     def check_cap(self) -> bool:
         """R27: cap check includes non-negative invariant."""
@@ -298,11 +366,21 @@ def validate_records(records: List[StateActionRecord],
             if len(rec.gen_rewards) != HORIZON:
                 raise ValueError(
                     f"R13/R14: {tag}: q_rollout must have exactly {HORIZON} rewards, got {len(rec.gen_rewards)}")
+            # R33: per-record Q slot validation (unconditional)
+            expected_slots = HORIZON * LAMBDA * N_EVAL
+            if rec.planned_slots != expected_slots:
+                raise ValueError(
+                    f"R33: {tag}: q_rollout planned_slots {rec.planned_slots} != {expected_slots}")
             q_counts[(rec.state_id, rec.action)] = q_counts.get((rec.state_id, rec.action), 0) + 1
         else:  # ROLE_EXTRA
             if len(rec.gen_rewards) != 1:
                 raise ValueError(
                     f"R13/R14: {tag}: extra_immediate must have exactly 1 reward, got {len(rec.gen_rewards)}")
+            # R33: per-record extra slot validation (unconditional)
+            expected_slots = LAMBDA * N_EVAL
+            if rec.planned_slots != expected_slots:
+                raise ValueError(
+                    f"R33: {tag}: extra_immediate planned_slots {rec.planned_slots} != {expected_slots}")
             extra_counts[(rec.state_id, rec.action)] = extra_counts.get((rec.state_id, rec.action), 0) + 1
 
         # R13: duplicate key check (state, action, rollout, replicate, role)
@@ -314,6 +392,11 @@ def validate_records(records: List[StateActionRecord],
         state_clusters.setdefault(rec.state_id, set()).add(rec.cluster_id)
         states.add(rec.state_id)
         clusters.add(rec.cluster_id)
+
+    # R35: validate against plan mapping FIRST (registered mode only)
+    if require_registered_shape:
+        plan_mapping, _ = get_plan_mapping()
+        validate_provenance_against_plan(records, plan_mapping)
 
     # R13: state-cluster conflict
     for sid, cids in state_clusters.items():
@@ -348,12 +431,7 @@ def validate_records(records: List[StateActionRecord],
         if len(clusters) != N_STATE_COLLECTION_EPISODES:
             raise ValueError(
                 f"R28/R29: need exactly {N_STATE_COLLECTION_EPISODES} clusters, got {len(clusters)}")
-        # R29: provenance must be present
-        for rec in records:
-            if not rec.task_id:
-                raise ValueError(f"R29: record state={rec.state_id} missing task_id")
-            if not rec.episode_id:
-                raise ValueError(f"R29: record state={rec.state_id} missing episode_id")
+
 
 
 # ===========================================================================
@@ -479,9 +557,11 @@ def run_pc1_analysis(records: List[StateActionRecord],
                      require_registered_shape: bool = True,
                      manifest_hash: str = "",
                      runtime_revision: str = "",
-                     evaluator_version: str = "") -> "PC1Result":
+                     evaluator_version: str = "",
+                     protocol_hash: str = "",
+                     plan_hash: str = "") -> "PC1Result":
     """R13: validate first, fail closed. R28: full reconciliation. R30: provenance."""
-    # R30: registered provenance must be non-empty BEFORE any statistics
+    # R30/R37: registered provenance must be non-empty BEFORE any statistics
     if require_registered_shape:
         if not manifest_hash or not manifest_hash.strip():
             raise ValueError("R30: registered analysis requires non-empty manifest_hash")
@@ -489,6 +569,20 @@ def run_pc1_analysis(records: List[StateActionRecord],
             raise ValueError("R30: registered analysis requires non-empty runtime_revision")
         if not evaluator_version or not evaluator_version.strip():
             raise ValueError("R30: registered analysis requires non-empty evaluator_version")
+        if not protocol_hash or not protocol_hash.strip():
+            raise ValueError("R37: registered analysis requires non-empty protocol_hash")
+        if not plan_hash or not plan_hash.strip():
+            raise ValueError("R37: registered analysis requires non-empty plan_hash")
+        # R37: verify protocol hash matches actual document
+        actual_doc_hash = compute_protocol_hash(parse_protocol_document())
+        if protocol_hash != actual_doc_hash:
+            raise ValueError(
+                f"R37: protocol_hash mismatch: got '{protocol_hash}', expected '{actual_doc_hash}'")
+        # R37: verify plan hash matches generated mapping
+        _, expected_plan_hash = get_plan_mapping()
+        if plan_hash != expected_plan_hash:
+            raise ValueError(
+                f"R37: plan_hash mismatch: got '{plan_hash}', expected '{expected_plan_hash}'")
     # R21: reject invalid totals
     if planned_slots_total <= 0:
         raise ValueError(f"R21: planned_slots_total must be positive, got {planned_slots_total}")
@@ -573,6 +667,8 @@ def run_pc1_analysis(records: List[StateActionRecord],
         "protocol_version": PROTOCOL_VERSION,
         "estimator_version": ESTIMATOR_VERSION,
         "protocol_status": PROTOCOL_STATUS,
+        "protocol_hash": protocol_hash,
+        "plan_hash": plan_hash,
         "manifest_hash": manifest_hash,
         "runtime_revision": runtime_revision,
         "evaluator_version": evaluator_version,
@@ -736,6 +832,69 @@ def generate_pc1_dry_run_plan() -> PC1Plan:
     )
 
 
+# ===========================================================================
+# R35: deterministic state-to-episode plan mapping with hash
+# ===========================================================================
+
+def generate_plan_mapping() -> Tuple[Dict[str, dict], str]:
+    """R35: deterministic state-to-episode/task/cluster/family mapping.
+
+    Returns (mapping, plan_hash) where mapping[state_id] = {episode_id, task_id, cluster_id, family}.
+    plan_hash is SHA256 of the canonical JSON serialization.
+    """
+    import json as _json
+    mapping: Dict[str, dict] = {}
+    for si in range(N_STATES):
+        ep_idx = si % N_STATE_COLLECTION_EPISODES
+        ep_id = f"col{ep_idx:03d}"
+        task_id = f"task-{ep_id}"
+        cluster_id = ep_id  # cluster == episode in this design
+        family = "A" if ep_idx % 2 == 0 else "B"
+        sid = f"s{si:03d}"
+        mapping[sid] = {
+            "episode_id": ep_id,
+            "task_id": task_id,
+            "cluster_id": cluster_id,
+            "family": family,
+        }
+    # canonical hash
+    canonical = _json.dumps(mapping, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    plan_hash = hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:32]
+    return mapping, plan_hash
+
+
+# Singleton cache for the plan mapping
+_PLAN_MAPPING_CACHE: Optional[Tuple[Dict[str, dict], str]] = None
+
+def get_plan_mapping() -> Tuple[Dict[str, dict], str]:
+    global _PLAN_MAPPING_CACHE
+    if _PLAN_MAPPING_CACHE is None:
+        _PLAN_MAPPING_CACHE = generate_plan_mapping()
+    return _PLAN_MAPPING_CACHE
+
+
+def validate_provenance_against_plan(records: List[StateActionRecord],
+                                     plan_mapping: Dict[str, dict]) -> None:
+    """R35: validate each record matches the plan mapping exactly."""
+    for i, rec in enumerate(records):
+        tag = f"record[{i}] state={rec.state_id}"
+        if rec.state_id not in plan_mapping:
+            raise ValueError(f"R35: {tag}: state not in plan mapping")
+        expected = plan_mapping[rec.state_id]
+        if rec.episode_id != expected["episode_id"]:
+            raise ValueError(
+                f"R35: {tag}: episode_id '{rec.episode_id}' != plan '{expected['episode_id']}'")
+        if rec.task_id != expected["task_id"]:
+            raise ValueError(
+                f"R35: {tag}: task_id '{rec.task_id}' != plan '{expected['task_id']}'")
+        if rec.cluster_id != expected["cluster_id"]:
+            raise ValueError(
+                f"R35: {tag}: cluster_id '{rec.cluster_id}' != plan '{expected['cluster_id']}'")
+        if rec.family != expected["family"]:
+            raise ValueError(
+                f"R35: {tag}: family '{rec.family}' != plan '{expected['family']}'")
+
+
 class PC1ExecutionRefused(Exception):
     """Raised when registered PC1 execution is attempted without approval."""
 
@@ -822,20 +981,25 @@ class ApprovalGate:
     expected_protocol_hash: str = ""
 
     def check(self) -> None:
+        """R38: fail-closed — all fields must be non-empty and consistent."""
         if not self.approved:
-            raise PC1ExecutionRefused(
-                "R31: approval gate NOT satisfied (approved=False).")
+            raise PC1ExecutionRefused("R38: approved=False")
         if self.protocol_status != "APPROVED":
             raise PC1ExecutionRefused(
-                f"R31: protocol status is '{self.protocol_status}', need 'APPROVED'. "
-                "A proposed protocol cannot be executed even if boolean flags are set.")
-        if not self.approver or not self.approval_date:
+                f"R38: protocol_status='{self.protocol_status}', need 'APPROVED'")
+        if not self.approver or not self.approver.strip():
+            raise PC1ExecutionRefused("R38: approver is empty")
+        if not self.approval_date or not self.approval_date.strip():
+            raise PC1ExecutionRefused("R38: approval_date is empty")
+        # R38: protocol hash must be non-empty AND match expected
+        if not self.protocol_hash or not self.protocol_hash.strip():
+            raise PC1ExecutionRefused("R38: protocol_hash is empty")
+        if not self.expected_protocol_hash or not self.expected_protocol_hash.strip():
+            raise PC1ExecutionRefused("R38: expected_protocol_hash is empty")
+        if self.protocol_hash != self.expected_protocol_hash:
             raise PC1ExecutionRefused(
-                "R31: approval metadata incomplete (need approver + approval_date).")
-        if self.expected_protocol_hash and self.protocol_hash != self.expected_protocol_hash:
-            raise PC1ExecutionRefused(
-                f"R31: protocol hash mismatch: expected {self.expected_protocol_hash}, "
-                f"got {self.protocol_hash}")
+                f"R38: protocol hash mismatch: got '{self.protocol_hash}', "
+                f"expected '{self.expected_protocol_hash}'")
 
 
 @dataclass
@@ -846,13 +1010,17 @@ class ProductionRuntimeGate:
     required_revision: str = ""
 
     def check(self) -> None:
+        """R38: fail-closed — both revisions must be non-empty and match."""
         if not self.ready:
+            raise PC1ExecutionRefused("R38: production runtime gate NOT ready")
+        if not self.runtime_revision or not self.runtime_revision.strip():
+            raise PC1ExecutionRefused("R38: runtime_revision is empty")
+        if not self.required_revision or not self.required_revision.strip():
+            raise PC1ExecutionRefused("R38: required_revision is empty")
+        if self.runtime_revision != self.required_revision:
             raise PC1ExecutionRefused(
-                "R31: production runtime gate NOT ready.")
-        if self.required_revision and self.runtime_revision != self.required_revision:
-            raise PC1ExecutionRefused(
-                f"R31: runtime revision mismatch: need '{self.required_revision}', "
-                f"got '{self.runtime_revision}'")
+                f"R38: runtime revision mismatch: got '{self.runtime_revision}', "
+                f"expected '{self.required_revision}'")
 
 
 @dataclass

@@ -4,10 +4,10 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_R6_REMEDIATION",
-  "state": "REQUEST_CHANGES_PC1_NOT_APPROVED",
-  "reviewed_commit": "1441882ab8cd12e26c4b0dc22626d34d18f8e0dd",
-  "implementation_status": "R26_R32_IMPROVED_R33_R38_BLOCKERS_OPEN",
-  "experimental_status": "PC1_NOT_EXECUTED_FAMILY_C_NOT_ACCESSED_PRODUCTION_BACKEND_PENDING",
+  "state": "R33_R38_FIXED_AWAITING_SEVENTH_REVIEW",
+  "reviewed_commit": "b7700f5",
+  "implementation_status": "PC1_PATH_GATED_NO_CONTROLLERS",
+  "experimental_status": "SYNTHETIC_EXPERIMENTS_ONLY_PC1_NOT_EXECUTED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Execute planner/latest_plan.md Phase 2A-R6: fix Q/extra ledger atomicity and role-specific slots; collision-free seed/cache identities; plan-backed provenance; protocol/plan hashes in registered evidence; complete protocol-document consistency; and fail-closed approval/runtime gate bindings.",
-  "next_gate": "FIX_R33_R38 -> FOCUSED_AND_FULL_TESTS -> SEVENTH_INDEPENDENT_REVIEW -> PLANNER_PROTOCOL_APPROVAL -> PRODUCTION_RUNTIME_SMOKE_G3 -> PC1_APPROVAL",
+  "current_task": "Await seventh independent review + Planner protocol approval.",
+  "next_gate": "SEVENTH_REVIEW -> PLANNER_APPROVAL -> PRODUCTION_SMOKE_G3 -> PC1",
   "hard_rules": [
     "No registered PC1 execution before Planner protocol approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -216,5 +216,33 @@
     },
     "cost_review": "Current SMOKE_RAW.json and COST_BASELINE.md agree on 0.0235 s, 128 planned smoke slots, and 112 actual replica executions.",
     "source_reviewed_commit": "1441882ab8cd12e26c4b0dc22626d34d18f8e0dd"
+  },
+  "remediation_r6": {
+    "date": "2026-10-27",
+    "verdict_requested": "SEVENTH_INDEPENDENT_REVIEW",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "fixed": {
+      "R33": "atomic Q/extra updates + per-record slot validation (Q=24, extra=8)",
+      "R34": "typed JSON seed encoding; None vs NONE vs EMPTY collision-free",
+      "R35": "plan mapping with hash; provenance validated against plan",
+      "R36": "parse_protocol_document + full field mutation tests",
+      "R37": "protocol_hash + plan_hash required and verified in registered mode",
+      "R38": "fail-closed gates: all fields non-empty and exact match required"
+    },
+    "experiments": {
+      "synthetic_analysis": "D>0, advantage>0, decision computed",
+      "negative_provenance": "rejected with specific error",
+      "round_trip": "serialize/replay consistent"
+    },
+    "tests": {
+      "unit": "206/206 PASS",
+      "zero_cost": "PASS",
+      "protocol_consistency": "PASS",
+      "dry_run": "PASS",
+      "manifest": "OK",
+      "smoke": "ok",
+      "cost_check": "PASS"
+    }
   }
 }

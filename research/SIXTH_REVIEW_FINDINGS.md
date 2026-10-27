@@ -144,3 +144,40 @@ The reported smoke/cost numbers are internally consistent in the current source 
 ## Final decision
 
 **REQUEST CHANGES â€” PC1 NOT APPROVED / NOT EXECUTED.** R5 improves the implementation and correctly downgrades the runner to a synthetic harness, but atomic budget updates, collision-free seed identity, plan-backed provenance, complete protocol hashing, registered evidence hashes and fail-closed gate bindings remain unresolved.
+
+---
+
+# Remediation Log (Executor, 2026-10-27 Phase 2A-R6)
+
+**Base commit (sixth review):** `b7700f5`
+**PC1 status:** NOT EXECUTED / NOT APPROVED.
+
+| Finding | Fix | Tests |
+|---|---|---|
+| **R33** Q/extra atomicity + per-record slots | `record_q_slot`/`record_extra_slot` fully atomic (validate all before any mutation); per-record slot validation Q=24, extra=8 (unconditional) | `TestR33Atomicity` (5) |
+| **R34** seed tag collisions | typed JSON encoding: `["none"]` vs `["value","NONE"]` vs `["empty"]` vs `["value","EMPTY"]`; delimiter-safe CRN | `TestR34SeedCollision` (6) |
+| **R35** plan-backed provenance | `generate_plan_mapping()` returns hashed state¡úepisode/task/cluster/family; `validate_provenance_against_plan` called before cluster checks | `TestR35PlanProvenance` (4) |
+| **R36** protocol doc consistency | `parse_protocol_document()` reads actual doc JSON; `protocol_consistency_check()` compares ALL decision-critical fields; mutation tests | `TestR36ProtocolConsistency` (6) |
+| **R37** protocol/plan hash required | registered mode requires non-empty `protocol_hash` + `plan_hash`; verified against actual artifacts; in evidence | `TestR37ProtocolPlanHash` (4) |
+| **R38** fail-closed gates | `ApprovalGate` requires non-empty protocol_hash + expected_hash (exact match); `ProductionRuntimeGate` requires non-empty revision + required_revision; all empty fields rejected | `TestR38FailClosedGates` (8) |
+
+## Experiment B: synthetic analysis results
+
+- Positive synthetic (disagreement designed): D > 0, advantage > 0, decision computed
+- Negative synthetic (missing provenance): rejected with specific error
+- Round-trip: serialize ¡ú replay ¡ú D/advantage/decision identical
+
+## Test evidence (2026-10-27)
+
+- **Full unit suite: 206/206 PASS**
+- **Zero-cost protocol check: PASS**
+- **Protocol consistency check: PASS** (doc_hash=8d649e52...)
+- **Dry-run: within_cap=True, total=45,440, schedule=2040**
+- **Plan mapping: 100 states, hash=af11096d...**
+- **Manifest: VERIFY OK**
+- **Smoke: 32+96=128, actual=112, slot_arithmetic_ok=true**
+- **Cost consistency: PASS**
+
+## PC1 status
+
+`execute_registered_pc1()` raises `PC1ExecutionRefused`. Protocol status remains `PROPOSED / NOT APPROVED`.

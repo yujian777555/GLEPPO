@@ -43,7 +43,7 @@ class InstrumentedInterpreter(Interpreter):
 def _make_rec(si, a, r=0, role=ROLE_Q, rewards=None, cluster=None,
               task_id="T1", episode_id="col000"):
     n = HORIZON if role == ROLE_Q else 1
-    return StateActionRecord(
+    rec = StateActionRecord(
         state_id=f"s{si:03d}", cluster_id=cluster or f"c{si:03d}",
         action=a, rollout_id=r, replicate_id=0,
         crn_seed=crn_seed(task_id, f"s{si:03d}", r),
@@ -51,6 +51,10 @@ def _make_rec(si, a, r=0, role=ROLE_Q, rewards=None, cluster=None,
         effective_seed_parts=("SEED", "AUTO", task_id, f"s{si:03d}", str(r), "0", "0"),
         gen_rewards=rewards if rewards is not None else [0.05] * n,
     )
+    rec.planned_slots = 24 if role == ROLE_Q else 8
+    return rec
+    rec.planned_slots = 24 if role == ROLE_Q else 8
+    return rec
 
 
 # ===== R19: protocol consistency =====
@@ -381,8 +385,8 @@ class TestR25GatedRunner(unittest.TestCase):
 
     def test_over_budget_denied(self):
         runner = SyntheticGateHarness(
-            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", approver="test", approval_date="2026-01-01"),
-            production_gate=ProductionRuntimeGate(ready=True),
+            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", approver="test", approval_date="2026-01-01", protocol_hash="h1", expected_protocol_hash="h1"),
+            production_gate=ProductionRuntimeGate(ready=True, runtime_revision="r1", required_revision="r1"),
             protocol_gate=ProtocolVersionGate(),
         )
         with self.assertRaises(PC1ExecutionRefused):
@@ -390,8 +394,8 @@ class TestR25GatedRunner(unittest.TestCase):
 
     def test_synthetic_execution_with_all_gates(self):
         runner = SyntheticGateHarness(
-            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", approver="test", approval_date="2026-01-01"),
-            production_gate=ProductionRuntimeGate(ready=True),
+            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", approver="test", approval_date="2026-01-01", protocol_hash="h1", expected_protocol_hash="h1"),
+            production_gate=ProductionRuntimeGate(ready=True, runtime_revision="r1", required_revision="r1"),
             protocol_gate=ProtocolVersionGate(),
         )
         runner.execute_unit("u1", PROTOCOL_VERSION, 10, 8, 0)
@@ -401,8 +405,8 @@ class TestR25GatedRunner(unittest.TestCase):
 
     def test_collection_episode_budget_check(self):
         runner = SyntheticGateHarness(
-            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", approver="test", approval_date="2026-01-01"),
-            production_gate=ProductionRuntimeGate(ready=True),
+            approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", approver="test", approval_date="2026-01-01", protocol_hash="h1", expected_protocol_hash="h1"),
+            production_gate=ProductionRuntimeGate(ready=True, runtime_revision="r1", required_revision="r1"),
             protocol_gate=ProtocolVersionGate(),
         )
         with self.assertRaises(PC1ExecutionRefused):

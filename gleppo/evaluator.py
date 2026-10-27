@@ -59,28 +59,33 @@ class Evaluator:
         with (task_id, state_id, rollout_id, replicate_id, replica_index).
         Action and genotype NEVER enter the seed.
         """
-        # R32: tagged encoding distinguishes None from ""
+        # R34: collision-free typed encoding — ["none"] vs ["value","NONE"] etc.
         if eval_seed_override is None:
-            base_tag = "NONE"
+            base_tag = ["none"]
         elif eval_seed_override == "":
-            base_tag = "EMPTY"
+            base_tag = ["empty"]
         else:
-            base_tag = eval_seed_override
-        return ("SEED", base_tag, task_id, state_id, str(rollout_id), str(replicate_id), str(replica_index))
+            base_tag = ["value", eval_seed_override]
+        # JSON-serialize all fields for unambiguous encoding
+        import json as _json
+        encoded = _json.dumps([
+            base_tag, task_id, state_id, str(rollout_id), str(replicate_id), str(replica_index)
+        ], separators=(",", ":"), ensure_ascii=False)
+        return ("SEED", encoded)
 
     def _cache_key(self, g: Genotype, task: dict, state_id: str, rollout_id: str,
                    replicate_id: int, eval_seed_override: Optional[str]) -> str:
         """R32: cache key uses tagged encoding for eval_seed to distinguish
         None (absent) from "" (explicit empty). Includes all seed-affecting
         fields plus genotype identity, task, runtime, evaluator version."""
-        # R32: tagged encoding — None -> "TAG:NONE", "" -> "TAG:EMPTY", else "TAG:" + value
+        # R34: collision-free typed encoding for eval_seed
         if eval_seed_override is None:
-            seed_tag = "TAG:NONE"
+            seed_tag = ["none"]
         elif eval_seed_override == "":
-            seed_tag = "TAG:EMPTY"
+            seed_tag = ["empty"]
         else:
-            seed_tag = "TAG:" + eval_seed_override
-        # R32: collision-safe serialization using JSON array encoding
+            seed_tag = ["value", eval_seed_override]
+        # R34: JSON-array serialization — delimiter-safe for any input
         import json as _json
         key_parts = _json.dumps([
             behavior_hash(g),
@@ -92,7 +97,7 @@ class Evaluator:
             self.runtime_revision,
             EVALUATOR_VERSION,
             getattr(getattr(self.interpreter, "llm", None), "name", "unknown"),
-        ], separators=(",", ":"))
+        ], separators=(",", ":"), ensure_ascii=False)
         return key_parts
 
     def evaluate(self, g: Genotype, task: dict, allow_family: tuple = ("A", "B"),

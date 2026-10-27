@@ -1,59 +1,33 @@
-# Planner Latest Plan — GLEPPO Phase 2A-R1 (OUTCOME)
+# Planner Latest Plan — GLEPPO Second Review
 
-**Status:** EXECUTED 2026-10-27 · awaiting SECOND independent review  
-**Repository:** `yujian777555/GLEPPO` only  
-**Base commit (under review):** `315796399116c4e1ec540f42d3e78a061043fb7e`  
-**PC1 status:** NOT APPROVED · NOT EXECUTED  
-**Controller status:** no PPO / Q-learning / bandit controllers implemented or trained
+**Status:** REQUEST CHANGES. PC1 is not approved and has not been executed.  
+**Reviewed commit:** `a272a453c1147d9b2fd194c04806ba0a4dac8cdc`  
+**Review record:** [research/SECOND_REVIEW_FINDINGS.md](../research/SECOND_REVIEW_FINDINGS.md)
 
-## Task (as executed)
+## Findings
 
-Phase 2A-R1 correctness remediation per `research/PC1_INDEPENDENT_REVIEW.md` R1–R7. No new mechanisms, no scope expansion.
+1. The evaluator appends the genotype behavior hash to the effective seed even when a common random seed is supplied, so paired action comparisons do not actually share seed inputs.
+2. Actual execution counters do not consistently subtract cached evaluation bundles containing multiple replicas.
+3. The smoke report's 96 slots count offspring only; including initialization gives 128 planned slots for the recorded configuration.
+4. Runtime lock seed rules still document built-in hash-based seeds instead of the SHA256 rules in code.
+5. StubLLM does not correctly solve every generated Family A template. Stub success scores are not task-performance evidence.
+6. The PC1 module has helpers but lacks a complete state-sampling, rollout, cluster-bootstrap and raw-evidence runner.
 
-## Outcome
+## Next executor task
 
-**All R1–R7 findings fixed with regression tests. PC1 still not executed — second review requested.**
+- Fix the common-random-number seed path and test effective seeds through an instrumented evaluator.
+- Correct actual CTX/cache accounting and smoke planned-slot reporting.
+- Update the runtime lock to match code.
+- Test StubLLM against every generated template or quarantine its success scores as non-evidence.
+- Implement and test the PC1 runner without executing PC1.
+- Update status and evidence, push to `main`, and request another independent review.
 
-| Finding | Fix | Test evidence |
-|---|---|---|
-| R1 gold correctness | A/B/C checkers compare actual answers/values to gold | `TestR1EvaluatorCorrectness` (adversarial wrong answers fail) |
-| R2 state count | N_STATES=100 (>=100 honored); 80-claim retracted | `TestR7Budget` + zero-cost check |
-| R3 reward identity | `gleppo/reward.py` single frozen function for r_hat & Q_hat | zero-cost checks 2/2 |
-| R4 seeds/cache/CRN | SHA256 seeds, replicate-aware cache, CRN paired | `TestR4SeedsCache` incl. PYTHONHASHSEED subprocess |
-| R5 templates | Real distinct generation rules; disjoint train/val | `TestR5Templates` + regenerated manifests |
-| R6 Jaccard distance | div_* = 1 - similarity | `TestR6JaccardDistance` |
-| R7 budget units | `BudgetLedger`; init slots included; 45,440<=50,000 | zero-cost check + `BudgetLedger` |
+## Forbidden until approval
 
-## Verification runs (2026-10-27)
+- Do not execute PC1.
+- Do not run production-model G3 or smoke before the runtime is pinned and deployed.
+- Do not access or tune against Family C.
+- Do not implement/train PPO, Q-learning or bandit controllers.
+- Do not introduce M2 or another mechanism, copy GLEET code, or fabricate results.
 
-- `python -m unittest discover -s tests` → **37/37 PASS**
-- `gleppo.pc1.zero_cost_protocol_check()` → **10/10 PASS** (45,440 planned slots, CRN/reward identity OK)
-- `python scripts/run_g3_causality.py` → **PASS 5/5** (StubLLM structural causality)
-- `python scripts/run_smoke.py` → 4 tasks A/B, 96 planned slots, 0 Family-C access
-- `python scripts/build_manifest.py` → VERIFY OK
-
-## Manifest SHA256 (regenerated)
-
-```
-train_A bc8e62255bebb3975a9c37b9422ab792a2891dfee783d9e060709f82a7cbc3f9
-train_B c5b0d99d4cbde9c7a7ab73979061a706482618c871cbc4bd0ceb59c3157a9b9b
-val_A   01591cb93bd445ec879c706fe80f7c9924184536f0b280fea6d0b4558b40c5ee
-val_B   6300f14a85acb04c9496a2d3796d69c19f4889813b785855165ca1ca5dadbe79
-test_C  67109af7d01e262f6c03ea75e27959e5136e2ce1700c56957f27853320a6bcb9   (never executed)
-```
-
-## Production smoke / real-model G3 — BLOCKED
-
-`docs/RUNTIME_LOCK.md` production backend is `PENDING_DEPLOYMENT` (no credentials/hardware). Real-model G3, token/latency measurements, and the PC1 LLM cost ceiling cannot be produced. **No fabricated model calls or costs.** StubLLM results are labeled stub-only and are not real-model evidence.
-
-## Next steps (shortest path)
-
-1. **Second independent review** of `research/PC1_INDEPENDENT_REVIEW.md` remediation table + `research/PHASE2_PREFLIGHT.md` Amendment v2.
-2. Deploy production backend → fill RUNTIME_LOCK production fields.
-3. Real-model A/B smoke + G3 (still no Family C) → set LLM inference ceiling.
-4. Execute **PC1** under 50,000 planned-slot cap and the separate LLM ceiling.
-5. Only if PC1 **PASS** → request controller implementation plan (random/fixed/adaptive/bandit/FM-rewrite/Q-learning/PPO).
-
-## Forbidden (unchanged)
-
-No PC1 before second review. No controllers. No Family C execution. No GLEET code. No M2/third mechanism. No fabricated results.
+PC1 may proceed only after a later independent review approves the protocol and the production smoke/G3 gate is complete. If PC1 is eventually inconclusive at the hard cap, apply SR1 and stop the PPO hypothesis.

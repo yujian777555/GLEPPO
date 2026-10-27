@@ -123,3 +123,25 @@ The production backend remains `PENDING_DEPLOYMENT`. No real-model smoke/G3 evid
 - **Dry-run: within_cap=True, total=45,440**
 - **Manifest: VERIFY OK**
 - **Smoke: 32+96=128, actual=112, 0.0248 s**
+
+---
+
+# Remediation Log (Executor, 2026-10-27 Phase 2A-R10-C1)
+
+**Base commit:** `024a816`
+**PC1 status:** NOT EXECUTED / NOT APPROVED.
+
+| Finding | Fix | Tests |
+|---|---|---|
+| **R54** approval action/status binding | `approval_action`+`authorization_status` in HMAC payload; gate rejects PROPOSED canonical status | status/action tests |
+| **R55** plan-protocol binding | `protocol_content_hash` in plan artifact; joint verification of plan_id/version/hash/protocol_hash | binding tests |
+| **R56** bool accepted as number | `_is_strict_number` rejects bool; all reward/estimator fields strictly checked | type mutation tests |
+
+## Test evidence (2026-10-27)
+
+- **Full unit suite: 232/232 PASS**
+- **Zero-cost protocol check: PASS**
+- **Protocol consistency check: PASS** (doc_hash=baa9e834)
+- **Dry-run: within_cap=True, total=45,440**
+- **Manifest: VERIFY OK**
+- **Smoke: 32+96=128, actual=112, 0.0209 s**

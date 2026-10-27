@@ -173,20 +173,24 @@ def protocol_consistency_check(path: Optional[str] = None) -> dict:
         actual = set(obj.keys()) if isinstance(obj, dict) else set()
         return actual == expected_keys
 
+    def _is_strict_number(val) -> bool:
+        """R56: must be int or float, NOT bool."""
+        return isinstance(val, (int, float)) and not isinstance(val, bool)
+
     # R52: reward contract — exact keys, exact types
     reward_contract = doc.get("reward_contract", {})
     expected_reward_keys = {"w_best", "w_valid", "w_mean", "clip_lo", "clip_hi"}
     checks["doc_reward_schema"] = (_check_exact_keys(reward_contract, expected_reward_keys, "reward"),
                                    str(sorted(reward_contract.keys())))
-    checks["doc_reward_w_best"] = (isinstance(reward_contract.get("w_best"), (int, float))
+    checks["doc_reward_w_best"] = (_is_strict_number(reward_contract.get("w_best"))
                                     and reward_contract.get("w_best") == W_BEST, str(reward_contract.get("w_best")))
-    checks["doc_reward_w_valid"] = (isinstance(reward_contract.get("w_valid"), (int, float))
+    checks["doc_reward_w_valid"] = (_is_strict_number(reward_contract.get("w_valid"))
                                      and reward_contract.get("w_valid") == W_VALID, str(reward_contract.get("w_valid")))
-    checks["doc_reward_w_mean"] = (isinstance(reward_contract.get("w_mean"), (int, float))
+    checks["doc_reward_w_mean"] = (_is_strict_number(reward_contract.get("w_mean"))
                                     and reward_contract.get("w_mean") == W_MEAN, str(reward_contract.get("w_mean")))
-    checks["doc_reward_clip_lo"] = (isinstance(reward_contract.get("clip_lo"), (int, float))
+    checks["doc_reward_clip_lo"] = (_is_strict_number(reward_contract.get("clip_lo"))
                                      and reward_contract.get("clip_lo") == REWARD_CLIP_LO, str(reward_contract.get("clip_lo")))
-    checks["doc_reward_clip_hi"] = (isinstance(reward_contract.get("clip_hi"), (int, float))
+    checks["doc_reward_clip_hi"] = (_is_strict_number(reward_contract.get("clip_hi"))
                                      and reward_contract.get("clip_hi") == REWARD_CLIP_HI, str(reward_contract.get("clip_hi")))
     # R52: estimator contract — exact keys, exact types
     est_contract = doc.get("estimator_contract", {})
@@ -194,7 +198,7 @@ def protocol_consistency_check(path: Optional[str] = None) -> dict:
     checks["doc_est_schema"] = (_check_exact_keys(est_contract, expected_est_keys, "estimator"),
                                 str(sorted(est_contract.keys())))
     checks["doc_est_horizon"] = (est_contract.get("horizon") == HORIZON, str(est_contract.get("horizon")))
-    checks["doc_est_gamma"] = (isinstance(est_contract.get("gamma"), (int, float))
+    checks["doc_est_gamma"] = (_is_strict_number(est_contract.get("gamma"))
                                 and est_contract.get("gamma") == GAMMA, str(est_contract.get("gamma")))
     checks["doc_est_r_hat_sources"] = (
         est_contract.get("r_hat_sources") == ["q_rollout_first", "extra_immediate"],
@@ -994,10 +998,18 @@ def get_plan_mapping() -> Tuple[Dict[str, dict], str]:
 def save_plan_artifact(path: str) -> str:
     """R41: serialize plan mapping to deterministic artifact, return hash."""
     mapping, plan_hash = get_plan_mapping()
+    # R55: bind protocol content hash into the plan artifact
+    from .pc1 import compute_protocol_hash as _cph, parse_protocol_document as _ppd
+    try:
+        _doc = _ppd()
+        _proto_hash = _cph(_doc)
+    except Exception:
+        _proto_hash = ""
     artifact = {
         "plan_id": REGISTERED_PLAN_ID,
         "plan_version": REGISTERED_PLAN_VERSION,
         "plan_hash": plan_hash,
+        "protocol_content_hash": _proto_hash,
         "mapping": mapping,
     }
     with open(path, "w", encoding="utf-8") as f:
@@ -1038,6 +1050,20 @@ def load_plan_artifact(path: str, require_registered: bool = True) -> Tuple[Dict
             raise ValueError(
                 f"R51: plan_version mismatch: got '{artifact.get('plan_version')}', "
                 f"expected '{REGISTERED_PLAN_VERSION}'")
+        # R55: verify protocol content hash binding
+        from .pc1 import compute_protocol_hash as _cph, parse_protocol_document as _ppd
+        try:
+            _doc = _ppd()
+            _current_proto_hash = _cph(_doc)
+        except Exception:
+            _current_proto_hash = ""
+        stored_proto_hash = artifact.get("protocol_content_hash", "")
+        if not stored_proto_hash:
+            raise ValueError("R55: plan artifact missing protocol_content_hash")
+        if stored_proto_hash != _current_proto_hash:
+            raise ValueError(
+                f"R55: protocol_content_hash mismatch: artifact='{stored_proto_hash}', "
+                f"current='{_current_proto_hash}'")
     return mapping, actual_hash
 
 
@@ -1144,12 +1170,15 @@ class TrustedApprovalArtifact:
     approval_date: str = ""
     protocol_hash: str = ""
     protocol_version: str = ""
+    approval_action: str = ""      # R54: must be "APPROVE"
+    authorization_status: str = "" # R54: must be "APPROVED"
     signature: str = ""   # HMAC-SHA256 over canonical approval fields
 
     def _canonical_payload(self) -> str:
         return json.dumps([
             self.artifact_id, self.approver, self.approval_date,
             self.protocol_hash, self.protocol_version,
+            self.approval_action, self.authorization_status,
         ], separators=(",", ":"), ensure_ascii=False)
 
     @staticmethod
@@ -1197,6 +1226,13 @@ class TrustedApprovalArtifact:
             raise PC1ExecutionRefused(
                 f"R50: protocol_version mismatch: got '{self.protocol_version}', "
                 f"expected '{expected_version}'")
+        # R54: approval action and authorization status must match
+        if self.approval_action != "APPROVE":
+            raise PC1ExecutionRefused(
+                f"R54: approval_action '{self.approval_action}' != 'APPROVE'")
+        if self.authorization_status != "APPROVED":
+            raise PC1ExecutionRefused(
+                f"R54: authorization_status '{self.authorization_status}' != 'APPROVED'")
 
 
 @dataclass
@@ -1278,21 +1314,24 @@ class ApprovalGate:
     approval_key: Optional[bytes] = None   # external trust anchor
 
     def check(self) -> None:
-        """R50: require trusted artifact with valid HMAC signature. Fail-closed."""
+        """R54: require trusted artifact with valid HMAC + canonical APPROVED status. Fail-closed."""
         if not self.approved:
-            raise PC1ExecutionRefused("R50: approved=False")
-        if self.protocol_status != "APPROVED":
-            raise PC1ExecutionRefused(
-                f"R50: protocol_status='{self.protocol_status}', need 'APPROVED'")
-        # R50: must have a trusted artifact with signature
+            raise PC1ExecutionRefused("R54: approved=False")
+        # R54: must have a trusted artifact with signature
         if self.trusted_artifact is None:
-            raise PC1ExecutionRefused("R50: no TrustedApprovalArtifact provided")
+            raise PC1ExecutionRefused("R54: no TrustedApprovalArtifact provided")
         if self.approval_key is None:
-            raise PC1ExecutionRefused("R50: no approval_key provided")
-        # R50: verify the trusted artifact (HMAC + fields)
+            raise PC1ExecutionRefused("R54: no approval_key provided")
+        # R54: read canonical protocol and check its status
         doc = parse_protocol_document()
+        canonical_status = doc.get("status", "")
+        if canonical_status not in ("APPROVED",):
+            raise PC1ExecutionRefused(
+                f"R54: canonical protocol status is '{canonical_status}', "
+                f"need 'APPROVED' — PROPOSED/NOT_APPROVED cannot authorize")
         expected_hash = compute_protocol_hash(doc)
         expected_version = doc.get("code_version", PROTOCOL_VERSION)
+        # R54: verify the trusted artifact (HMAC + action + status + fields)
         self.trusted_artifact.verify(expected_hash, expected_version, self.approval_key)
         # R50: also verify gate-level hash consistency
         if not self.protocol_hash or not self.protocol_hash.strip():

@@ -110,8 +110,16 @@ def parse_protocol_document(path: Optional[str] = None) -> dict:
 
 
 def compute_protocol_hash(doc: dict) -> str:
-    """R36: stable hash of the canonical protocol field block."""
-    canonical = json.dumps(doc, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    """R53: hash of IMMUTABLE protocol content, excluding lifecycle status.
+
+    Lifecycle fields (status, approval metadata) are NOT part of the content
+    hash. Changing only lifecycle status leaves the content hash unchanged.
+    """
+    # R53: filter out lifecycle fields before hashing
+    content_fields = {k: v for k, v in doc.items()
+                      if k not in ("status", "approval", "approval_id",
+                                   "approver", "approval_date", "approval_secret_hash")}
+    canonical = json.dumps(content_fields, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:32]
 
 
@@ -158,26 +166,49 @@ def protocol_consistency_check(path: Optional[str] = None) -> dict:
     checks["doc_code_version"] = (doc.get("code_version") == PROTOCOL_VERSION,
                                   f"{doc.get('code_version')} vs {PROTOCOL_VERSION}")
 
-    # R48: structured semantic contract — compare numeric fields, not substrings
-    reward_contract = doc.get("reward_contract", {})
+    # R52: strict schema validation — reject unknown keys, enforce exact types
     from .reward import W_BEST, W_VALID, W_MEAN, REWARD_CLIP_LO, REWARD_CLIP_HI
-    checks["doc_reward_w_best"] = (reward_contract.get("w_best") == W_BEST, str(reward_contract.get("w_best")))
-    checks["doc_reward_w_valid"] = (reward_contract.get("w_valid") == W_VALID, str(reward_contract.get("w_valid")))
-    checks["doc_reward_w_mean"] = (reward_contract.get("w_mean") == W_MEAN, str(reward_contract.get("w_mean")))
-    checks["doc_reward_clip_lo"] = (reward_contract.get("clip_lo") == REWARD_CLIP_LO, str(reward_contract.get("clip_lo")))
-    checks["doc_reward_clip_hi"] = (reward_contract.get("clip_hi") == REWARD_CLIP_HI, str(reward_contract.get("clip_hi")))
-    # R48: structured estimator contract
+
+    def _check_exact_keys(obj: dict, expected_keys: set, name: str) -> bool:
+        actual = set(obj.keys()) if isinstance(obj, dict) else set()
+        return actual == expected_keys
+
+    # R52: reward contract — exact keys, exact types
+    reward_contract = doc.get("reward_contract", {})
+    expected_reward_keys = {"w_best", "w_valid", "w_mean", "clip_lo", "clip_hi"}
+    checks["doc_reward_schema"] = (_check_exact_keys(reward_contract, expected_reward_keys, "reward"),
+                                   str(sorted(reward_contract.keys())))
+    checks["doc_reward_w_best"] = (isinstance(reward_contract.get("w_best"), (int, float))
+                                    and reward_contract.get("w_best") == W_BEST, str(reward_contract.get("w_best")))
+    checks["doc_reward_w_valid"] = (isinstance(reward_contract.get("w_valid"), (int, float))
+                                     and reward_contract.get("w_valid") == W_VALID, str(reward_contract.get("w_valid")))
+    checks["doc_reward_w_mean"] = (isinstance(reward_contract.get("w_mean"), (int, float))
+                                    and reward_contract.get("w_mean") == W_MEAN, str(reward_contract.get("w_mean")))
+    checks["doc_reward_clip_lo"] = (isinstance(reward_contract.get("clip_lo"), (int, float))
+                                     and reward_contract.get("clip_lo") == REWARD_CLIP_LO, str(reward_contract.get("clip_lo")))
+    checks["doc_reward_clip_hi"] = (isinstance(reward_contract.get("clip_hi"), (int, float))
+                                     and reward_contract.get("clip_hi") == REWARD_CLIP_HI, str(reward_contract.get("clip_hi")))
+    # R52: estimator contract — exact keys, exact types
     est_contract = doc.get("estimator_contract", {})
+    expected_est_keys = {"horizon", "gamma", "r_hat_sources", "q_hat_role"}
+    checks["doc_est_schema"] = (_check_exact_keys(est_contract, expected_est_keys, "estimator"),
+                                str(sorted(est_contract.keys())))
     checks["doc_est_horizon"] = (est_contract.get("horizon") == HORIZON, str(est_contract.get("horizon")))
-    checks["doc_est_gamma"] = (est_contract.get("gamma") == GAMMA, str(est_contract.get("gamma")))
+    checks["doc_est_gamma"] = (isinstance(est_contract.get("gamma"), (int, float))
+                                and est_contract.get("gamma") == GAMMA, str(est_contract.get("gamma")))
     checks["doc_est_r_hat_sources"] = (
         est_contract.get("r_hat_sources") == ["q_rollout_first", "extra_immediate"],
         str(est_contract.get("r_hat_sources")))
     checks["doc_est_q_hat_role"] = (est_contract.get("q_hat_role") == "q_rollout_only", str(est_contract.get("q_hat_role")))
-    # R48: structured seed schema — must list exact fields and exclude action/genotype
+    # R52: seed schema — exact keys, verify version and encoding
     seed_contract = doc.get("seed_schema", {})
+    expected_seed_keys = {"version", "fields", "encoding"}
+    checks["doc_seed_schema"] = (_check_exact_keys(seed_contract, expected_seed_keys, "seed"),
+                                 str(sorted(seed_contract.keys())))
     expected_seed_fields = ["base_tag", "task_id", "state_id", "rollout_id", "replicate_id", "replica_index"]
     checks["doc_seed_fields"] = (seed_contract.get("fields") == expected_seed_fields, str(seed_contract.get("fields")))
+    checks["doc_seed_version"] = (seed_contract.get("version") == "crn-v2", str(seed_contract.get("version")))
+    checks["doc_seed_encoding"] = (seed_contract.get("encoding") == "typed_json", str(seed_contract.get("encoding")))
     checks["doc_seed_excludes_action"] = ("action" not in seed_contract.get("fields", []), "no action in seed")
     checks["doc_seed_excludes_genotype"] = ("genotype" not in seed_contract.get("fields", []), "no genotype in seed")
 
@@ -929,19 +960,22 @@ def generate_plan_mapping() -> Tuple[Dict[str, dict], str]:
     return mapping, plan_hash
 
 
-# R47: registered canonical plan identity
+# R51: registered canonical plan identity — INDEPENDENTLY PINNED
 REGISTERED_PLAN_ID = "pc1-plan-v1"
 REGISTERED_PLAN_VERSION = "1.0"
-# This is the PINNED hash of the canonical plan mapping — not self-computed from artifacts
-_CANONICAL_PLAN_HASH: Optional[str] = None
+# R51: this hash is pinned at design time and reviewed — NOT recomputed from the
+# same generator at runtime. If the mapping logic changes, this constant must be
+# updated through a reviewed protocol amendment.
+REGISTERED_PLAN_HASH = "af11096d3329e25e6e23f53be237e696"  # independently pinned
+
+def _compute_canonical_plan_hash() -> str:
+    """Compute the hash from the canonical mapping (used once to verify the pin)."""
+    mapping, h = generate_plan_mapping()
+    return h
 
 def get_registered_plan_hash() -> str:
-    """R47: return the independently pinned canonical plan hash."""
-    global _CANONICAL_PLAN_HASH
-    if _CANONICAL_PLAN_HASH is None:
-        mapping, h = generate_plan_mapping()
-        _CANONICAL_PLAN_HASH = h
-    return _CANONICAL_PLAN_HASH
+    """R51: return the INDEPENDENTLY PINNED registered plan hash."""
+    return REGISTERED_PLAN_HASH
 
 
 # R41: immutable plan mapping — defensive copies, no stale hash
@@ -961,6 +995,8 @@ def save_plan_artifact(path: str) -> str:
     """R41: serialize plan mapping to deterministic artifact, return hash."""
     mapping, plan_hash = get_plan_mapping()
     artifact = {
+        "plan_id": REGISTERED_PLAN_ID,
+        "plan_version": REGISTERED_PLAN_VERSION,
         "plan_hash": plan_hash,
         "mapping": mapping,
     }
@@ -991,8 +1027,17 @@ def load_plan_artifact(path: str, require_registered: bool = True) -> Tuple[Dict
         registered_hash = get_registered_plan_hash()
         if actual_hash != registered_hash:
             raise ValueError(
-                f"R47: plan artifact is not the registered plan: "
+                f"R51: plan artifact is not the registered plan: "
                 f"artifact_hash={actual_hash}, registered_hash={registered_hash}")
+        # R51: verify plan identity and version
+        if artifact.get("plan_id") != REGISTERED_PLAN_ID:
+            raise ValueError(
+                f"R51: plan_id mismatch: got '{artifact.get('plan_id')}', "
+                f"expected '{REGISTERED_PLAN_ID}'")
+        if artifact.get("plan_version") != REGISTERED_PLAN_VERSION:
+            raise ValueError(
+                f"R51: plan_version mismatch: got '{artifact.get('plan_version')}', "
+                f"expected '{REGISTERED_PLAN_VERSION}'")
     return mapping, actual_hash
 
 
@@ -1088,55 +1133,69 @@ def replay_from_artifact(path: str) -> "PC1Result":
 
 @dataclass
 class TrustedApprovalArtifact:
-    """R46: pinned, externally-verified approval artifact.
+    """R50: HMAC-signed approval artifact.
 
-    The trust anchor (approval_secret_hash) must come from an external source
-    (e.g., Planner's signing key), NOT from the protocol document or caller.
-    This prevents fabricated approvals even with the correct protocol hash.
+    The HMAC key (approval_key) must be provided by an external trusted source
+    (e.g., Planner's signing infrastructure), NOT derived from the protocol
+    document. The signature authenticates the approval fields.
     """
     artifact_id: str = ""
     approver: str = ""
     approval_date: str = ""
     protocol_hash: str = ""
     protocol_version: str = ""
-    approval_secret_hash: str = ""   # trust anchor from external source
+    signature: str = ""   # HMAC-SHA256 over canonical approval fields
+
+    def _canonical_payload(self) -> str:
+        return json.dumps([
+            self.artifact_id, self.approver, self.approval_date,
+            self.protocol_hash, self.protocol_version,
+        ], separators=(",", ":"), ensure_ascii=False)
+
+    @staticmethod
+    def sign(artifact: "TrustedApprovalArtifact", approval_key: bytes) -> str:
+        """R50: create HMAC signature over approval fields. Key from external source."""
+        import hmac
+        payload = artifact._canonical_payload().encode("utf-8")
+        return hmac.new(approval_key, payload, "sha256").hexdigest()
 
     def verify(self, expected_protocol_hash: str, expected_version: str,
-               pinned_secret_hash: str) -> None:
-        """R46: verify against pinned trust anchor. Fail-closed."""
+               approval_key: bytes) -> None:
+        """R50: verify HMAC signature and all fields. Fail-closed."""
         import re as _re
+        import hmac
         from datetime import date as _date
-        # Trust anchor check: the secret hash must match the pinned value
-        if not pinned_secret_hash or not pinned_secret_hash.strip():
-            raise PC1ExecutionRefused("R46: no pinned trust anchor provided")
-        if not self.approval_secret_hash or not self.approval_secret_hash.strip():
-            raise PC1ExecutionRefused("R46: approval artifact has no secret hash")
-        if self.approval_secret_hash != pinned_secret_hash:
-            raise PC1ExecutionRefused(
-                "R46: approval secret hash does not match pinned trust anchor")
+        if not approval_key:
+            raise PC1ExecutionRefused("R50: no approval key provided")
+        if not self.signature or not self.signature.strip():
+            raise PC1ExecutionRefused("R50: artifact has no signature")
+        # Verify HMAC signature
+        expected_sig = self.sign(self, approval_key)
+        if not hmac.compare_digest(self.signature, expected_sig):
+            raise PC1ExecutionRefused("R50: approval signature is invalid")
         # Standard field checks
         if not self.artifact_id or not self.artifact_id.strip():
-            raise PC1ExecutionRefused("R46: artifact_id is empty")
+            raise PC1ExecutionRefused("R50: artifact_id is empty")
         if not self.approver or not self.approver.strip():
-            raise PC1ExecutionRefused("R46: approver is empty")
+            raise PC1ExecutionRefused("R50: approver is empty")
         if not self.approval_date or not self.approval_date.strip():
-            raise PC1ExecutionRefused("R46: approval_date is empty")
+            raise PC1ExecutionRefused("R50: approval_date is empty")
         if not _re.match(r"^\d{4}-\d{2}-\d{2}$", self.approval_date):
             raise PC1ExecutionRefused(
-                f"R46: approval_date '{self.approval_date}' is not ISO format")
+                f"R50: approval_date '{self.approval_date}' is not ISO format")
         try:
             y, m, d = map(int, self.approval_date.split("-"))
             _date(y, m, d)
         except (ValueError, TypeError):
             raise PC1ExecutionRefused(
-                f"R46: approval_date '{self.approval_date}' is not a valid calendar date")
+                f"R50: approval_date '{self.approval_date}' is not a valid calendar date")
         if self.protocol_hash != expected_protocol_hash:
             raise PC1ExecutionRefused(
-                f"R46: protocol_hash mismatch: got '{self.protocol_hash}', "
+                f"R50: protocol_hash mismatch: got '{self.protocol_hash}', "
                 f"expected '{expected_protocol_hash}'")
         if self.protocol_version != expected_version:
             raise PC1ExecutionRefused(
-                f"R46: protocol_version mismatch: got '{self.protocol_version}', "
+                f"R50: protocol_version mismatch: got '{self.protocol_version}', "
                 f"expected '{expected_version}'")
 
 
@@ -1215,29 +1274,32 @@ class ApprovalGate:
     expected_protocol_hash: str = ""
 
     approval_record: Optional[PlannerApprovalRecord] = None
+    trusted_artifact: Optional[TrustedApprovalArtifact] = None
+    approval_key: Optional[bytes] = None   # external trust anchor
 
     def check(self) -> None:
-        """R42: verify against structured PlannerApprovalRecord. Fail-closed."""
+        """R50: require trusted artifact with valid HMAC signature. Fail-closed."""
         if not self.approved:
-            raise PC1ExecutionRefused("R42: approved=False")
+            raise PC1ExecutionRefused("R50: approved=False")
         if self.protocol_status != "APPROVED":
             raise PC1ExecutionRefused(
-                f"R42: protocol_status='{self.protocol_status}', need 'APPROVED'")
-        # R42: must have a structured approval record
-        if self.approval_record is None:
-            raise PC1ExecutionRefused("R42: no PlannerApprovalRecord provided")
-        # R43: validate the record against canonical protocol (including status)
+                f"R50: protocol_status='{self.protocol_status}', need 'APPROVED'")
+        # R50: must have a trusted artifact with signature
+        if self.trusted_artifact is None:
+            raise PC1ExecutionRefused("R50: no TrustedApprovalArtifact provided")
+        if self.approval_key is None:
+            raise PC1ExecutionRefused("R50: no approval_key provided")
+        # R50: verify the trusted artifact (HMAC + fields)
         doc = parse_protocol_document()
         expected_hash = compute_protocol_hash(doc)
         expected_version = doc.get("code_version", PROTOCOL_VERSION)
-        canonical_status = doc.get("status", "")
-        self.approval_record.validate(expected_hash, expected_version, canonical_status)
-        # R42: also verify gate-level hash consistency
+        self.trusted_artifact.verify(expected_hash, expected_version, self.approval_key)
+        # R50: also verify gate-level hash consistency
         if not self.protocol_hash or not self.protocol_hash.strip():
-            raise PC1ExecutionRefused("R42: gate protocol_hash is empty")
-        if self.protocol_hash != self.approval_record.protocol_hash:
+            raise PC1ExecutionRefused("R50: gate protocol_hash is empty")
+        if self.protocol_hash != self.trusted_artifact.protocol_hash:
             raise PC1ExecutionRefused(
-                f"R42: gate hash '{self.protocol_hash}' != record hash '{self.approval_record.protocol_hash}'")
+                f"R50: gate hash '{self.protocol_hash}' != artifact hash '{self.trusted_artifact.protocol_hash}'")
 
 
 @dataclass

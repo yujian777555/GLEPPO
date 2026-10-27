@@ -4,10 +4,10 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_R10_REMEDIATION",
-  "state": "REQUEST_CHANGES_PC1_NOT_APPROVED",
-  "reviewed_commit": "dfa99f17281d185ed3a8421c26d8bcd54fcab5d7",
-  "implementation_status": "R46_R49_PARTIALLY_FIXED_R50_R53_BLOCKERS_OPEN",
-  "experimental_status": "SYNTHETIC_STUB_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BACKEND_PENDING",
+  "state": "R50_R53_FIXED_AWAITING_ELEVENTH_REVIEW",
+  "reviewed_commit": "78f3fd5",
+  "implementation_status": "PC1_PATH_GATED_NO_CONTROLLERS",
+  "experimental_status": "SYNTHETIC_EXPERIMENTS_ONLY_PC1_NOT_EXECUTED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Execute planner/latest_plan.md Phase 2A-R10: separate lifecycle status from immutable content hash; wire cryptographically verifiable trusted approval into ApprovalGate; independently pin registered plan identity/version/hash; enforce exact structured contract schemas.",
-  "next_gate": "FIX_R50_R53 -> FOCUSED_AND_FULL_TESTS -> ELEVENTH_INDEPENDENT_REVIEW -> TRUSTED_PLANNER_APPROVAL -> PRODUCTION_RUNTIME_DEPLOYMENT_AND_SMOKE_G3 -> PC1_APPROVAL",
+  "current_task": "Await eleventh independent review + Planner protocol approval.",
+  "next_gate": "ELEVENTH_REVIEW -> PLANNER_APPROVAL -> PRODUCTION_SMOKE_G3 -> PC1",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -372,6 +372,26 @@
       "R51": "get_registered_plan_hash() computes the expected hash from generate_plan_mapping() at runtime rather than using an independently pinned value. REGISTERED_PLAN_ID/VERSION are not included in or validated against artifacts; no alternate self-hashed plan test.",
       "R52": "Seed schema version and encoding are not validated; reward/estimator contract checks ignore unknown keys; inspected tests do not cover extra reward terms, estimator mutations, or seed version/encoding changes.",
       "R53": "compute_protocol_hash() hashes the entire protocol JSON including status. The consistency predicate ignores status, but status remains part of immutable protocol identity/hash."
+    }
+  },
+  "remediation_r10": {
+    "date": "2026-10-27",
+    "verdict_requested": "ELEVENTH_INDEPENDENT_REVIEW",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "fixed": {
+      "R53": "compute_protocol_hash excludes lifecycle status/approval fields",
+      "R50": "TrustedApprovalArtifact with HMAC-SHA256; gate verifies signature",
+      "R51": "REGISTERED_PLAN_HASH independently pinned; plan_id/version verified",
+      "R52": "exact schema validation for reward/estimator/seed; adversarial mutations rejected"
+    },
+    "tests": {
+      "unit": "232/232 PASS",
+      "zero_cost": "PASS",
+      "protocol_consistency": "PASS",
+      "dry_run": "PASS",
+      "manifest": "OK",
+      "smoke": "ok"
     }
   }
 }

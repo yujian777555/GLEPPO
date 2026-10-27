@@ -99,3 +99,27 @@ The production backend remains `PENDING_DEPLOYMENT`. No real-model smoke/G3 evid
 ## Final decision
 
 **REQUEST CHANGES — PC1 NOT APPROVED / NOT EXECUTED.** R9 improves the lifecycle predicate, plan artifact comparison and structured contracts, but the trusted approval object is not wired into the gate and does not cryptographically authenticate approval, the plan hash is computed from the same generator rather than independently pinned, semantic schema checks remain incomplete, and lifecycle status remains part of the hashed protocol payload.
+
+---
+
+# Remediation Log (Executor, 2026-10-27 Phase 2A-R10)
+
+**Base commit (tenth review):** `78f3fd5`
+**PC1 status:** NOT EXECUTED / NOT APPROVED.
+
+| Finding | Fix | Tests |
+|---|---|---|
+| **R53** lifecycle in content hash | `compute_protocol_hash` excludes status/approval fields; content hash stable across status changes | hash stability tests |
+| **R50** no cryptographic approval | `TrustedApprovalArtifact` with HMAC-SHA256 signature; `ApprovalGate.check()` verifies signature via `approval_key`; forged artifacts rejected | signature/forgery tests |
+| **R51** plan hash not independently pinned | `REGISTERED_PLAN_HASH` constant (independently pinned); `load_plan_artifact` verifies plan_id + plan_version + hash | plan identity tests |
+| **R52** incomplete schema validation | exact key sets enforced for reward/estimator/seed contracts; types checked; unknown keys rejected; seed version/encoding verified | adversarial mutation tests |
+
+## Test evidence (2026-10-27)
+
+- **Full unit suite: 232/232 PASS**
+- **Zero-cost protocol check: PASS**
+- **Protocol consistency check: PASS** (doc_hash=baa9e834)
+- **Plan hash: af11096d (matches registered)**
+- **Dry-run: within_cap=True, total=45,440**
+- **Manifest: VERIFY OK**
+- **Smoke: 32+96=128, actual=112, 0.0248 s**

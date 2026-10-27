@@ -3,11 +3,11 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-27",
-  "phase": "PHASE2A_R3_PC1_AUDITABILITY_REMEDIATION",
-  "state": "R12_R18_FIXED_AWAITING_FOURTH_REVIEW",
-  "reviewed_commit": "2d42bdf334c6414f466fb2c5857660f62adf72b0",
-  "implementation_status": "PC1_PATH_FULLY_VALIDATED_NO_CONTROLLERS",
-  "experimental_status": "SYNTHETIC_TESTS_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BLOCKED",
+  "phase": "PHASE2A_R4_PROTOCOL_AND_PC1_AUDITABILITY",
+  "state": "REQUEST_CHANGES_PC1_NOT_APPROVED",
+  "reviewed_commit": "4c727997a71d4eb1cd34c1612fe1d275009d859f",
+  "implementation_status": "R12_R18_IMPROVEMENTS_ACKNOWLEDGED_R19_R25_BLOCKERS_OPEN",
+  "experimental_status": "PC1_NOT_EXECUTED_PRODUCTION_BACKEND_PENDING",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Await fourth independent review. After approval + production gate: deploy backend, real-model smoke/G3, then PC1.",
-  "next_gate": "FOURTH_REVIEW -> PRODUCTION_SMOKE_G3 -> PC1 -> ONLY_THEN_CONTROLLER_TRAINING",
+  "current_task": "Execute planner/latest_plan.md Phase 2A-R4: resolve R19-R25 protocol freeze, CRN override uniqueness, fail-closed budget reconciliation, collection-cluster provenance, replayable raw evidence, source-consistent cost accounting, and genuinely gated collection/rollout orchestration. Do not execute registered PC1.",
+  "next_gate": "FIX_R19_R25 -> FOCUSED_AND_FULL_TESTS -> FOURTH_REVIEW_REMEDIATION_REVIEW -> PRODUCTION_RUNTIME_LOCK_AND_SMOKE_G3 -> PC1_APPROVAL",
   "hard_rules": [
     "No registered PC1 execution before independent approval and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -108,6 +108,24 @@
       "manifest": "OK",
       "smoke": "slot_arithmetic_ok=true",
       "cost_check": "PASS"
+    }
+  },
+  "fourth_review": {
+    "verdict": "REQUEST_CHANGES",
+    "report": "research/FOURTH_REVIEW_FINDINGS.md",
+    "reviewer_scope": "read-only source/protocol audit; reviewer did not execute repository tests or experiments",
+    "github_ci": "No combined status checks or PR-triggered workflow runs returned for reviewed commit; executor-reported tests were not independently reproduced.",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "production_backend_deployed": false,
+    "findings": {
+      "R19": "Code declares pc1-amendment-v3-r3 while active protocol document remains amendment v2; proposed estimator amendment explicitly says it is not an approved protocol.",
+      "R20": "eval_seed override drops task/rollout/replicate fields from effective seed parts; crn_seed helper only hashes state and rollout; override-path tests do not prove task/replicate separation.",
+      "R21": "run_pc1_analysis trusts caller-supplied planned_slots_total, does not reconcile total against records/components, accepts surplus sample counts, and analysis ledger cannot represent 5,440 state-collection slots.",
+      "R22": "Record schema lacks explicit task/source-collection-episode provenance; dry-run lists 40 episodes separately from states; validation only requires two clusters.",
+      "R23": "raw_evidence omits D, advantage, D_ci, adv_ci, input artifact hash; provenance fields may be empty; replay_command references undefined records_from_raw and no round-trip test exists.",
+      "R24": "SMOKE_RAW.json records 0.0188s while COST_BASELINE.md states 0.021s; report still labels 45,440 planned slots as CTX in sections 4/6.",
+      "R25": "Current PC1 implementation is dry-run schedule + analysis + unconditional refusal; no actual gated collection/rollout orchestration exists."
     }
   }
 }

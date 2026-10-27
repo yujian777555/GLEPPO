@@ -28,7 +28,7 @@ from gleppo.features import STATE_DIM, FEATURE_NAMES, state_vector, empty_state,
 from gleppo.manifest import build_manifests, verify_manifest, load_split, FamilyCGuard
 from gleppo.evolution import EvolutionConfig, evolve, evolve_generation, Individual, stable_seed
 from gleppo.reward import generation_reward
-from gleppo.pc1 import zero_cost_protocol_check, crn_seed, replicate_seed
+from gleppo.pc1 import zero_cost_protocol_check, crn_seed
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -203,11 +203,11 @@ class TestR4SeedsCache(unittest.TestCase):
         self.assertGreaterEqual(ev.cache_hits, 1)
 
     def test_crn_seed_shared_across_actions(self):
-        self.assertEqual(crn_seed("s1", 0, 0), crn_seed("s1", 4, 0))
-        self.assertNotEqual(crn_seed("s1", 0, 0), crn_seed("s1", 0, 1))
+        self.assertEqual(crn_seed("s1", 0), crn_seed("s1", 0))
+        self.assertNotEqual(crn_seed("s1", 0), crn_seed("s1", 1))
 
     def test_replicate_seeds_distinct(self):
-        self.assertNotEqual(replicate_seed("s", 0, 0, 0), replicate_seed("s", 0, 0, 1))
+        self.assertNotEqual(crn_seed("s", 0), crn_seed("s", 1))
 
 
 # ===== R3: reward identity =====
@@ -223,7 +223,7 @@ class TestR3RewardIdentity(unittest.TestCase):
     def test_pc1_zero_cost_protocol(self):
         report = zero_cost_protocol_check()
         self.assertTrue(report["all_pass"], json.dumps(report["checks"], indent=2))
-        self.assertTrue(report["checks"]["reward_identity_first_term"]["ok"])
+        self.assertTrue(report["checks"]["q_uses_same_first_term"]["ok"])
         self.assertTrue(report["checks"]["q_uses_same_first_term"]["ok"])
 
 

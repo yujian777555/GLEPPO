@@ -4,10 +4,10 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_R3_PC1_AUDITABILITY_REMEDIATION",
-  "state": "REQUEST_CHANGES_PC1_NOT_APPROVED",
-  "reviewed_commit": "f329a45e91b8011a42e6cc3fee49817da940966b",
-  "implementation_status": "R8_R9_EVOLUTION_PATH_IMPROVED_BUT_PC1_LEDGER_AND_RUNNER_BLOCKERS_OPEN",
-  "experimental_status": "STUB_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BACKEND_PENDING",
+  "state": "R12_R18_FIXED_AWAITING_FOURTH_REVIEW",
+  "reviewed_commit": "2d42bdf334c6414f466fb2c5857660f62adf72b0",
+  "implementation_status": "PC1_PATH_FULLY_VALIDATED_NO_CONTROLLERS",
+  "experimental_status": "SYNTHETIC_TESTS_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BLOCKED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Execute planner/latest_plan.md Phase 2A-R3: fix R12-R18, test BudgetLedger and fail-closed PC1 analysis, separate sample roles, implement guarded PC1 dry-run collection/rollout schedule, unify CRN/cache seed semantics, emit replayable evidence, and reconcile cost documentation. Do not execute registered PC1.",
-  "next_gate": "FIX_R12_R18 -> FULL_TESTS_AND_DRY_RUN_ONLY -> FOURTH_INDEPENDENT_REVIEW -> PRODUCTION_RUNTIME_LOCK_AND_SMOKE_G3 -> PC1_APPROVAL",
+  "current_task": "Await fourth independent review. After approval + production gate: deploy backend, real-model smoke/G3, then PC1.",
+  "next_gate": "FOURTH_REVIEW -> PRODUCTION_SMOKE_G3 -> PC1 -> ONLY_THEN_CONTROLLER_TRAINING",
   "hard_rules": [
     "No registered PC1 execution before independent approval and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -83,6 +83,31 @@
       "R16": "CRN helpers/eval_seed are not one authoritative path; eval_seed is cache-key-only, replicate_seed includes action, and cache key can omit effective state/rollout inputs.",
       "R17": "raw_evidence lacks full replayable records, seed/cluster/sample-role provenance, manifest hashes, and execution counter breakdown.",
       "R18": "COST_BASELINE.md still contradicts itself: 112 vs 96 actual CTX, 0.021 vs 0.012 s, 45,440 vs 47,200 PC1 slots."
+    }
+  },
+  "remediation_r3": {
+    "date": "2026-10-27",
+    "verdict_requested": "FOURTH_INDEPENDENT_REVIEW",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "production_backend_deployed": false,
+    "fixed": {
+      "R12": "BudgetLedger explicit replicas_run_delta; no unit mixing",
+      "R13": "validate_records fail-closed: missing actions, horizon, finiteness, clusters, duplicates",
+      "R14": "sample_role q_rollout/extra_immediate; Q_hat excludes extra; r_hat=Q_first+extra",
+      "R15": "dry-run plan (2040 units, 45440 slots) + execute_registered_pc1 refuses",
+      "R16": "eval_seed authoritative for RNG; cache key includes state/rollout/replicate",
+      "R17": "replayable evidence with full records, provenance, bootstrap config",
+      "R18": "COST_BASELINE reconciled: 45440 PC1, 32+96=128 smoke, 112 actual, 0.021s stub"
+    },
+    "tests": {
+      "unit": "97/97 PASS",
+      "r12_r17": "35/35 PASS",
+      "zero_cost": "PASS",
+      "dry_run": "PASS",
+      "manifest": "OK",
+      "smoke": "slot_arithmetic_ok=true",
+      "cost_check": "PASS"
     }
   }
 }

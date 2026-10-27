@@ -99,3 +99,43 @@ The Executor's reported “String to replace not found” indicates one attempte
 ## Final decision
 
 **REQUEST CHANGES — PC1 NOT APPROVED / NOT EXECUTED.** R8/R9 evolution-loop improvements are acknowledged, but the remaining BudgetLedger, estimator validation, sampling-role, CRN integration, raw-evidence and cost-documentation issues must be resolved before a further review.
+
+---
+
+# Remediation Log (Executor, 2026-10-27 Phase 2A-R3)
+
+**Base commit (third review):** `f329a45e91b8011a42e6cc3fee49817da940966b`
+**PC1 status:** NOT EXECUTED / NOT APPROVED. This log does NOT self-approve.
+
+| Finding | Fix | Evidence |
+|---|---|---|
+| **R12** BudgetLedger mixes bundle/replica units | `record_evaluation`/`record_init` receive explicit `replicas_run_delta` from evaluator counters; no `valid*n_eval - cache_hits` arithmetic | `gleppo/pc1.py:BudgetLedger`; `TestR12BudgetLedger` (6 tests) |
+| **R13** estimator does not fail closed | `validate_records` rejects: missing actions, wrong horizon, non-finite rewards, cluster conflicts, duplicate keys, invalid action/role, negative counters, missing seeds; `_per_state_stats` raises on missing actions (no 0.0 default) | `TestR13FailClosed` (10 tests) |
+| **R14** extra immediate draws unrepresented | `sample_role` field (`q_rollout`/`extra_immediate`); `Q_hat` uses only q_rollout; `r_hat` = Q-first + extra (estimator per PC1_INDEPENDENT_REVIEW); extra cannot pollute Q_hat | `TestR14SampleRoles` (3 tests) |
+| **R15** no collection/rollout runner | `generate_pc1_dry_run_plan()` emits full schedule (2040 units); `execute_registered_pc1()` refuses execution; FamilyCGuard at eval boundaries | `TestR15DryRunPlan` (4 tests) |
+| **R16** seed/CRN/cache inconsistency | `eval_seed` now authoritative for RNG (not cache-only); cache key includes state_id+rollout_id+replicate_id+eval_seed+genotype+runtime; operator RNG separate | `TestR16SeedContract` (7 tests) |
+| **R17** evidence not replayable | `raw_evidence` includes full sanitized records (family, cluster, seed parts, reward traces, counters), manifest hash, runtime/evaluator versions, bootstrap config, replay command | `TestR17Evidence` (3 tests) |
+| **R18** cost report contradictions | 47,200 replaced with 45,440; 0.012 s latency fixed to 0.021 s stub; 96 labeled as offspring-only planned slots; consistency check PASS | `research/COST_BASELINE.md` |
+
+## Test evidence (2026-10-27)
+
+- **Full unit suite: 97/97 PASS** (37 core + 25 R8/R9/R11/PC1 + 35 R12-R17)
+- **Zero-cost protocol check: PASS** (45,440 <= 50,000)
+- **Dry-run plan: within_cap=True, total=45,440, schedule=2040 units**
+- **Manifest verification: OK** (digests unchanged)
+- **Smoke: planned_init=32, planned_offspring=96, planned_total=128, actual=112, slot_arithmetic_ok=true**
+- **Cost documentation consistency: PASS**
+
+## PC1 execution status
+
+`execute_registered_pc1()` raises `PC1ExecutionRefused`. Registered PC1 is NOT APPROVED and NOT EXECUTED. Only dry-run plan generation and synthetic analysis tests were run.
+
+## Open blockers
+
+1. Production backend PENDING_DEPLOYMENT.
+2. Fourth independent review required.
+3. C4 literature collision re-check outstanding.
+
+## Request
+
+Independent review of this remediation. Executor does NOT mark PC1 approved or executed.

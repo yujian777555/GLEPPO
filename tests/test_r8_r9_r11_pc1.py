@@ -19,7 +19,7 @@ from gleppo.tasks import (
 )
 from gleppo.pc1 import (
     StateActionRecord, compute_r_hat, compute_q_hat, run_pc1_analysis,
-    zero_cost_protocol_check, HARD_CAP_SLOTS, N_ACTIONS,
+    zero_cost_protocol_check, HARD_CAP_SLOTS, N_ACTIONS, ROLE_Q, ROLE_EXTRA,
 )
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -228,6 +228,8 @@ class TestPC1RunnerSynthetic(unittest.TestCase):
                         state_id=f"s{si}", cluster_id=cid, action=a,
                         rollout_id=r, replicate_id=0,
                         crn_seed=f"CRN|s{si}|{r}",
+                        sample_role=ROLE_Q,
+                        effective_seed_parts=("SEED", f"s{si}", "A", str(r), "0", "0"),
                         gen_rewards=gen,
                         planned_slots=4 * 2,
                     ))
@@ -246,14 +248,14 @@ class TestPC1RunnerSynthetic(unittest.TestCase):
 
     def test_disagreement_detected(self):
         recs = self._make_records()
-        res = run_pc1_analysis(recs, planned_slots_total=1000)
+        res = run_pc1_analysis(recs, planned_slots_total=1000, require_registered_shape=False)
         # a_r = 0 (highest r_hat=0.10), a_q = 1 (highest Q) -> disagreement expected
         self.assertGreater(res.D, 0.0)
         self.assertGreater(res.advantage, 0.0)
 
     def test_cluster_bootstrap_keeps_clusters_together(self):
         recs = self._make_records(n_states=6, n_clusters=3)
-        res = run_pc1_analysis(recs, planned_slots_total=1000)
+        res = run_pc1_analysis(recs, planned_slots_total=1000, require_registered_shape=False)
         self.assertEqual(res.n_clusters, 3)
         self.assertEqual(res.n_states, 6)
         self.assertEqual(len(res.D_ci), 2)
@@ -279,8 +281,10 @@ class TestPC1RunnerSynthetic(unittest.TestCase):
                     recs.append(StateActionRecord(
                         state_id=f"s{si}", cluster_id=f"c{si}", action=a,
                         rollout_id=r, replicate_id=0, crn_seed=f"CRN|s{si}|{r}",
+                        sample_role=ROLE_Q,
+                        effective_seed_parts=("SEED", f"s{si}", "A", str(r), "0", "0"),
                         gen_rewards=gen, planned_slots=8))
-        res = run_pc1_analysis(recs, planned_slots_total=45000)
+        res = run_pc1_analysis(recs, planned_slots_total=45000, require_registered_shape=False)
         self.assertGreaterEqual(res.D, 0.15)
         self.assertGreaterEqual(res.advantage, 0.02)
         self.assertEqual(res.decision, "PASS", f"D={res.D} adv={res.advantage} ci={res.D_ci},{res.adv_ci}")
@@ -294,15 +298,17 @@ class TestPC1RunnerSynthetic(unittest.TestCase):
                     recs.append(StateActionRecord(
                         state_id=f"s{si}", cluster_id=f"c{si}", action=a,
                         rollout_id=r, replicate_id=0, crn_seed=f"CRN|s{si}|{r}",
+                        sample_role=ROLE_Q,
+                        effective_seed_parts=("SEED", f"s{si}", "A", str(r), "0", "0"),
                         gen_rewards=[0.05, 0.05, 0.05], planned_slots=8))
-        res = run_pc1_analysis(recs, planned_slots_total=1000)
+        res = run_pc1_analysis(recs, planned_slots_total=1000, require_registered_shape=False)
         self.assertEqual(res.D, 0.0)
         self.assertEqual(res.advantage, 0.0)
         self.assertIn(res.decision, ("FAIL", "INCONCLUSIVE"))
 
     def test_raw_evidence_replayable_fields(self):
         recs = self._make_records()
-        res = run_pc1_analysis(recs, planned_slots_total=1000)
+        res = run_pc1_analysis(recs, planned_slots_total=1000, require_registered_shape=False)
         ev = res.raw_evidence
         self.assertIn("protocol_version", ev)
         self.assertIn("r_hat", ev)

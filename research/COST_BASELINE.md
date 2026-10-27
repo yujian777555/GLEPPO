@@ -79,7 +79,7 @@ Marked `EXT`. They use the smoke ratio and Phase 1 formulas; they are **not** ob
 |---|---|---|---|
 | Main evolution ROL (μ=8, λ=4, T=15, n_eval=3) | 15×4×3 | **180** | 180 × turns/task (TBD) |
 | Smoke→main scale factor | 180/96 | 1.875× | — |
-| PC1 amended (PHASE2_PREFLIGHT §3.3) | — | **47,200** | TBD after real-mode smoke |
+| PC1 amended (PHASE2_PREFLIGHT §3.3) | — | **45,440** | TBD after real-mode smoke |
 | PC1 original (unaffordable) | 200×5×20×5×4×3 | 1,200,000 | — |
 
 **Real-model smoke is required** before any reliable token/latency forecast. Placeholders only:
@@ -94,11 +94,11 @@ Marked `EXT`. They use the smoke ratio and Phase 1 formulas; they are **not** ob
 
 | Category | Stub (measured) | Production |
 |---|---|---|
-| Agent execution CTX | 96 | TBD |
+| Agent execution CTX (planned offspring slots) | 96 (offspring only; total smoke planned = 128 incl. init) | TBD |
 | Agent LLM turns | n/a (stub) | TBD |
 | Operator proposal LLM calls | 0 | TBD (0–2/app) |
 | Tokens in/out | UNMEASURED | TBD |
-| Latency | 0.012 s | TBD |
+| Latency | 0.021 s (stub smoke; not production) | TBD |
 | Peak memory | not profiled | TBD |
 | Failure rate (invalid offspring) | 16.7% | expected similar (structural) |
 
@@ -107,8 +107,8 @@ Marked `EXT`. They use the smoke ratio and Phase 1 formulas; they are **not** ob
 ## 6. Implications for PC1 and Phase 3
 
 1. **PC1 remains unexecuted** pending independent review of `research/PHASE2_PREFLIGHT.md` (protocol §1.1).
-2. Structural overhead is trivial in stub mode; the real cost driver is **agent-execution LLM calls** (CTX × turns/episode). PC1's 47,200 CTX at even 4 turns/episode ≈ 190k completions — must be budgeted against the actual deployment backend before running.
-3. If production smoke shows turns/episode >8 or latency making 47,200 CTX infeasible, **SR5** applies: one scale revision, then STOP. Do not silently reduce n_eval in main experiments.
+2. Structural overhead is trivial in stub mode; the real cost driver is **agent-execution LLM calls** (CTX × turns/episode). PC1's 45,440 CTX at even 4 turns/episode ≈ 190k completions — must be budgeted against the actual deployment backend before running.
+3. If production smoke shows turns/episode >8 or latency making 45,440 CTX infeasible, **SR5** applies: one scale revision, then STOP. Do not silently reduce n_eval in main experiments.
 
 ---
 

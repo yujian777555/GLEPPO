@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-27",
-  "phase": "PHASE2A_R1_SECOND_REVIEW_REMEDIATION",
-  "state": "PC1_NOT_APPROVED_REQUEST_CHANGES",
+  "phase": "PHASE2A_R2_CRN_ACCOUNTING_REMEDIATION",
+  "state": "EXECUTOR_TASK_READY_PC1_NOT_APPROVED",
   "reviewed_commit": "a272a453c1147d9b2fd194c04806ba0a4dac8cdc",
   "implementation_status": "ENVIRONMENT_EXISTS_CRN_AND_ACCOUNTING_BLOCKERS_OPEN",
   "experimental_status": "STUB_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BACKEND_PENDING",
@@ -22,15 +22,24 @@
       "Runtime lock seed rules conflict with SHA256 stable-seed code.",
       "StubLLM does not correctly solve every generated Family A template.",
       "Complete PC1 runner is not implemented."
+    ],
+    "current_executor_task": "planner/latest_plan.md",
+    "required_remediations": [
+      "R8: end-to-end paired CRN seed behavior must exclude action/genotype from the effective shared evaluation seed and be verified with an instrumented interpreter.",
+      "R9: actual CTX must count uncached replica executions; cache hits must use consistent bundle/replica units; episode counters must be deltas.",
+      "Smoke planned slots must include initialization: 32 init + 96 offspring = 128 total for the current configuration.",
+      "R10: runtime lock must document the actual SHA256 seed hierarchy and remain explicit that production backend is pending.",
+      "R11: validate StubLLM on every generated A/B template or quarantine stub success rates as non-evidence.",
+      "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Fix second-review findings, test PC1 runner without executing PC1, then request independent review.",
-  "next_gate": "FIX_SEEDS_AND_ACCOUNTING -> PC1_RUNNER_TESTS -> INDEPENDENT_REVIEW -> PRODUCTION_SMOKE_G3 -> PC1",
+  "current_task": "Execute planner/latest_plan.md Phase 2A-R2: fix end-to-end CRN seed path, CTX/cache accounting, smoke planned slots, runtime-lock seed documentation, StubLLM template correctness/quarantine, and implement/test PC1 runner on synthetic fixtures only.",
+  "next_gate": "R8_R9_TESTED -> SMOKE_ACCOUNTING_FIXED -> RUNTIME_LOCK_AND_STUB_CHECKED -> PC1_RUNNER_SYNTHETIC_TESTS -> INDEPENDENT_REVIEW -> PRODUCTION_SMOKE_G3 -> PC1_APPROVAL",
   "hard_rules": [
-    "No PC1 execution before independent approval and production smoke.",
+    "No PC1 execution before another independent review approves the protocol and production smoke/G3 pass.",
     "No Family C execution or tuning.",
     "No controller implementation or training before PC1 passes.",
-    "No GLEET code reuse or new mechanisms.",
-    "No fabricated results or costs."
+    "No GLEET code reuse or cross-project artifacts.",
+    "No fabricated model calls, costs, tokens, test results, or approval."
   ]
 }

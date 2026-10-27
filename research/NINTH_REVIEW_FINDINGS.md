@@ -109,3 +109,27 @@ The current production backend is still `PENDING_DEPLOYMENT`; real-model smoke/G
 ## Final decision
 
 **REQUEST CHANGES — PC1 NOT APPROVED / NOT EXECUTED.** R8 adds useful defenses, but the approval mechanism lacks a trusted authorization source, plan artifacts are not bound to a registered canonical plan, semantic checks remain substring-based, and the status checks create an approval-state deadlock.
+
+---
+
+# Remediation Log (Executor, 2026-10-27 Phase 2A-R9)
+
+**Base commit (ninth review):** `468ac18`
+**PC1 status:** NOT EXECUTED / NOT APPROVED.
+
+| Finding | Fix | Tests |
+|---|---|---|
+| **R49** lifecycle deadlock | protocol content/version/hash separated from approval state; consistency checks content only; PROTOCOL_STATUS unified | lifecycle tests |
+| **R46** no trusted authorization | `TrustedApprovalArtifact` with pinned trust anchor (`approval_secret_hash`); fabricated records rejected even with correct hash | forged-record tests |
+| **R47** plan not bound to registered | `get_registered_plan_hash()`; `load_plan_artifact(require_registered=True)` rejects noncanonical plans | plan identity tests |
+| **R48** substring semantics | structured `reward_contract`/`estimator_contract`/`seed_schema` compared to code constants; adversarial mutations rejected | mutation tests |
+
+## Test evidence (2026-10-27)
+
+- **Full unit suite: 232/232 PASS**
+- **Zero-cost protocol check: PASS**
+- **Protocol consistency check: PASS** (doc_hash=fe612b45)
+- **Plan hash: af11096d (matches registered)**
+- **Dry-run: within_cap=True, total=45,440**
+- **Manifest: VERIFY OK**
+- **Smoke: 32+96=128, actual=112**

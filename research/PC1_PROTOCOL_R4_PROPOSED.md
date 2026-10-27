@@ -136,10 +136,9 @@ Default is **deny**. Boolean flags alone do not authorize execution.
   "gamma": 0.95,
   "thresholds": {"D": 0.15, "advantage": 0.02, "margin_D": 0.10, "margin_adv": 0.01},
   "budget": {"q_slots": 36000, "extra_slots": 4000, "collection_slots": 5440, "total": 45440, "hard_cap": 50000},
-  "estimator_r_hat": "mean of Q-rollout first rewards + extra immediate rewards",
-  "estimator_q_hat": "h-step discounted return of q_rollout records only",
-  "reward_formula": "clip(d_best + 0.1*valid_rate + 0.25*d_mean, -0.5, 1.0)",
-  "seed_contract": "crn-v2 typed JSON serialization",
+  "reward_contract": {"w_best": 1.0, "w_valid": 0.1, "w_mean": 0.25, "clip_lo": -0.5, "clip_hi": 1.0},
+  "estimator_contract": {"horizon": 3, "gamma": 0.95, "r_hat_sources": ["q_rollout_first", "extra_immediate"], "q_hat_role": "q_rollout_only"},
+  "seed_schema": {"version": "crn-v2", "fields": ["base_tag", "task_id", "state_id", "rollout_id", "replicate_id", "replica_index"], "encoding": "typed_json"},
   "cluster_unit": "collection_episode"
 }
 ```

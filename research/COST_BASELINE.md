@@ -19,7 +19,7 @@
 |---|---|
 | Tasks | 4 (train_A x2, train_B x2) |
 | Evolution config | mu=4, lam=2, T=6, n_eval=2 |
-| Wall-clock (total) | **0.0273 s** (stub; not representative of real LLM latency) |
+| Wall-clock (total) | **0.0457 s** (stub; not representative of real LLM latency) |
 
 ### 2.1 Planned-slot arithmetic (Task C - explicit)
 
@@ -98,7 +98,7 @@ Marked `EXT`. They use the smoke ratio and Phase 1 formulas; they are **not** ob
 | Agent LLM turns | n/a (stub) | TBD |
 | Operator proposal LLM calls | 0 | TBD (0–2/app) |
 | Tokens in/out | UNMEASURED | TBD |
-| Latency | 0.0273 s (stub smoke; not production) | TBD |
+| Latency | 0.0457 s (stub smoke; not production) | TBD |
 | Peak memory | not profiled | TBD |
 | Failure rate (invalid offspring) | 16.7% | expected similar (structural) |
 

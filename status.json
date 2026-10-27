@@ -4,10 +4,10 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_R9_REMEDIATION",
-  "state": "REQUEST_CHANGES_PC1_NOT_APPROVED",
-  "reviewed_commit": "d4c58f03e57a5369864152f3a2bc5097589ace4e",
-  "implementation_status": "R43_R45_IMPROVED_R46_R49_BLOCKERS_OPEN",
-  "experimental_status": "STUB_SYNTHETIC_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BACKEND_PENDING",
+  "state": "R46_R49_FIXED_AWAITING_TENTH_REVIEW",
+  "reviewed_commit": "468ac18",
+  "implementation_status": "PC1_PATH_GATED_NO_CONTROLLERS",
+  "experimental_status": "SYNTHETIC_EXPERIMENTS_ONLY_PC1_NOT_EXECUTED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Execute planner/latest_plan.md Phase 2A-R9: separate protocol content from approval lifecycle; bind approval to trusted authorization; bind plan artifact to a pinned registered plan identity/hash; replace semantic substring checks with structured executable contracts.",
-  "next_gate": "FIX_R46_R49 -> FOCUSED_AND_FULL_TESTS -> TENTH_INDEPENDENT_REVIEW -> TRUSTED_PLANNER_APPROVAL -> PRODUCTION_RUNTIME_DEPLOYMENT_AND_SMOKE_G3 -> PC1_APPROVAL",
+  "current_task": "Await tenth independent review + Planner protocol approval.",
+  "next_gate": "TENTH_REVIEW -> PLANNER_APPROVAL -> PRODUCTION_SMOKE_G3 -> PC1",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -335,6 +335,26 @@
       "R47": "load_plan_artifact verifies only its own embedded hash. run_pc1_analysis compares plan_hash to that artifact hash but never checks the mapping against an independently pinned registered plan identity/hash. An alternative mapping with a recomputed self-hash is not rejected.",
       "R48": "protocol_consistency_check still uses substring checks for reward coefficients/clipping, estimator semantics and seed schema (pc1.py lines 152-190). Materially altered formulas/contracts can retain those substrings and pass; W_BEST is imported but not validated.",
       "R49": "protocol_consistency_check hardcodes status PROPOSED_NOT_APPROVED, while ApprovalGate requires canonical status APPROVED. run_pc1_analysis requires protocol consistency, creating a lifecycle deadlock. PROTOCOL_STATUS constant also differs from document status string."
+    }
+  },
+  "remediation_r9": {
+    "date": "2026-10-27",
+    "verdict_requested": "TENTH_INDEPENDENT_REVIEW",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "fixed": {
+      "R49": "protocol content vs lifecycle status separated; deadlock resolved",
+      "R46": "TrustedApprovalArtifact with pinned trust anchor; fabricated records rejected",
+      "R47": "registered plan identity binding; noncanonical plans rejected",
+      "R48": "structured reward/estimator/seed contracts; adversarial mutations rejected"
+    },
+    "tests": {
+      "unit": "232/232 PASS",
+      "zero_cost": "PASS",
+      "protocol_consistency": "PASS",
+      "dry_run": "PASS",
+      "manifest": "OK",
+      "smoke": "ok"
     }
   }
 }

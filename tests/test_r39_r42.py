@@ -115,19 +115,21 @@ class TestR40ProtocolConsistency(unittest.TestCase):
         self.assertFalse(r["all_pass"])
         os.unlink(path)
 
-    def test_mutation_status_fails(self):
+    def test_mutation_status_not_checked_by_consistency(self):
+        """R49: status is lifecycle concern, not content consistency."""
         doc = parse_protocol_document()
         doc["status"] = "APPROVED"
         with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as f:
             f.write("# T\n\n```json\n" + json.dumps(doc) + "\n```\n")
             path = f.name
         r = protocol_consistency_check(path)
-        self.assertFalse(r["all_pass"])
+        # R49: status change should NOT fail content consistency
+        self.assertTrue(r["all_pass"], "status is lifecycle, not content")
         os.unlink(path)
 
     def test_mutation_seed_contract_fails(self):
         doc = parse_protocol_document()
-        doc["seed_contract"] = "wrong-contract"
+        doc["seed_schema"] = {"version": "crn-v2", "fields": ["action", "genotype", "task_id"], "encoding": "typed_json"}
         with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as f:
             f.write("# T\n\n```json\n" + json.dumps(doc) + "\n```\n")
             path = f.name
@@ -137,7 +139,7 @@ class TestR40ProtocolConsistency(unittest.TestCase):
 
     def test_mutation_reward_fails(self):
         doc = parse_protocol_document()
-        doc["reward_formula"] = "wrong-reward"
+        doc["reward_contract"] = {"w_best": 99.0, "w_valid": 0.1, "w_mean": 0.25, "clip_lo": -0.5, "clip_hi": 1.0}
         with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as f:
             f.write("# T\n\n```json\n" + json.dumps(doc) + "\n```\n")
             path = f.name

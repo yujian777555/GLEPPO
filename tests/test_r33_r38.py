@@ -302,13 +302,13 @@ class TestR36ProtocolConsistency(unittest.TestCase):
 
     def test_mutation_estimator_fails(self):
         doc = parse_protocol_document()
-        doc["estimator_r_hat"] = "wrong definition"
+        doc["estimator_contract"] = {"horizon": 99, "gamma": 0.95, "r_hat_sources": ["q_rollout_first", "extra_immediate"], "q_hat_role": "q_rollout_only"}
         with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as f:
             f.write("# Test\n\n```json\n" + json.dumps(doc) + "\n```\n")
             path = f.name
         r = protocol_consistency_check(path)
         self.assertFalse(r["all_pass"])
-        self.assertFalse(r["checks"]["doc_estimator_r_hat"]["ok"])
+        self.assertFalse(r["checks"]["doc_est_horizon"]["ok"])
         os.unlink(path)
 
 

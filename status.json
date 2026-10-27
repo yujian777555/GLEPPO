@@ -2,51 +2,24 @@
   "project": "GLEPPO",
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
-  "updated_at": "2026-10-26",
-  "phase": "PHASE1_PROBLEM_DEFINITION",
-  "state": "PHASE1_DESIGN_COMPLETE",
+  "updated_at": "2026-10-27",
+  "phase": "PHASE2_ENVIRONMENT_BUILD",
+  "state": "PHASE2_PLAN_READY",
   "implementation_status": "NOT_STARTED",
   "experimental_status": "NO_EXPERIMENTS",
-  "current_hypothesis": "ECOS: a PPO policy over a restricted 5-operator library, conditioned on population state and real agent-execution feedback, optimizes discounted multi-step return of an evolution run and may outperform identical-state contextual bandits and hand rules on held-out task families — only if operator choice has non-myopic delayed effects (pre-training myopia diagnostic).",
+  "current_hypothesis": "A PPO-trained controller may learn sequential operator-selection decisions for LLM-agent evolution from population state and real execution feedback, and transfer to held-out task families.",
   "hypothesis_status": "UNVALIDATED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
-  "candidate_selection_status": "PLANNER_SELECTED_AND_DESIGNED",
   "inactive_candidate": "M2_FMPS_FROZEN_NOT_TO_BE_DEVELOPED_IN_PARALLEL",
-  "selection_rationale": "M1 has a small discrete action space and permits controlled isolation of operator choice. This is a tractability decision, not a novelty claim.",
-  "central_falsification_risk": "A contextual bandit using the same state features may match PPO; Phase 1 treats this as a core scientific test (myopia diagnostic + identical-state bandits), not a checkbox.",
-  "phase1_design": {
-    "status": "COMPLETE",
-    "date": "2026-10-26",
-    "artifact": "research/PHASE1_DESIGN.md",
-    "protocol": "docs/PHASE1_DESIGN_PROTOCOL.md",
-    "decision": "GO",
-    "conditions": {
-      "PC1": "Myopia diagnostic must pass before any PPO/controller training",
-      "SR1": "If decision problem is myopic → STOP PPO hypothesis (do not wrap bandit as RL)",
-      "SR2": "Phase3: ECOS must beat identical-state contextual bandits on Family-C else STOP",
-      "SR3": "A1 fitness-only / A0 no-execution-feature ablations equal to full ECOS → revise/stop",
-      "SR4": "G3 causality: ≥3/5 operators must change observable behavior",
-      "SR5": "Cost smoke infeasible → revise scale once then STOP"
-    },
-    "locked_design": {
-      "decision_family": "operator_selection_only",
-      "genotype": "declarative agent spec (system_prompt + tool subset + workflow), not free-form code",
-      "operators_K": 5,
-      "operators": ["prompt_local_edit", "prompt_critique_rewrite", "tool_subset_edit", "workflow_step_edit", "crossover"],
-      "population_mu": 8,
-      "offspring_lambda": 4,
-      "generations_T": 15,
-      "parent_selection": "tournament_k2_frozen",
-      "survivor_selection": "mu_plus_lambda_elitist",
-      "gamma": 0.95,
-      "action": "one_operator_per_generation_categorical",
-      "families": {"train": ["A_arithmetic", "B_tool_composition"], "val": ["A_prime", "B_prime"], "test_heldout": ["C_structured_constraints"]},
-      "baselines_mandatory": ["B0_fixed", "B1_random", "B2_adaptive_rule", "B3a_UCB1", "B3b_EXP3", "B3c_LinUCB_identical_state", "B3d_neural_CB_identical_state", "B4_GLEET_knob", "B5_FM_rewrite", "B6_Qlearning"],
-      "ppo_vs_bandit_test": "myopia diagnostic + equal-state bandit kill baselines; if myopic → STOP not wrap"
-    }
-  },
-  "current_task": "Phase 2: implement genotype/interpreter/operators, task generators + manifest freeze, evolution loop, myopia diagnostic (PC1 gate), baselines B0–B6; then PPO trainer only after PC1 pass.",
-  "next_gate": "G3_ENVIRONMENT_GATE (genotype causality + manifest freeze) then PC1_MYOPIA_GATE before G4_TRAINING_GATE",
+  "phase1_commit": "f537032999412b7635f580a1eab9a7e927ae04f9",
+  "phase1_decision": "GO_WITH_PC1_AND_SR1_SR5",
+  "phase2_preflight_flags": [
+    "PC1 cost arithmetic must be reconciled with the 50000-episode cap before running the diagnostic.",
+    "State vector feature dimensions and packing must be explicitly frozen and tested.",
+    "Exact runtime/model revision and operator proposal-call counts must be locked before real execution."
+  ],
+  "current_task": "Phase 2A: implement minimal ECOS environment and verify runtime, data isolation, genotype causality, and measured cost; no controller training until the amended PC1 diagnostic passes.",
+  "next_gate": "RUNTIME_LOCK_AND_G3_CAUSALITY_GATE -> PC1_PREFLIGHT_REVIEW -> PC1_MYOPIA_GATE -> ONLY_THEN_CONTROLLER_TRAINING",
   "project_isolation": {
     "source_of_truth": "yujian777555/GLEPPO",
     "cross_project_code_reuse": false,
@@ -55,22 +28,26 @@
   },
   "p0_1_conditions": [
     "C1: do not copy GLEET code; independent implementation only.",
-    "C2: choose exactly one decision family; M1 selected and designed, M2 frozen.",
-    "C3: bandit and FM-rewrite baselines are mandatory in effectiveness experiments.",
-    "C4: perform deeper literature collision check before publication-level novelty claims.",
-    "C5: if PPO fails to beat bandit on held-out task families, STOP this hypothesis; do not expand action space or stack modules."
+    "C2: choose exactly one decision family; M1 selected, M2 frozen.",
+    "C3: bandit and FM-rewrite baselines mandatory in effectiveness experiments.",
+    "C4: deeper literature collision check before publication-level novelty claims.",
+    "C5: if PPO fails to beat contextual bandits on held-out task families, STOP the scoped hypothesis."
+  ],
+  "phase1_gates": [
+    "PC1: no PPO training before the myopia diagnostic passes under an approved, budget-consistent protocol.",
+    "SR1: if myopia diagnostic fails or remains inconclusive at the hard cap, STOP the PPO hypothesis.",
+    "SR2: if PPO does not beat identical-state LinUCB and neural contextual bandit on Family C, STOP.",
+    "SR3: if fitness-only state matches full ECOS, revise or stop the execution-feedback claim.",
+    "SR4: genotype/operator causality must pass after at most one operator-library revision.",
+    "SR5: if cost smoke is infeasible after one scale revision, STOP."
   ],
   "acceptance_rules": [
-    "Real LLM-agent execution outcomes ground the primary evaluation.",
-    "No novelty claims before mechanism-level related-work audit and deeper collision check.",
-    "Compare PPO against fixed, random, adaptive-rule, non-contextual bandit, contextual bandit (same state), FM-rewrite, and Q-learning baselines.",
-    "Use train/validation/held-out task-family separation and multiple seeds.",
+    "Real LLM-agent execution outcomes ground primary evaluation.",
+    "No novelty claims before mechanism-level literature review and deeper collision check.",
+    "Compare PPO against fixed, random, adaptive, contextual-bandit, FM-rewrite, and Q-learning baselines.",
+    "Use disjoint train/validation/held-out task-family splits and hash-frozen manifests.",
     "Limited-budget allocation is not the central contribution.",
-    "No controller implementation, model/API calls, training, or experiments during Phase 1 design task.",
-    "GLEET code must not be copied (no license).",
-    "Do not package a myopic operator-selection problem as RL to justify PPO; if myopic, STOP.",
-    "M2 frozen; no third mechanism to rescue STOP conditions."
-  ],
-  "bootstrap_base_commit": "e7e8e4aac243df2ac690d8b3b4351d32ea4023e3",
-  "p0_1_commit": "4d9a8078c728a0115ca69ac04ba41649cc6de071"
+    "No controller training or effectiveness claims before PC1 passes.",
+    "No GLEET code reuse and no cross-project artifacts."
+  ]
 }

@@ -349,7 +349,7 @@ class TestR37ProtocolPlanHash(unittest.TestCase):
             run_pc1_analysis(recs, 45440, require_registered_shape=True,
                              manifest_hash="mh", runtime_revision="rt",
                              evaluator_version="ev", protocol_hash="wrong_hash",
-                             plan_hash=plan_hash)
+                             plan_hash=plan_hash, plan_artifact_path="dummy.json")
         self.assertIn("protocol_hash", str(ctx.exception))
 
     def test_wrong_plan_hash_rejected(self):
@@ -361,7 +361,7 @@ class TestR37ProtocolPlanHash(unittest.TestCase):
                              manifest_hash="mh", runtime_revision="rt",
                              evaluator_version="ev", protocol_hash=ph,
                              plan_hash="wrong_plan")
-        self.assertIn("plan_hash", str(ctx.exception))
+        self.assertIn("plan_artifact_path", str(ctx.exception))
 
 
 # ===== R38: fail-closed gates =====

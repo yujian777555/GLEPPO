@@ -395,15 +395,15 @@ class TestR25GatedRunner(unittest.TestCase):
             runner.execute_unit("u1", PROTOCOL_VERSION, HARD_CAP_SLOTS + 1, 0, 0)
 
     def test_synthetic_execution_with_all_gates(self):
+        """R43: even with all fields set, PROPOSED protocol must be rejected."""
         runner = SyntheticGateHarness(
             approval_gate=ApprovalGate(approved=True, protocol_status="APPROVED", protocol_hash=self._real_hash, expected_protocol_hash=self._real_hash, approval_record=PlannerApprovalRecord(approval_id="A1", approver="test", approval_date="2026-01-01", protocol_hash=self._real_hash, protocol_status="APPROVED", protocol_version=PROTOCOL_VERSION)),
             production_gate=ProductionRuntimeGate(ready=True, runtime_revision="r1", required_revision="r1"),
             protocol_gate=ProtocolVersionGate(),
         )
-        runner.execute_unit("u1", PROTOCOL_VERSION, 10, 8, 0)
-        runner.execute_unit("u2", PROTOCOL_VERSION, 10, 8, 0)
-        self.assertEqual(len(runner.executed_units), 2)
-        self.assertEqual(runner.ledger.planned_slots, 20)
+        # R43: canonical protocol is PROPOSED, so this must fail
+        with self.assertRaises(PC1ExecutionRefused):
+            runner.execute_unit("u1", PROTOCOL_VERSION, 10, 8, 0)
 
     def test_collection_episode_budget_check(self):
         runner = SyntheticGateHarness(

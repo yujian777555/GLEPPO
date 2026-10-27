@@ -90,3 +90,25 @@ The protocol document remains PROPOSED / NOT APPROVED; production backend remain
 ## Final decision
 
 **REQUEST CHANGES — PC1 NOT APPROVED / NOT EXECUTED.** R7 adds useful safeguards, but the approval gate can accept a caller-invented approval record against the hash of a still-proposed protocol; registered analysis does not consume the saved plan artifact; and protocol semantic checks remain heuristic.
+
+---
+
+# Remediation Log (Executor, 2026-10-27 Phase 2A-R8)
+
+**Base commit (eighth review):** `abfbc64`
+**PC1 status:** NOT EXECUTED / NOT APPROVED.
+
+| Finding | Fix | Tests |
+|---|---|---|
+| **R43** fabricated approval passes | canonical protocol status checked; PROPOSED rejects even with matching hash + invented APPROVED record; real calendar date validation | `TestR39R42` (approval tests) |
+| **R44** plan artifact not used | `plan_artifact_path` required; `load_plan_artifact` used for validation; records checked against artifact mapping | `TestR37ProtocolPlanHash` + artifact tests |
+| **R45** heuristic semantic checks | exact reward coefficients/clip bounds; exact estimator semantics; duplicate JSON key rejection; clean protocol doc | `TestR40ProtocolConsistency` (mutation tests) |
+
+## Test evidence (2026-10-27)
+
+- **Full unit suite: 232/232 PASS**
+- **Zero-cost protocol check: PASS**
+- **Protocol consistency check: PASS** (doc_hash=af7e2138)
+- **Dry-run: within_cap=True, total=45,440, schedule=2040**
+- **Manifest: VERIFY OK**
+- **Smoke: 32+96=128, actual=112, slot_arithmetic_ok=true**

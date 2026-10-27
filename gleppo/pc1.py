@@ -79,8 +79,23 @@ CANONICAL_PROTOCOL = {
 }
 
 
+class _DuplicateKeyChecker(json.JSONDecoder):
+    """R45: reject duplicate JSON object keys."""
+    def __init__(self, *args, **kwargs):
+        super().__init__(object_pairs_hook=self._check_duplicates, *args, **kwargs)
+
+    @staticmethod
+    def _check_duplicates(pairs):
+        seen = set()
+        for key, _ in pairs:
+            if key in seen:
+                raise ValueError(f"R45: duplicate JSON key '{key}' in protocol document")
+            seen.add(key)
+        return dict(pairs)
+
+
 def parse_protocol_document(path: Optional[str] = None) -> dict:
-    """R36: parse the canonical JSON field block from PC1_PROTOCOL_R4_PROPOSED.md."""
+    """R36/R45: parse canonical JSON block; reject duplicate keys."""
     import re as _re
     if path is None:
         import os as _os
@@ -91,7 +106,7 @@ def parse_protocol_document(path: Optional[str] = None) -> dict:
     match = _re.search(r'```json\s*\n(\{[^`]+\})\s*\n```', content)
     if not match:
         raise ValueError(f"R36: no canonical JSON block found in {path}")
-    return json.loads(match.group(1))
+    return json.loads(match.group(1), cls=_DuplicateKeyChecker)
 
 
 def compute_protocol_hash(doc: dict) -> str:
@@ -152,14 +167,27 @@ def protocol_consistency_check(path: Optional[str] = None) -> dict:
     seed = doc.get("seed_contract", "")
     checks["doc_seed_typed"] = ("crn-v2" in seed or "typed" in seed.lower() or "json" in seed.lower(),
                                 seed[:60])
-    # R40: reward formula check
+    # R45: exact reward formula — check coefficients and clip bounds
     reward = doc.get("reward_formula", "")
-    checks["doc_reward_formula"] = ("clip" in reward and "valid_rate" in reward, reward[:60])
-    # R40: estimator completeness
-    checks["doc_est_complete"] = (
-        "first" in doc.get("estimator_r_hat", "").lower()
-        and "discounted" in doc.get("estimator_q_hat", "").lower(),
-        f"{doc.get('estimator_r_hat', '')[:30]}...{doc.get('estimator_q_hat', '')[:30]}")
+    from .reward import W_BEST, W_VALID, W_MEAN, REWARD_CLIP_LO, REWARD_CLIP_HI
+    checks["doc_reward_clip_lo"] = (str(REWARD_CLIP_LO) in reward or "-0.5" in reward, reward[:60])
+    checks["doc_reward_clip_hi"] = (str(REWARD_CLIP_HI) in reward or "1.0" in reward, reward[:60])
+    checks["doc_reward_valid_coef"] = ("0.1" in reward and "valid_rate" in reward, reward[:60])
+    checks["doc_reward_mean_coef"] = ("0.25" in reward and "mean" in reward, reward[:60])
+    # R45: exact estimator semantics — not just substring
+    r_hat = doc.get("estimator_r_hat", "")
+    q_hat = doc.get("estimator_q_hat", "")
+    checks["doc_est_r_hat_exact"] = (
+        "Q-rollout first" in r_hat and "extra" in r_hat.lower()
+        and "immediate" in r_hat.lower(), r_hat[:50])
+    checks["doc_est_q_hat_exact"] = (
+        "discounted" in q_hat.lower() and "q_rollout" in q_hat.lower()
+        and "only" in q_hat.lower(), q_hat[:50])
+    # R45: exact seed schema check
+    seed = doc.get("seed_contract", "")
+    checks["doc_seed_schema"] = (
+        "crn-v2" in seed and ("json" in seed.lower() or "typed" in seed.lower()),
+        seed[:50])
 
     all_ok = all(ok for ok, _ in checks.values())
     return {"all_pass": all_ok,
@@ -352,7 +380,8 @@ class StateActionRecord:
 
 
 def validate_records(records: List[StateActionRecord],
-                     require_registered_shape: bool = True) -> None:
+                     require_registered_shape: bool = True,
+                     plan_mapping: Optional[Dict[str, dict]] = None) -> None:
     """R13: fail closed. Raises ValueError with a specific message on any violation."""
     if not records:
         raise ValueError("R13: empty record collection")
@@ -420,7 +449,8 @@ def validate_records(records: List[StateActionRecord],
 
     # R35: validate against plan mapping FIRST (registered mode only)
     if require_registered_shape:
-        plan_mapping, _ = get_plan_mapping()
+        if plan_mapping is None:
+            plan_mapping, _ = get_plan_mapping()
         validate_provenance_against_plan(records, plan_mapping)
 
     # R13: state-cluster conflict
@@ -584,7 +614,8 @@ def run_pc1_analysis(records: List[StateActionRecord],
                      runtime_revision: str = "",
                      evaluator_version: str = "",
                      protocol_hash: str = "",
-                     plan_hash: str = "") -> "PC1Result":
+                     plan_hash: str = "",
+                     plan_artifact_path: str = "") -> "PC1Result":
     """R13: validate first, fail closed. R28: full reconciliation. R30: provenance."""
     # R40: protocol consistency must pass before registered analysis
     if require_registered_shape:
@@ -601,23 +632,31 @@ def run_pc1_analysis(records: List[StateActionRecord],
             raise ValueError("R37: registered analysis requires non-empty protocol_hash")
         if not plan_hash or not plan_hash.strip():
             raise ValueError("R37: registered analysis requires non-empty plan_hash")
+        if not plan_artifact_path or not plan_artifact_path.strip():
+            raise ValueError("R44: registered analysis requires plan_artifact_path")
         # R37: verify protocol hash matches actual document
         actual_doc_hash = compute_protocol_hash(parse_protocol_document())
         if protocol_hash != actual_doc_hash:
             raise ValueError(
                 f"R37: protocol_hash mismatch: got '{protocol_hash}', expected '{actual_doc_hash}'")
-        # R37: verify plan hash matches generated mapping
-        _, expected_plan_hash = get_plan_mapping()
-        if plan_hash != expected_plan_hash:
+        # R44: load and verify plan artifact
+        try:
+            artifact_mapping, artifact_hash = load_plan_artifact(plan_artifact_path)
+        except Exception as e:
+            raise ValueError(f"R44: cannot load plan artifact: {e}")
+        if plan_hash != artifact_hash:
             raise ValueError(
-                f"R37: plan_hash mismatch: got '{plan_hash}', expected '{expected_plan_hash}'")
+                f"R44: plan_hash mismatch: got '{plan_hash}', artifact hash '{artifact_hash}'")
+        # R44: validate records against the ARTIFACT mapping, not get_plan_mapping()
+        validate_provenance_against_plan(records, artifact_mapping)
     # R21: reject invalid totals
     if planned_slots_total <= 0:
         raise ValueError(f"R21: planned_slots_total must be positive, got {planned_slots_total}")
     if planned_slots_total > HARD_CAP_SLOTS:
         raise ValueError(f"R21: planned slots {planned_slots_total} exceed hard cap {HARD_CAP_SLOTS}")
 
-    validate_records(records, require_registered_shape=require_registered_shape)
+    validate_records(records, require_registered_shape=require_registered_shape,
+                     plan_mapping=artifact_mapping if require_registered_shape and plan_artifact_path else None)
 
     # R40: protocol consistency must pass before registered statistics
     if require_registered_shape:
@@ -703,6 +742,7 @@ def run_pc1_analysis(records: List[StateActionRecord],
         "protocol_status": PROTOCOL_STATUS,
         "protocol_hash": protocol_hash,
         "plan_hash": plan_hash,
+        "plan_artifact_path": plan_artifact_path,
         "manifest_hash": manifest_hash,
         "runtime_revision": runtime_revision,
         "evaluator_version": evaluator_version,
@@ -1037,34 +1077,51 @@ class PlannerApprovalRecord:
     protocol_status: str = ""      # must be "APPROVED"
     protocol_version: str = ""
 
-    def validate(self, expected_protocol_hash: str, expected_version: str) -> None:
-        """R42: validate record against canonical protocol. Fail-closed."""
+    def validate(self, expected_protocol_hash: str, expected_version: str,
+                 canonical_status: str = "") -> None:
+        """R43: validate record against canonical protocol. Fail-closed.
+
+        canonical_status must be the ACTUAL status from the protocol document.
+        The gate rejects if the canonical protocol is still PROPOSED.
+        """
         import re as _re
+        from datetime import date as _date
         if not self.approval_id or not self.approval_id.strip():
-            raise PC1ExecutionRefused("R42: approval_id is empty")
+            raise PC1ExecutionRefused("R43: approval_id is empty")
         if not self.approver or not self.approver.strip():
-            raise PC1ExecutionRefused("R42: approver is empty")
+            raise PC1ExecutionRefused("R43: approver is empty")
         if not self.approval_date or not self.approval_date.strip():
-            raise PC1ExecutionRefused("R42: approval_date is empty")
-        # R42: validate ISO date format
+            raise PC1ExecutionRefused("R43: approval_date is empty")
+        # R43: validate REAL calendar date (not just regex shape)
         if not _re.match(r"^\d{4}-\d{2}-\d{2}$", self.approval_date):
             raise PC1ExecutionRefused(
-                f"R42: approval_date '{self.approval_date}' is not ISO format YYYY-MM-DD")
+                f"R43: approval_date '{self.approval_date}' is not ISO format YYYY-MM-DD")
+        try:
+            y, m, d = map(int, self.approval_date.split("-"))
+            _date(y, m, d)
+        except (ValueError, TypeError):
+            raise PC1ExecutionRefused(
+                f"R43: approval_date '{self.approval_date}' is not a valid calendar date")
         if self.protocol_status != "APPROVED":
             raise PC1ExecutionRefused(
-                f"R42: protocol_status='{self.protocol_status}', need 'APPROVED'")
+                f"R43: protocol_status='{self.protocol_status}', need 'APPROVED'")
         if not self.protocol_hash or not self.protocol_hash.strip():
-            raise PC1ExecutionRefused("R42: protocol_hash is empty")
+            raise PC1ExecutionRefused("R43: protocol_hash is empty")
         if self.protocol_hash != expected_protocol_hash:
             raise PC1ExecutionRefused(
-                f"R42: protocol_hash mismatch: got '{self.protocol_hash}', "
+                f"R43: protocol_hash mismatch: got '{self.protocol_hash}', "
                 f"expected '{expected_protocol_hash}'")
         if not self.protocol_version or not self.protocol_version.strip():
-            raise PC1ExecutionRefused("R42: protocol_version is empty")
+            raise PC1ExecutionRefused("R43: protocol_version is empty")
         if self.protocol_version != expected_version:
             raise PC1ExecutionRefused(
-                f"R42: protocol_version mismatch: got '{self.protocol_version}', "
+                f"R43: protocol_version mismatch: got '{self.protocol_version}', "
                 f"expected '{expected_version}'")
+        # R43: canonical protocol must itself be APPROVED
+        if canonical_status and canonical_status != "APPROVED":
+            raise PC1ExecutionRefused(
+                f"R43: canonical protocol status is '{canonical_status}', "
+                f"cannot authorize while PROPOSED")
 
 
 @dataclass
@@ -1096,11 +1153,12 @@ class ApprovalGate:
         # R42: must have a structured approval record
         if self.approval_record is None:
             raise PC1ExecutionRefused("R42: no PlannerApprovalRecord provided")
-        # R42: validate the record against canonical protocol
+        # R43: validate the record against canonical protocol (including status)
         doc = parse_protocol_document()
         expected_hash = compute_protocol_hash(doc)
         expected_version = doc.get("code_version", PROTOCOL_VERSION)
-        self.approval_record.validate(expected_hash, expected_version)
+        canonical_status = doc.get("status", "")
+        self.approval_record.validate(expected_hash, expected_version, canonical_status)
         # R42: also verify gate-level hash consistency
         if not self.protocol_hash or not self.protocol_hash.strip():
             raise PC1ExecutionRefused("R42: gate protocol_hash is empty")

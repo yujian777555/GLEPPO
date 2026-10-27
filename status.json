@@ -3,11 +3,11 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-27",
-  "phase": "PHASE2A_R2_CRN_ACCOUNTING_REMEDIATION",
-  "state": "R8_R11_FIXED_AWAITING_THIRD_REVIEW",
-  "reviewed_commit": "94764f86481edb8abb674c66aea0221ede2b9219",
-  "implementation_status": "ENVIRONMENT_CORRECTED_CRN_ACCOUNTING_FIXED_NO_CONTROLLERS",
-  "experimental_status": "STUB_G3_SMOKE_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BLOCKED",
+  "phase": "PHASE2A_R3_PC1_AUDITABILITY_REMEDIATION",
+  "state": "REQUEST_CHANGES_PC1_NOT_APPROVED",
+  "reviewed_commit": "f329a45e91b8011a42e6cc3fee49817da940966b",
+  "implementation_status": "R8_R9_EVOLUTION_PATH_IMPROVED_BUT_PC1_LEDGER_AND_RUNNER_BLOCKERS_OPEN",
+  "experimental_status": "STUB_ONLY_PC1_NOT_EXECUTED_PRODUCTION_BACKEND_PENDING",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,14 +33,14 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Await third independent review of R8-R11 remediation + PC1 runner. After approval: deploy production backend, real-model smoke/G3, then PC1.",
-  "next_gate": "THIRD_REVIEW -> PRODUCTION_SMOKE_G3 -> PC1 -> ONLY_THEN_CONTROLLER_TRAINING",
+  "current_task": "Execute planner/latest_plan.md Phase 2A-R3: fix R12-R18, test BudgetLedger and fail-closed PC1 analysis, separate sample roles, implement guarded PC1 dry-run collection/rollout schedule, unify CRN/cache seed semantics, emit replayable evidence, and reconcile cost documentation. Do not execute registered PC1.",
+  "next_gate": "FIX_R12_R18 -> FULL_TESTS_AND_DRY_RUN_ONLY -> FOURTH_INDEPENDENT_REVIEW -> PRODUCTION_RUNTIME_LOCK_AND_SMOKE_G3 -> PC1_APPROVAL",
   "hard_rules": [
-    "No PC1 execution before another independent review approves the protocol and production smoke/G3 pass.",
-    "No Family C execution or tuning.",
+    "No registered PC1 execution before independent approval and production-runtime smoke/G3.",
+    "No Family C loading, execution, or tuning.",
     "No controller implementation or training before PC1 passes.",
     "No GLEET code reuse or cross-project artifacts.",
-    "No fabricated model calls, costs, tokens, test results, or approval."
+    "No fabricated test, model-call, cost, token, or approval evidence."
   ],
   "remediation_r2": {
     "date": "2026-10-27",
@@ -68,5 +68,21 @@
       "Third independent review not yet obtained",
       "C4 literature collision re-check outstanding"
     ]
+  },
+  "third_review": {
+    "verdict": "REQUEST_CHANGES",
+    "report": "research/THIRD_REVIEW_FINDINGS.md",
+    "reviewer_scope": "read-only source audit; reviewer did not execute repository tests or experiments",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "findings": {
+      "R12": "BudgetLedger still subtracts bundle-level cache hits from replica-level actual_ctx; units inconsistent and untested.",
+      "R13": "PC1 analysis fails open on incomplete records: missing actions default to 0.0; no full coverage, horizon, replicate-count or cluster-consistency validation.",
+      "R14": "EXTRA_IMMEDIATE slots are budgeted but records do not distinguish extra immediate draws from Q rollouts; estimators can mix sample roles.",
+      "R15": "run_pc1_analysis analyzes preconstructed records only; no guarded registered state-collection/action-rollout runner, family metadata, or FamilyCGuard path.",
+      "R16": "CRN helpers/eval_seed are not one authoritative path; eval_seed is cache-key-only, replicate_seed includes action, and cache key can omit effective state/rollout inputs.",
+      "R17": "raw_evidence lacks full replayable records, seed/cluster/sample-role provenance, manifest hashes, and execution counter breakdown.",
+      "R18": "COST_BASELINE.md still contradicts itself: 112 vs 96 actual CTX, 0.021 vs 0.012 s, 45,440 vs 47,200 PC1 slots."
+    }
   }
 }

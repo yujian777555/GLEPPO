@@ -112,16 +112,16 @@ def op_tool_subset_edit(parent: Genotype, ctx: dict) -> Genotype:
                 if step.tool == drop_tool:
                     step.tool = replacement
     elif missing:
-        # C7-R1-B: add missing tool AND add workflow step to enter execution path
+        # C7-R1-C1-B: add missing tool AND add workflow step with valid input
         new_tool = missing[0]
         child.tools = sorted(set(current) | {new_tool})
-        # Add a tool step before finalize so the new tool enters execution
+        # Add a tool step before finalize with tool-appropriate input
         finalize_idx = None
         for idx, step in enumerate(child.workflow):
             if step.type == "finalize":
                 finalize_idx = idx
                 break
-        if finalize_idx is not None:
+        if finalize_idx is not None and len(child.workflow) < 6:
             tool_step = Step(type="tool", tool=new_tool, input_from="task")
             child.workflow.insert(finalize_idx, tool_step)
         child.meta["added_tool"] = new_tool

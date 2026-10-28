@@ -5,6 +5,36 @@
       "size": 8860,
       "status": "present"
     },
+    "docs/RUNTIME_LOCK_V2.md": {
+      "sha256": "bbc538745f988a749bbc1ddaaff5a08cafb926091ff70c685919efeafb32d722",
+      "size": 5094,
+      "status": "present"
+    },
+    "gleppo/evaluator.py": {
+      "sha256": "8edc25213c8d47488ea2f9f57c222f16c39078ce4dd454c78c803e5ae858f631",
+      "size": 7745,
+      "status": "present"
+    },
+    "gleppo/genotype.py": {
+      "sha256": "99ca74a12d1635610fc007e0e27cac64c69dea116fbd156defae50a5b1726a0b",
+      "size": 6935,
+      "status": "present"
+    },
+    "gleppo/interpreter.py": {
+      "sha256": "10bf94d41fb678d4e04a55260e5f209baa8d27a491aab17ba9bcb231b9d9e5b0",
+      "size": 8757,
+      "status": "present"
+    },
+    "gleppo/operators.py": {
+      "sha256": "636c043047b1116b0133e9c76365a42ceedb33a73503514168f3010e26e4ad7b",
+      "size": 11447,
+      "status": "present"
+    },
+    "gleppo/tasks.py": {
+      "sha256": "f6eff79f80d72d6e9932ce87693c5170e98554f3516ab31649708d45de657b0d",
+      "size": 15249,
+      "status": "present"
+    },
     "research/C7_EVIDENCE_RECOVERY.md": {
       "sha256": "deae7aff4e55be505e699eeb3a3a9e69446cf6ae92cff1924663b3542ccea35e",
       "size": 1682,
@@ -16,9 +46,9 @@
     "research/PHASE2A_R10_C6_RAW.json": {
       "status": "historical_missing"
     },
-    "research/PHASE2A_R10_C7_REPORT.md": {
-      "sha256": "90a4c75d2df9a4fd037689f24f4ddb738383e49a4496f57812cfcfaf3eaf09f9",
-      "size": 2188,
+    "research/PHASE2A_R10_C7_R1_REPORT.md": {
+      "sha256": "9b6eb6e7427fa74a176d0a56036b5a6e4e2039e1ff1bf1cea149828a25f0e273",
+      "size": 1954,
       "status": "present"
     },
     "research/PRODUCTION_G3_RAW.json": {
@@ -36,12 +66,17 @@
       "size": 1782,
       "status": "present"
     },
+    "scripts/verify_evidence.py": {
+      "sha256": "6661af0bdcc530d2f2edc9b08c60869279210266a77a3d059c199d0d1a83b17d",
+      "size": 7631,
+      "status": "present"
+    },
     "status.json": {
-      "sha256": "01bf84cb15bab468dca725cc515bce9b07f807a50b13033e0ef1763ebf2b73d8",
-      "size": 30932,
+      "sha256": "6c6b4285e5b62dbfd299b2868def7719d7c13ac93e7c4badaebb3c0eeb798df4",
+      "size": 31541,
       "status": "present"
     }
   },
-  "generated_at": "2026-10-28T05:13:31Z",
-  "version": "2.0"
+  "generated_at": "2026-10-28T06:06:56Z",
+  "version": "3.0"
 }

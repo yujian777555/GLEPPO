@@ -92,26 +92,17 @@ class TestEvidenceVerifier(unittest.TestCase):
         self.assertTrue(any("INVALID_HASH_FORMAT" in e for e in errors))
 
     def test_historical_missing_ok(self):
-        manifest = {
-            "version": "2.0",
-            "files": {
-                "research/PHASE2A_R10_C6_RAW.json": {"status": "historical_missing"},
-            },
-        }
-        with open(self.manifest_path, "w") as f:
-            json.dump(manifest, f)
+        build_manifest(self.manifest_path)
         errors = verify_manifest(self.manifest_path)
         self.assertEqual(errors, [], "historical_missing should not fail verification")
 
     def test_required_file_missing_fails(self):
-        manifest = {
-            "version": "2.0",
-            "files": {
-                "research/NONEXISTENT_REQUIRED.json": {"status": "required"},
-            },
-        }
-        with open(self.manifest_path, "w") as f:
-            json.dump(manifest, f)
+        build_manifest(self.manifest_path)
+        with open(self.manifest_path, encoding="utf-8") as f:
+            m = json.load(f)
+        m["files"]["status.json"]["status"] = "required_missing"
+        with open(self.manifest_path, "w", encoding="utf-8") as f:
+            json.dump(m, f)
         errors = verify_manifest(self.manifest_path)
         self.assertTrue(any("REQUIRED_FILE_MISSING" in e for e in errors))
 

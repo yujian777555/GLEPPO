@@ -31,6 +31,8 @@ class EvalResult:
     from_cache: bool = False
     replicas_run: int = 0       # R9/R12: actual replica executions (0 on cache hit)
     effective_seeds: List[Tuple[str, ...]] = field(default_factory=list)
+    answer_correct: float = 0.0    # D1: gold checker result (0-1)
+    format_compliant: float = 0.0  # D1: format checker result (0-1)
 
 
 class Evaluator:
@@ -144,14 +146,26 @@ class Evaluator:
         dom = max(set(fails), key=fails.count) if fails else ""
         turns = sum(x.turns for x in reps) / len(reps)
         tools = sum(x.tool_calls for x in reps) / len(reps)
+        # D1: separate answer_correct from format_compliant
+        answer_correct = sum(1 for x in reps if x.success) / len(reps)
+        format_compliant = sum(1 for x in reps if self._check_format(x.answer)) / len(reps)
         out = EvalResult(
             success=succ, validity_ok=True, failure_category=dom,
             turns=turns, tool_calls=tools, replicas=len(reps),
             from_cache=False, replicas_run=self.n_eval,
             effective_seeds=seeds_used,
+            answer_correct=answer_correct,
+            format_compliant=format_compliant,
         )
         self._cache[key] = out
         return out
+
+    @staticmethod
+    def _check_format(answer: str) -> bool:
+        """D1: format compliance — independent of gold checker."""
+        if not answer or not answer.strip():
+            return False
+        return "Final answer:" in answer
 
     def observe(self, ev: EvalResult) -> dict:
         return {

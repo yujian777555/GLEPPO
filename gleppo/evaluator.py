@@ -147,7 +147,10 @@ class Evaluator:
         turns = sum(x.turns for x in reps) / len(reps)
         tools = sum(x.tool_calls for x in reps) / len(reps)
         # D1: separate answer_correct from format_compliant
-        answer_correct = sum(1 for x in reps if x.success) / len(reps)
+        # B1: answer_correct from gold checker directly (independent of success)
+        answer_correct = sum(
+            1 for x in reps if task.get("gold_check") and task["gold_check"](x.answer, g)
+        ) / len(reps)
         format_compliant = sum(1 for x in reps if self._check_format(x.answer)) / len(reps)
         out = EvalResult(
             success=succ, validity_ok=True, failure_category=dom,

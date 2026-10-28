@@ -162,10 +162,30 @@ class Evaluator:
 
     @staticmethod
     def _check_format(answer: str) -> bool:
-        """D1: format compliance — independent of gold checker."""
+        """D1: format compliance — independent of gold checker.
+
+        Rules (frozen protocol):
+        - Must contain 'Final answer:' prefix
+        - Must have non-empty content after prefix
+        - No trailing explanation after the answer value
+        """
         if not answer or not answer.strip():
             return False
-        return "Final answer:" in answer
+        if "Final answer:" not in answer:
+            return False
+        # Extract content after prefix
+        idx = answer.index("Final answer:")
+        after = answer[idx + len("Final answer:"):].strip()
+        if not after:
+            return False
+        # D1: check for excessive trailing text (more than 20 chars after value)
+        # This catches "Final answer: 42. Let me explain..." as non-compliant
+        lines = after.split("\n")
+        first_line = lines[0].strip()
+        # Value should be reasonably short (no long explanations)
+        if len(first_line) > 100:
+            return False
+        return True
 
     def observe(self, ev: EvalResult) -> dict:
         return {

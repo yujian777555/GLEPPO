@@ -253,6 +253,33 @@ def op_crossover(parent: Genotype, ctx: dict) -> Genotype:
     m_tools_unique = sorted(set(mate.tools) - set(parent.tools))
     shared_tools = sorted(set(parent.tools) & set(mate.tools))
 
+    # C2: workflow inheritance tracking
+    wf_inherit = []
+    for i, step in enumerate(child.workflow):
+        # Determine source: parent, mate, or derived
+        p_match = any(
+            s.type == step.type and s.tool == step.tool and s.prompt_slot == step.prompt_slot
+            for s in parent.workflow
+        )
+        m_match = any(
+            s.type == step.type and s.tool == step.tool and s.prompt_slot == step.prompt_slot
+            for s in mate.workflow
+        )
+        if p_match and m_match:
+            source = "shared"
+        elif p_match:
+            source = "parent"
+        elif m_match:
+            source = "mate"
+        else:
+            source = "derived"
+        wf_inherit.append({
+            "child_index": i,
+            "type": step.type,
+            "tool": step.tool,
+            "source": source,
+        })
+
     child.meta["crossover_parent"] = behavior_hash(parent)[:8]
     child.meta["crossover_mate"] = behavior_hash(mate)[:8]
     child.meta["inherited_strategies"] = {
@@ -262,6 +289,7 @@ def op_crossover(parent: Genotype, ctx: dict) -> Genotype:
         "from_parent_tools": [t for t in p_tools_unique if t in child.tools],
         "from_mate_tools": [t for t in m_tools_unique if t in child.tools],
         "from_shared_tools": [t for t in shared_tools if t in child.tools],
+        "workflow_inheritance": wf_inherit,
     }
     # C2: final child behavior hash for verification
     child.meta["crossover_child_hash"] = behavior_hash(child)[:8]

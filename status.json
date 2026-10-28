@@ -4,7 +4,7 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_R10_REMEDIATION",
-  "state": "C7_R1_C2_COMPLETE_READY_FOR_REVIEW",
+  "state": "C7_R1_C3_COMPLETE_READY_FOR_REVIEW",
   "reviewed_commit": "d91f72c",
   "implementation_status": "EVIDENCE_VERIFIER_FIXED_OPERATORS_FIXED_RUNTIME_LOCK_V2",
   "experimental_status": "NO_NEW_EXPERIMENTS_PC1_NOT_EXECUTED",
@@ -570,6 +570,17 @@
       "unit": "319/319 PASS",
       "evidence": "OK",
       "protocol_hash": "OK",
+      "zero_cost": "PASS",
+      "protocol": "PASS"
+    }
+  },
+  "c7_r1_c3": {
+    "decision": "READY_FOR_INDEPENDENT_REVIEW",
+    "branch": "c7-r1-c3-fix",
+    "tests": {
+      "unit": "334/334 PASS",
+      "protocol_hash": "OK",
+      "evidence": "OK",
       "zero_cost": "PASS",
       "protocol": "PASS"
     }

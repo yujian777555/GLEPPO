@@ -104,20 +104,28 @@ class Interpreter:
             if step.type == "tool":
                 src = step.input_from or "task"
                 payload = ctx.get(src, task["input"])
-                # R63: extract usable tool payload from LLM natural-language output
-                if step.tool == "calc":
-                    payload = self._extract_calc_payload(str(payload), task)
-                elif step.tool == "str_ops":
-                    payload = self._extract_strops_payload(str(payload), task)
-                elif step.tool == "py_sandbox":
-                    payload = self._extract_pysandbox_payload(str(payload), task)
+                # B1: extract usable tool payload; raise on invalid input
+                try:
+                    if step.tool == "calc":
+                        payload = self._extract_calc_payload(str(payload), task)
+                    elif step.tool == "str_ops":
+                        payload = self._extract_strops_payload(str(payload), task)
+                    elif step.tool == "py_sandbox":
+                        payload = self._extract_pysandbox_payload(str(payload), task)
+                except ValueError as e:
+                    trace.append(TraceEvent("tool", False, step.tool or "", f"input_error: {e}").to_dict())
+                    failure = "tool_error"
+                    break
                 ok, out = run_tool(step.tool or "", str(payload))
                 tool_calls += 1
                 trace.append(TraceEvent("tool", ok, step.tool or "", out).to_dict())
                 if not ok:
                     failure = "tool_error"
                     break
+                # B2: store output for downstream consumption
                 ctx[step.tool or "out"] = out
+                # Also store in generic "last_tool_output" for finalize step
+                ctx["last_tool_output"] = out
                 i += 1
                 continue
 
@@ -179,21 +187,25 @@ class Interpreter:
         return self._extract_expr_from_text(task.get("input", ""))
 
     def _extract_pysandbox_payload(self, llm_output: str, task: dict) -> str:
-        """B1: extract Python code from LLM output or task input for py_sandbox."""
+        """B1: extract Python code from LLM output or task input.
+
+        Raises ValueError if no valid input found — never returns fake success.
+        """
         import re
-        # Look for code block or assignment pattern
+        # Look for explicit result assignment
         m = re.search(r"(?:result|out|answer)\s*=\s*(.+)", llm_output)
         if m:
             return f"result = {m.group(1).strip()}"
-        # Try to extract arithmetic and wrap in assignment
+        # Try to extract arithmetic expression
         m = re.search(r"([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*)", llm_output)
         if m:
             return f"result = {m.group(1).strip()}"
-        # Fall back: try task input
+        # Try task input
         m = re.search(r"([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*)", task.get("input", ""))
         if m:
             return f"result = {m.group(1).strip()}"
-        return "result = 0"
+        # B1: no valid input found — raise, don't fabricate
+        raise ValueError("B1: no valid Python input extracted for py_sandbox")
 
     def _extract_strops_payload(self, llm_output: str, task: dict) -> str:
         """R63: extract str_ops command from LLM output or task input."""

@@ -1,212 +1,1906 @@
-# GLEPPO Runtime Lock V2
-
-
-
-**Version:** V2  
-
-**Date:** 2026-10-27  
-
-**Status:** FROZEN for next formal production experiment  
-
-**Protocol hash:** 8ae58613907263d68824d17b84b38eb410bbb6c44a6e6ddd2b8cce45002a22c4
-
-
-
-## 1. Model
-
-
-
-| Field | Value |
-
-|---|---|
-
-| Model ID | Qwen2.5-7B-Instruct |
-
-| Revision | `a09a35458c702b33eeacc393d103063234e8bc28` |
-
-| Source | Local HF cache `/202532803004/datasets/hf/hub/models--Qwen--Qwen2.5-7B-Instruct/` |
-
-
-
-## 2. Inference Backend
-
-
-
-| Field | Value |
-
-|---|---|
-
-| Framework | Transformers |
-
-| Version | 5.7.0 |
-
-| PyTorch | 2.5.1+cu121 |
-
-| Device | NVIDIA A800 80GB PCIe |
-
-| GPU index | CUDA_VISIBLE_DEVICES=0 |
-
-| Precision | bfloat16 |
-
-| Quantization | none |
-
-
-
-## 3. Decoding Parameters
-
-
-
-| Parameter | Value |
-
-|---|---|
-
-| temperature | 0.7 |
-
-| top_p | 0.95 |
-
-| max_new_tokens | 128 (canary) / 256 (smoke/G3) |
-
-| do_sample | True |
-
-| pad_token_id | eos_token_id |
-
-
-
-## 4. Random Seeds
-
-
-
-| Rule | Implementation |
-
-|---|---|
-
-| Seed derivation | SHA256 of JSON-serialized seed tuple |
-
-| Seed tuple | `(seed_base, task_id, replicate_id, rollout_id, replica_index)` |
-
-| CRN pairing | Same (task, state, rollout, replicate) → same seed across actions |
-
-| Genotype exclusion | Genotype/action NEVER enter evaluation seed |
-
-| Built-in hash() | **NOT USED** |
-
-
-
-## 5. Task Protocol
-
-
-
-| Field | Value |
-
-|---|---|
-
-| Families | A (train), B (train) — Family C FORBIDDEN |
-
-| Tasks | A-g3-prod-00 (TA1), B-g3-prod-00 (TB1) |
-
-| Replicates | 3 per task (canary) |
-
-| Operators | 5 frozen: prompt_local_edit, prompt_critique_rewrite, tool_subset_edit, workflow_step_edit, crossover |
-
-| Parents | 4 (default genotype + Variant suffix) |
-
-
-
-## 6. Trace Format
-
-
-
-Required fields per execution:
-
-- `task_id`, `family`, `replicate`, `seed`
-
-- `model_input_hash`, `model_output`
-
-- `tool_name`, `tool_input`, `tool_output`
-
-- `final_answer`, `gold_check_result`
-
-- `failure_category`, `success`
-
-
-
-## 7. Behavior Change Calculation
-
-
-
-Behavior changed if ANY of:
-
-- `success_rate` differs
-
-- `mean_tool_calls` or `mean_turns` differ
-
-- `failure_category` distribution differs
-
-- Execution trace events (excluding prompt_sig) differ
-
-- `answer_head` differs
-
-
-
-## 8. G3 Pass Criteria (FROZEN)
-
-
-
-Each operator: `behavior_changed >= max(1, valid // 2)`  
-
-Overall: all 5 operators must pass.
-
-
-
-## 9. Budget Limits
-
-
-
-| Budget | Limit |
-
-|---|---|
-
-| Canary model requests | 30 |
-
-| Canary wall clock | 300s |
-
-| G3 model requests | 200 |
-
-| G3 wall clock | 1200s |
-
-
-
-## 10. Abort Conditions
-
-
-
-- Budget exceeded → stop immediately
-
-- Family C access → stop immediately
-
-- Invalid genotype rate > 50% → stop and diagnose
-
-- Model loading failure → stop
-
-
-
-## 11. Evidence Rules
-
-
-
-- All raw files saved to `research/`
-
-- SHA-256 manifest generated before and after experiments
-
-- Historical files (C6) marked as `historical_missing`
-
-- No overwriting of previous experimental data
-
-
-
-## 12. C6 Note
-
-
-
-C6 experiments (`be883ff`) were **exploratory**, not preregistered. C6 results marked `NOT_INDEPENDENTLY_VERIFIABLE` (raw files missing). This V2 lock supersedes C6 runtime parameters for future formal experiments.
-
+# GLEPPO Runtime Lock V2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Version:** V2  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Date:** 2026-10-27  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Status:** FROZEN for next formal production experiment  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Protocol hash:** 8ae58613907263d68824d17b84b38eb410bbb6c44a6e6ddd2b8cce45002a22c4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 1. Model
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Field | Value |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|---|---|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Model ID | Qwen2.5-7B-Instruct |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Revision | `a09a35458c702b33eeacc393d103063234e8bc28` |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Source | Local HF cache `/202532803004/datasets/hf/hub/models--Qwen--Qwen2.5-7B-Instruct/` |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 2. Inference Backend
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Field | Value |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|---|---|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Framework | Transformers |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Version | 5.7.0 |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| PyTorch | 2.5.1+cu121 |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Device | NVIDIA A800 80GB PCIe |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| GPU index | CUDA_VISIBLE_DEVICES=0 |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Precision | bfloat16 |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Quantization | none |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 3. Decoding Parameters
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Parameter | Value |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|---|---|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| temperature | 0.7 |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| top_p | 0.95 |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| max_new_tokens | 128 (canary) / 256 (smoke/G3) |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| do_sample | True |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| pad_token_id | eos_token_id |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 4. Random Seeds
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Rule | Implementation |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|---|---|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Seed derivation | SHA256 of JSON-serialized seed tuple |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Seed tuple | `(seed_base, task_id, replicate_id, rollout_id, replica_index)` |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| CRN pairing | Same (task, state, rollout, replicate) → same seed across actions |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Genotype exclusion | Genotype/action NEVER enter evaluation seed |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Built-in hash() | **NOT USED** |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 5. Task Protocol
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Field | Value |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|---|---|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Families | A (train), B (train) — Family C FORBIDDEN |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Tasks | A-g3-prod-00 (TA1), B-g3-prod-00 (TB1) |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Replicates | 3 per task (canary) |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Operators | 5 frozen: prompt_local_edit, prompt_critique_rewrite, tool_subset_edit, workflow_step_edit, crossover |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Parents | 4 (default genotype + Variant suffix) |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 6. Trace Format
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Required fields per execution:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- `task_id`, `family`, `replicate`, `seed`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- `model_input_hash`, `model_output`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- `tool_name`, `tool_input`, `tool_output`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- `final_answer`, `gold_check_result`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- `failure_category`, `success`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 7. Behavior Change Calculation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Behavior changed if ANY of:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- `success_rate` differs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- `mean_tool_calls` or `mean_turns` differ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- `failure_category` distribution differs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Execution trace events (excluding prompt_sig) differ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- `answer_head` differs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 8. G3 Pass Criteria (FROZEN)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Each operator: `behavior_changed >= max(1, valid // 2)`  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Overall: all 5 operators must pass.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 9. Budget Limits
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Budget | Limit |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+|---|---|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Canary model requests | 30 |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| Canary wall clock | 300s |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| G3 model requests | 200 |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+| G3 wall clock | 1200s |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 10. Abort Conditions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Budget exceeded → stop immediately
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Family C access → stop immediately
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Invalid genotype rate > 50% → stop and diagnose
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Model loading failure → stop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 11. Evidence Rules
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- All raw files saved to `research/`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- SHA-256 manifest generated before and after experiments
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Historical files (C6) marked as `historical_missing`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- No overwriting of previous experimental data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 12. C6 Note
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+C6 experiments (`be883ff`) were **exploratory**, not preregistered. C6 results marked `NOT_INDEPENDENTLY_VERIFIABLE` (raw files missing). This V2 lock supersedes C6 runtime parameters for future formal experiments.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

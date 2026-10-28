@@ -6,13 +6,13 @@
       "status": "present"
     },
     "docs/RUNTIME_LOCK_V2.md": {
-      "sha256": "7a5d32f89b13fbceb565d82f96999c913e8c72bf1ce30990c98ac9335fde51da",
-      "size": 5094,
+      "sha256": "2a27fd55b71d166b3015a82c8f360822de6b7f098357fb054767612a75a24189",
+      "size": 4882,
       "status": "present"
     },
     "gleppo/evaluator.py": {
-      "sha256": "8edc25213c8d47488ea2f9f57c222f16c39078ce4dd454c78c803e5ae858f631",
-      "size": 7745,
+      "sha256": "c962ff2a4399267e65322bd362379f1969228eed7584a6154a6dc37a7c796754",
+      "size": 8554,
       "status": "present"
     },
     "gleppo/genotype.py": {
@@ -21,13 +21,13 @@
       "status": "present"
     },
     "gleppo/interpreter.py": {
-      "sha256": "17ca0b9c35687e8eec9f893867f081eeb14dcedcbf7379a865d46a825492c255",
-      "size": 9618,
+      "sha256": "b24a767274ccb22bea29c0a2bb30e411fc7c04ce703fafa0714613419131b993",
+      "size": 10228,
       "status": "present"
     },
     "gleppo/operators.py": {
-      "sha256": "851406e39ed68d8e2ab8dc0e3b06430710cb09e3226c8c36073cbc793f4ede94",
-      "size": 12252,
+      "sha256": "fc30a724fe93b6c933ad32cc4ed08f1af7c083ca856749d6d5ad7e7ff49b3097",
+      "size": 13180,
       "status": "present"
     },
     "gleppo/tasks.py": {
@@ -72,8 +72,8 @@
       "status": "present"
     },
     "scripts/protocol_hash.py": {
-      "sha256": "c78115f90611ed9bebec5b27e59294692d15cb0b02e5e479597e686696c198b9",
-      "size": 2582,
+      "sha256": "41e654c08a2c2aadcd373749463292a981acf2f22faa454ab72a2f4841890457",
+      "size": 3119,
       "status": "present"
     },
     "scripts/verify_evidence.py": {
@@ -82,8 +82,8 @@
       "status": "present"
     },
     "status.json": {
-      "sha256": "2a3d99d694a16e44fbd4644ea03bd96c1e9a01c105f44312ae9e00db4acb6774",
-      "size": 31820,
+      "sha256": "068cfb18dd4eca5a871465e25ea341d755611010a4c9f210fdc978125c937444",
+      "size": 32055,
       "status": "present"
     },
     "tests/test_c7r1c1_crossover.py": {
@@ -102,6 +102,6 @@
       "status": "present"
     }
   },
-  "generated_at": "2026-10-28T06:46:18Z",
+  "generated_at": "2026-10-28T07:49:04Z",
   "version": "3.0"
 }

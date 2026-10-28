@@ -1,0 +1,29 @@
+{
+  "files": {
+    "research/PRODUCTION_G3_RAW.json": {
+      "sha256": "580cce66387347c38374e014ddfa092cd82305894bbbf48bb2d2c5d5ef89efce",
+      "size": 28379
+    },
+    "research/PRODUCTION_G3_REPORT.md": {
+      "sha256": "22f7bb897ff150e14784b896d3cd389ca928bcea54559687f78e5ce632fd00de",
+      "size": 851
+    },
+    "research/PRODUCTION_SMOKE_RAW.json": {
+      "sha256": "23e5ff1422c0cc514b82dceaf25bbc99944a032c2185a9d64848422871aa15fd",
+      "size": 1782
+    },
+    "research/C7_EVIDENCE_RECOVERY.md": {
+      "sha256": "deae7aff4e55be505e699eeb3a3a9e69446cf6ae92cff1924663b3542ccea35e",
+      "size": 1682
+    },
+    "docs/RUNTIME_LOCK.md": {
+      "sha256": "525b292f26b88ef79ffe2a3cd2c02d3833ba2c7cbf0dd325534ce5bdceffba42",
+      "size": 7767
+    },
+    "status.json": {
+      "sha256": "62ea055584a46e8d2565e1576b229dc74586bd91bce7d921a11a81b3a5413fbb",
+      "size": 30374
+    }
+  },
+  "generated_at": "2026-10-28T12:29:12Z"
+}

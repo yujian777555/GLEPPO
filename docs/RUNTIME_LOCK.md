@@ -111,3 +111,26 @@ Cache hits are **bundle-level** (1 hit returns `n_eval` replicas, 0 actual CTX).
 ## 9. Immutability
 
 Changes to any row above require a new `RUNTIME_LOCK.md` revision, a note in `research/COST_BASELINE.md`, and re-running G3 for operators whose causal effects could change. Seed-rule changes must be reflected in `gleppo/` code and tests in the same commit.
+
+---
+
+## Revision C7 (2026-10-27)
+
+**C6 Exploration Note:** C6 experiments (`be883ff`) were **exploratory**, not preregistered. The C6 report claims 3/5 operators passing, but `PRODUCTION_G3_RAW.json` shows all `behavior_changed=0`. Raw files `PHASE2A_R10_C6_RAW.json` and `PHASE2A_R10_C6_CANARY_RAW.json` are **MISSING** from the repository.
+
+**Confirmed environment (C6):**
+- Model: Qwen2.5-7B-Instruct rev=`a09a35458c702b33eeacc393d103063234e8bc28`
+- GPU: A800 80GB on 10.10.24.107:30939
+- Framework: Transformers 5.7.0 + PyTorch 2.5.1+cu121
+
+**Unconfirmed:** exact temperature, top_p, max_tokens used in C6 runs (code defaults apply but not independently verified in raw logs).
+
+**Next experiment freeze required:** Before any formal production experiment, create `RUNTIME_LOCK_V2.md` with:
+- Fixed model revision
+- Fixed inference backend + version
+- Fixed precision, device, context length
+- Fixed decoding parameters
+- Fixed seed rules
+- Fixed evaluation protocol
+
+**C6 results classification:** `NOT_INDEPENDENTLY_VERIFIABLE` for the 3/5 operator claim. The raw data shows all zeros.

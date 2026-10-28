@@ -1,46 +1,37 @@
-# Planner Latest Plan — GLEPPO Phase 2A-R10-C6 (OUTCOME)
+# Planner Latest Plan — GLEPPO Phase 2A-R10-C7 (OUTCOME)
 
-**Status:** EXECUTED 2026-10-27  
-**Baseline:** `89d59ba`  
+**Status:** EXECUTED 2026-10-27 · awaiting independent review  
+**Base SHA:** `be883ff`  
 **PC1 status:** NOT APPROVED · NOT EXECUTED
 
-## Outcome
+## C7_STATUS: COMPLETE (offline)
 
-**Canary PASS (A 3/3, B 3/3). G3 FAIL (3/5 operators pass).**
+## C6_EVIDENCE
+- Raw data files **MISSING** (PHASE2A_R10_C6_RAW.json, CANARY_RAW.json)
+- C6 3/5 claim: **NOT_INDEPENDENTLY_VERIFIABLE**
+- PRODUCTION_G3_RAW.json shows all `behavior_changed=0`
+- Hash manifest generated and verified
 
-| Item | Result |
-|---|---|
-| C6-A answer format | ✅ Fixed (system prompt) |
-| C6-B canary | ✅ PASS (A 3/3, B 3/3) |
-| C6-C G3 | ❌ FAIL (3/5 operators) |
+## OPERATOR_FIXES
+- **tool_subset_edit:** workflow-tool consistency guaranteed
+- **crossover:** strategy-based recombination with inheritance metadata
 
-## G3 Results
+## ANSWER_FORMAT
+- Unified to `Final answer: <value>`
+- Family A/B format tests added
 
-| Operator | behavior_changed | PASS |
-|---|---|---|
-| prompt_local_edit | 2/4 | ✅ |
-| prompt_critique_rewrite | 4/4 | ✅ |
-| tool_subset_edit | 0/2 | ❌ |
-| workflow_step_edit | 2/4 | ✅ |
-| crossover | 0/4 | ❌ |
+## TESTS
+- 272/272 PASS (255 old + 17 new)
+- Evidence verification OK
 
-**144 real LLM requests, 93.3s wall clock.**
-
-## Four-Level Assessment
-
-| Level | Status |
+## GATES
+| Gate | Status |
 |---|---|
 | ENGINEERING_VALIDATION | ✅ PASS |
-| TASK_SOLVING_VALIDATION | ✅ PASS |
-| GENOTYPE_CAUSALITY_VALIDATION | ⚠️ PARTIAL (3/5) |
+| TASK_SOLVING_VALIDATION | ⚠️ Previous canary (not verified) |
+| GENOTYPE_CAUSALITY | ❌ NOT_CONFIRMED |
 | G3_GATE | ❌ FAIL |
+| PC1_APPROVAL | ❌ NOT_APPROVED |
 
-## Key Finding
-
-**G3 FAIL is not due to model insensitivity.** 3/5 operators show real behavioral causality. tool_subset_edit and crossover need redesign.
-
-## Next steps
-
-1. Redesign tool_subset_edit and crossover for observable behavior changes
-2. Re-run G3
-3. Only then request PC1 approval
+## NEXT_ACTION
+Independent review of C7 fixes → G3 rerun approval → PC1 approval

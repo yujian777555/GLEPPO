@@ -9,7 +9,7 @@ import hashlib
 import re
 from typing import Callable, List, Optional, Tuple
 
-from .genotype import Genotype, Step, is_valid, validate_genotype
+from .genotype import Genotype, Step, is_valid, validate_genotype, behavior_hash
 
 OPERATOR_NAMES = (
     "prompt_local_edit",
@@ -76,21 +76,66 @@ def op_prompt_critique_rewrite(parent: Genotype, ctx: dict) -> Genotype:
 
 
 def op_tool_subset_edit(parent: Genotype, ctx: dict) -> Genotype:
+    """C7-B: tool subset mutation with workflow dependency handling.
+
+    Guarantees:
+    - All children pass validate_genotype.
+    - Workflow steps only reference enabled tools.
+    - Adding a tool may or may not enter the execution path (documented).
+    - Dropping a tool safely handles workflow references.
+    """
     child = parent.copy()
     all_tools = ["calc", "py_sandbox", "str_ops"]
     current = sorted(child.tools)
     missing = [t for t in all_tools if t not in current]
     present = [t for t in all_tools if t in current]
-    # Deterministic alternation by generation parity: even -> drop if possible, odd -> add if possible.
+
+    # Find tools referenced in workflow
+    workflow_tools = set()
+    for step in child.workflow:
+        if step.tool:
+            workflow_tools.add(step.tool)
+
     gen = int(ctx.get("gen", 0))
+
     if gen % 2 == 0 and len(current) > 1:
-        child.tools = sorted(set(current) - {present[-1]})
+        # Drop mode: prefer dropping tools NOT referenced in workflow
+        droppable = [t for t in present if t not in workflow_tools]
+        if droppable:
+            child.tools = sorted(set(current) - {droppable[-1]})
+        else:
+            # All tools referenced — drop one and fix ALL workflow references
+            drop_tool = present[-1]
+            child.tools = sorted(set(current) - {drop_tool})
+            replacement = child.tools[0] if child.tools else "calc"
+            for step in child.workflow:
+                if step.tool == drop_tool:
+                    step.tool = replacement
     elif missing:
+        # Add mode: add missing tool
         child.tools = sorted(set(current) | {missing[0]})
+        child.meta["added_tool"] = missing[0]
+        child.meta["added_tool_in_workflow"] = False
     elif len(current) > 1:
-        child.tools = sorted(set(current) - {present[-1]})
+        droppable = [t for t in present if t not in workflow_tools]
+        if droppable:
+            child.tools = sorted(set(current) - {droppable[-1]})
+        else:
+            drop_tool = present[-1]
+            child.tools = sorted(set(current) - {drop_tool})
+            replacement = child.tools[0] if child.tools else "calc"
+            for step in child.workflow:
+                if step.tool == drop_tool:
+                    step.tool = replacement
     else:
-        child.tools = sorted(set(current) | {missing[0]}) if missing else current
+        if missing:
+            child.tools = sorted(set(current) | {missing[0]})
+            child.meta["added_tool"] = missing[0]
+
+    # C7-B: ensure ALL workflow tool references are valid
+    for step in child.workflow:
+        if step.tool and step.tool not in child.tools:
+            step.tool = child.tools[0] if child.tools else "calc"
     return child
 
 
@@ -121,38 +166,78 @@ def op_workflow_step_edit(parent: Genotype, ctx: dict) -> Genotype:
 
 
 def op_crossover(parent: Genotype, ctx: dict) -> Genotype:
+    """C7-C: meaningful strategy recombination.
+
+    Strategy components (recombinable):
+    1. System prompt strategy rules (key phrases)
+    2. Tool subset
+    3. Workflow steps and dependencies
+
+    Guarantees:
+    - Child is valid genotype.
+    - Child inherits meaningful strategy from both parents.
+    - Tool/workflow dependencies preserved.
+    - No meaningless text appended.
+    """
     mate: Optional[Genotype] = ctx.get("mate")
-    if mate is None:
+    if mate is None or mate is parent:
         mate = parent
     child = parent.copy()
-    p_sent = [s for s in re.split(r"(?<=[.!?])\s+", parent.system_prompt.strip()) if s]
-    m_sent = [s for s in re.split(r"(?<=[.!?])\s+", mate.system_prompt.strip()) if s]
-    # Union preserving parent order first, then mate-only sentences.
-    # Guarantees the child differs from the parent whenever the mate contributes
-    # any sentence the parent lacks (G3-visible causality).
-    mixed = list(p_sent)
-    for s in m_sent:
-        if s not in mixed:
-            mixed.append(s)
-    child.system_prompt = " ".join(mixed) if mixed else parent.system_prompt
+
+    # 1. Prompt strategy recombination: take strategy keywords from both
+    p_prompt = parent.system_prompt
+    m_prompt = mate.system_prompt
+    # Extract strategy sentences (those containing key words)
+    strategy_words = {"compute", "transform", "step", "tool", "final", "answer", "format"}
+    p_strat = [s for s in re.split(r"(?<=[.!?])\s+", p_prompt) if any(w in s.lower() for w in strategy_words)]
+    m_strat = [s for s in re.split(r"(?<=[.!?])\s+", m_prompt) if any(w in s.lower() for w in strategy_words)]
+    # Take half from each parent
+    half = max(1, len(p_strat) // 2)
+    mixed_strat = p_strat[:half] + m_strat[:half]
+    if not mixed_strat:
+        mixed_strat = p_strat or m_strat or [p_prompt]
+    child.system_prompt = " ".join(mixed_strat)
     if "{{answer}}" not in child.system_prompt and "final answer" not in child.system_prompt.lower():
-        child.system_prompt = child.system_prompt + " Final answer: {{answer}}"
+        child.system_prompt += " Final answer: {{answer}}"
+
+    # 2. Tool subset: union with cap, ensure workflow compatibility
     tools = sorted(set(parent.tools) | set(mate.tools))
     if len(tools) > 3:
-        tools = tools[:3]
+        # Prefer tools used in either workflow
+        wf_tools = set()
+        for g in [parent, mate]:
+            for s in g.workflow:
+                if s.tool:
+                    wf_tools.add(s.tool)
+        priority = [t for t in tools if t in wf_tools] + [t for t in tools if t not in wf_tools]
+        tools = sorted(priority[:3])
     child.tools = tools
-    # workflow alternation
+
+    # 3. Workflow recombination: alternate steps, ensure validity
     wf = []
-    for i in range(max(len(parent.workflow), len(mate.workflow))):
+    max_len = max(len(parent.workflow), len(mate.workflow))
+    for i in range(max_len):
         src = parent.workflow if i % 2 == 0 else mate.workflow
         if i < len(src):
-            wf.append(copy.deepcopy(src[i]))
-    # keep only one finalize at end
+            step = copy.deepcopy(src[i])
+            # Fix tool references to match child's tools
+            if step.tool and step.tool not in child.tools:
+                step.tool = child.tools[0] if child.tools else "calc"
+            wf.append(step)
+    # Ensure exactly one finalize at end
     fin = [s for s in wf if s.type == "finalize"]
     body = [s for s in wf if s.type != "finalize"]
     if not fin:
         fin = [Step(type="finalize", prompt_slot="answer", input_from="task")]
     child.workflow = body + [fin[0]]
+
+    # Record inheritance
+    child.meta["crossover_parent"] = behavior_hash(parent)[:8]
+    child.meta["crossover_mate"] = behavior_hash(mate)[:8]
+    child.meta["inherited_strategies"] = {
+        "from_parent": len(p_strat),
+        "from_mate": len(m_strat),
+    }
     return child
 
 

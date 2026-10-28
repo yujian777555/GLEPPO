@@ -4,10 +4,10 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_R10_REMEDIATION",
-  "state": "G3_PARTIAL_PASS_3_OF_5_OPERATORS",
-  "reviewed_commit": "89d59ba",
-  "implementation_status": "PRODUCTION_LLM_WORKING_TASKS_SOLVABLE",
-  "experimental_status": "CANARY_PASS_G3_FAIL_3_OF_5",
+  "state": "C7_OFFLINE_FIXES_DONE_AWAITING_REVIEW",
+  "reviewed_commit": "be883ff",
+  "implementation_status": "OPERATORS_FIXED_OFFLINE_VERIFIED",
+  "experimental_status": "NO_NEW_PRODUCTION_EXPERIMENTS_PC1_NOT_EXECUTED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "G3 FAIL: tool_subset_edit and crossover need redesign. 3/5 operators show real causality.",
-  "next_gate": "OPERATOR_REDESIGN -> G3_RETEST -> PC1_APPROVAL",
+  "current_task": "Await independent review of C7 fixes. Re-run G3 requires Planner approval.",
+  "next_gate": "C7_REVIEW -> G3_RERUN_APPROVAL -> PC1_APPROVAL",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -518,6 +518,23 @@
       "task_solving": "PASS",
       "genotype_causality": "PARTIAL (3/5 operators)",
       "g3_gate": "FAIL"
+    }
+  },
+  "c7": {
+    "date": "2026-10-27",
+    "c6_evidence": {
+      "raw_files": "MISSING",
+      "c6_3_5_claim": "NOT_INDEPENDENTLY_VERIFIABLE",
+      "production_g3_raw": "all behavior_changed=0"
+    },
+    "operator_fixes": {
+      "tool_subset_edit": "FIXED: workflow-tool consistency guaranteed",
+      "crossover": "FIXED: strategy-based recombination with inheritance metadata"
+    },
+    "answer_format": "UNIFIED to Final answer: <value>",
+    "tests": {
+      "unit": "272/272 PASS",
+      "evidence_verification": "OK"
     }
   }
 }

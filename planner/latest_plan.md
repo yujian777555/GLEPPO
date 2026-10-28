@@ -1,37 +1,40 @@
-# Planner Latest Plan — GLEPPO Phase 2A-R10-C7 (OUTCOME)
+# Planner Latest Plan — GLEPPO Phase 2A-R10-C7-R1 (OUTCOME)
 
-**Status:** EXECUTED 2026-10-27 · awaiting independent review  
-**Base SHA:** `be883ff`  
+**Status:** EXECUTED 2026-10-27 · READY_FOR_INDEPENDENT_REVIEW  
+**Base SHA:** `d91f72c`  
 **PC1 status:** NOT APPROVED · NOT EXECUTED
 
-## C7_STATUS: COMPLETE (offline)
+## 1. Git Status
+- BASE_SHA: `d91f72c`
+- RESULT_SHA: (after commit)
+- HEAD == origin/main: ✅
+- Worktree clean: ✅
 
-## C6_EVIDENCE
-- Raw data files **MISSING** (PHASE2A_R10_C6_RAW.json, CANARY_RAW.json)
-- C6 3/5 claim: **NOT_INDEPENDENTLY_VERIFIABLE**
-- PRODUCTION_G3_RAW.json shows all `behavior_changed=0`
-- Hash manifest generated and verified
+## 2. Problem Fixes
+- **A Evidence verifier:** build/verify separated; read-only verify; 10 tests
+- **B tool_subset_edit:** tools enter execution path; 27 tests
+- **C crossover:** inheritance metadata tracks actual content
+- **D Answer format:** correctness vs format separated; 19 tests
+- **E RUNTIME_LOCK_V2:** frozen for next formal experiment
 
-## OPERATOR_FIXES
-- **tool_subset_edit:** workflow-tool consistency guaranteed
-- **crossover:** strategy-based recombination with inheritance metadata
-
-## ANSWER_FORMAT
-- Unified to `Final answer: <value>`
-- Family A/B format tests added
-
-## TESTS
-- 272/272 PASS (255 old + 17 new)
+## 3. Verification Results
+- 291/291 tests PASS
 - Evidence verification OK
+- Zero-cost protocol PASS
+- Protocol consistency PASS
 
-## GATES
-| Gate | Status |
+## 4. Research Validity
+| Level | Status |
 |---|---|
 | ENGINEERING_VALIDATION | ✅ PASS |
-| TASK_SOLVING_VALIDATION | ⚠️ Previous canary (not verified) |
+| TASK_SOLVING_VALIDATION | ⚠️ Not verified |
 | GENOTYPE_CAUSALITY | ❌ NOT_CONFIRMED |
 | G3_GATE | ❌ FAIL |
 | PC1_APPROVAL | ❌ NOT_APPROVED |
 
-## NEXT_ACTION
-Independent review of C7 fixes → G3 rerun approval → PC1 approval
+## 5. Safety
+- Real model calls: 0
+- PC1: NOT executed
+- Family C: NOT accessed
+
+## 6. Final Decision: READY_FOR_INDEPENDENT_REVIEW

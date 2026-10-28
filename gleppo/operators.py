@@ -112,10 +112,20 @@ def op_tool_subset_edit(parent: Genotype, ctx: dict) -> Genotype:
                 if step.tool == drop_tool:
                     step.tool = replacement
     elif missing:
-        # Add mode: add missing tool
-        child.tools = sorted(set(current) | {missing[0]})
-        child.meta["added_tool"] = missing[0]
-        child.meta["added_tool_in_workflow"] = False
+        # C7-R1-B: add missing tool AND add workflow step to enter execution path
+        new_tool = missing[0]
+        child.tools = sorted(set(current) | {new_tool})
+        # Add a tool step before finalize so the new tool enters execution
+        finalize_idx = None
+        for idx, step in enumerate(child.workflow):
+            if step.type == "finalize":
+                finalize_idx = idx
+                break
+        if finalize_idx is not None:
+            tool_step = Step(type="tool", tool=new_tool, input_from="task")
+            child.workflow.insert(finalize_idx, tool_step)
+        child.meta["added_tool"] = new_tool
+        child.meta["added_tool_in_workflow"] = True
     elif len(current) > 1:
         droppable = [t for t in present if t not in workflow_tools]
         if droppable:
@@ -231,12 +241,16 @@ def op_crossover(parent: Genotype, ctx: dict) -> Genotype:
         fin = [Step(type="finalize", prompt_slot="answer", input_from="task")]
     child.workflow = body + [fin[0]]
 
-    # Record inheritance
+    # C7-R1-C: record ACTUAL inherited content, not just counts
+    inherited_from_parent = [s for s in p_strat if s in child.system_prompt]
+    inherited_from_mate = [s for s in m_strat if s in child.system_prompt]
     child.meta["crossover_parent"] = behavior_hash(parent)[:8]
     child.meta["crossover_mate"] = behavior_hash(mate)[:8]
     child.meta["inherited_strategies"] = {
-        "from_parent": len(p_strat),
-        "from_mate": len(m_strat),
+        "from_parent_sentences": inherited_from_parent,
+        "from_mate_sentences": inherited_from_mate,
+        "from_parent_tools": sorted(set(parent.tools) & set(child.tools)),
+        "from_mate_tools": sorted(set(mate.tools) & set(child.tools)),
     }
     return child
 

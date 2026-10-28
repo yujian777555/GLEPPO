@@ -4,10 +4,10 @@
   "default_branch": "main",
   "updated_at": "2026-10-27",
   "phase": "PHASE2A_R10_REMEDIATION",
-  "state": "C7_OFFLINE_FIXES_DONE_AWAITING_REVIEW",
-  "reviewed_commit": "be883ff",
-  "implementation_status": "OPERATORS_FIXED_OFFLINE_VERIFIED",
-  "experimental_status": "NO_NEW_PRODUCTION_EXPERIMENTS_PC1_NOT_EXECUTED",
+  "state": "C7_R1_COMPLETE_READY_FOR_REVIEW",
+  "reviewed_commit": "d91f72c",
+  "implementation_status": "EVIDENCE_VERIFIER_FIXED_OPERATORS_FIXED_RUNTIME_LOCK_V2",
+  "experimental_status": "NO_NEW_EXPERIMENTS_PC1_NOT_EXECUTED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Await independent review of C7 fixes. Re-run G3 requires Planner approval.",
-  "next_gate": "C7_REVIEW -> G3_RERUN_APPROVAL -> PC1_APPROVAL",
+  "current_task": "Await independent review. No G3 rerun or PC1 without approval.",
+  "next_gate": "INDEPENDENT_REVIEW -> G3_RERUN_APPROVAL -> PC1_APPROVAL",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -535,6 +535,23 @@
     "tests": {
       "unit": "272/272 PASS",
       "evidence_verification": "OK"
+    }
+  },
+  "c7_r1": {
+    "date": "2026-10-27",
+    "decision": "READY_FOR_INDEPENDENT_REVIEW",
+    "fixes": {
+      "A_evidence_verifier": "build/verify separated; read-only verify; path traversal rejected",
+      "B_tool_subset_edit": "tools enter workflow execution path",
+      "C_crossover_inheritance": "actual content tracking",
+      "D_answer_format": "correctness vs format separated",
+      "E_runtime_lock_v2": "frozen for next formal experiment"
+    },
+    "tests": {
+      "unit": "291/291 PASS",
+      "evidence": "OK",
+      "zero_cost": "PASS",
+      "protocol": "PASS"
     }
   }
 }

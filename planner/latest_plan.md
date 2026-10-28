@@ -1,41 +1,46 @@
-# Planner Latest Plan — GLEPPO Phase 2A-R10-C5 (OUTCOME)
+# Planner Latest Plan — GLEPPO Phase 2A-R10-C6 (OUTCOME)
 
 **Status:** EXECUTED 2026-10-27  
-**Base commit:** `7dcac24`  
+**Baseline:** `89d59ba`  
 **PC1 status:** NOT APPROVED · NOT EXECUTED
 
 ## Outcome
 
-**R62-R64 fixed. Tool chain works. Format issue identified. G3 cannot assess until format fixed.**
+**Canary PASS (A 3/3, B 3/3). G3 FAIL (3/5 operators pass).**
 
 | Item | Result |
 |---|---|
-| R62 behavior measurement | ✅ trace saved; prompt_sig excluded |
-| R63 tool call chain | ✅ calc/str_ops execute correctly |
-| R64 stable seeds | ✅ SHA256-based |
-| Canary Family A | ❌ wrong_answer (tool chain OK) |
-| Canary Family B | ❌ wrong_answer (tool chain OK) |
+| C6-A answer format | ✅ Fixed (system prompt) |
+| C6-B canary | ✅ PASS (A 3/3, B 3/3) |
+| C6-C G3 | ❌ FAIL (3/5 operators) |
 
-## Key Finding
+## G3 Results
 
-**G3 FAIL was partially caused by tool chain defects (R63), not solely model insensitivity.** After fixing:
-1. Tools execute correctly
-2. Model produces coherent natural language
-3. But model doesn't follow "Final answer: <number>" format
+| Operator | behavior_changed | PASS |
+|---|---|---|
+| prompt_local_edit | 2/4 | ✅ |
+| prompt_critique_rewrite | 4/4 | ✅ |
+| tool_subset_edit | 0/2 | ❌ |
+| workflow_step_edit | 2/4 | ✅ |
+| crossover | 0/4 | ❌ |
 
-**This is a prompt/format issue, not a fundamental model limitation.**
+**144 real LLM requests, 93.3s wall clock.**
 
 ## Four-Level Assessment
 
 | Level | Status |
 |---|---|
 | ENGINEERING_VALIDATION | ✅ PASS |
-| TASK_SOLVING_VALIDATION | ❌ FAIL (format) |
-| GENOTYPE_CAUSALITY_VALIDATION | Not tested |
-| G3_GATE | Cannot assess |
+| TASK_SOLVING_VALIDATION | ✅ PASS |
+| GENOTYPE_CAUSALITY_VALIDATION | ⚠️ PARTIAL (3/5) |
+| G3_GATE | ❌ FAIL |
+
+## Key Finding
+
+**G3 FAIL is not due to model insensitivity.** 3/5 operators show real behavioral causality. tool_subset_edit and crossover need redesign.
 
 ## Next steps
 
-1. Fix answer format (improve system prompt OR modify gold checker)
-2. Re-run G3 to test genotype causality
+1. Redesign tool_subset_edit and crossover for observable behavior changes
+2. Re-run G3
 3. Only then request PC1 approval

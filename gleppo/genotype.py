@@ -156,7 +156,17 @@ def is_valid(g: Genotype) -> bool:
 
 
 def make_valid_genotype(
-    system_prompt: str = "Compute step by step and then transform the result. Final answer: {{answer}}",
+    system_prompt: str = (
+        "Compute step by step and transform the result. "
+        "You are a precise task solver. Follow these rules strictly: "
+        "(1) Use tools to compute values. "
+        "(2) Your FINAL answer MUST start with 'Final answer: ' followed by ONLY the answer value. "
+        "(3) For numeric answers, output only the number. "
+        "(4) When asked for SUM-STRING format, compute the sum and uppercase the string. Output ONLY the computed result like '25-AB42'. The phrase 'Give as SUM-STRING' means use that FORMAT, not output those words. NEVER include 'SUM-STRING', 'SUM', or 'STRING' in your answer. "
+        "(5) Do NOT include markdown, reasoning, or text after the answer. "
+        "(6) Do NOT output '{{answer}}' as a literal. "
+        "Example: If the answer is 42, output exactly 'Final answer: 42'"
+    ),
     tools: Optional[List[str]] = None,
     workflow: Optional[List[Step]] = None,
 ) -> Genotype:

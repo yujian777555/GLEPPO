@@ -1,0 +1,5966 @@
+{
+  "run_id": "20261028T090752Z",
+  "mode": "G3_PRODUCTION_DIAGNOSTIC",
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "tasks": [
+    {
+      "id": "A-g3-prod-00",
+      "family": "A"
+    },
+    {
+      "id": "B-g3-prod-00",
+      "family": "B"
+    }
+  ],
+  "operators": {
+    "prompt_local_edit": {
+      "valid": 4,
+      "invalid": 0,
+      "hash_changed": 4,
+      "behavior_changed": 2,
+      "threshold": 2,
+      "pass": true,
+      "diffs": [
+        {
+          "parent": 0,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 1,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "prompt_critique_rewrite": {
+      "valid": 4,
+      "invalid": 0,
+      "hash_changed": 4,
+      "behavior_changed": 4,
+      "threshold": 2,
+      "pass": true,
+      "diffs": [
+        {
+          "parent": 0,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "First, we calculate \\(13 \\times 3\\):\n\n\\[ 13 \\times 3 = 39 \\]\n\nThen add 2 to the result:\n\n\\[ 39 + 2 = 41 \\]\n\nTherefore, the answer is 41.",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "To solve the expression \\(13 \\times 3 + 2\\) given \\(x = 13\\) and \\(y = 2\\), we can follow these step"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "5"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "First, let's compute the expression \\(13 \\times 3 + 2\\).\n\n\\[ 13 \\times 3 = 39 \\]\n\nAdding 2 to the result:\n\n\\[ 39 + 2 = 41 \\]\n\nTherefore, the final answer is 41.",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "To solve the expression \\(13 \\times 3 + 2\\) given that \\(x = 13\\) and \\(y = 2\\), we will follow thes"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "5"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "First, we compute the sum:\n\n\\[ 2 + 4 = 6 \\]\n\nNext, we transform the string \"ab67\" to uppercase:\n\n\\[ \\text{AB67} \\]\n\nSo, the final answer in the format requested is:\n\n\\[ \\text{SUM-STRING: 6-AB67} \\]",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Step 1: Compute 2 + 4.\n2 + 4 = 6\n\nStep 2: Transform the string \"ab67\" to upper case.\n\"ab67\" becomes "
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "First, let's compute the sum:\n\n\\[ 2 + 4 = 6 \\]\n\nNext, we transform the string \"ab67\" to upper case:\n\n\\[ \\text{AB67} \\]\n\nCombining these results according to the given format (SUM-STRING):\n\n\\[ \\text{SU",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Step 1: Compute 2 + 4\n\\[ 2 + 4 = 6 \\]\n\nStep 2: Transform the string \"ab67\" to upper case\nThe string "
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 1,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "To solve the expression \\(13*3+2\\):\n\n1. First, calculate the product of 13 and 3:\n   \\[\n   13 \\times 3 = 39\n   \\]\n\n2. Then, add 2 to the result:\n   \\[\n   39 + 2 = 41\n   \\]\n\nTherefore, the value of the",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "To solve the expression \\(13 \\times 3 + 2\\) given that \\(x = 13\\) and \\(y = 2\\), we can break it dow"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "5"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "To solve the expression \\(13 \\times 3 + 2\\), follow these steps:\n\n1. **Multiplication**: First, multiply 13 by 3.\n   - \\(13 \\times 3 = 39\\)\n\n2. **Addition**: Next, add 2 to the result of the multiplic",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "To solve the expression \\(13 \\times 3 + 2\\), we can break it down into steps:\n\n1. Calculate \\(13 \\ti"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "5"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "First, let's compute the numerical expression:\n\n\\[ 2 + 4 = 6 \\]\n\nNext, we will transform the given string \"ab67\" to upper case:\n\n\\[ \\text{ab67} \\rightarrow \\text{AB67} \\]\n\nNow, combining the results i",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "First, we compute the sum:\n\n\\[ 2 + 4 = 6 \\]\n\nNext, we transform the string \"ab67\" to upper case, whi"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "First, we compute the sum:\n\n\\[ 2 + 4 = 6 \\]\n\nNext, we transform the string \"ab67\" to upper case:\n\n\\[ \\text{ab67} \\rightarrow \\text{AB67} \\]\n\nSo, the final answer in the requested format is:\n\n\\[ \\text{",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "First, let's compute the sum:\n\n\\[ 2 + 4 = 6 \\]\n\nNext, we transform the string \"ab67\" to upper case:\n"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "{{result:41}}",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "{{answer:\"41\"}}"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "{{answer:\"41\"}}",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "{{answer:\"41\"}}"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "{{SUM-STRING:\"6-AB67\"}}",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "{{SUM-STRING:\"6-AB67\"}}"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "{{SUM-STRING:\"SUM:6-STRING:AB67\"}}",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "{{SUM-STRING:\"SUM=6, STRING=AB67\"}}"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "First, multiply 13 by 3 to get 39. Then add 2. So, 39 + 2 = 41. \n\nFinal answer: 41.",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "First, calculate \\(13 \\times 3\\):\n\\[ 13 \\times 3 = 39 \\]\n\nThen add 2:\n\\[ 39 + 2 = 41 \\]\n\nFinal answe"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "First, multiply 13 by 3 to get 39. Then add 2 to get 41. \n\nFinal answer: 41.",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "First, calculate \\(13 \\times 3\\):\n\\[13 \\times 3 = 39\\]\n\nThen add 2:\n\\[39 + 2 = 41\\]\n\nFinal answer: 4"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 0.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "wrong_answer": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "SUM: 6\n\nSTRING: AB67\n\nSUM-STRING: 6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "SUM: 6-STRING: AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": false,
+                  "failure": "wrong_answer",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "SUM: 6\n\nSTRING: AB67\n\nSUM-STRING: 6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "SUM-STRING: 6AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tool_subset_edit": {
+      "valid": 2,
+      "invalid": 2,
+      "hash_changed": 2,
+      "behavior_changed": 0,
+      "threshold": 1,
+      "pass": false,
+      "diffs": [
+        {
+          "parent": 1,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "workflow_step_edit": {
+      "valid": 4,
+      "invalid": 0,
+      "hash_changed": 2,
+      "behavior_changed": 2,
+      "threshold": 2,
+      "pass": true,
+      "diffs": [
+        {
+          "parent": 0,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 3,
+                  "tool_calls": 1,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 3,
+                  "tool_calls": 1,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 1.0,
+                "mean_turns": 3.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 3,
+                  "tool_calls": 1,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 3,
+                  "tool_calls": 1,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 1,
+          "hash_changed": true,
+          "behavior_changed": true,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "hash_changed": false,
+          "behavior_changed": false,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "hash_changed": false,
+          "behavior_changed": false,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "crossover": {
+      "valid": 4,
+      "invalid": 0,
+      "hash_changed": 4,
+      "behavior_changed": 0,
+      "threshold": 2,
+      "pass": false,
+      "diffs": [
+        {
+          "parent": 0,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 1,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 2,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "parent": 3,
+          "hash_changed": true,
+          "behavior_changed": false,
+          "samples": [
+            {
+              "task_id": "A-g3-prod-00",
+              "family": "A",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "Final answer: 41",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "41"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "13*3+2"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "task_id": "B-g3-prod-00",
+              "family": "B",
+              "parent": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "child": {
+                "success_rate": 1.0,
+                "mean_tool_calls": 2.0,
+                "mean_turns": 2.0,
+                "fails": {
+                  "": 2
+                }
+              },
+              "parent_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ],
+              "child_traces": [
+                {
+                  "rep": 0,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                },
+                {
+                  "rep": 1,
+                  "success": true,
+                  "failure": "",
+                  "turns": 2,
+                  "tool_calls": 2,
+                  "answer": "6-AB67",
+                  "trace": [
+                    {
+                      "type": "meta",
+                      "ok": null,
+                      "detail": "",
+                      "output": ""
+                    },
+                    {
+                      "type": "llm",
+                      "ok": true,
+                      "detail": "analyze",
+                      "output": "Final answer: 6-AB67"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "calc",
+                      "output": "6"
+                    },
+                    {
+                      "type": "tool",
+                      "ok": true,
+                      "detail": "str_ops",
+                      "output": "2+4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "llm_stats": {
+    "model": "qwen2.5-7b-instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "requests": 292,
+    "total_tokens": 3714,
+    "failures": 0,
+    "mean_latency_s": 0.3129274983928628,
+    "max_latency_s": 3.2632439136505127
+  },
+  "total_requests": 144,
+  "total_wall_s": 91.4228,
+  "budget_exhausted": false,
+  "g3_overall": "FAIL"
+}

@@ -47,12 +47,13 @@ class TestCrossoverInheritance(unittest.TestCase):
         self.assertTrue(ok)
         # Metadata should track actual inherited content
         inherited = child.meta.get("inherited_strategies", {})
-        self.assertIn("from_parent_sentences", inherited)
-        self.assertIn("from_mate_sentences", inherited)
+        self.assertIn("from_parent_unique", inherited)
+        self.assertIn("from_mate_unique", inherited)
+        self.assertIn("from_shared", inherited)
         # Verify inherited sentences are actually in child
-        for sent in inherited.get("from_parent_sentences", []):
+        for sent in inherited.get("from_parent_unique", []):
             self.assertIn(sent, child.system_prompt, "parent sentence must be in child")
-        for sent in inherited.get("from_mate_sentences", []):
+        for sent in inherited.get("from_mate_unique", []):
             self.assertIn(sent, child.system_prompt, "mate sentence must be in child")
 
     def test_tools_inherited(self):

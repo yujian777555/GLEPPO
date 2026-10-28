@@ -81,8 +81,8 @@ class TestCrossover(unittest.TestCase):
 
     def test_different_tools(self):
         """Crossover of parents with different tools."""
-        g1 = make_valid_genotype(tools=["calc"])
-        g2 = make_valid_genotype(tools=["str_ops"])
+        g1 = make_valid_genotype(tools=["calc", "str_ops"])
+        g2 = make_valid_genotype(tools=["calc", "str_ops", "py_sandbox"])
         child, ok, _ = apply_operator("crossover", g1, {"mate": g2, "gen": 0})
         self.assertTrue(ok)
         self.assertTrue(is_valid(child))
@@ -112,7 +112,7 @@ class TestCrossover(unittest.TestCase):
         """Same inputs produce same result."""
         g1 = make_valid_genotype()
         g2 = make_valid_genotype()
-        g2.system_prompt = "Other. Final answer: {{answer}}"
+        g2.system_prompt = "Different strategy here. Final answer: {{answer}}"
         c1, _, _ = apply_operator("crossover", g1, {"mate": g2, "gen": 0})
         c2, _, _ = apply_operator("crossover", g1, {"mate": g2, "gen": 0})
         self.assertEqual(behavior_hash(c1), behavior_hash(c2))

@@ -109,6 +109,8 @@ class Interpreter:
                     payload = self._extract_calc_payload(str(payload), task)
                 elif step.tool == "str_ops":
                     payload = self._extract_strops_payload(str(payload), task)
+                elif step.tool == "py_sandbox":
+                    payload = self._extract_pysandbox_payload(str(payload), task)
                 ok, out = run_tool(step.tool or "", str(payload))
                 tool_calls += 1
                 trace.append(TraceEvent("tool", ok, step.tool or "", out).to_dict())
@@ -167,14 +169,31 @@ class Interpreter:
         )
 
     def _extract_calc_payload(self, llm_output: str, task: dict) -> str:
-        """R63: extract arithmetic expression from LLM output or task input."""
+        """B1: extract arithmetic expression from LLM output or task input."""
         import re
         # Try to find arithmetic expression in LLM output
-        m = re.search(r"([0-9]+\s*[+\-*/\*]\s*[0-9][0-9+\-*/\s]*)", llm_output)
+        m = re.search(r"([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*)", llm_output)
         if m:
             return m.group(1).strip().rstrip(".?, ")
         # Fall back to task input
-        return self._extract_calc_payload(task["input"], {"input": ""}) if "input" not in task else self._extract_expr_from_text(task["input"])
+        return self._extract_expr_from_text(task.get("input", ""))
+
+    def _extract_pysandbox_payload(self, llm_output: str, task: dict) -> str:
+        """B1: extract Python code from LLM output or task input for py_sandbox."""
+        import re
+        # Look for code block or assignment pattern
+        m = re.search(r"(?:result|out|answer)\s*=\s*(.+)", llm_output)
+        if m:
+            return f"result = {m.group(1).strip()}"
+        # Try to extract arithmetic and wrap in assignment
+        m = re.search(r"([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*)", llm_output)
+        if m:
+            return f"result = {m.group(1).strip()}"
+        # Fall back: try task input
+        m = re.search(r"([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*)", task.get("input", ""))
+        if m:
+            return f"result = {m.group(1).strip()}"
+        return "result = 0"
 
     def _extract_strops_payload(self, llm_output: str, task: dict) -> str:
         """R63: extract str_ops command from LLM output or task input."""

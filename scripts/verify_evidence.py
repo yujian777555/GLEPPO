@@ -20,15 +20,20 @@ REQUIRED_FILES = {
     "research/PRODUCTION_SMOKE_RAW.json",
     "research/C7_EVIDENCE_RECOVERY.md",
     "research/PHASE2A_R10_C7_R1_REPORT.md",
+    "research/PHASE2A_R10_C7_R1_C2_REPORT.md",
     "docs/RUNTIME_LOCK.md",
     "docs/RUNTIME_LOCK_V2.md",
     "status.json",
     "scripts/verify_evidence.py",
+    "scripts/protocol_hash.py",
     "gleppo/operators.py",
     "gleppo/genotype.py",
     "gleppo/interpreter.py",
     "gleppo/tasks.py",
     "gleppo/evaluator.py",
+    "tests/test_c7r1c2_protocol.py",
+    "tests/test_c7r1c1_evidence.py",
+    "tests/test_c7r1c1_crossover.py",
 }
 
 # R1-A3: historical missing (allowed but must be explicitly marked)

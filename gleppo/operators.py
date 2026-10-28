@@ -176,22 +176,21 @@ def op_workflow_step_edit(parent: Genotype, ctx: dict) -> Genotype:
 
 
 def op_crossover(parent: Genotype, ctx: dict) -> Genotype:
-    """C7-C: meaningful strategy recombination.
+    """C7-R1-C2-C: meaningful strategy recombination with strict validation.
 
-    Strategy components (recombinable):
-    1. System prompt strategy rules (key phrases)
-    2. Tool subset
-    3. Workflow steps and dependencies
-
-    Guarantees:
-    - Child is valid genotype.
-    - Child inherits meaningful strategy from both parents.
-    - Tool/workflow dependencies preserved.
-    - No meaningless text appended.
+    C1: validates both parents before crossover.
+    C2: tracks actual inherited content from final child.
     """
     mate: Optional[Genotype] = ctx.get("mate")
     if mate is None or mate is parent:
         mate = parent
+    # C1: validate both parents
+    p_errors = validate_genotype(parent)
+    m_errors = validate_genotype(mate)
+    if p_errors:
+        raise ValueError(f"C1: invalid parent: {p_errors}")
+    if m_errors:
+        raise ValueError(f"C1: invalid mate: {m_errors}")
     child = parent.copy()
 
     # 1. Prompt strategy recombination: take strategy keywords from both
@@ -241,17 +240,31 @@ def op_crossover(parent: Genotype, ctx: dict) -> Genotype:
         fin = [Step(type="finalize", prompt_slot="answer", input_from="task")]
     child.workflow = body + [fin[0]]
 
-    # C7-R1-C: record ACTUAL inherited content, not just counts
-    inherited_from_parent = [s for s in p_strat if s in child.system_prompt]
-    inherited_from_mate = [s for s in m_strat if s in child.system_prompt]
+    # C2: record ACTUAL inherited content based on final child
+    # Distinguish parent-unique, mate-unique, shared, and selected
+    p_unique = [s for s in p_strat if s not in m_strat]
+    m_unique = [s for s in m_strat if s not in p_strat]
+    shared = [s for s in p_strat if s in m_strat]
+    selected_from_parent = [s for s in p_unique if s in child.system_prompt]
+    selected_from_mate = [s for s in m_unique if s in child.system_prompt]
+    selected_shared = [s for s in shared if s in child.system_prompt]
+
+    p_tools_unique = sorted(set(parent.tools) - set(mate.tools))
+    m_tools_unique = sorted(set(mate.tools) - set(parent.tools))
+    shared_tools = sorted(set(parent.tools) & set(mate.tools))
+
     child.meta["crossover_parent"] = behavior_hash(parent)[:8]
     child.meta["crossover_mate"] = behavior_hash(mate)[:8]
     child.meta["inherited_strategies"] = {
-        "from_parent_sentences": inherited_from_parent,
-        "from_mate_sentences": inherited_from_mate,
-        "from_parent_tools": sorted(set(parent.tools) & set(child.tools)),
-        "from_mate_tools": sorted(set(mate.tools) & set(child.tools)),
+        "from_parent_unique": selected_from_parent,
+        "from_mate_unique": selected_from_mate,
+        "from_shared": selected_shared,
+        "from_parent_tools": [t for t in p_tools_unique if t in child.tools],
+        "from_mate_tools": [t for t in m_tools_unique if t in child.tools],
+        "from_shared_tools": [t for t in shared_tools if t in child.tools],
     }
+    # C2: final child behavior hash for verification
+    child.meta["crossover_child_hash"] = behavior_hash(child)[:8]
     return child
 
 

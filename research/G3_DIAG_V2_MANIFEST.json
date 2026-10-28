@@ -1,0 +1,56 @@
+{
+  "run_id": "20261028T130000Z",
+  "protocol": "G3-DIAG-v2",
+  "created_at": "2026-10-28T12:29:12Z",
+  "gold_corrections": {
+    "A2-001": "21 -> 23 (arithmetic error: (3*7)+(12-4)-(2*3)=23)",
+    "B2-001": "64-75 -> 64-SUM (phantom 75 removed; redesigned to calc+str_ops consistent task)"
+  },
+  "tool_path_verification": {
+    "B2-001": "Must verify calc AND str_ops called in trace",
+    "B2-002": "Must verify py_sandbox AND calc called in trace",
+    "B2-003": "Must verify calc AND str_ops called AND str_ops output='HI'"
+  },
+  "tasks": {
+    "diagnostic_A2": {
+      "count": 3,
+      "sha256": "fe44f18e72483901717ca21994547990677b04790fa9672cd10b0d2a91b77a89",
+      "task_ids": [
+        "A2-001",
+        "A2-002",
+        "A2-003"
+      ]
+    },
+    "diagnostic_B2": {
+      "count": 3,
+      "sha256": "7ebe2ec735fd7dbfe634f2c850e9f7a33aad6f561929a26cd2261cd9d18b464e",
+      "task_ids": [
+        "B2-001",
+        "B2-002",
+        "B2-003"
+      ]
+    }
+  },
+  "freeze": {
+    "frozen_at": "2026-10-28T12:32:13Z",
+    "protocol_sha256": "5d158df0125c8fff95753a7f97e7e4e5ec4d11b4b5ea7ce030d3b6cfb1565acd",
+    "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "operators": [
+      "tool_subset_edit",
+      "crossover",
+      "prompt_critique_rewrite"
+    ],
+    "max_requests": 60,
+    "max_wall_s": 600,
+    "n_replicates": 2,
+    "paired_seed_rule": "diag-{task_id}-p{parent_idx}",
+    "behavior_change_criteria": [
+      "success_rate_differs",
+      "mean_tool_calls_differs",
+      "mean_turns_differs",
+      "failure_distribution_differs",
+      "trace_differs",
+      "answer_differs"
+    ]
+  }
+}

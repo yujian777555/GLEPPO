@@ -1,0 +1,3486 @@
+{
+  "budget_exhausted": false,
+  "canary": {
+    "episodes": [
+      {
+        "answer": "Final answer: 41",
+        "answer_correct": true,
+        "effective_success": true,
+        "failure_category": "",
+        "format_compliant": true,
+        "genotype_hash": "42b1329306c1f8c0debb9ed6b4b71d5d02553a917543379462a1141112fa71bc",
+        "hard_validity": true,
+        "interpreter_success": true,
+        "operator": "canary_reference",
+        "role": "reference",
+        "seed_id": "r3-paired-seed-001",
+        "seed_index": 0,
+        "task_id": "B2-004",
+        "tool_calls": 2,
+        "tool_path_details": {
+          "all_tool_events": [
+            {
+              "ok": true,
+              "output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "ok": true,
+              "output": "41",
+              "tool": "calc"
+            }
+          ],
+          "contract": [
+            {
+              "expected_output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "expected_output": "41",
+              "tool": "calc"
+            }
+          ],
+          "matched_contract_entries": 2,
+          "matched_indices": [
+            0,
+            1
+          ],
+          "passed": true,
+          "successful_sequence": [
+            {
+              "output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "output": "41",
+              "tool": "calc"
+            }
+          ],
+          "total_contract_entries": 2
+        },
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "py_sandbox",
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 41",
+            "type": "llm"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "32",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "41",
+            "type": "tool"
+          }
+        ],
+        "turns": 2
+      },
+      {
+        "answer": "Final answer: 41",
+        "answer_correct": true,
+        "effective_success": true,
+        "failure_category": "",
+        "format_compliant": true,
+        "genotype_hash": "42b1329306c1f8c0debb9ed6b4b71d5d02553a917543379462a1141112fa71bc",
+        "hard_validity": true,
+        "interpreter_success": true,
+        "operator": "canary_reference",
+        "role": "reference",
+        "seed_id": "r3-paired-seed-002",
+        "seed_index": 1,
+        "task_id": "B2-004",
+        "tool_calls": 2,
+        "tool_path_details": {
+          "all_tool_events": [
+            {
+              "ok": true,
+              "output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "ok": true,
+              "output": "41",
+              "tool": "calc"
+            }
+          ],
+          "contract": [
+            {
+              "expected_output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "expected_output": "41",
+              "tool": "calc"
+            }
+          ],
+          "matched_contract_entries": 2,
+          "matched_indices": [
+            0,
+            1
+          ],
+          "passed": true,
+          "successful_sequence": [
+            {
+              "output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "output": "41",
+              "tool": "calc"
+            }
+          ],
+          "total_contract_entries": 2
+        },
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "py_sandbox",
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 41",
+            "type": "llm"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "32",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "41",
+            "type": "tool"
+          }
+        ],
+        "turns": 2
+      },
+      {
+        "answer": "Final answer: 41",
+        "answer_correct": true,
+        "effective_success": true,
+        "failure_category": "",
+        "format_compliant": true,
+        "genotype_hash": "42b1329306c1f8c0debb9ed6b4b71d5d02553a917543379462a1141112fa71bc",
+        "hard_validity": true,
+        "interpreter_success": true,
+        "operator": "canary_reference",
+        "role": "reference",
+        "seed_id": "r3-paired-seed-003",
+        "seed_index": 2,
+        "task_id": "B2-004",
+        "tool_calls": 2,
+        "tool_path_details": {
+          "all_tool_events": [
+            {
+              "ok": true,
+              "output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "ok": true,
+              "output": "41",
+              "tool": "calc"
+            }
+          ],
+          "contract": [
+            {
+              "expected_output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "expected_output": "41",
+              "tool": "calc"
+            }
+          ],
+          "matched_contract_entries": 2,
+          "matched_indices": [
+            0,
+            1
+          ],
+          "passed": true,
+          "successful_sequence": [
+            {
+              "output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "output": "41",
+              "tool": "calc"
+            }
+          ],
+          "total_contract_entries": 2
+        },
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "py_sandbox",
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 41",
+            "type": "llm"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "32",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "41",
+            "type": "tool"
+          }
+        ],
+        "turns": 2
+      }
+    ],
+    "gate": {
+      "accounting_ok": true,
+      "accounting_snapshot": {
+        "accounting_ok": true,
+        "actual_generations": 6,
+        "failure_ledger_match": true,
+        "generation_count_match": true,
+        "ledger_generation_failures": 0,
+        "ledger_rows": 6,
+        "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+        "monotonic_call_ids": true,
+        "reserved_call_count": 6,
+        "runtime_generation_failures": 0,
+        "runtime_total_tokens": 42,
+        "stats": {
+          "actual_generations": 6,
+          "episodes": 0,
+          "evaluations": 0,
+          "failures": 0,
+          "max_generations_cap": 100,
+          "max_latency_s": 0.7562191486358643,
+          "mean_latency_s": 0.27597113450368244,
+          "model": "qwen2.5-7b-instruct",
+          "requests": 6,
+          "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+          "tool_invocations": 0,
+          "total_tokens": 42
+        },
+        "token_delta_sum": 42,
+        "token_sum_match": true,
+        "unique_call_ids": true
+      },
+      "answer_correct_count": 3,
+      "completed_episodes": 3,
+      "format_compliant_count": 3,
+      "passed": true,
+      "reason": "all frozen canary gates passed",
+      "tool_path_pass_count": 3
+    },
+    "reference_by_seed": {
+      "r3-paired-seed-001": {
+        "answer": "Final answer: 41",
+        "answer_correct": true,
+        "effective_success": true,
+        "failure_category": "",
+        "format_compliant": true,
+        "genotype_hash": "42b1329306c1f8c0debb9ed6b4b71d5d02553a917543379462a1141112fa71bc",
+        "hard_validity": true,
+        "interpreter_success": true,
+        "operator": "canary_reference",
+        "role": "reference",
+        "seed_id": "r3-paired-seed-001",
+        "task_id": "B2-004",
+        "tool_calls": 2,
+        "tool_path_details": {
+          "all_tool_events": [
+            {
+              "ok": true,
+              "output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "ok": true,
+              "output": "41",
+              "tool": "calc"
+            }
+          ],
+          "contract": [
+            {
+              "expected_output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "expected_output": "41",
+              "tool": "calc"
+            }
+          ],
+          "matched_contract_entries": 2,
+          "matched_indices": [
+            0,
+            1
+          ],
+          "passed": true,
+          "successful_sequence": [
+            {
+              "output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "output": "41",
+              "tool": "calc"
+            }
+          ],
+          "total_contract_entries": 2
+        },
+        "tool_path_valid": true,
+        "turns": 2
+      },
+      "r3-paired-seed-002": {
+        "answer": "Final answer: 41",
+        "answer_correct": true,
+        "effective_success": true,
+        "failure_category": "",
+        "format_compliant": true,
+        "genotype_hash": "42b1329306c1f8c0debb9ed6b4b71d5d02553a917543379462a1141112fa71bc",
+        "hard_validity": true,
+        "interpreter_success": true,
+        "operator": "canary_reference",
+        "role": "reference",
+        "seed_id": "r3-paired-seed-002",
+        "task_id": "B2-004",
+        "tool_calls": 2,
+        "tool_path_details": {
+          "all_tool_events": [
+            {
+              "ok": true,
+              "output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "ok": true,
+              "output": "41",
+              "tool": "calc"
+            }
+          ],
+          "contract": [
+            {
+              "expected_output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "expected_output": "41",
+              "tool": "calc"
+            }
+          ],
+          "matched_contract_entries": 2,
+          "matched_indices": [
+            0,
+            1
+          ],
+          "passed": true,
+          "successful_sequence": [
+            {
+              "output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "output": "41",
+              "tool": "calc"
+            }
+          ],
+          "total_contract_entries": 2
+        },
+        "tool_path_valid": true,
+        "turns": 2
+      },
+      "r3-paired-seed-003": {
+        "answer": "Final answer: 41",
+        "answer_correct": true,
+        "effective_success": true,
+        "failure_category": "",
+        "format_compliant": true,
+        "genotype_hash": "42b1329306c1f8c0debb9ed6b4b71d5d02553a917543379462a1141112fa71bc",
+        "hard_validity": true,
+        "interpreter_success": true,
+        "operator": "canary_reference",
+        "role": "reference",
+        "seed_id": "r3-paired-seed-003",
+        "task_id": "B2-004",
+        "tool_calls": 2,
+        "tool_path_details": {
+          "all_tool_events": [
+            {
+              "ok": true,
+              "output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "ok": true,
+              "output": "41",
+              "tool": "calc"
+            }
+          ],
+          "contract": [
+            {
+              "expected_output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "expected_output": "41",
+              "tool": "calc"
+            }
+          ],
+          "matched_contract_entries": 2,
+          "matched_indices": [
+            0,
+            1
+          ],
+          "passed": true,
+          "successful_sequence": [
+            {
+              "output": "32",
+              "tool": "py_sandbox"
+            },
+            {
+              "output": "41",
+              "tool": "calc"
+            }
+          ],
+          "total_contract_entries": 2
+        },
+        "tool_path_valid": true,
+        "turns": 2
+      }
+    }
+  },
+  "controller_training": "NOT_AUTHORIZED",
+  "family_c_access": false,
+  "final_accounting": {
+    "accounting_ok": true,
+    "actual_generations": 54,
+    "failure_ledger_match": true,
+    "generation_count_match": true,
+    "ledger_generation_failures": 0,
+    "ledger_rows": 54,
+    "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "monotonic_call_ids": true,
+    "reserved_call_count": 54,
+    "runtime_generation_failures": 0,
+    "runtime_total_tokens": 1226,
+    "stats": {
+      "actual_generations": 54,
+      "episodes": 0,
+      "evaluations": 0,
+      "failures": 0,
+      "max_generations_cap": 100,
+      "max_latency_s": 3.1199591159820557,
+      "mean_latency_s": 0.5576851058889318,
+      "model": "qwen2.5-7b-instruct",
+      "requests": 54,
+      "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+      "tool_invocations": 0,
+      "total_tokens": 1226
+    },
+    "token_delta_sum": 1226,
+    "token_sum_match": true,
+    "unique_call_ids": true
+  },
+  "formal_g3": "FAIL_UNCHANGED",
+  "frozen_manifest_sha256": "8434874ceb7b12d88fedca605c09398bf9c1afb547732ed319f4373b678194ef",
+  "git": {
+    "branch": "c7-g3-diag-v2-r1-fastpath",
+    "head": "61bf7becd6b9a962cd301daa730b6bed11d29c62",
+    "tracked_worktree_clean": "true"
+  },
+  "llm_stats": {
+    "actual_generations": 54,
+    "episodes": 0,
+    "evaluations": 0,
+    "failures": 0,
+    "max_generations_cap": 100,
+    "max_latency_s": 3.1199591159820557,
+    "mean_latency_s": 0.5576851058889318,
+    "model": "qwen2.5-7b-instruct",
+    "requests": 54,
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "tool_invocations": 0,
+    "total_tokens": 1226
+  },
+  "model_config_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "model_path": "/202532803004/datasets/hf/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28",
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "pc1_approved": false,
+  "pc1_executed": false,
+  "pilot": {
+    "aggregate": {
+      "crossover": {
+        "behavior_changed_count_diagnostic_only": 6,
+        "child_answer_correct_rate": 0.4444444444444444,
+        "child_effective_success_rate": 0.3333333333333333,
+        "child_format_failure_count": 6,
+        "child_hard_validity_rate": 0.3333333333333333,
+        "child_tool_path_rate": 1.0,
+        "mean_paired_correctness_delta": -0.3333333333333333,
+        "operator_invalid_count": 0,
+        "paired_comparisons": 9,
+        "paired_rows": [
+          {
+            "behavior_changed": true,
+            "child_answer_correct": false,
+            "child_effective_success": false,
+            "child_format_compliant": false,
+            "child_hard_validity": false,
+            "child_tool_path_valid": true,
+            "operator_valid": true,
+            "paired_correctness_delta": -1,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-001",
+            "task_id": "B2-001"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": true,
+            "child_effective_success": false,
+            "child_format_compliant": false,
+            "child_hard_validity": false,
+            "child_tool_path_valid": true,
+            "operator_valid": true,
+            "paired_correctness_delta": 0,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-002",
+            "task_id": "B2-001"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": false,
+            "child_effective_success": false,
+            "child_format_compliant": false,
+            "child_hard_validity": false,
+            "child_tool_path_valid": true,
+            "operator_valid": true,
+            "paired_correctness_delta": -1,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-003",
+            "task_id": "B2-001"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": false,
+            "child_effective_success": false,
+            "child_format_compliant": false,
+            "child_hard_validity": false,
+            "child_tool_path_valid": true,
+            "operator_valid": true,
+            "paired_correctness_delta": 0,
+            "parent_answer_correct": false,
+            "parent_effective_success": false,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-001",
+            "task_id": "B2-003"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": false,
+            "child_effective_success": false,
+            "child_format_compliant": false,
+            "child_hard_validity": false,
+            "child_tool_path_valid": true,
+            "operator_valid": true,
+            "paired_correctness_delta": -1,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-002",
+            "task_id": "B2-003"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": false,
+            "child_effective_success": false,
+            "child_format_compliant": false,
+            "child_hard_validity": false,
+            "child_tool_path_valid": true,
+            "operator_valid": true,
+            "paired_correctness_delta": 0,
+            "parent_answer_correct": false,
+            "parent_effective_success": false,
+            "parent_format_compliant": false,
+            "parent_hard_validity": false,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-003",
+            "task_id": "B2-003"
+          },
+          {
+            "behavior_changed": false,
+            "child_answer_correct": true,
+            "child_effective_success": true,
+            "child_format_compliant": true,
+            "child_hard_validity": true,
+            "child_tool_path_valid": true,
+            "operator_valid": true,
+            "paired_correctness_delta": 0,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-001",
+            "task_id": "B2-004"
+          },
+          {
+            "behavior_changed": false,
+            "child_answer_correct": true,
+            "child_effective_success": true,
+            "child_format_compliant": true,
+            "child_hard_validity": true,
+            "child_tool_path_valid": true,
+            "operator_valid": true,
+            "paired_correctness_delta": 0,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-002",
+            "task_id": "B2-004"
+          },
+          {
+            "behavior_changed": false,
+            "child_answer_correct": true,
+            "child_effective_success": true,
+            "child_format_compliant": true,
+            "child_hard_validity": true,
+            "child_tool_path_valid": true,
+            "operator_valid": true,
+            "paired_correctness_delta": 0,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-003",
+            "task_id": "B2-004"
+          }
+        ],
+        "parent_answer_correct_rate": 0.7777777777777778,
+        "parent_effective_success_rate": 0.7777777777777778,
+        "parent_format_failure_count": 1,
+        "parent_hard_validity_rate": 0.8888888888888888,
+        "parent_tool_path_rate": 1.0
+      },
+      "tool_subset_edit": {
+        "behavior_changed_count_diagnostic_only": 9,
+        "child_answer_correct_rate": 0.7777777777777778,
+        "child_effective_success_rate": 0.0,
+        "child_format_failure_count": 0,
+        "child_hard_validity_rate": 0.0,
+        "child_tool_path_rate": 0.0,
+        "mean_paired_correctness_delta": 0.0,
+        "operator_invalid_count": 0,
+        "paired_comparisons": 9,
+        "paired_rows": [
+          {
+            "behavior_changed": true,
+            "child_answer_correct": true,
+            "child_effective_success": false,
+            "child_format_compliant": true,
+            "child_hard_validity": false,
+            "child_tool_path_valid": false,
+            "operator_valid": true,
+            "paired_correctness_delta": 0,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-001",
+            "task_id": "B2-001"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": false,
+            "child_effective_success": false,
+            "child_format_compliant": true,
+            "child_hard_validity": false,
+            "child_tool_path_valid": false,
+            "operator_valid": true,
+            "paired_correctness_delta": -1,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-002",
+            "task_id": "B2-001"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": false,
+            "child_effective_success": false,
+            "child_format_compliant": true,
+            "child_hard_validity": false,
+            "child_tool_path_valid": false,
+            "operator_valid": true,
+            "paired_correctness_delta": -1,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-003",
+            "task_id": "B2-001"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": true,
+            "child_effective_success": false,
+            "child_format_compliant": true,
+            "child_hard_validity": false,
+            "child_tool_path_valid": false,
+            "operator_valid": true,
+            "paired_correctness_delta": 1,
+            "parent_answer_correct": false,
+            "parent_effective_success": false,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-001",
+            "task_id": "B2-003"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": true,
+            "child_effective_success": false,
+            "child_format_compliant": true,
+            "child_hard_validity": false,
+            "child_tool_path_valid": false,
+            "operator_valid": true,
+            "paired_correctness_delta": 0,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-002",
+            "task_id": "B2-003"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": true,
+            "child_effective_success": false,
+            "child_format_compliant": true,
+            "child_hard_validity": false,
+            "child_tool_path_valid": false,
+            "operator_valid": true,
+            "paired_correctness_delta": 1,
+            "parent_answer_correct": false,
+            "parent_effective_success": false,
+            "parent_format_compliant": false,
+            "parent_hard_validity": false,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-003",
+            "task_id": "B2-003"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": true,
+            "child_effective_success": false,
+            "child_format_compliant": true,
+            "child_hard_validity": false,
+            "child_tool_path_valid": false,
+            "operator_valid": true,
+            "paired_correctness_delta": 0,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-001",
+            "task_id": "B2-004"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": true,
+            "child_effective_success": false,
+            "child_format_compliant": true,
+            "child_hard_validity": false,
+            "child_tool_path_valid": false,
+            "operator_valid": true,
+            "paired_correctness_delta": 0,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-002",
+            "task_id": "B2-004"
+          },
+          {
+            "behavior_changed": true,
+            "child_answer_correct": true,
+            "child_effective_success": false,
+            "child_format_compliant": true,
+            "child_hard_validity": false,
+            "child_tool_path_valid": false,
+            "operator_valid": true,
+            "paired_correctness_delta": 0,
+            "parent_answer_correct": true,
+            "parent_effective_success": true,
+            "parent_format_compliant": true,
+            "parent_hard_validity": true,
+            "parent_tool_path_valid": true,
+            "seed_id": "r3-paired-seed-003",
+            "task_id": "B2-004"
+          }
+        ],
+        "parent_answer_correct_rate": 0.7777777777777778,
+        "parent_effective_success_rate": 0.7777777777777778,
+        "parent_format_failure_count": 1,
+        "parent_hard_validity_rate": 0.8888888888888888,
+        "parent_tool_path_rate": 1.0
+      }
+    },
+    "matrix_complete": true,
+    "pairs": {
+      "B2-001": {
+        "r3-paired-seed-001": {
+          "children": {
+            "crossover": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "First, let's compute the expression \\(25 \\times 3 - 11\\) using the `calc` tool.\n\n\\[ 25 \\times 3 = 75 \\]\n\\[ 75 - 11 = 64 \\]\n\nNow that we have the result of 64, we will use the `str_ops` tool to transform the word 'sum' to uppercase.\n\nThe transformation of 'sum' to uppercase is 'SUM'.\n\nSo, the final output as requested is:\n\n64-SUM",
+                "answer_correct": false,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "wrong_answer",
+                "format_compliant": false,
+                "genotype_hash": "763d4aa21ff2f57eb5f83ab9227fa32513f7b77fd6210c1653c9edbc04dce2bd",
+                "hard_validity": false,
+                "interpreter_success": false,
+                "operator": "crossover",
+                "role": "child",
+                "seed_id": "r3-paired-seed-001",
+                "seed_index": 0,
+                "task_id": "B2-001",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "expected_output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "matched_contract_entries": 2,
+                  "matched_indices": [
+                    0,
+                    1
+                  ],
+                  "passed": true,
+                  "successful_sequence": [
+                    {
+                      "output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": true,
+                "trace": [
+                  {
+                    "prompt_sig": "6f3ccae0",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Step 1: Calculate 25*3-11 using the calc tool.\nResult from calc tool: 64\n\nStep 2: Transform the word 'sum' to uppercase using str_ops.\nResult from str_ops: SUM\n\nFinal answer: 64-SUM",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "64",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "str_ops",
+                    "ok": true,
+                    "output": "SUM",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            },
+            "tool_subset_edit": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "Final answer: 64-SUM",
+                "answer_correct": true,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "",
+                "format_compliant": true,
+                "genotype_hash": "45fca402471544acea89294d8566eeb1e3470cd07d4acf208703a0137b204e0a",
+                "hard_validity": false,
+                "interpreter_success": true,
+                "operator": "tool_subset_edit",
+                "role": "child",
+                "seed_id": "r3-paired-seed-001",
+                "seed_index": 0,
+                "task_id": "B2-001",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "64",
+                      "tool": "calc"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "expected_output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "matched_contract_entries": 1,
+                  "matched_indices": [
+                    0
+                  ],
+                  "missing_or_wrong": [
+                    {
+                      "expected_output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "passed": false,
+                  "successful_sequence": [
+                    {
+                      "output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "64",
+                      "tool": "calc"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": false,
+                "trace": [
+                  {
+                    "prompt_sig": "a93f44dc",
+                    "tools": [
+                      "calc"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolcalc|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Final answer: 64-SUM",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "64",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "64",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            }
+          },
+          "parent": {
+            "answer": "Final answer: 64-SUM",
+            "answer_correct": true,
+            "effective_success": true,
+            "failure_category": "",
+            "format_compliant": true,
+            "genotype_hash": "e0eb8cae1f3864849792b484e5a1b2f902e0ec9e8aaf365ef5e3b152647839da",
+            "hard_validity": true,
+            "interpreter_success": true,
+            "operator": "paired_reference",
+            "role": "reference",
+            "seed_id": "r3-paired-seed-001",
+            "seed_index": 0,
+            "task_id": "B2-001",
+            "tool_calls": 2,
+            "tool_path_details": {
+              "all_tool_events": [
+                {
+                  "ok": true,
+                  "output": "64",
+                  "tool": "calc"
+                },
+                {
+                  "ok": true,
+                  "output": "SUM",
+                  "tool": "str_ops"
+                }
+              ],
+              "contract": [
+                {
+                  "expected_output": "64",
+                  "tool": "calc"
+                },
+                {
+                  "expected_output": "SUM",
+                  "tool": "str_ops"
+                }
+              ],
+              "matched_contract_entries": 2,
+              "matched_indices": [
+                0,
+                1
+              ],
+              "passed": true,
+              "successful_sequence": [
+                {
+                  "output": "64",
+                  "tool": "calc"
+                },
+                {
+                  "output": "SUM",
+                  "tool": "str_ops"
+                }
+              ],
+              "total_contract_entries": 2
+            },
+            "tool_path_valid": true,
+            "trace": [
+              {
+                "prompt_sig": "a93f44dc",
+                "tools": [
+                  "calc",
+                  "str_ops"
+                ],
+                "type": "meta",
+                "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+              },
+              {
+                "detail": "analyze",
+                "ok": true,
+                "output": "Final answer: 64-SUM",
+                "type": "llm"
+              },
+              {
+                "detail": "calc",
+                "ok": true,
+                "output": "64",
+                "type": "tool"
+              },
+              {
+                "detail": "str_ops",
+                "ok": true,
+                "output": "SUM",
+                "type": "tool"
+              }
+            ],
+            "turns": 2
+          }
+        },
+        "r3-paired-seed-002": {
+          "children": {
+            "crossover": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "First, let's compute the expression 25*3-11 using the calc tool.\n\n[tool:calc] 25*3-11\n\nNow, we'll transform the word 'sum' to uppercase using the str_ops tool, although in this case, 'sum' is already a single word and doesn't need transformation since the context seems to imply it should remain as is after the calculation.\n\n[tool:str_ops] sum\n\nThe result of the calculation is 64. Since 'sum' doesn't need transformation, we report the result as follows:\n\nSUM-SUM\n\nFinal answer: 64-SUM",
+                "answer_correct": true,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "",
+                "format_compliant": false,
+                "genotype_hash": "763d4aa21ff2f57eb5f83ab9227fa32513f7b77fd6210c1653c9edbc04dce2bd",
+                "hard_validity": false,
+                "interpreter_success": true,
+                "operator": "crossover",
+                "role": "child",
+                "seed_id": "r3-paired-seed-002",
+                "seed_index": 1,
+                "task_id": "B2-001",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "expected_output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "matched_contract_entries": 2,
+                  "matched_indices": [
+                    0,
+                    1
+                  ],
+                  "passed": true,
+                  "successful_sequence": [
+                    {
+                      "output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": true,
+                "trace": [
+                  {
+                    "prompt_sig": "6f3ccae0",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "First, let's calculate the value of 25*3-11 using the calc tool.\n\n```plaintext\n25*3-11 = 64\n```\n\nNow, we will transform the word 'sum' to uppercase using the str_ops tool.\n\n```plaintext\nsum -> SUM\n```",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "64",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "str_ops",
+                    "ok": true,
+                    "output": "SUM",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            },
+            "tool_subset_edit": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "Final answer: 68-SUM",
+                "answer_correct": false,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "wrong_answer",
+                "format_compliant": true,
+                "genotype_hash": "45fca402471544acea89294d8566eeb1e3470cd07d4acf208703a0137b204e0a",
+                "hard_validity": false,
+                "interpreter_success": false,
+                "operator": "tool_subset_edit",
+                "role": "child",
+                "seed_id": "r3-paired-seed-002",
+                "seed_index": 1,
+                "task_id": "B2-001",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "64",
+                      "tool": "calc"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "expected_output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "matched_contract_entries": 1,
+                  "matched_indices": [
+                    0
+                  ],
+                  "missing_or_wrong": [
+                    {
+                      "expected_output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "passed": false,
+                  "successful_sequence": [
+                    {
+                      "output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "64",
+                      "tool": "calc"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": false,
+                "trace": [
+                  {
+                    "prompt_sig": "a93f44dc",
+                    "tools": [
+                      "calc"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolcalc|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Final answer: 64-SUM",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "64",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "64",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            }
+          },
+          "parent": {
+            "answer": "Final answer: 64-SUM",
+            "answer_correct": true,
+            "effective_success": true,
+            "failure_category": "",
+            "format_compliant": true,
+            "genotype_hash": "e0eb8cae1f3864849792b484e5a1b2f902e0ec9e8aaf365ef5e3b152647839da",
+            "hard_validity": true,
+            "interpreter_success": true,
+            "operator": "paired_reference",
+            "role": "reference",
+            "seed_id": "r3-paired-seed-002",
+            "seed_index": 1,
+            "task_id": "B2-001",
+            "tool_calls": 2,
+            "tool_path_details": {
+              "all_tool_events": [
+                {
+                  "ok": true,
+                  "output": "64",
+                  "tool": "calc"
+                },
+                {
+                  "ok": true,
+                  "output": "SUM",
+                  "tool": "str_ops"
+                }
+              ],
+              "contract": [
+                {
+                  "expected_output": "64",
+                  "tool": "calc"
+                },
+                {
+                  "expected_output": "SUM",
+                  "tool": "str_ops"
+                }
+              ],
+              "matched_contract_entries": 2,
+              "matched_indices": [
+                0,
+                1
+              ],
+              "passed": true,
+              "successful_sequence": [
+                {
+                  "output": "64",
+                  "tool": "calc"
+                },
+                {
+                  "output": "SUM",
+                  "tool": "str_ops"
+                }
+              ],
+              "total_contract_entries": 2
+            },
+            "tool_path_valid": true,
+            "trace": [
+              {
+                "prompt_sig": "a93f44dc",
+                "tools": [
+                  "calc",
+                  "str_ops"
+                ],
+                "type": "meta",
+                "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+              },
+              {
+                "detail": "analyze",
+                "ok": true,
+                "output": "Final answer: 64-SUM",
+                "type": "llm"
+              },
+              {
+                "detail": "calc",
+                "ok": true,
+                "output": "64",
+                "type": "tool"
+              },
+              {
+                "detail": "str_ops",
+                "ok": true,
+                "output": "SUM",
+                "type": "tool"
+              }
+            ],
+            "turns": 2
+          }
+        },
+        "r3-paired-seed-003": {
+          "children": {
+            "crossover": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "[tool:calc] 25*3-11\nThe result of 25*3-11 is 64.\n[tool:str_ops] sum\nTransforming 'sum' to uppercase gives 'SUM'.\nTherefore, the final answer in the format requested is: 64-SUM.",
+                "answer_correct": false,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "wrong_answer",
+                "format_compliant": false,
+                "genotype_hash": "763d4aa21ff2f57eb5f83ab9227fa32513f7b77fd6210c1653c9edbc04dce2bd",
+                "hard_validity": false,
+                "interpreter_success": false,
+                "operator": "crossover",
+                "role": "child",
+                "seed_id": "r3-paired-seed-003",
+                "seed_index": 2,
+                "task_id": "B2-001",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "expected_output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "matched_contract_entries": 2,
+                  "matched_indices": [
+                    0,
+                    1
+                  ],
+                  "passed": true,
+                  "successful_sequence": [
+                    {
+                      "output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": true,
+                "trace": [
+                  {
+                    "prompt_sig": "6f3ccae0",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Step 1: Compute 25*3-11 using the calc tool.\nResult from calc: 25*3-11 = 64\n\nStep 2: Transform the word 'sum' to uppercase using str_ops.\nResult from str_ops: SUM\n\nFinal Answer: 64-SUM",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "64",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "str_ops",
+                    "ok": true,
+                    "output": "SUM",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            },
+            "tool_subset_edit": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "Final answer: 69-SUM",
+                "answer_correct": false,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "wrong_answer",
+                "format_compliant": true,
+                "genotype_hash": "45fca402471544acea89294d8566eeb1e3470cd07d4acf208703a0137b204e0a",
+                "hard_validity": false,
+                "interpreter_success": false,
+                "operator": "tool_subset_edit",
+                "role": "child",
+                "seed_id": "r3-paired-seed-003",
+                "seed_index": 2,
+                "task_id": "B2-001",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "64",
+                      "tool": "calc"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "expected_output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "matched_contract_entries": 1,
+                  "matched_indices": [
+                    0
+                  ],
+                  "missing_or_wrong": [
+                    {
+                      "expected_output": "SUM",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "passed": false,
+                  "successful_sequence": [
+                    {
+                      "output": "64",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "64",
+                      "tool": "calc"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": false,
+                "trace": [
+                  {
+                    "prompt_sig": "a93f44dc",
+                    "tools": [
+                      "calc"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolcalc|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Final answer: 64-SUM",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "64",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "64",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            }
+          },
+          "parent": {
+            "answer": "Final answer: 64-SUM",
+            "answer_correct": true,
+            "effective_success": true,
+            "failure_category": "",
+            "format_compliant": true,
+            "genotype_hash": "e0eb8cae1f3864849792b484e5a1b2f902e0ec9e8aaf365ef5e3b152647839da",
+            "hard_validity": true,
+            "interpreter_success": true,
+            "operator": "paired_reference",
+            "role": "reference",
+            "seed_id": "r3-paired-seed-003",
+            "seed_index": 2,
+            "task_id": "B2-001",
+            "tool_calls": 2,
+            "tool_path_details": {
+              "all_tool_events": [
+                {
+                  "ok": true,
+                  "output": "64",
+                  "tool": "calc"
+                },
+                {
+                  "ok": true,
+                  "output": "SUM",
+                  "tool": "str_ops"
+                }
+              ],
+              "contract": [
+                {
+                  "expected_output": "64",
+                  "tool": "calc"
+                },
+                {
+                  "expected_output": "SUM",
+                  "tool": "str_ops"
+                }
+              ],
+              "matched_contract_entries": 2,
+              "matched_indices": [
+                0,
+                1
+              ],
+              "passed": true,
+              "successful_sequence": [
+                {
+                  "output": "64",
+                  "tool": "calc"
+                },
+                {
+                  "output": "SUM",
+                  "tool": "str_ops"
+                }
+              ],
+              "total_contract_entries": 2
+            },
+            "tool_path_valid": true,
+            "trace": [
+              {
+                "prompt_sig": "a93f44dc",
+                "tools": [
+                  "calc",
+                  "str_ops"
+                ],
+                "type": "meta",
+                "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+              },
+              {
+                "detail": "analyze",
+                "ok": true,
+                "output": "Final answer: 64-SUM",
+                "type": "llm"
+              },
+              {
+                "detail": "calc",
+                "ok": true,
+                "output": "64",
+                "type": "tool"
+              },
+              {
+                "detail": "str_ops",
+                "ok": true,
+                "output": "SUM",
+                "type": "tool"
+              }
+            ],
+            "turns": 2
+          }
+        }
+      },
+      "B2-003": {
+        "r3-paired-seed-001": {
+          "children": {
+            "crossover": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "[tool:calc] 8*8-4\nThe result of 8*8-4 is 60.\n[tool:str_ops] hi\nTransforming 'hi' to uppercase gives 'HI'.\nNUMBER-STRING: 60-HI",
+                "answer_correct": false,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "wrong_answer",
+                "format_compliant": false,
+                "genotype_hash": "763d4aa21ff2f57eb5f83ab9227fa32513f7b77fd6210c1653c9edbc04dce2bd",
+                "hard_validity": false,
+                "interpreter_success": false,
+                "operator": "crossover",
+                "role": "child",
+                "seed_id": "r3-paired-seed-001",
+                "seed_index": 0,
+                "task_id": "B2-003",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "expected_output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "matched_contract_entries": 2,
+                  "matched_indices": [
+                    0,
+                    1
+                  ],
+                  "passed": true,
+                  "successful_sequence": [
+                    {
+                      "output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": true,
+                "trace": [
+                  {
+                    "prompt_sig": "6f3ccae0",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Step 1: Calculate 8*8-4 using the calc tool.\nCalculation: 8*8-4 = 64-4 = 60\n\nStep 2: Transform 'hi' to uppercase using the str_ops tool.\nTransformation: 'hi' -> 'HI'\n\nFinal Answer: 60-HI",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "60",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "str_ops",
+                    "ok": true,
+                    "output": "HI",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            },
+            "tool_subset_edit": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "Final answer: 60-HI",
+                "answer_correct": true,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "",
+                "format_compliant": true,
+                "genotype_hash": "45fca402471544acea89294d8566eeb1e3470cd07d4acf208703a0137b204e0a",
+                "hard_validity": false,
+                "interpreter_success": true,
+                "operator": "tool_subset_edit",
+                "role": "child",
+                "seed_id": "r3-paired-seed-001",
+                "seed_index": 0,
+                "task_id": "B2-003",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "60",
+                      "tool": "calc"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "expected_output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "matched_contract_entries": 1,
+                  "matched_indices": [
+                    0
+                  ],
+                  "missing_or_wrong": [
+                    {
+                      "expected_output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "passed": false,
+                  "successful_sequence": [
+                    {
+                      "output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "60",
+                      "tool": "calc"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": false,
+                "trace": [
+                  {
+                    "prompt_sig": "a93f44dc",
+                    "tools": [
+                      "calc"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolcalc|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "60-hi",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "60",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "60",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            }
+          },
+          "parent": {
+            "answer": "Final answer: 60-STRING_HI",
+            "answer_correct": false,
+            "effective_success": false,
+            "failure_category": "wrong_answer",
+            "format_compliant": true,
+            "genotype_hash": "e0eb8cae1f3864849792b484e5a1b2f902e0ec9e8aaf365ef5e3b152647839da",
+            "hard_validity": true,
+            "interpreter_success": false,
+            "operator": "paired_reference",
+            "role": "reference",
+            "seed_id": "r3-paired-seed-001",
+            "seed_index": 0,
+            "task_id": "B2-003",
+            "tool_calls": 2,
+            "tool_path_details": {
+              "all_tool_events": [
+                {
+                  "ok": true,
+                  "output": "60",
+                  "tool": "calc"
+                },
+                {
+                  "ok": true,
+                  "output": "HI",
+                  "tool": "str_ops"
+                }
+              ],
+              "contract": [
+                {
+                  "expected_output": "60",
+                  "tool": "calc"
+                },
+                {
+                  "expected_output": "HI",
+                  "tool": "str_ops"
+                }
+              ],
+              "matched_contract_entries": 2,
+              "matched_indices": [
+                0,
+                1
+              ],
+              "passed": true,
+              "successful_sequence": [
+                {
+                  "output": "60",
+                  "tool": "calc"
+                },
+                {
+                  "output": "HI",
+                  "tool": "str_ops"
+                }
+              ],
+              "total_contract_entries": 2
+            },
+            "tool_path_valid": true,
+            "trace": [
+              {
+                "prompt_sig": "a93f44dc",
+                "tools": [
+                  "calc",
+                  "str_ops"
+                ],
+                "type": "meta",
+                "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+              },
+              {
+                "detail": "analyze",
+                "ok": true,
+                "output": "60-hi",
+                "type": "llm"
+              },
+              {
+                "detail": "calc",
+                "ok": true,
+                "output": "60",
+                "type": "tool"
+              },
+              {
+                "detail": "str_ops",
+                "ok": true,
+                "output": "HI",
+                "type": "tool"
+              }
+            ],
+            "turns": 2
+          }
+        },
+        "r3-paired-seed-002": {
+          "children": {
+            "crossover": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "First, we compute 8*8-4 using the calc tool:\n[tool:calc] 8*8-4\nThe result is 60.\nNext, we transform 'hi' to uppercase using the str_ops tool:\n[tool:str_ops] hi.upper()\nThe transformed string is 'HI'.\nTherefore, the final answer is 60-HI.",
+                "answer_correct": false,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "wrong_answer",
+                "format_compliant": false,
+                "genotype_hash": "763d4aa21ff2f57eb5f83ab9227fa32513f7b77fd6210c1653c9edbc04dce2bd",
+                "hard_validity": false,
+                "interpreter_success": false,
+                "operator": "crossover",
+                "role": "child",
+                "seed_id": "r3-paired-seed-002",
+                "seed_index": 1,
+                "task_id": "B2-003",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "expected_output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "matched_contract_entries": 2,
+                  "matched_indices": [
+                    0,
+                    1
+                  ],
+                  "passed": true,
+                  "successful_sequence": [
+                    {
+                      "output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": true,
+                "trace": [
+                  {
+                    "prompt_sig": "6f3ccae0",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Step 1: Calculate 8*8-4 using the calc tool.\nCalculation: 8 * 8 - 4 = 64 - 4 = 60\n\nStep 2: Transform 'hi' to uppercase using the str_ops tool.\nTransformation: 'HI'\n\nFinal Answer: 60-HI",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "60",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "str_ops",
+                    "ok": true,
+                    "output": "HI",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            },
+            "tool_subset_edit": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "Final answer: 60-HI",
+                "answer_correct": true,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "",
+                "format_compliant": true,
+                "genotype_hash": "45fca402471544acea89294d8566eeb1e3470cd07d4acf208703a0137b204e0a",
+                "hard_validity": false,
+                "interpreter_success": true,
+                "operator": "tool_subset_edit",
+                "role": "child",
+                "seed_id": "r3-paired-seed-002",
+                "seed_index": 1,
+                "task_id": "B2-003",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "60",
+                      "tool": "calc"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "expected_output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "matched_contract_entries": 1,
+                  "matched_indices": [
+                    0
+                  ],
+                  "missing_or_wrong": [
+                    {
+                      "expected_output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "passed": false,
+                  "successful_sequence": [
+                    {
+                      "output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "60",
+                      "tool": "calc"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": false,
+                "trace": [
+                  {
+                    "prompt_sig": "a93f44dc",
+                    "tools": [
+                      "calc"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolcalc|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "60-HI",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "60",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "60",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            }
+          },
+          "parent": {
+            "answer": "Final answer: 60-HI",
+            "answer_correct": true,
+            "effective_success": true,
+            "failure_category": "",
+            "format_compliant": true,
+            "genotype_hash": "e0eb8cae1f3864849792b484e5a1b2f902e0ec9e8aaf365ef5e3b152647839da",
+            "hard_validity": true,
+            "interpreter_success": true,
+            "operator": "paired_reference",
+            "role": "reference",
+            "seed_id": "r3-paired-seed-002",
+            "seed_index": 1,
+            "task_id": "B2-003",
+            "tool_calls": 2,
+            "tool_path_details": {
+              "all_tool_events": [
+                {
+                  "ok": true,
+                  "output": "60",
+                  "tool": "calc"
+                },
+                {
+                  "ok": true,
+                  "output": "HI",
+                  "tool": "str_ops"
+                }
+              ],
+              "contract": [
+                {
+                  "expected_output": "60",
+                  "tool": "calc"
+                },
+                {
+                  "expected_output": "HI",
+                  "tool": "str_ops"
+                }
+              ],
+              "matched_contract_entries": 2,
+              "matched_indices": [
+                0,
+                1
+              ],
+              "passed": true,
+              "successful_sequence": [
+                {
+                  "output": "60",
+                  "tool": "calc"
+                },
+                {
+                  "output": "HI",
+                  "tool": "str_ops"
+                }
+              ],
+              "total_contract_entries": 2
+            },
+            "tool_path_valid": true,
+            "trace": [
+              {
+                "prompt_sig": "a93f44dc",
+                "tools": [
+                  "calc",
+                  "str_ops"
+                ],
+                "type": "meta",
+                "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+              },
+              {
+                "detail": "analyze",
+                "ok": true,
+                "output": "60-HI",
+                "type": "llm"
+              },
+              {
+                "detail": "calc",
+                "ok": true,
+                "output": "60",
+                "type": "tool"
+              },
+              {
+                "detail": "str_ops",
+                "ok": true,
+                "output": "HI",
+                "type": "tool"
+              }
+            ],
+            "turns": 2
+          }
+        },
+        "r3-paired-seed-003": {
+          "children": {
+            "crossover": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "[tool:calc] 8*8-4\nThe result of 8*8-4 is 60.\n[tool:str_ops] hi\nTransforming 'hi' to uppercase gives 'HI'.\nNUMBER-STRING: 60-HI",
+                "answer_correct": false,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "wrong_answer",
+                "format_compliant": false,
+                "genotype_hash": "763d4aa21ff2f57eb5f83ab9227fa32513f7b77fd6210c1653c9edbc04dce2bd",
+                "hard_validity": false,
+                "interpreter_success": false,
+                "operator": "crossover",
+                "role": "child",
+                "seed_id": "r3-paired-seed-003",
+                "seed_index": 2,
+                "task_id": "B2-003",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "expected_output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "matched_contract_entries": 2,
+                  "matched_indices": [
+                    0,
+                    1
+                  ],
+                  "passed": true,
+                  "successful_sequence": [
+                    {
+                      "output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": true,
+                "trace": [
+                  {
+                    "prompt_sig": "6f3ccae0",
+                    "tools": [
+                      "calc",
+                      "str_ops"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Step 1: Calculate 8*8-4 using the calc tool.\nCalculation: 8*8-4 = 64-4 = 60\n\nStep 2: Transform 'hi' to uppercase using the str_ops tool.\nTransformation: 'hi' -> 'HI'\n\nFinal Answer: 60-HI",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "60",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "str_ops",
+                    "ok": true,
+                    "output": "HI",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            },
+            "tool_subset_edit": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "Final answer: 60-HI",
+                "answer_correct": true,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "",
+                "format_compliant": true,
+                "genotype_hash": "45fca402471544acea89294d8566eeb1e3470cd07d4acf208703a0137b204e0a",
+                "hard_validity": false,
+                "interpreter_success": true,
+                "operator": "tool_subset_edit",
+                "role": "child",
+                "seed_id": "r3-paired-seed-003",
+                "seed_index": 2,
+                "task_id": "B2-003",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "60",
+                      "tool": "calc"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "expected_output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "matched_contract_entries": 1,
+                  "matched_indices": [
+                    0
+                  ],
+                  "missing_or_wrong": [
+                    {
+                      "expected_output": "HI",
+                      "tool": "str_ops"
+                    }
+                  ],
+                  "passed": false,
+                  "successful_sequence": [
+                    {
+                      "output": "60",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "60",
+                      "tool": "calc"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": false,
+                "trace": [
+                  {
+                    "prompt_sig": "a93f44dc",
+                    "tools": [
+                      "calc"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolcalc|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "60-hi",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "60",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "60",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            }
+          },
+          "parent": {
+            "answer": "NUMBER-STRING: 60-STRING: HI",
+            "answer_correct": false,
+            "effective_success": false,
+            "failure_category": "wrong_answer",
+            "format_compliant": false,
+            "genotype_hash": "e0eb8cae1f3864849792b484e5a1b2f902e0ec9e8aaf365ef5e3b152647839da",
+            "hard_validity": false,
+            "interpreter_success": false,
+            "operator": "paired_reference",
+            "role": "reference",
+            "seed_id": "r3-paired-seed-003",
+            "seed_index": 2,
+            "task_id": "B2-003",
+            "tool_calls": 2,
+            "tool_path_details": {
+              "all_tool_events": [
+                {
+                  "ok": true,
+                  "output": "60",
+                  "tool": "calc"
+                },
+                {
+                  "ok": true,
+                  "output": "HI",
+                  "tool": "str_ops"
+                }
+              ],
+              "contract": [
+                {
+                  "expected_output": "60",
+                  "tool": "calc"
+                },
+                {
+                  "expected_output": "HI",
+                  "tool": "str_ops"
+                }
+              ],
+              "matched_contract_entries": 2,
+              "matched_indices": [
+                0,
+                1
+              ],
+              "passed": true,
+              "successful_sequence": [
+                {
+                  "output": "60",
+                  "tool": "calc"
+                },
+                {
+                  "output": "HI",
+                  "tool": "str_ops"
+                }
+              ],
+              "total_contract_entries": 2
+            },
+            "tool_path_valid": true,
+            "trace": [
+              {
+                "prompt_sig": "a93f44dc",
+                "tools": [
+                  "calc",
+                  "str_ops"
+                ],
+                "type": "meta",
+                "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+              },
+              {
+                "detail": "analyze",
+                "ok": true,
+                "output": "60-hi",
+                "type": "llm"
+              },
+              {
+                "detail": "calc",
+                "ok": true,
+                "output": "60",
+                "type": "tool"
+              },
+              {
+                "detail": "str_ops",
+                "ok": true,
+                "output": "HI",
+                "type": "tool"
+              }
+            ],
+            "turns": 2
+          }
+        }
+      },
+      "B2-004": {
+        "r3-paired-seed-001": {
+          "children": {
+            "crossover": {
+              "attempted": true,
+              "behavior_changed": false,
+              "episode": {
+                "answer": "Final answer: 41",
+                "answer_correct": true,
+                "behavior_changed": false,
+                "effective_success": true,
+                "failure_category": "",
+                "format_compliant": true,
+                "genotype_hash": "18166a78eb0e312ce3760f858601131d8e5a368f1666d0580c8535dbe2695fb4",
+                "hard_validity": true,
+                "interpreter_success": true,
+                "operator": "crossover",
+                "role": "child",
+                "seed_id": "r3-paired-seed-001",
+                "seed_index": 0,
+                "task_id": "B2-004",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "ok": true,
+                      "output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "expected_output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "matched_contract_entries": 2,
+                  "matched_indices": [
+                    0,
+                    1
+                  ],
+                  "passed": true,
+                  "successful_sequence": [
+                    {
+                      "output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": true,
+                "trace": [
+                  {
+                    "prompt_sig": "6f3ccae0",
+                    "tools": [
+                      "calc",
+                      "py_sandbox"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Final answer: 41",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "py_sandbox",
+                    "ok": true,
+                    "output": "32",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "41",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            },
+            "tool_subset_edit": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "Final answer: 41",
+                "answer_correct": true,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "",
+                "format_compliant": true,
+                "genotype_hash": "45fca402471544acea89294d8566eeb1e3470cd07d4acf208703a0137b204e0a",
+                "hard_validity": false,
+                "interpreter_success": true,
+                "operator": "tool_subset_edit",
+                "role": "child",
+                "seed_id": "r3-paired-seed-001",
+                "seed_index": 0,
+                "task_id": "B2-004",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "41",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "expected_output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "matched_contract_entries": 0,
+                  "matched_indices": [],
+                  "missing_or_wrong": [
+                    {
+                      "expected_output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "expected_output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "passed": false,
+                  "successful_sequence": [
+                    {
+                      "output": "41",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": false,
+                "trace": [
+                  {
+                    "prompt_sig": "a93f44dc",
+                    "tools": [
+                      "calc"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolcalc|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Final answer: 41",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "41",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "41",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            }
+          },
+          "parent": {
+            "answer": "Final answer: 41",
+            "answer_correct": true,
+            "effective_success": true,
+            "failure_category": "",
+            "format_compliant": true,
+            "genotype_hash": "42b1329306c1f8c0debb9ed6b4b71d5d02553a917543379462a1141112fa71bc",
+            "hard_validity": true,
+            "interpreter_success": true,
+            "operator": "canary_reference",
+            "role": "reference",
+            "seed_id": "r3-paired-seed-001",
+            "seed_index": 0,
+            "task_id": "B2-004",
+            "tool_calls": 2,
+            "tool_path_details": {
+              "all_tool_events": [
+                {
+                  "ok": true,
+                  "output": "32",
+                  "tool": "py_sandbox"
+                },
+                {
+                  "ok": true,
+                  "output": "41",
+                  "tool": "calc"
+                }
+              ],
+              "contract": [
+                {
+                  "expected_output": "32",
+                  "tool": "py_sandbox"
+                },
+                {
+                  "expected_output": "41",
+                  "tool": "calc"
+                }
+              ],
+              "matched_contract_entries": 2,
+              "matched_indices": [
+                0,
+                1
+              ],
+              "passed": true,
+              "successful_sequence": [
+                {
+                  "output": "32",
+                  "tool": "py_sandbox"
+                },
+                {
+                  "output": "41",
+                  "tool": "calc"
+                }
+              ],
+              "total_contract_entries": 2
+            },
+            "tool_path_valid": true,
+            "trace": [
+              {
+                "prompt_sig": "a93f44dc",
+                "tools": [
+                  "py_sandbox",
+                  "calc"
+                ],
+                "type": "meta",
+                "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+              },
+              {
+                "detail": "analyze",
+                "ok": true,
+                "output": "Final answer: 41",
+                "type": "llm"
+              },
+              {
+                "detail": "py_sandbox",
+                "ok": true,
+                "output": "32",
+                "type": "tool"
+              },
+              {
+                "detail": "calc",
+                "ok": true,
+                "output": "41",
+                "type": "tool"
+              }
+            ],
+            "turns": 2
+          }
+        },
+        "r3-paired-seed-002": {
+          "children": {
+            "crossover": {
+              "attempted": true,
+              "behavior_changed": false,
+              "episode": {
+                "answer": "Final answer: 41",
+                "answer_correct": true,
+                "behavior_changed": false,
+                "effective_success": true,
+                "failure_category": "",
+                "format_compliant": true,
+                "genotype_hash": "18166a78eb0e312ce3760f858601131d8e5a368f1666d0580c8535dbe2695fb4",
+                "hard_validity": true,
+                "interpreter_success": true,
+                "operator": "crossover",
+                "role": "child",
+                "seed_id": "r3-paired-seed-002",
+                "seed_index": 1,
+                "task_id": "B2-004",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "ok": true,
+                      "output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "expected_output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "matched_contract_entries": 2,
+                  "matched_indices": [
+                    0,
+                    1
+                  ],
+                  "passed": true,
+                  "successful_sequence": [
+                    {
+                      "output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": true,
+                "trace": [
+                  {
+                    "prompt_sig": "6f3ccae0",
+                    "tools": [
+                      "calc",
+                      "py_sandbox"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Final answer: 41",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "py_sandbox",
+                    "ok": true,
+                    "output": "32",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "41",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            },
+            "tool_subset_edit": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "Final answer: 41",
+                "answer_correct": true,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "",
+                "format_compliant": true,
+                "genotype_hash": "45fca402471544acea89294d8566eeb1e3470cd07d4acf208703a0137b204e0a",
+                "hard_validity": false,
+                "interpreter_success": true,
+                "operator": "tool_subset_edit",
+                "role": "child",
+                "seed_id": "r3-paired-seed-002",
+                "seed_index": 1,
+                "task_id": "B2-004",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "41",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "expected_output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "matched_contract_entries": 0,
+                  "matched_indices": [],
+                  "missing_or_wrong": [
+                    {
+                      "expected_output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "expected_output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "passed": false,
+                  "successful_sequence": [
+                    {
+                      "output": "41",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": false,
+                "trace": [
+                  {
+                    "prompt_sig": "a93f44dc",
+                    "tools": [
+                      "calc"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolcalc|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Final answer: 41",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "41",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "41",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            }
+          },
+          "parent": {
+            "answer": "Final answer: 41",
+            "answer_correct": true,
+            "effective_success": true,
+            "failure_category": "",
+            "format_compliant": true,
+            "genotype_hash": "42b1329306c1f8c0debb9ed6b4b71d5d02553a917543379462a1141112fa71bc",
+            "hard_validity": true,
+            "interpreter_success": true,
+            "operator": "canary_reference",
+            "role": "reference",
+            "seed_id": "r3-paired-seed-002",
+            "seed_index": 1,
+            "task_id": "B2-004",
+            "tool_calls": 2,
+            "tool_path_details": {
+              "all_tool_events": [
+                {
+                  "ok": true,
+                  "output": "32",
+                  "tool": "py_sandbox"
+                },
+                {
+                  "ok": true,
+                  "output": "41",
+                  "tool": "calc"
+                }
+              ],
+              "contract": [
+                {
+                  "expected_output": "32",
+                  "tool": "py_sandbox"
+                },
+                {
+                  "expected_output": "41",
+                  "tool": "calc"
+                }
+              ],
+              "matched_contract_entries": 2,
+              "matched_indices": [
+                0,
+                1
+              ],
+              "passed": true,
+              "successful_sequence": [
+                {
+                  "output": "32",
+                  "tool": "py_sandbox"
+                },
+                {
+                  "output": "41",
+                  "tool": "calc"
+                }
+              ],
+              "total_contract_entries": 2
+            },
+            "tool_path_valid": true,
+            "trace": [
+              {
+                "prompt_sig": "a93f44dc",
+                "tools": [
+                  "py_sandbox",
+                  "calc"
+                ],
+                "type": "meta",
+                "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+              },
+              {
+                "detail": "analyze",
+                "ok": true,
+                "output": "Final answer: 41",
+                "type": "llm"
+              },
+              {
+                "detail": "py_sandbox",
+                "ok": true,
+                "output": "32",
+                "type": "tool"
+              },
+              {
+                "detail": "calc",
+                "ok": true,
+                "output": "41",
+                "type": "tool"
+              }
+            ],
+            "turns": 2
+          }
+        },
+        "r3-paired-seed-003": {
+          "children": {
+            "crossover": {
+              "attempted": true,
+              "behavior_changed": false,
+              "episode": {
+                "answer": "Final answer: 41",
+                "answer_correct": true,
+                "behavior_changed": false,
+                "effective_success": true,
+                "failure_category": "",
+                "format_compliant": true,
+                "genotype_hash": "18166a78eb0e312ce3760f858601131d8e5a368f1666d0580c8535dbe2695fb4",
+                "hard_validity": true,
+                "interpreter_success": true,
+                "operator": "crossover",
+                "role": "child",
+                "seed_id": "r3-paired-seed-003",
+                "seed_index": 2,
+                "task_id": "B2-004",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "ok": true,
+                      "output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "expected_output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "matched_contract_entries": 2,
+                  "matched_indices": [
+                    0,
+                    1
+                  ],
+                  "passed": true,
+                  "successful_sequence": [
+                    {
+                      "output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": true,
+                "trace": [
+                  {
+                    "prompt_sig": "6f3ccae0",
+                    "tools": [
+                      "calc",
+                      "py_sandbox"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Final answer: 41",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "py_sandbox",
+                    "ok": true,
+                    "output": "32",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "41",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            },
+            "tool_subset_edit": {
+              "attempted": true,
+              "behavior_changed": true,
+              "episode": {
+                "answer": "Final answer: 41",
+                "answer_correct": true,
+                "behavior_changed": true,
+                "effective_success": false,
+                "failure_category": "",
+                "format_compliant": true,
+                "genotype_hash": "45fca402471544acea89294d8566eeb1e3470cd07d4acf208703a0137b204e0a",
+                "hard_validity": false,
+                "interpreter_success": true,
+                "operator": "tool_subset_edit",
+                "role": "child",
+                "seed_id": "r3-paired-seed-003",
+                "seed_index": 2,
+                "task_id": "B2-004",
+                "tool_calls": 2,
+                "tool_path_details": {
+                  "all_tool_events": [
+                    {
+                      "ok": true,
+                      "output": "41",
+                      "tool": "calc"
+                    },
+                    {
+                      "ok": true,
+                      "output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "contract": [
+                    {
+                      "expected_output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "expected_output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "matched_contract_entries": 0,
+                  "matched_indices": [],
+                  "missing_or_wrong": [
+                    {
+                      "expected_output": "32",
+                      "tool": "py_sandbox"
+                    },
+                    {
+                      "expected_output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "passed": false,
+                  "successful_sequence": [
+                    {
+                      "output": "41",
+                      "tool": "calc"
+                    },
+                    {
+                      "output": "41",
+                      "tool": "calc"
+                    }
+                  ],
+                  "total_contract_entries": 2
+                },
+                "tool_path_valid": false,
+                "trace": [
+                  {
+                    "prompt_sig": "a93f44dc",
+                    "tools": [
+                      "calc"
+                    ],
+                    "type": "meta",
+                    "workflow_sig": "llm|toolcalc|toolcalc|finalize"
+                  },
+                  {
+                    "detail": "analyze",
+                    "ok": true,
+                    "output": "Final answer: 41",
+                    "type": "llm"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "41",
+                    "type": "tool"
+                  },
+                  {
+                    "detail": "calc",
+                    "ok": true,
+                    "output": "41",
+                    "type": "tool"
+                  }
+                ],
+                "turns": 2
+              },
+              "errors": [],
+              "operator_valid": true
+            }
+          },
+          "parent": {
+            "answer": "Final answer: 41",
+            "answer_correct": true,
+            "effective_success": true,
+            "failure_category": "",
+            "format_compliant": true,
+            "genotype_hash": "42b1329306c1f8c0debb9ed6b4b71d5d02553a917543379462a1141112fa71bc",
+            "hard_validity": true,
+            "interpreter_success": true,
+            "operator": "canary_reference",
+            "role": "reference",
+            "seed_id": "r3-paired-seed-003",
+            "seed_index": 2,
+            "task_id": "B2-004",
+            "tool_calls": 2,
+            "tool_path_details": {
+              "all_tool_events": [
+                {
+                  "ok": true,
+                  "output": "32",
+                  "tool": "py_sandbox"
+                },
+                {
+                  "ok": true,
+                  "output": "41",
+                  "tool": "calc"
+                }
+              ],
+              "contract": [
+                {
+                  "expected_output": "32",
+                  "tool": "py_sandbox"
+                },
+                {
+                  "expected_output": "41",
+                  "tool": "calc"
+                }
+              ],
+              "matched_contract_entries": 2,
+              "matched_indices": [
+                0,
+                1
+              ],
+              "passed": true,
+              "successful_sequence": [
+                {
+                  "output": "32",
+                  "tool": "py_sandbox"
+                },
+                {
+                  "output": "41",
+                  "tool": "calc"
+                }
+              ],
+              "total_contract_entries": 2
+            },
+            "tool_path_valid": true,
+            "trace": [
+              {
+                "prompt_sig": "a93f44dc",
+                "tools": [
+                  "py_sandbox",
+                  "calc"
+                ],
+                "type": "meta",
+                "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+              },
+              {
+                "detail": "analyze",
+                "ok": true,
+                "output": "Final answer: 41",
+                "type": "llm"
+              },
+              {
+                "detail": "py_sandbox",
+                "ok": true,
+                "output": "32",
+                "type": "tool"
+              },
+              {
+                "detail": "calc",
+                "ok": true,
+                "output": "41",
+                "type": "tool"
+              }
+            ],
+            "turns": 2
+          }
+        }
+      }
+    },
+    "stop_reason": "complete predeclared matrix"
+  },
+  "protocol": "G3-DIAG-v2-R3",
+  "revision_match": true,
+  "run_id": "20261029T052350Z_R3",
+  "status": "PILOT_COMPLETE_REQUIRES_INDEPENDENT_REVIEW",
+  "total_actual_generations": 54,
+  "total_wall_s": 42.8831
+}

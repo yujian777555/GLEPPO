@@ -1,0 +1,89 @@
+{
+  "budget": {
+    "max_actual_generations": 100,
+    "max_wall_clock_seconds_including_model_load": 300
+  },
+  "created_at_utc": "2026-10-29T05:23:50.242786+00:00",
+  "files": {
+    ".github/workflows/r3-offline-validation.yml": {
+      "sha256": "0ceb342b1edb2c3e30ad2c3e8d049808ad573b445f047716eb313a6106bb0d96",
+      "size_bytes": 1097
+    },
+    "data/diagnostic_B2.jsonl": {
+      "sha256": "7ebe2ec735fd7dbfe634f2c850e9f7a33aad6f561929a26cd2261cd9d18b464e",
+      "size_bytes": 1003
+    },
+    "data/diagnostic_B2_R3.jsonl": {
+      "sha256": "5e68c3f91a9b1e30e09b85c3c20e857fabe2ef3c4511bcb9fa88aa662acf269e",
+      "size_bytes": 622
+    },
+    "gleppo/genotype.py": {
+      "sha256": "a84ae45a3b2e6585c84875576cd7168a99cec6d676402d0870bfa6a1b43ca10f",
+      "size_bytes": 9858
+    },
+    "gleppo/interpreter.py": {
+      "sha256": "ff4a9624ce5397d335f1c116cc0c20226bec69f30b4b9380a9bf0d100c8eb14b",
+      "size_bytes": 17347
+    },
+    "gleppo/llm.py": {
+      "sha256": "6125edbdbe0526e0f9d07ce8abb5f3c70d3233ae84629c1a4b62894bf872e30a",
+      "size_bytes": 14872
+    },
+    "gleppo/operators.py": {
+      "sha256": "fc30a724fe93b6c933ad32cc4ed08f1af7c083ca856749d6d5ad7e7ff49b3097",
+      "size_bytes": 13180
+    },
+    "gleppo/r3_metrics.py": {
+      "sha256": "cedcb0732149886ae7703df8c04d05d4b600890472273b63e24bd26e4b0918a4",
+      "size_bytes": 1849
+    },
+    "gleppo/tasks.py": {
+      "sha256": "f6eff79f80d72d6e9932ce87693c5170e98554f3516ab31649708d45de657b0d",
+      "size_bytes": 15249
+    },
+    "gleppo/tool_path.py": {
+      "sha256": "7bc5447d5010e752c096b2f0159188198e5aa89f4a0b27badb9d9e26e4dde726",
+      "size_bytes": 4458
+    },
+    "research/G3_DIAG_R3_PROTOCOL.md": {
+      "sha256": "38bac92ef9367914ed4e45f46f2c7f27dd48f2bcf9d3bbe1803cc9d3aa7decd7",
+      "size_bytes": 5039
+    },
+    "scripts/_run_g3_r3.py": {
+      "sha256": "b8c1da2624e665762f6a680bac625a8091e109bee0c55c69fce6dd93057400a0",
+      "size_bytes": 30312
+    },
+    "scripts/verify_g3_r3.py": {
+      "sha256": "7c418e2f535110cbce5f19c9858452daec69800642b07f679466a9c192eb6e9d",
+      "size_bytes": 11394
+    },
+    "tests/test_r3_protocol.py": {
+      "sha256": "8d4150f3e3786698cea9c0b77133ad2b938f59e2450533471f76168975d65a6b",
+      "size_bytes": 6619
+    }
+  },
+  "git": {
+    "branch": "c7-g3-diag-v2-r1-fastpath",
+    "head": "61bf7becd6b9a962cd301daa730b6bed11d29c62",
+    "tracked_worktree_clean": "true"
+  },
+  "metrics": {
+    "answer_correct": "gold checker independent of format/path",
+    "behavior_changed": "diagnostic only",
+    "effective_success": "answer_correct AND hard_validity",
+    "format_compliant": "exact prefix, nonempty value <=100 characters, one line",
+    "hard_validity": "format_compliant AND tool_path_valid",
+    "tool_path_valid": "ordered required tools with exact outputs"
+  },
+  "model": {
+    "expected_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "name": "qwen2.5-7b-instruct"
+  },
+  "protocol": "G3-DIAG-v2-R3",
+  "run_id": "20261029T052350Z_R3",
+  "seed_ids": [
+    "r3-paired-seed-001",
+    "r3-paired-seed-002",
+    "r3-paired-seed-003"
+  ]
+}

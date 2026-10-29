@@ -2,12 +2,12 @@
   "project": "GLEPPO",
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
-  "updated_at": "2026-10-28",
-  "phase": "G3_DIAG_V2_R1_FASTPATH",
-  "state": "ACTIVE_EXECUTOR_TASK_OFFLINE_FIXES_FIRST",
+  "updated_at": "2026-10-29",
+  "phase": "G3_DIAG_V2_R2_TOOL_PATH_REPAIR",
+  "state": "R1_ACCEPTED_DIAGNOSTIC_STOP_R2_AUTHORIZED",
   "reviewed_commit": "d91f72c",
   "implementation_status": "EVIDENCE_VERIFIER_FIXED_OPERATORS_FIXED_RUNTIME_LOCK_V2",
-  "experimental_status": "G3_DIAG_V2_COMPLETE_R1_NOT_RUN",
+  "experimental_status": "R1_DIAGNOSTIC_STOP_ACCEPTED_R2_NOT_RUN",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Execute planner/G3_DIAG_V2_R1_FASTPATH.md Stage A offline fixes; if and only if Stage A passes, run the explicitly authorized 30-actual-generation diagnostic Stage B.",
-  "next_gate": "STAGE_A_OFFLINE_ACCEPTANCE -> STAGE_B_BOUNDED_DIAGNOSTIC -> PLANNER_REVIEW",
+  "current_task": "Execute planner/G3_DIAG_R2_TOOL_PATH_REPAIR.md: fix str_ops natural-language payload extraction, B2-002 calc expression selection, and task-compatible reference workflows; run focused + full offline tests; then perform fresh bounded R2 only if offline acceptance passes.",
+  "next_gate": "R2_OFFLINE_ACCEPTANCE -> R2_BASELINE_TOOL_PATH_GATE -> R2_OPERATOR_DIAGNOSTIC -> PLANNER_REVIEW",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -598,20 +598,41 @@
   },
   "active_fastpath": {
     "branch": "c7-g3-diag-v2-r1-fastpath",
-    "base_sha": "7b0017fee427a49f3f9eb34532bc447f4c2bb7cd",
-    "plan_path": "planner/G3_DIAG_V2_R1_FASTPATH.md",
-    "latest_plan_path": "planner/latest_plan.md",
-    "plan_commit": "2dd54afd1e36bed491cc12a28e7ec383141a4be1",
-    "stage_a": "NOT_STARTED",
-    "stage_b": "NOT_STARTED",
-    "stage_b_authorization": "CONDITIONAL: only after Stage A acceptance",
-    "actual_generation_cap": 30,
-    "wall_clock_cap_seconds": 300,
+    "r1_commit": "b8b70354433113bead0bbfa3560cda79f592d4f9",
+    "r1_run_id": "20261029T033104Z_R1",
+    "r1_decision": "ACCEPTED_AS_PROTOCOL_COMPLIANT_DIAGNOSTIC_STOP_ONLY",
+    "r1_operator_comparison": "NOT_RUN",
+    "r1_artifacts": "IMMUTABLE",
+    "r2_plan": "planner/G3_DIAG_R2_TOOL_PATH_REPAIR.md",
+    "latest_plan": "planner/latest_plan.md",
+    "r2_stage_a": "NOT_STARTED",
+    "r2_stage_b": "NOT_STARTED",
+    "r2_stage_b_authorization": "AUTHORIZED_CONDITIONAL_ON_OFFLINE_ACCEPTANCE",
+    "r2_actual_generation_cap": 30,
+    "r2_wall_clock_cap_seconds": 300,
+    "root_causes": [
+      "Interpreter._extract_strops_payload falls back to arithmetic extraction instead of converting quoted natural-language string transforms into str_ops commands.",
+      "B2-002 requires py_sandbox -> calc but make_valid_genotype defaults to calc + str_ops.",
+      "B2-002 calc payload fallback chooses the first arithmetic expression 14*3+7 rather than the tool-directed 49-6."
+    ],
     "formal_g3": "FAIL_UNCHANGED",
     "pc1_approved": false,
     "pc1_executed": false,
     "controller_training": "NOT_AUTHORIZED",
-    "family_c_access": false,
-    "historical_v2_artifacts": "IMMUTABLE; actual-generation budget discrepancy must remain disclosed"
+    "family_c_access": false
+  },
+  "r1_fastpath_decision": {
+    "verdict": "ACCEPT_DIAGNOSTIC_STOP",
+    "interpretation": "Budget enforcement and fail-closed tool-path gate worked; the run is not evidence for or against operators.",
+    "blockers": [
+      "str_ops natural-language payload extraction",
+      "B2-002 incompatible default workflow",
+      "B2-002 calc expression selection"
+    ],
+    "no_claims": [
+      "No operator comparison occurred",
+      "No performance-improvement claim",
+      "No formal G3 passage"
+    ]
   }
 }

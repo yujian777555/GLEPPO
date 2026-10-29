@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-29",
-  "phase": "GLEPPO_R10_COMPLETE",
-  "state": "R10_GO_SELECTIVE_FORMAT_INTERVENTION",
+  "phase": "GLEPPO_R11_COMPLETE",
+  "state": "R11_INCONCLUSIVE_C2_MECHANISM_NOT_TRIGGERED",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -826,5 +826,12 @@
     "c2_avoids_harm": "YES_B2_024_uses_C0",
     "c2_detects_risk": "YES_B2_001_uses_C1",
     "decision": "GO_selective_intervention_clear_advantage"
+  },
+  "r11_status": {
+    "run_id": "20261029T111634Z_R11",
+    "status": "INCONCLUSIVE_33of54",
+    "c2_interventions": "0_of_9",
+    "reason": "new_tasks_dont_trigger_format_failures",
+    "decision": "INCONCLUSIVE_need_format_sensitive_tasks_for_C2"
   }
 }

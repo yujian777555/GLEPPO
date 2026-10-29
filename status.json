@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-29",
-  "phase": "GLEPPO_R9_COMPLETE",
-  "state": "R9_INCONCLUSIVE_FORMAT_CONSTRAINT_TASK_DEPENDENT",
+  "phase": "GLEPPO_R10_COMPLETE",
+  "state": "R10_GO_SELECTIVE_FORMAT_INTERVENTION",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -818,5 +818,13 @@
     "h2_performance_conversion": "NOT_SUPPORTED",
     "h3_task_conditioned": "CONFIRMED",
     "decision": "INCONCLUSIVE_B2_001_benefits_B2_026_harmed"
+  },
+  "r10_status": {
+    "run_id": "20261029T110437Z_R10",
+    "status": "INCONCLUSIVE_33of54_budget_exhausted",
+    "fs_c2_eff": "66.7pct_best",
+    "c2_avoids_harm": "YES_B2_024_uses_C0",
+    "c2_detects_risk": "YES_B2_001_uses_C1",
+    "decision": "GO_selective_intervention_clear_advantage"
   }
 }

@@ -6,6 +6,7 @@ from pathlib import Path
 from gleppo.genotype import make_task_compatible_reference, validate_genotype
 from gleppo.r3_metrics import check_format_compliant, evaluate_r3_metrics
 from gleppo.tool_path import verify_tool_path_for_task
+from scripts._run_g3_r3 import FROZEN_FILES, freeze_manifest, load_tasks
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,6 +21,22 @@ def load_r3_task():
 
 
 class TestR3TaskAndReference(unittest.TestCase):
+    def test_runner_loads_exact_predeclared_task_set(self):
+        tasks = load_tasks()
+        self.assertEqual(set(tasks), {"B2-001", "B2-003", "B2-004"})
+        self.assertEqual(tasks["B2-004"]["gold"], "41")
+
+    def test_frozen_manifest_hashes_all_required_sources(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = freeze_manifest(
+                Path(tmp),
+                {"branch": "test", "head": "test", "tracked_worktree_clean": "true"},
+            )
+            self.assertTrue((Path(tmp) / "R3_FROZEN_MANIFEST.json").is_file())
+            self.assertEqual(set(manifest["files"]), set(FROZEN_FILES))
+            self.assertTrue(all(len(item["sha256"]) == 64 for item in manifest["files"].values()))
+
     def test_b2_004_frozen_identity_and_gold(self):
         task = load_r3_task()
         self.assertEqual(task["task_id"], "B2-004")

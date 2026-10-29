@@ -1,34 +1,61 @@
-# Planner Latest Plan — R2 Independent Review / R3 Performance-Validity Pilot
+# Planner Latest Plan — R3 Frozen Protocol / Offline Validation Passed
 
-**Status:** R2 ACCEPTED WITH LIMITATIONS · R3 TASK/METRIC GATE NEXT  
 **Branch:** `c7-g3-diag-v2-r1-fastpath`  
-**R2 commit:** `d1a10a04f237f98bab32867fb8e8400788219458`  
-**Independent review:** `research/G3_DIAG_R2_INDEPENDENT_REVIEW.md`
+**R3 implementation baseline:** `a5c6f14b1b33ef062c8d5180d764580542c97f1e`  
+**Offline CI:** PASS — [run 6](https://github.com/yujian777555/GLEPPO/actions/runs/40817885049)  
+**R3 protocol:** `research/G3_DIAG_R3_PROTOCOL.md`  
+**Independent verifier:** `scripts/verify_g3_r3.py`
 
-## R2 verdict
+## What is implemented
 
-R2 is accepted as bounded diagnostic evidence. Raw/ledger audit confirms 30 unique monotonically increasing generation IDs, 771 output-token delta sum matching runtime total, paired reference/child seed digests, and 3/3 baseline tool paths passing.
+- Added independent task B2-004 in `data/diagnostic_B2_R3.jsonl` as one-line JSONL.
+- Added frozen ordered path contract: `py_sandbox → 32`, then `calc → 41`.
+- Added task-compatible B2-004 reference workflow.
+- Added independent metrics for answer correctness, format compliance, tool-path validity, hard validity, and effective success.
+- Added gated R3 runner with pre-inference SHA-256 source/task manifest, exact model-revision check, 3-seed canary, paired reference/operator pilot, generation cap 100, wall-clock cap 300s, per-generation ledger, run-specific artifacts, and no overwrite of R1/R2.
+- Added independent artifact/metric verifier.
+- Invalid operator outcomes are counted as failures in paired aggregates, not silently dropped.
+- Formal G3 remains FAIL. PC1, Family C, and controller training remain unauthorized.
 
-However, `behavior_changed=3/3` is not operator effectiveness:
-- `tool_subset_edit`: child path validity 0/3, answer correctness 1/3; parent correctness was 2/3.
-- `crossover`: child path validity 3/3, answer correctness 0/3; parent correctness was 2/3.
-- Baseline answer correctness is 2/3 because B2-002 follows the required path but returns `37` rather than gold `43`.
+## Offline validation evidence
 
-Formal G3 remains FAIL. Do not start PC1 or controller training.
+GitHub Actions run `40817885049` completed successfully:
+- R3 scripts and metric module: `py_compile` PASS.
+- Focused R3 tests: PASS.
+- Full offline suite: **416 tests, all passed**.
+- This CI run used a hosted CPU runner for offline tests only. It did not load Qwen and did not run the R3 model canary.
 
-## Immediate task — R3 protocol and validity gate
+## Experiment status — important distinction
 
-1. Preserve all R2/R1/v2 artifacts unchanged.
-2. Update `status.json` so it no longer claims R2 has not run.
-3. Keep B2-002 as a documented baseline failure. Create a new separately identified task B2-004 for a two-stage tool task; never overwrite B2-002 or put the gold answer in the task prompt.
-4. Freeze a new R3 protocol, task JSONL, and SHA-256 manifest before any model calls.
-5. Add offline tests that distinguish:
-   - hard validity (required tool path + format compliance),
-   - gold answer correctness,
-   - behavior change (diagnostic only).
-6. Baseline canary: B2-004, three predeclared distinct seeds. Proceed only if tool path passes 3/3 and answer correctness is at least 2/3. Otherwise stop and revise offline.
-7. If canary passes, run the paired pilot on B2-001, B2-003 and B2-004 with at least three paired seeds per task, comparing the task-compatible reference, `tool_subset_edit`, and `crossover`. Hard cap: **100 actual model generations**, **300 seconds**. If the complete predeclared matrix cannot fit, stop and label INCONCLUSIVE.
-8. Report answer correctness, hard-validity rate, path pass rate, paired correctness deltas, and format failures. A child with a failed required path is invalid even if its answer string matches gold.
-9. Do not begin PC1, controller training, or Family C. Formal G3 remains FAIL pending a separate review of a complete, sufficiently replicated protocol.
+**Actual R3 model calls: 0. Canary: NOT RUN.** The current chat execution environment has no SSH/terminal channel to the A800 host at `/tmp/gleppo_prod`. Do not describe the offline CI pass as an experiment result. The runner is committed and ready for execution on the existing A800 environment.
 
-**R3 acceptance is a pilot gate, not formal G3 authorization.**
+## Immediate execution on the existing A800 host
+
+Run on the host that already has the frozen Qwen snapshot and the project's conda environment:
+
+```bash
+cd /tmp/gleppo_prod
+git fetch origin c7-g3-diag-v2-r1-fastpath
+git checkout c7-g3-diag-v2-r1-fastpath
+git pull --ff-only origin c7-g3-diag-v2-r1-fastpath
+git status --short
+CUDA_VISIBLE_DEVICES=0 /202532803004/conda_envs/amber/bin/python scripts/_run_g3_r3.py
+```
+
+The runner fails closed if the tracked tree is dirty or the branch is wrong. It writes a unique `research/runs/<RUN_ID>/` directory and freezes the manifest before model loading. It runs the paired pilot only if the B2-004 canary passes all frozen gates.
+
+After the run, use the printed RUN_ID:
+
+```bash
+/202532803004/conda_envs/amber/bin/python scripts/verify_g3_r3.py research/runs/<RUN_ID>
+```
+
+Inspect the verifier result, then commit the run artifacts and update `status.json`. If the canary fails, preserve and report the failure; do not relax the gold, task contract, or gate.
+
+## Acceptance boundary
+
+- Canary must pass: tool path 3/3, answer correctness at least 2/3, correct revision, and consistent generation/token accounting.
+- Full pilot: B2-001, B2-003, B2-004 × three paired seeds × reference / `tool_subset_edit` / `crossover`.
+- If the predeclared matrix cannot finish within 100 actual generations / 300 seconds, label INCONCLUSIVE.
+- Behavior change is diagnostic only, never a success criterion.
+- Formal G3 remains FAIL pending separate independent review; no PC1 or controller training.

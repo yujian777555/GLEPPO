@@ -8,6 +8,12 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from gleppo.r3_metrics import check_format_compliant
+from gleppo.tasks import attach_checker
+from gleppo.tool_path import verify_tool_path_for_task
+
 EXPECTED_TASKS = ["B2-001", "B2-003", "B2-004"]
 EXPECTED_SEEDS = ["r3-paired-seed-001", "r3-paired-seed-002", "r3-paired-seed-003"]
 EXPECTED_OPERATORS = ["tool_subset_edit", "crossover"]
@@ -55,6 +61,14 @@ def verify(run_dir_arg: str) -> Dict[str, Any]:
         json.loads(line) for line in ledger_path.read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
+
+    tasks: Dict[str, dict] = {}
+    for rel in ("data/diagnostic_B2.jsonl", "data/diagnostic_B2_R3.jsonl"):
+        task_path = ROOT / rel
+        for line in task_path.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                task = attach_checker(json.loads(line))
+                tasks[task["task_id"]] = task
 
     checks: Dict[str, bool] = {}
     manifest_files = result_manifest.get("files", {})
@@ -115,7 +129,47 @@ def verify(run_dir_arg: str) -> Dict[str, Any]:
         gate.get("completed_episodes") == len(eps)
         and gate.get("tool_path_pass_count") == canary_path_count
         and gate.get("answer_correct_count") == canary_correct_count
+        and gate.get("format_compliant_count") == sum(bool(ep.get("format_compliant")) for ep in eps)
     )
+
+    # Independently recompute answer correctness, format, path, hard validity,
+    # and effective success from the saved answers and traces.
+    all_episodes: List[Dict[str, Any]] = list(eps)
+    pilot_for_metrics = raw.get("pilot", {})
+    for task_id, seed_map in pilot_for_metrics.get("pairs", {}).items():
+        for seed_id, pair in seed_map.items():
+            if pair.get("parent"):
+                all_episodes.append(pair["parent"])
+            for child_row in pair.get("children", {}).values():
+                if child_row.get("episode"):
+                    all_episodes.append(child_row["episode"])
+    metrics_ok = True
+    for ep in all_episodes:
+        task = tasks.get(ep.get("task_id"))
+        if task is None:
+            metrics_ok = False
+            continue
+        answer = ep.get("answer", "")
+        try:
+            correct = bool(task["gold_check"](answer, None))
+        except Exception:  # noqa: BLE001
+            correct = False
+        format_ok = check_format_compliant(answer)
+        path_details = verify_tool_path_for_task(
+            task["task_id"], ep.get("trace", []), task.get("required_tools", [])
+        )
+        path_ok = bool(path_details.get("passed"))
+        hard_ok = format_ok and path_ok
+        effective_ok = correct and hard_ok
+        if (
+            bool(ep.get("answer_correct")) != correct
+            or bool(ep.get("format_compliant")) != format_ok
+            or bool(ep.get("tool_path_valid")) != path_ok
+            or bool(ep.get("hard_validity")) != hard_ok
+            or bool(ep.get("effective_success")) != effective_ok
+        ):
+            metrics_ok = False
+    checks["episode_metrics_independently_recomputed"] = metrics_ok
 
     pilot = raw.get("pilot", {})
     if pilot.get("matrix_complete"):

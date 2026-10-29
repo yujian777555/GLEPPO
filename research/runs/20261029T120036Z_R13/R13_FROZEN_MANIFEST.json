@@ -1,0 +1,38 @@
+{
+  "files": {
+    "data/diagnostic_B2_R13.jsonl": {
+      "sha256": "be0b418b1c99055b555055a7434a20c0f210aa18e26918dea04b289e51a2ff4d",
+      "size": 2896
+    },
+    "gleppo/genotype.py": {
+      "sha256": "492f3d0a7a9b20a48bdef48e543c9e07599d885ac3ae3efa3d3b1a4cfa8e80e3",
+      "size": 26658
+    },
+    "gleppo/interpreter.py": {
+      "sha256": "ff4a9624ce5397d335f1c116cc0c20226bec69f30b4b9380a9bf0d100c8eb14b",
+      "size": 17347
+    },
+    "gleppo/llm.py": {
+      "sha256": "6125edbdbe0526e0f9d07ce8abb5f3c70d3233ae84629c1a4b62894bf872e30a",
+      "size": 14872
+    },
+    "gleppo/operators.py": {
+      "sha256": "29d96cd27b37c5e63223ee571aeae26614efea136d452c654d7128b5fb20930e",
+      "size": 20263
+    },
+    "gleppo/tasks.py": {
+      "sha256": "f6eff79f80d72d6e9932ce87693c5170e98554f3516ab31649708d45de657b0d",
+      "size": 15249
+    },
+    "gleppo/tool_path.py": {
+      "sha256": "7bc5447d5010e752c096b2f0159188198e5aa89f4a0b27badb9d9e26e4dde726",
+      "size": 4458
+    },
+    "scripts/_run_g3_r13.py": {
+      "sha256": "39146d4a88bddbb21b6af1bbdf23124f6f4f5e3bec4168f9354067d183dadc41",
+      "size": 11770
+    }
+  },
+  "protocol_id": "GLEPPO-R13",
+  "run_id": "20261029T120036Z_R13"
+}

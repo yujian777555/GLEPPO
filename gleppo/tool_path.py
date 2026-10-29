@@ -12,6 +12,7 @@ B2_TOOL_PATH_CONTRACTS: Dict[str, List[Tuple[str, str]]] = {
     "B2-001": [("calc", "64"), ("str_ops", "SUM")],
     "B2-002": [("py_sandbox", "49"), ("calc", "43")],
     "B2-003": [("calc", "60"), ("str_ops", "HI")],
+    "B2-004": [("py_sandbox", "32"), ("calc", "41")],
 }
 
 

@@ -1,0 +1,2245 @@
+{
+  "arm_aggregates": {
+    "A0_original/crossover": {
+      "child_eff_rate": 0.3333333333333333,
+      "child_effective_success": 3,
+      "child_format_rate": 0.3333333333333333,
+      "child_tool_path_rate": 1.0,
+      "degraded": 5,
+      "improved": 0,
+      "n": 9,
+      "parent_eff_rate": 0.8888888888888888,
+      "parent_effective_success": 8,
+      "same": 4
+    },
+    "A0_original/tool_subset_edit": {
+      "child_eff_rate": 0.0,
+      "child_effective_success": 0,
+      "child_format_rate": 1.0,
+      "child_tool_path_rate": 0.0,
+      "degraded": 9,
+      "improved": 0,
+      "n": 10,
+      "parent_eff_rate": 0.9,
+      "parent_effective_success": 9,
+      "same": 1
+    },
+    "A1_fixed_filtered/crossover_fixed": {
+      "child_eff_rate": 1.0,
+      "child_effective_success": 9,
+      "child_format_rate": 1.0,
+      "child_tool_path_rate": 1.0,
+      "degraded": 0,
+      "improved": 1,
+      "n": 9,
+      "parent_eff_rate": 0.8888888888888888,
+      "parent_effective_success": 8,
+      "same": 8
+    },
+    "A1_fixed_filtered/tool_subset_edit_fixed": {
+      "child_eff_rate": 0.0,
+      "child_effective_success": 0,
+      "child_format_rate": 1.0,
+      "child_tool_path_rate": 0.0,
+      "degraded": 8,
+      "improved": 0,
+      "n": 9,
+      "parent_eff_rate": 0.8888888888888888,
+      "parent_effective_success": 8,
+      "same": 1
+    }
+  },
+  "arms": [
+    "A0_original/tool_subset_edit",
+    "A0_original/crossover",
+    "A1_fixed_filtered/tool_subset_edit_fixed",
+    "A1_fixed_filtered/crossover_fixed"
+  ],
+  "budget_exhausted": true,
+  "ledger_counter_match": true,
+  "llm_stats": {
+    "actual_generations": 150,
+    "episodes": 0,
+    "evaluations": 0,
+    "failures": 0,
+    "max_generations_cap": 150,
+    "max_latency_s": 3.0218265056610107,
+    "mean_latency_s": 0.3399861685434977,
+    "model": "qwen2.5-7b-instruct",
+    "requests": 150,
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "tool_invocations": 0,
+    "total_tokens": 2082
+  },
+  "max_generations": 150,
+  "max_wall_s": 300,
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "protocol": "G3-DIAG-v2-R5",
+  "revision_match": true,
+  "run_id": "20261029T063026Z_R5",
+  "seeds": [
+    "r5-paired-seed-001",
+    "r5-paired-seed-002",
+    "r5-paired-seed-003"
+  ],
+  "selection_summary": {
+    "S0_unfiltered": {
+      "accepted": 37,
+      "total": 37
+    },
+    "S1_static_filter": {
+      "accepted": 18,
+      "total": 37
+    },
+    "S2_static_select": {
+      "accepted": 18,
+      "total": 37
+    },
+    "S3_post_exec_diag": {
+      "accepted": 12,
+      "total": 37
+    }
+  },
+  "status": "INCONCLUSIVE",
+  "tasks": [
+    "B2-001",
+    "B2-003",
+    "B2-004",
+    "B2-005",
+    "B2-006"
+  ],
+  "token_delta_sum": 2082,
+  "token_sum_match": true,
+  "total_actual_generations": 150,
+  "total_units": 60,
+  "total_wall_s": 63.7232,
+  "units": [
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 68-SUM",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc', 'calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc', 'calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-001",
+      "unit_key": "B2-001/r5-paired-seed-001/A0_original/tool_subset_edit"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 25*3-11\nThe result of 25*3-11 is 64.\n[tool:str_ops] sum\nTransforming 'sum' to uppercase gives 'SUM'.\nTherefore, the final answer formatted",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "763d4aa21ff2",
+            "hash_changed": true,
+            "parent_hash": "e0eb8cae1f38",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": false,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-001",
+      "unit_key": "B2-001/r5-paired-seed-001/A0_original/crossover"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 64-SUMSTRING",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-001",
+      "unit_key": "B2-001/r5-paired-seed-001/A1_fixed_filtered/tool_subset_edit_fixed"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 25*3-11\n[tool:str_ops] sum\nFinal answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "51d0b2008090",
+            "hash_changed": true,
+            "parent_hash": "e0eb8cae1f38",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": true,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-001",
+      "unit_key": "B2-001/r5-paired-seed-001/A1_fixed_filtered/crossover_fixed"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 68-SUM",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-002",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc', 'calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc', 'calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-001",
+      "unit_key": "B2-001/r5-paired-seed-002/A0_original/tool_subset_edit"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 25*3-11\nThe result of 25*3-11 is 64.\n[tool:str_ops] sum\nTransforming 'sum' to uppercase gives 'SUM'.\nSo the final answer following the for",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-002",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "763d4aa21ff2",
+            "hash_changed": true,
+            "parent_hash": "e0eb8cae1f38",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": false,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-001",
+      "unit_key": "B2-001/r5-paired-seed-002/A0_original/crossover"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 25*3-11\n[tool:str_ops] sum\nFinal answer: 64-UPPERCASE",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-002",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-001",
+      "unit_key": "B2-001/r5-paired-seed-002/A1_fixed_filtered/tool_subset_edit_fixed"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 25*3-11\n[tool:str_ops] sum\nFinal answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-002",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "51d0b2008090",
+            "hash_changed": true,
+            "parent_hash": "e0eb8cae1f38",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": true,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-001",
+      "unit_key": "B2-001/r5-paired-seed-002/A1_fixed_filtered/crossover_fixed"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 68-SUM",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 59-SUM",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-003",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc', 'calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc', 'calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-001",
+      "unit_key": "B2-001/r5-paired-seed-003/A0_original/tool_subset_edit"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "First, let's compute the expression \\(25 \\times 3 - 11\\) using the calc tool:\n\n\\[ 25 \\times 3 = 75 \\]\n\\[ 75 - 11 = 64 \\]\n\nNow, we need to transform th",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 59-SUM",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-003",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "763d4aa21ff2",
+            "hash_changed": true,
+            "parent_hash": "e0eb8cae1f38",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": false,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-001",
+      "unit_key": "B2-001/r5-paired-seed-003/A0_original/crossover"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 64-WORD",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit_fixed",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 59-SUM",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-003",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-001",
+      "unit_key": "B2-001/r5-paired-seed-003/A1_fixed_filtered/tool_subset_edit_fixed"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 25*3-11\n[tool:str_ops] sum\nFinal answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover_fixed",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 59-SUM",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-003",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "51d0b2008090",
+            "hash_changed": true,
+            "parent_hash": "e0eb8cae1f38",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": true,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-001",
+      "unit_key": "B2-001/r5-paired-seed-003/A1_fixed_filtered/crossover_fixed"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc', 'calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc', 'calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-003",
+      "unit_key": "B2-003/r5-paired-seed-001/A0_original/tool_subset_edit"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "First, let's compute 8*8-4 using the calc tool:\n[tool:calc] 8*8-4\nThe result is 60.\nNow, let's transform 'hi' to uppercase using the str_ops tool:\n[to",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "763d4aa21ff2",
+            "hash_changed": true,
+            "parent_hash": "e0eb8cae1f38",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": false,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-003",
+      "unit_key": "B2-003/r5-paired-seed-001/A0_original/crossover"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-003",
+      "unit_key": "B2-003/r5-paired-seed-001/A1_fixed_filtered/tool_subset_edit_fixed"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Calc output: 60\nStr_ops output: HI\nFinal answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "51d0b2008090",
+            "hash_changed": true,
+            "parent_hash": "e0eb8cae1f38",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": true,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-003",
+      "unit_key": "B2-003/r5-paired-seed-001/A1_fixed_filtered/crossover_fixed"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-002",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc', 'calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc', 'calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-003",
+      "unit_key": "B2-003/r5-paired-seed-002/A0_original/tool_subset_edit"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 8*8-4\nThe result is 60.\n[tool:str_ops] hi\nThe transformed string is HI.\nNUMBER-STRING: 60-HI",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-002",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "763d4aa21ff2",
+            "hash_changed": true,
+            "parent_hash": "e0eb8cae1f38",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": false,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-003",
+      "unit_key": "B2-003/r5-paired-seed-002/A0_original/crossover"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-002",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-003",
+      "unit_key": "B2-003/r5-paired-seed-002/A1_fixed_filtered/tool_subset_edit_fixed"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Calc output: 60\nStr_ops output: HI\nFinal answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-002",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "51d0b2008090",
+            "hash_changed": true,
+            "parent_hash": "e0eb8cae1f38",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": true,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-003",
+      "unit_key": "B2-003/r5-paired-seed-002/A1_fixed_filtered/crossover_fixed"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-003",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc', 'calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc', 'calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-003",
+      "unit_key": "B2-003/r5-paired-seed-003/A0_original/tool_subset_edit"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "First, we use the calc tool to compute 8*8-4:\n[tool:calc] 8*8-4\nThe result is 60.\nNext, we use the str_ops tool to transform 'hi' to uppercase:\n[tool:",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-003",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "763d4aa21ff2",
+            "hash_changed": true,
+            "parent_hash": "e0eb8cae1f38",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": false,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-003",
+      "unit_key": "B2-003/r5-paired-seed-003/A0_original/crossover"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-003",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'str_ops'], have ['calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-003",
+      "unit_key": "B2-003/r5-paired-seed-003/A1_fixed_filtered/tool_subset_edit_fixed"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Calc output: 60\nStr_ops output: HI\nFinal answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-003",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "51d0b2008090",
+            "hash_changed": true,
+            "parent_hash": "e0eb8cae1f38",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": true,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-003",
+      "unit_key": "B2-003/r5-paired-seed-003/A1_fixed_filtered/crossover_fixed"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['py_sandbox', 'calc'], have ['calc', 'calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['py_sandbox', 'calc'], have ['calc', 'calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-004",
+      "unit_key": "B2-004/r5-paired-seed-001/A0_original/tool_subset_edit"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "18166a78eb0e",
+            "hash_changed": true,
+            "parent_hash": "42b1329306c1",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": true,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-004",
+      "unit_key": "B2-004/r5-paired-seed-001/A0_original/crossover"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['py_sandbox', 'calc'], have ['calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['py_sandbox', 'calc'], have ['calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-004",
+      "unit_key": "B2-004/r5-paired-seed-001/A1_fixed_filtered/tool_subset_edit_fixed"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "868fd63eceb1",
+            "hash_changed": true,
+            "parent_hash": "42b1329306c1",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": true,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-004",
+      "unit_key": "B2-004/r5-paired-seed-001/A1_fixed_filtered/crossover_fixed"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-002",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['py_sandbox', 'calc'], have ['calc', 'calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['py_sandbox', 'calc'], have ['calc', 'calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-004",
+      "unit_key": "B2-004/r5-paired-seed-002/A0_original/tool_subset_edit"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-002",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "18166a78eb0e",
+            "hash_changed": true,
+            "parent_hash": "42b1329306c1",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": true,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-004",
+      "unit_key": "B2-004/r5-paired-seed-002/A0_original/crossover"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-002",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['py_sandbox', 'calc'], have ['calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['py_sandbox', 'calc'], have ['calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-004",
+      "unit_key": "B2-004/r5-paired-seed-002/A1_fixed_filtered/tool_subset_edit_fixed"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-002",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "868fd63eceb1",
+            "hash_changed": true,
+            "parent_hash": "42b1329306c1",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": true,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-004",
+      "unit_key": "B2-004/r5-paired-seed-002/A1_fixed_filtered/crossover_fixed"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-003",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['py_sandbox', 'calc'], have ['calc', 'calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['py_sandbox', 'calc'], have ['calc', 'calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-004",
+      "unit_key": "B2-004/r5-paired-seed-003/A0_original/tool_subset_edit"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-003",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "18166a78eb0e",
+            "hash_changed": true,
+            "parent_hash": "42b1329306c1",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": true,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-004",
+      "unit_key": "B2-004/r5-paired-seed-003/A0_original/crossover"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-003",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['py_sandbox', 'calc'], have ['calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['py_sandbox', 'calc'], have ['calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-004",
+      "unit_key": "B2-004/r5-paired-seed-003/A1_fixed_filtered/tool_subset_edit_fixed"
+    },
+    {
+      "arm": "A1_fixed_filtered",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "operator": "crossover_fixed",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 41",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": true,
+      "seed_id": "r5-paired-seed-003",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": true,
+          "violations": []
+        },
+        "S2_static_select": {
+          "accepted": true,
+          "reason": "accepted",
+          "s1": {
+            "not_checkable": [],
+            "pass": true,
+            "violations": []
+          },
+          "static_features": {
+            "child_hash": "868fd63eceb1",
+            "hash_changed": true,
+            "parent_hash": "42b1329306c1",
+            "tools_added": [],
+            "tools_removed": [],
+            "wf_step_delta": 0
+          }
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": true,
+          "tool_path_valid": true
+        }
+      },
+      "task_id": "B2-004",
+      "unit_key": "B2-004/r5-paired-seed-003/A1_fixed_filtered/crossover_fixed"
+    },
+    {
+      "arm": "A0_original",
+      "child_errors": [],
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 71",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": false,
+        "tool_path_valid": false
+      },
+      "child_valid": true,
+      "operator": "tool_subset_edit",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 71",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "s1_static_pass": false,
+      "seed_id": "r5-paired-seed-001",
+      "selection": {
+        "S0_unfiltered": {
+          "accepted": true
+        },
+        "S1_static_filter": {
+          "not_checkable": [],
+          "pass": false,
+          "violations": [
+            "required_tools_not_in_order: need ['calc', 'py_sandbox'], have ['calc', 'calc']"
+          ]
+        },
+        "S2_static_select": {
+          "accepted": false,
+          "reason": "S1_failed",
+          "s1": {
+            "not_checkable": [],
+            "pass": false,
+            "violations": [
+              "required_tools_not_in_order: need ['calc', 'py_sandbox'], have ['calc', 'calc']"
+            ]
+          },
+          "static_features": {}
+        },
+        "S3_post_exec_diag": {
+          "format_compliant": true,
+          "note": "POST_EXECUTION_DIAGNOSTIC",
+          "pass": false,
+          "tool_path_valid": false
+        }
+      },
+      "task_id": "B2-005",
+      "unit_key": "B2-005/r5-paired-seed-001/A0_original/tool_subset_edit"
+    }
+  ],
+  "units_completed": 37
+}

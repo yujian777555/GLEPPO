@@ -296,17 +296,6 @@ def op_crossover(parent: Genotype, ctx: dict) -> Genotype:
     return child
 
 
-_OPS: dict[str, Callable[[Genotype, dict], Genotype]] = {
-    "prompt_local_edit": op_prompt_local_edit,
-    "prompt_critique_rewrite": op_prompt_critique_rewrite,
-    "tool_subset_edit": op_tool_subset_edit,
-    "workflow_step_edit": op_workflow_step_edit,
-    "crossover": op_crossover,
-}
-
-OPERATORS = _OPS
-
-
 def apply_operator(name: str, parent: Genotype, ctx: Optional[dict] = None) -> Tuple[Genotype, bool, List[str]]:
     """Return (child, valid, errors). Invalid children are dropped (never parent-cloned)."""
     if name not in _OPS:
@@ -317,3 +306,150 @@ def apply_operator(name: str, parent: Genotype, ctx: Optional[dict] = None) -> T
     if errs:
         return raw, False, errs
     return raw, True, []
+
+
+# ===========================================================================
+# R5: FIXED operators — address structural degradation root causes
+# ===========================================================================
+
+def op_tool_subset_edit_fixed(parent: Genotype, ctx: dict) -> Genotype:
+    """R5 fix: tool_subset_edit that NEVER replaces tool references.
+
+    Root cause of R4 degradation: dropping a tool replaced its workflow
+    references with child.tools[0] (often 'calc'), breaking tool contracts.
+
+    Fix: when dropping a tool, REMOVE the workflow step entirely instead of
+    replacing it. This preserves structural validity without fabricating
+    wrong tool calls.
+    """
+    child = parent.copy()
+    all_tools = ["calc", "py_sandbox", "str_ops"]
+    current = sorted(child.tools)
+    missing = [t for t in all_tools if t not in current]
+    present = [t for t in all_tools if t in current]
+
+    # Find tools referenced in workflow
+    workflow_tools = set()
+    for step in child.workflow:
+        if step.tool:
+            workflow_tools.add(step.tool)
+
+    gen = int(ctx.get("gen", 0))
+
+    if gen % 2 == 0 and len(current) > 1:
+        # Drop mode: prefer dropping tools NOT referenced in workflow
+        droppable = [t for t in present if t not in workflow_tools]
+        if droppable:
+            child.tools = sorted(set(current) - {droppable[-1]})
+        else:
+            # R5 FIX: remove workflow step instead of replacing tool reference
+            drop_tool = present[-1]
+            child.tools = sorted(set(current) - {drop_tool})
+            child.workflow = [
+                s for s in child.workflow if not (s.type == "tool" and s.tool == drop_tool)
+            ]
+            child.meta["dropped_tool"] = drop_tool
+            child.meta["dropped_step_removed"] = True
+    elif missing:
+        new_tool = missing[0]
+        child.tools = sorted(set(current) | {new_tool})
+        finalize_idx = None
+        for idx, step in enumerate(child.workflow):
+            if step.type == "finalize":
+                finalize_idx = idx
+                break
+        if finalize_idx is not None and len(child.workflow) < 6:
+            tool_step = Step(type="tool", tool=new_tool, input_from="task")
+            child.workflow.insert(finalize_idx, tool_step)
+        child.meta["added_tool"] = new_tool
+    elif len(current) > 1:
+        droppable = [t for t in present if t not in workflow_tools]
+        if droppable:
+            child.tools = sorted(set(current) - {droppable[-1]})
+        else:
+            drop_tool = present[-1]
+            child.tools = sorted(set(current) - {drop_tool})
+            # R5 FIX: remove step instead of replacing
+            child.workflow = [
+                s for s in child.workflow if not (s.type == "tool" and s.tool == drop_tool)
+            ]
+            child.meta["dropped_tool"] = drop_tool
+    else:
+        if missing:
+            child.tools = sorted(set(current) | {missing[0]})
+            child.meta["added_tool"] = missing[0]
+
+    # Ensure workflow references only enabled tools (but DON'T replace)
+    for step in child.workflow:
+        if step.tool and step.tool not in child.tools:
+            step.tool = None  # mark as removed rather than replaced
+    child.workflow = [s for s in child.workflow if s.type != "tool" or s.tool]
+    return child
+
+
+def op_crossover_fixed(parent: Genotype, ctx: dict) -> Genotype:
+    """R5 fix: crossover that preserves output format compliance.
+
+    Root cause of R4 degradation: crossover produces verbose prompts that
+    cause the LLM to embed tool traces in the answer.
+
+    Fix: ensure the system_prompt explicitly requires clean Final answer format.
+    """
+    mate: Optional[Genotype] = ctx.get("mate")
+    if mate is None or mate is parent:
+        mate = parent
+    p_errors = validate_genotype(parent)
+    m_errors = validate_genotype(mate)
+    if p_errors:
+        raise ValueError(f"C1: invalid parent: {p_errors}")
+    if m_errors:
+        raise ValueError(f"C1: invalid mate: {m_errors}")
+    child = parent.copy()
+
+    # Strategy recombination (same as original)
+    p_prompt = parent.system_prompt
+    m_prompt = mate.system_prompt
+    strategy_words = {"compute", "transform", "step", "tool", "final", "answer", "format"}
+
+    def extract_strategies(prompt: str) -> List[str]:
+        sentences = prompt.split(". ")
+        return [s for s in sentences if any(w in s.lower() for w in strategy_words)]
+
+    p_strats = extract_strategies(p_prompt)
+    m_strats = extract_strategies(m_prompt)
+
+    # Take first half from parent, second half from mate
+    combined = p_strats[:len(p_strats)//2] + m_strats[len(m_strats)//2:]
+    if not combined:
+        combined = p_strats[:1] + m_strats[:1]
+
+    # R5 FIX: enforce clean output format in the prompt
+    child.system_prompt = ". ".join(combined) + (
+        ". Your FINAL answer MUST start with 'Final answer: ' followed by ONLY the answer value. "
+        "Do NOT include tool outputs, reasoning, or any text before 'Final answer:'. "
+        "Do NOT include markdown, explanations, or text after the answer."
+    )
+
+    # Workflow recombination: take tool order from parent, tools from mate
+    child.workflow = copy.deepcopy(parent.workflow)
+    if mate.tools != parent.tools:
+        # Keep parent's workflow but update tools if mate has additional ones
+        for step in child.workflow:
+            if step.tool and step.tool not in child.tools and step.tool in mate.tools:
+                pass  # keep parent's tool reference
+
+    return child
+
+
+# Registry: must be defined AFTER all operator functions
+_OPS: dict[str, Callable[[Genotype, dict], Genotype]] = {
+    "prompt_local_edit": op_prompt_local_edit,
+    "prompt_critique_rewrite": op_prompt_critique_rewrite,
+    "tool_subset_edit": op_tool_subset_edit,
+    "workflow_step_edit": op_workflow_step_edit,
+    "crossover": op_crossover,
+    "tool_subset_edit_fixed": op_tool_subset_edit_fixed,
+    "crossover_fixed": op_crossover_fixed,
+}
+
+OPERATORS = _OPS

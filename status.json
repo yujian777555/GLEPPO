@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-29",
-  "phase": "G3_DIAG_V2_R6_COMPLETE",
-  "state": "R6_H1_NO_GO_CROSSOVER_FIXED_DOES_NOT_GENERALIZE",
+  "phase": "G3_DIAG_V2_R7_COMPLETE",
+  "state": "R7_INCONCLUSIVE_FORMAT_CONSTRAINT_EFFECT_TOO_SMALL",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -794,5 +794,14 @@
     "h2_format_constraint": "GO_format_failures_reduced",
     "h4_no_sacrifice": "GO_both_100pct_path",
     "decision": "do_not_deploy_crossover_fixed_consider_format_constraint_only"
+  },
+  "r7_status": {
+    "run_id": "20261029T073455Z_R7",
+    "status": "COMPLETE_36of36",
+    "c0_eff": "44.4pct",
+    "c1_eff": "50.0pct",
+    "paired": "c1_wins_1_c0_wins_0_ties_17",
+    "mcnemar_p": "1.0",
+    "decision": "INCONCLUSIVE_effect_too_small_format_constraint_untestable_on_R7"
   }
 }

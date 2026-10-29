@@ -3,11 +3,11 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-29",
-  "phase": "G3_DIAG_V2_R2_TOOL_PATH_REPAIR",
-  "state": "R1_ACCEPTED_DIAGNOSTIC_STOP_R2_AUTHORIZED",
-  "reviewed_commit": "d91f72c",
+  "phase": "G3_DIAG_V2_R2_REVIEW_R3_VALIDITY_PILOT",
+  "state": "R2_ACCEPTED_WITH_LIMITATIONS_R3_CANARY_NOT_RUN",
+  "reviewed_commit": "d1a10a04f237f98bab32867fb8e8400788219458",
   "implementation_status": "EVIDENCE_VERIFIER_FIXED_OPERATORS_FIXED_RUNTIME_LOCK_V2",
-  "experimental_status": "R1_DIAGNOSTIC_STOP_ACCEPTED_R2_NOT_RUN",
+  "experimental_status": "R2_DIAGNOSTIC_COMPLETE_OPERATOR_PERFORMANCE_NOT_ESTABLISHED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Execute planner/G3_DIAG_R2_TOOL_PATH_REPAIR.md: fix str_ops natural-language payload extraction, B2-002 calc expression selection, and task-compatible reference workflows; run focused + full offline tests; then perform fresh bounded R2 only if offline acceptance passes.",
-  "next_gate": "R2_OFFLINE_ACCEPTANCE -> R2_BASELINE_TOOL_PATH_GATE -> R2_OPERATOR_DIAGNOSTIC -> PLANNER_REVIEW",
+  "current_task": "Follow planner/latest_plan.md and research/G3_DIAG_R2_INDEPENDENT_REVIEW.md. Freeze R3 task/protocol/manifest, validate new B2-004 baseline on 3 predeclared seeds, then run bounded paired pilot only if canary gate passes.",
+  "next_gate": "R3_OFFLINE_ACCEPTANCE -> B2-004_CANARY -> R3_PAIRED_PILOT -> INDEPENDENT_REVIEW",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -605,8 +605,8 @@
     "r1_artifacts": "IMMUTABLE",
     "r2_plan": "planner/G3_DIAG_R2_TOOL_PATH_REPAIR.md",
     "latest_plan": "planner/latest_plan.md",
-    "r2_stage_a": "NOT_STARTED",
-    "r2_stage_b": "NOT_STARTED",
+    "r2_stage_a": "PASS",
+    "r2_stage_b": "COMPLETE",
     "r2_stage_b_authorization": "AUTHORIZED_CONDITIONAL_ON_OFFLINE_ACCEPTANCE",
     "r2_actual_generation_cap": 30,
     "r2_wall_clock_cap_seconds": 300,
@@ -619,7 +619,17 @@
     "pc1_approved": false,
     "pc1_executed": false,
     "controller_training": "NOT_AUTHORIZED",
-    "family_c_access": false
+    "family_c_access": false,
+    "r2_run_id": "20261029T040254Z_R2",
+    "r2_actual_generations": 30,
+    "r2_wall_clock_seconds": 32.4955,
+    "r2_baseline_tool_paths": "3/3 PASS",
+    "r2_operator_comparison": "COMPLETE_WITH_LIMITATIONS",
+    "r2_operator_effectiveness": "NOT_ESTABLISHED",
+    "r2_independent_review": "ACCEPT_WITH_LIMITATIONS",
+    "r3_plan": "planner/latest_plan.md",
+    "r3_canary": "NOT_RUN",
+    "r3_pilot": "NOT_RUN"
   },
   "r1_fastpath_decision": {
     "verdict": "ACCEPT_DIAGNOSTIC_STOP",
@@ -634,5 +644,66 @@
       "No performance-improvement claim",
       "No formal G3 passage"
     ]
+  },
+  "r2_independent_review": {
+    "verdict": "ACCEPT_WITH_LIMITATIONS",
+    "report": "research/G3_DIAG_R2_INDEPENDENT_REVIEW.md",
+    "run_id": "20261029T040254Z_R2",
+    "raw_path": "research/G3_DIAG_R2_RAW.json",
+    "ledger_path": "research/G3_DIAG_R2_LEDGER.jsonl",
+    "manifest_path": "research/G3_DIAG_R2_MANIFEST.json",
+    "audited_generations": 30,
+    "ledger_rows": 30,
+    "unique_monotonic_call_ids": true,
+    "output_token_delta_sum": 771,
+    "token_sum_matches_runtime": true,
+    "paired_seed_digests_match": true,
+    "baseline_tool_paths": "3/3 PASS",
+    "baseline_answer_correct": "2/3 (B2-002 fails: final answer 37 vs gold 43)",
+    "tool_subset_edit": {
+      "behavior_changed": "3/3",
+      "child_path_pass": "0/3",
+      "child_answer_correct": "1/3"
+    },
+    "crossover": {
+      "behavior_changed": "3/3",
+      "child_path_pass": "3/3",
+      "child_answer_correct": "0/3"
+    },
+    "interpretation": "Behavior change is observed but is not performance improvement. Both operators show degradation on this pilot.",
+    "formal_g3": "FAIL_UNCHANGED",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "family_c_access": false,
+    "controller_training": "NOT_AUTHORIZED"
+  },
+  "r3_plan": {
+    "status": "AUTHORIZED_FOR_OFFLINE_PROTOCOL_AND_CANARY_ONLY",
+    "plan": "planner/latest_plan.md",
+    "new_task": "B2-004 (new ID; do not overwrite B2-002)",
+    "canary_replicates": 3,
+    "canary_gate": "tool_path 3/3 AND answer_correct >=2/3",
+    "pilot_tasks": [
+      "B2-001",
+      "B2-003",
+      "B2-004"
+    ],
+    "paired_seeds_per_task": 3,
+    "actual_generation_cap": 100,
+    "wall_clock_cap_seconds": 300,
+    "required_metrics": [
+      "answer_correct",
+      "format_compliant",
+      "hard_validity",
+      "tool_path_pass_rate",
+      "paired_correctness_delta",
+      "behavior_changed_diagnostic_only"
+    ],
+    "full_pilot_authorized_after_canary": true,
+    "formal_g3": "FAIL_UNCHANGED",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "family_c_access": false,
+    "controller_training": "NOT_AUTHORIZED"
   }
 }

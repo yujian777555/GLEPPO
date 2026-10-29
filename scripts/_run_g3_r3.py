@@ -267,7 +267,7 @@ def aggregate_pilot(pilot: Dict[str, Any]) -> Dict[str, Any]:
             "parent_tool_path_rate": sum(r["parent_tool_path_valid"] for r in rows) / n,
             "child_tool_path_rate": sum(r["child_tool_path_valid"] for r in rows) / n,
             "parent_format_failure_count": sum(not r["parent_format_compliant"] for r in rows),
-            "child_format_failure_count": sum(not r["child_format_compliant"] for r in rows),
+            "child_format_failure_count": sum(r["operator_valid"] and not r["child_format_compliant"] for r in rows),
             "parent_effective_success_rate": sum(r["parent_effective_success"] for r in rows) / n,
             "child_effective_success_rate": sum(r["child_effective_success"] for r in rows) / n,
             "mean_paired_correctness_delta": sum(r["paired_correctness_delta"] for r in rows) / n,

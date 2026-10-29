@@ -82,6 +82,10 @@ def verify(run_dir_arg: str) -> Dict[str, Any]:
     checks["frozen_manifest_hash_link"] = (
         result_manifest.get("frozen_manifest_sha256") == sha256_file(frozen_path)
     )
+    checks["result_manifest_run_status_match"] = (
+        result_manifest.get("run_id") == raw.get("run_id")
+        and result_manifest.get("status") == raw.get("status")
+    )
 
     source_checks = {}
     for rel, entry in frozen.get("files", {}).items():
@@ -190,6 +194,29 @@ def verify(run_dir_arg: str) -> Dict[str, Any]:
     else:
         checks["complete_pilot_matrix_coverage"] = True
         checks["complete_pilot_within_declared_status"] = raw.get("status") != "PILOT_COMPLETE_REQUIRES_INDEPENDENT_REVIEW"
+
+    aggregate = pilot.get("aggregate", {})
+    for op in EXPECTED_OPERATORS:
+        attempted_rows = []
+        invalid_rows = []
+        format_failures = 0
+        for task_id, seed_map in pilot.get("pairs", {}).items():
+            for seed_id, pair in seed_map.items():
+                if not pair.get("parent"):
+                    continue
+                child_row = pair.get("children", {}).get(op, {})
+                if not child_row.get("attempted"):
+                    continue
+                attempted_rows.append(child_row)
+                child = child_row.get("episode")
+                if not child_row.get("operator_valid") or not child:
+                    invalid_rows.append(child_row)
+                elif not child.get("format_compliant"):
+                    format_failures += 1
+        summary = aggregate.get(op, {})
+        checks[f"aggregate_attempt_count:{op}"] = summary.get("paired_comparisons", 0) == len(attempted_rows)
+        checks[f"aggregate_invalid_count:{op}"] = summary.get("operator_invalid_count", 0) == len(invalid_rows)
+        checks[f"aggregate_format_failure_count:{op}"] = summary.get("child_format_failure_count", 0) == format_failures
 
     checks["formal_g3_still_fail"] = raw.get("formal_g3") == "FAIL_UNCHANGED"
     checks["pc1_not_approved_or_run"] = raw.get("pc1_approved") is False and raw.get("pc1_executed") is False

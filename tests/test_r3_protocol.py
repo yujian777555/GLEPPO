@@ -96,7 +96,7 @@ class TestR3MetricSeparation(unittest.TestCase):
         self.assertFalse(check_format_compliant("41"))
         self.assertFalse(check_format_compliant("Final answer: "))
         self.assertFalse(check_format_compliant("Final answer: " + "x" * 101))
-        self.assertFalse(check_format_compliant("Final answer: 41\\nextra"))
+        self.assertFalse(check_format_compliant("Final answer: 41\nextra"))
 
     def test_correct_answer_with_broken_path_is_not_effective_success(self):
         metrics = evaluate_r3_metrics(

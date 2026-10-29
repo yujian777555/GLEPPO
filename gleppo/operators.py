@@ -441,6 +441,37 @@ def op_crossover_fixed(parent: Genotype, ctx: dict) -> Genotype:
     return child
 
 
+def op_crossover_format_only(parent: Genotype, ctx: dict) -> Genotype:
+    """R6 C1 ablation: original crossover + format constraint ONLY.
+
+    This isolates the effect of the format constraint from other crossover_fixed
+    changes (strategy recombination, workflow preservation).
+    """
+    # Get original crossover output
+    child = op_crossover(parent, ctx)
+
+    # Add ONLY the format constraint (no other changes)
+    FORMAT_CONSTRAINT = (
+        " Your FINAL answer MUST start with 'Final answer: ' followed by ONLY the answer value. "
+        "Do NOT include tool outputs, reasoning, or any text before 'Final answer:'. "
+        "Do NOT include markdown, explanations, or text after the answer."
+    )
+    if "Final answer:" not in child.system_prompt:
+        child.system_prompt += FORMAT_CONSTRAINT
+    else:
+        # Replace existing answer instruction with stricter one
+        import re
+        child.system_prompt = re.sub(
+            r"\.?\s*Final answer:.*$",
+            FORMAT_CONSTRAINT,
+            child.system_prompt,
+            flags=re.IGNORECASE,
+        )
+
+    child.meta["ablation"] = "C1_format_only"
+    return child
+
+
 # Registry: must be defined AFTER all operator functions
 _OPS: dict[str, Callable[[Genotype, dict], Genotype]] = {
     "prompt_local_edit": op_prompt_local_edit,
@@ -450,6 +481,7 @@ _OPS: dict[str, Callable[[Genotype, dict], Genotype]] = {
     "crossover": op_crossover,
     "tool_subset_edit_fixed": op_tool_subset_edit_fixed,
     "crossover_fixed": op_crossover_fixed,
+    "crossover_format_only": op_crossover_format_only,
 }
 
 OPERATORS = _OPS

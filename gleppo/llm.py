@@ -11,13 +11,18 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from dataclasses import dataclass
-from typing import List, Optional
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional
 
 
 def _seed_int(*parts: object) -> int:
     h = hashlib.sha256("|".join(map(str, parts)).encode("utf-8")).hexdigest()
     return int(h[:8], 16)
+
+
+class BudgetExceededError(Exception):
+    """Raised BEFORE model.generate when the hard generation cap is exhausted."""
+    pass
 
 
 @dataclass
@@ -38,7 +43,8 @@ class StubLLM:
     name = "stub-v1"
     version = "stub-v1.1-correctness"
 
-    def reply(self, system_prompt: str, user_message: str, trace: List[dict], seed_parts: tuple) -> LLMReply:
+    def reply(self, system_prompt: str, user_message: str, trace: List[dict],
+              seed_parts: tuple, provenance: Optional[Dict] = None) -> LLMReply:
         prompt = system_prompt.lower()
         enabled = self._enabled_tools(trace)
         numeric = bool(re.search(r"\d", msg := user_message))
@@ -138,22 +144,32 @@ class ProductionLLM:
 
     Must be explicitly instantiated and injected via Interpreter(llm=...).
     Records model revision, request counts, tokens, latency in self.stats.
+
+    R1-FASTPATH: hard cap enforced at model.generate boundary. Every actual
+    generation reserves a slot BEFORE calling the model. Per-call ledger rows
+    record monotonic call_id, per-call token deltas, duration, status and
+    provenance. Evaluation counts are tracked separately from generation counts.
     """
 
     name = "qwen2.5-7b-instruct"
     version = "a09a35458c702b33eeacc393d103063234e8bc28"
 
     def __init__(self, model_path: str = "", device: str = "cuda:0",
-                 max_new_tokens: int = 512, temperature: float = 0.7):
+                 max_new_tokens: int = 512, temperature: float = 0.7,
+                 max_generations: Optional[int] = None):
         import torch
         from transformers import AutoModelForCausalLM, AutoTokenizer
         self.model_path = model_path or "/202532803004/datasets/hf/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28"
         self.device = device
         self.max_new_tokens = max_new_tokens
         self.temperature = temperature
+        self.max_generations = max_generations  # None = unlimited
+        self._call_id = 0
+        self._generation_ledger: List[Dict] = []
         self.stats = {
             "requests": 0, "total_tokens": 0, "failures": 0,
             "latencies": [], "revision": self.version,
+            "evaluations": 0, "episodes": 0, "tool_invocations": 0,
         }
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_path)
         self.model = AutoModelForCausalLM.from_pretrained(
@@ -161,21 +177,59 @@ class ProductionLLM:
         )
         self.model.eval()
 
-    def reply(self, system_prompt: str, user_message: str, trace: List[dict], seed_parts: tuple) -> LLMReply:
+    def _reserve_generation_slot(self) -> int:
+        """Reserve one actual-generation slot BEFORE calling model.generate.
+
+        Raises BudgetExceededError if cap would be exceeded. Returns call_id.
+        """
+        if self.max_generations is not None and self._call_id >= self.max_generations:
+            raise BudgetExceededError(
+                f"generation cap exhausted: {self._call_id}/{self.max_generations}"
+            )
+        self._call_id += 1
+        return self._call_id
+
+    def reply(self, system_prompt: str, user_message: str, trace: List[dict],
+              seed_parts: tuple, provenance: Optional[Dict] = None) -> LLMReply:
         import time
         import torch
+
+        # Reserve slot BEFORE generation
+        call_id = self._reserve_generation_slot()
+
+        # Build provenance record
+        prov = provenance or {}
+        seed_digest = hashlib.sha256(
+            json.dumps(list(seed_parts), separators=(",", ":"), ensure_ascii=False).encode()
+        ).hexdigest()[:16]
+
         self.stats["requests"] += 1
         t0 = time.time()
 
         # Build messages from system_prompt + user_message + trace context
         messages = [{"role": "system", "content": system_prompt}]
-        # Include trace context (tool outputs, errors) but NEVER gold labels
         for entry in trace:
             if entry.get("type") == "tool" and entry.get("ok"):
                 messages.append({"role": "user", "content": f"[tool:{entry.get('detail','')}] {entry.get('output','')[:200]}"})
             elif entry.get("type") == "tool" and not entry.get("ok"):
                 messages.append({"role": "user", "content": f"[tool error: {entry.get('detail','')}] {entry.get('output','')[:200]}"})
         messages.append({"role": "user", "content": user_message})
+
+        ledger_row = {
+            "call_id": call_id,
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "seed_digest": seed_digest,
+            "task_id": prov.get("task_id", ""),
+            "operator": prov.get("operator", ""),
+            "genotype_role": prov.get("genotype_role", ""),
+            "replicate": prov.get("replicate", -1),
+            "turn": prov.get("turn", -1),
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "duration_s": 0.0,
+            "status": "error",
+            "error": "",
+        }
 
         try:
             result = self.tokenizer.apply_chat_template(
@@ -188,9 +242,10 @@ class ProductionLLM:
             else:
                 input_ids = result.to(self.device)
 
+            input_tokens = input_ids.shape[1]
+            ledger_row["input_tokens"] = input_tokens
+
             # R64: stable SHA256-based seed (not Python hash())
-            import hashlib
-            import json
             seed_str = json.dumps(list(seed_parts), separators=(",", ":"), ensure_ascii=False)
             seed_val = int(hashlib.sha256(seed_str.encode()).hexdigest()[:8], 16) % (2**31)
             torch.manual_seed(seed_val)
@@ -208,13 +263,27 @@ class ProductionLLM:
             generated = output[0][input_ids.shape[1]:]
             text = self.tokenizer.decode(generated, skip_special_tokens=True).strip()
 
-            latency = time.time() - t0
-            self.stats["latencies"].append(latency)
-            self.stats["total_tokens"] += len(generated)
+            duration = time.time() - t0
+            output_tokens = len(generated)
 
-            # R63: parse with real tool registry
+            # Per-call deltas
+            ledger_row["output_tokens"] = output_tokens
+            ledger_row["duration_s"] = round(duration, 4)
+            ledger_row["status"] = "ok"
+            self._generation_ledger.append(ledger_row)
+
+            self.stats["latencies"].append(duration)
+            self.stats["total_tokens"] += output_tokens
+
             return self._parse_response(text)
+        except BudgetExceededError:
+            raise
         except Exception as e:
+            duration = time.time() - t0
+            ledger_row["duration_s"] = round(duration, 4)
+            ledger_row["status"] = "error"
+            ledger_row["error"] = str(e)[:200]
+            self._generation_ledger.append(ledger_row)
             self.stats["failures"] += 1
             return LLMReply(kind="answer", text=f"Final answer: ERROR:{str(e)[:50]}")
 
@@ -250,8 +319,17 @@ class ProductionLLM:
         return {
             "model": self.name, "revision": self.version,
             "requests": self.stats["requests"],
+            "actual_generations": self._call_id,
             "total_tokens": self.stats["total_tokens"],
             "failures": self.stats["failures"],
             "mean_latency_s": statistics.mean(lats) if lats else 0,
             "max_latency_s": max(lats) if lats else 0,
+            "evaluations": self.stats.get("evaluations", 0),
+            "episodes": self.stats.get("episodes", 0),
+            "tool_invocations": self.stats.get("tool_invocations", 0),
+            "max_generations_cap": self.max_generations,
         }
+
+    def get_generation_ledger(self) -> List[Dict]:
+        """Return immutable copy of per-generation ledger rows."""
+        return [dict(row) for row in self._generation_ledger]

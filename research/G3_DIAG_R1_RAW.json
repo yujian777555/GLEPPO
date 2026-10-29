@@ -1,0 +1,387 @@
+{
+  "run_id": "20261029T033104Z_R1",
+  "protocol": "G3-DIAG-v2-R1",
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "revision_match": true,
+  "max_generations": 30,
+  "max_wall_s": 300,
+  "baseline": {
+    "B2-001": {
+      "tool_path_passed": false,
+      "success_rate": 1.0,
+      "traces": [
+        {
+          "rep": 0,
+          "success": true,
+          "failure": "",
+          "turns": 2,
+          "tool_calls": 2,
+          "answer": "Final answer: 64-SUM",
+          "tool_path_passed": false,
+          "tool_path_details": {
+            "passed": false,
+            "contract": [
+              {
+                "tool": "calc",
+                "expected_output": "64"
+              },
+              {
+                "tool": "str_ops",
+                "expected_output": "SUM"
+              }
+            ],
+            "successful_sequence": [
+              {
+                "tool": "calc",
+                "output": "64"
+              },
+              {
+                "tool": "str_ops",
+                "output": "25*3-11"
+              }
+            ],
+            "matched_contract_entries": 1,
+            "total_contract_entries": 2,
+            "matched_indices": [
+              0
+            ],
+            "all_tool_events": [
+              {
+                "tool": "calc",
+                "ok": true,
+                "output": "64"
+              },
+              {
+                "tool": "str_ops",
+                "ok": true,
+                "output": "25*3-11"
+              }
+            ],
+            "missing_or_wrong": [
+              {
+                "tool": "str_ops",
+                "expected_output": "SUM"
+              }
+            ]
+          },
+          "trace": [
+            {
+              "type": "meta",
+              "ok": null,
+              "detail": "",
+              "output": ""
+            },
+            {
+              "type": "llm",
+              "ok": true,
+              "detail": "analyze",
+              "output": "Final answer: 54-SUM"
+            },
+            {
+              "type": "tool",
+              "ok": true,
+              "detail": "calc",
+              "output": "64"
+            },
+            {
+              "type": "tool",
+              "ok": true,
+              "detail": "str_ops",
+              "output": "25*3-11"
+            }
+          ]
+        }
+      ]
+    },
+    "B2-002": {
+      "tool_path_passed": false,
+      "success_rate": 0.0,
+      "traces": [
+        {
+          "rep": 0,
+          "success": false,
+          "failure": "wrong_answer",
+          "turns": 2,
+          "tool_calls": 2,
+          "answer": "Final answer: 49",
+          "tool_path_passed": false,
+          "tool_path_details": {
+            "passed": false,
+            "contract": [
+              {
+                "tool": "py_sandbox",
+                "expected_output": "49"
+              },
+              {
+                "tool": "calc",
+                "expected_output": "43"
+              }
+            ],
+            "successful_sequence": [
+              {
+                "tool": "calc",
+                "output": "49"
+              },
+              {
+                "tool": "str_ops",
+                "output": "14*3+7"
+              }
+            ],
+            "matched_contract_entries": 0,
+            "total_contract_entries": 2,
+            "matched_indices": [],
+            "all_tool_events": [
+              {
+                "tool": "calc",
+                "ok": true,
+                "output": "49"
+              },
+              {
+                "tool": "str_ops",
+                "ok": true,
+                "output": "14*3+7"
+              }
+            ],
+            "missing_or_wrong": [
+              {
+                "tool": "py_sandbox",
+                "expected_output": "49"
+              },
+              {
+                "tool": "calc",
+                "expected_output": "43"
+              }
+            ]
+          },
+          "trace": [
+            {
+              "type": "meta",
+              "ok": null,
+              "detail": "",
+              "output": ""
+            },
+            {
+              "type": "llm",
+              "ok": true,
+              "detail": "analyze",
+              "output": "Final answer: 37"
+            },
+            {
+              "type": "tool",
+              "ok": true,
+              "detail": "calc",
+              "output": "49"
+            },
+            {
+              "type": "tool",
+              "ok": true,
+              "detail": "str_ops",
+              "output": "14*3+7"
+            }
+          ]
+        }
+      ]
+    },
+    "B2-003": {
+      "tool_path_passed": false,
+      "success_rate": 1.0,
+      "traces": [
+        {
+          "rep": 0,
+          "success": true,
+          "failure": "",
+          "turns": 2,
+          "tool_calls": 2,
+          "answer": "60-HI",
+          "tool_path_passed": false,
+          "tool_path_details": {
+            "passed": false,
+            "contract": [
+              {
+                "tool": "calc",
+                "expected_output": "60"
+              },
+              {
+                "tool": "str_ops",
+                "expected_output": "HI"
+              }
+            ],
+            "successful_sequence": [
+              {
+                "tool": "calc",
+                "output": "60"
+              },
+              {
+                "tool": "str_ops",
+                "output": "8*8-4"
+              }
+            ],
+            "matched_contract_entries": 1,
+            "total_contract_entries": 2,
+            "matched_indices": [
+              0
+            ],
+            "all_tool_events": [
+              {
+                "tool": "calc",
+                "ok": true,
+                "output": "60"
+              },
+              {
+                "tool": "str_ops",
+                "ok": true,
+                "output": "8*8-4"
+              }
+            ],
+            "missing_or_wrong": [
+              {
+                "tool": "str_ops",
+                "expected_output": "HI"
+              }
+            ]
+          },
+          "trace": [
+            {
+              "type": "meta",
+              "ok": null,
+              "detail": "",
+              "output": ""
+            },
+            {
+              "type": "llm",
+              "ok": true,
+              "detail": "analyze",
+              "output": "60-HI"
+            },
+            {
+              "type": "tool",
+              "ok": true,
+              "detail": "calc",
+              "output": "60"
+            },
+            {
+              "type": "tool",
+              "ok": true,
+              "detail": "str_ops",
+              "output": "8*8-4"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "operators": {},
+  "stopped_reason": "baseline_tool_path_failure",
+  "generation_ledger": [
+    {
+      "call_id": 1,
+      "timestamp": "2026-10-29T03:31:18Z",
+      "seed_digest": "92d444a367b4c0a0",
+      "task_id": "B2-001",
+      "operator": "baseline",
+      "genotype_role": "baseline",
+      "replicate": 0,
+      "turn": 0,
+      "input_tokens": 278,
+      "output_tokens": 9,
+      "duration_s": 0.8353,
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "call_id": 2,
+      "timestamp": "2026-10-29T03:31:18Z",
+      "seed_digest": "b2a17d09ddbc63ce",
+      "task_id": "B2-001",
+      "operator": "baseline",
+      "genotype_role": "baseline",
+      "replicate": 0,
+      "turn": 1,
+      "input_tokens": 277,
+      "output_tokens": 9,
+      "duration_s": 0.2332,
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "call_id": 3,
+      "timestamp": "2026-10-29T03:31:19Z",
+      "seed_digest": "cd87bd6b2451f091",
+      "task_id": "B2-002",
+      "operator": "baseline",
+      "genotype_role": "baseline",
+      "replicate": 0,
+      "turn": 0,
+      "input_tokens": 262,
+      "output_tokens": 7,
+      "duration_s": 0.1863,
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "call_id": 4,
+      "timestamp": "2026-10-29T03:31:19Z",
+      "seed_digest": "c6dc8cc4b9a93752",
+      "task_id": "B2-002",
+      "operator": "baseline",
+      "genotype_role": "baseline",
+      "replicate": 0,
+      "turn": 1,
+      "input_tokens": 267,
+      "output_tokens": 7,
+      "duration_s": 0.1825,
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "call_id": 5,
+      "timestamp": "2026-10-29T03:31:19Z",
+      "seed_digest": "b2aecfcc7ae5128d",
+      "task_id": "B2-003",
+      "operator": "baseline",
+      "genotype_role": "baseline",
+      "replicate": 0,
+      "turn": 0,
+      "input_tokens": 252,
+      "output_tokens": 5,
+      "duration_s": 0.1364,
+      "status": "ok",
+      "error": ""
+    },
+    {
+      "call_id": 6,
+      "timestamp": "2026-10-29T03:31:19Z",
+      "seed_digest": "258c9e443cee18dc",
+      "task_id": "B2-003",
+      "operator": "baseline",
+      "genotype_role": "baseline",
+      "replicate": 0,
+      "turn": 1,
+      "input_tokens": 260,
+      "output_tokens": 5,
+      "duration_s": 0.1436,
+      "status": "ok",
+      "error": ""
+    }
+  ],
+  "llm_stats": {
+    "model": "qwen2.5-7b-instruct",
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "requests": 6,
+    "actual_generations": 6,
+    "total_tokens": 42,
+    "failures": 0,
+    "mean_latency_s": 0.2862345774968465,
+    "max_latency_s": 0.8353455066680908,
+    "evaluations": 0,
+    "episodes": 0,
+    "tool_invocations": 0,
+    "max_generations_cap": 30
+  },
+  "total_actual_generations": 6,
+  "total_wall_s": 14.9324,
+  "budget_exhausted": false,
+  "ledger_counter_match": true,
+  "token_delta_sum": 42,
+  "token_sum_match": true
+}

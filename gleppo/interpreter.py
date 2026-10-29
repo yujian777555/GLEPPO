@@ -39,7 +39,8 @@ class Interpreter:
     def __init__(self, llm: Optional[StubLLM] = None):
         self.llm = llm or StubLLM()
 
-    def run(self, g: Genotype, task: dict, seed_parts: tuple) -> ExecutionResult:
+    def run(self, g: Genotype, task: dict, seed_parts: tuple,
+            provenance: Optional[dict] = None) -> ExecutionResult:
         trace: List[dict] = []
         turns = 0
         tool_calls = 0
@@ -60,16 +61,20 @@ class Interpreter:
         while i < len(steps) and iterations < MAX_ITER:
             iterations += 1
             step = steps[i]
+            # Build per-turn provenance
+            turn_prov = dict(provenance or {})
+            turn_prov["turn"] = turns
+
             if step.type == "finalize":
                 payload = self._slot_text(step, ctx, task)
-                reply = self.llm.reply(g.system_prompt, payload, trace, seed_parts + (turns,))
+                reply = self.llm.reply(g.system_prompt, payload, trace, seed_parts + (turns,), provenance=turn_prov)
                 turns += 1
                 answer = reply.text
                 if reply.kind == "call_tool" and turns < MAX_TURNS:
                     ok, out = run_tool(reply.tool, reply.tool_payload) if reply.tool else (False, "no tool")
                     tool_calls += 1
                     trace.append(TraceEvent("tool", ok, reply.tool or "", out).to_dict())
-                    answer = self.llm.reply(g.system_prompt, payload, trace, seed_parts + (turns,)).text
+                    answer = self.llm.reply(g.system_prompt, payload, trace, seed_parts + (turns,), provenance=turn_prov).text
                     turns += 1
                 i += 1
                 continue
@@ -77,7 +82,7 @@ class Interpreter:
             if step.type == "llm":
                 payload = self._slot_text(step, ctx, task)
                 t0 = time.time()
-                reply = self.llm.reply(g.system_prompt, payload, trace, seed_parts + (turns,))
+                reply = self.llm.reply(g.system_prompt, payload, trace, seed_parts + (turns,), provenance=turn_prov)
                 turns += 1
                 if time.time() - t0 > TOOL_TIMEOUT_S * 20:
                     failure = "timeout"
@@ -92,7 +97,7 @@ class Interpreter:
                     # keep the tool output as the slot value so downstream tool steps can consume it
                     ctx[step.prompt_slot or "llm"] = out
                     # one follow-up turn consuming tool result (text kept for trace only)
-                    reply2 = self.llm.reply(g.system_prompt, payload, trace, seed_parts + (turns,))
+                    reply2 = self.llm.reply(g.system_prompt, payload, trace, seed_parts + (turns,), provenance=turn_prov)
                     turns += 1
                     trace.append(TraceEvent("llm", True, step.prompt_slot or "llm", reply2.text[:200]).to_dict())
                 else:
@@ -144,7 +149,7 @@ class Interpreter:
                                 break
                             ctx[sub.tool or "out"] = out
                         elif sub.type == "llm":
-                            reply = self.llm.reply(g.system_prompt, task["input"], trace, seed_parts + (turns,))
+                            reply = self.llm.reply(g.system_prompt, task["input"], trace, seed_parts + (turns,), provenance=turn_prov)
                             turns += 1
                             ctx[sub.prompt_slot or "branch"] = reply.text
                     if failure:

@@ -1,105 +1,108 @@
-"""G3-DIAG-v2: Tool path verification.
+"""G3-DIAG-v2-R1: Tool path verification with order and expected outputs.
 
-Phase 1 requirement 5-6: evaluator must independently verify tool call paths.
-- B2-002: must verify py_sandbox AND calc were actually called
-- B2-003: must verify str_ops actually executed string transformation
+Gate requirement: required tools must SUCCEED in the REQUIRED ORDER and return
+the frozen expected outputs. Missing, reordered, failed, or wrong-output
+events must cause verification to FAIL.
 """
-from typing import Dict, List, Set
+from typing import Any, Dict, List, Optional, Tuple
 
 
-def verify_tool_path(trace: List[Dict], required_tools: List[str]) -> Dict:
-    """Verify that required tools were actually called in the execution trace.
-
-    Args:
-        trace: execution trace from Interpreter.run()
-        required_tools: list of tool names that must be called
-
-    Returns:
-        dict with 'passed', 'called_tools', 'missing_tools', 'tool_outputs'
-    """
-    called_tools: Set[str] = set()
-    tool_outputs: Dict[str, str] = {}
-
-    for event in trace:
-        if event.get("type") == "tool" and event.get("ok"):
-            tool_name = event.get("detail", "")
-            called_tools.add(tool_name)
-            tool_outputs[tool_name] = event.get("output", "")
-
-    missing_tools = [t for t in required_tools if t not in called_tools]
-
-    return {
-        "passed": len(missing_tools) == 0,
-        "called_tools": sorted(called_tools),
-        "missing_tools": missing_tools,
-        "tool_outputs": tool_outputs,
-    }
-
-
-def verify_tool_path_b2_001(trace: List[Dict]) -> Dict:
-    """B2-001: verify calc AND str_ops were called.
-
-    Expected: calc computes 25*3-11=64, str_ops transforms 'sum'->'SUM'
-    """
-    result = verify_tool_path(trace, ["calc", "str_ops"])
-
-    # Additional check: verify str_ops output is 'SUM'
-    if "str_ops" in result["tool_outputs"]:
-        strops_out = result["tool_outputs"]["str_ops"].strip().upper()
-        result["strops_output_correct"] = strops_out == "SUM"
-    else:
-        result["strops_output_correct"] = False
-
-    result["passed"] = result["passed"] and result.get("strops_output_correct", False)
-    return result
-
-
-def verify_tool_path_b2_002(trace: List[Dict]) -> Dict:
-    """B2-002: verify py_sandbox AND calc were called.
-
-    Expected: py_sandbox computes 14*3+7=49, calc computes 49-6=43
-    """
-    result = verify_tool_path(trace, ["py_sandbox", "calc"])
-
-    # Additional check: verify py_sandbox output is 49
-    if "py_sandbox" in result["tool_outputs"]:
-        ps_out = result["tool_outputs"]["py_sandbox"].strip()
-        result["py_sandbox_output_correct"] = ps_out == "49"
-    else:
-        result["py_sandbox_output_correct"] = False
-
-    result["passed"] = result["passed"] and result.get("py_sandbox_output_correct", False)
-    return result
-
-
-def verify_tool_path_b2_003(trace: List[Dict]) -> Dict:
-    """B2-003: verify calc AND str_ops were called.
-
-    Expected: calc computes 8*8-4=60, str_ops transforms 'hi'->'HI'
-    """
-    result = verify_tool_path(trace, ["calc", "str_ops"])
-
-    # Additional check: verify str_ops output is 'HI'
-    if "str_ops" in result["tool_outputs"]:
-        strops_out = result["tool_outputs"]["str_ops"].strip().upper()
-        result["strops_output_correct"] = strops_out == "HI"
-    else:
-        result["strops_output_correct"] = False
-
-    result["passed"] = result["passed"] and result.get("strops_output_correct", False)
-    return result
-
-
-# Mapping of task_id to specialized verifier
-TOOL_PATH_VERIFIERS = {
-    "B2-001": verify_tool_path_b2_001,
-    "B2-002": verify_tool_path_b2_002,
-    "B2-003": verify_tool_path_b2_003,
+# Frozen tool-path contracts for B2 tasks: ordered (tool_name, expected_output) pairs.
+B2_TOOL_PATH_CONTRACTS: Dict[str, List[Tuple[str, str]]] = {
+    "B2-001": [("calc", "64"), ("str_ops", "SUM")],
+    "B2-002": [("py_sandbox", "49"), ("calc", "43")],
+    "B2-003": [("calc", "60"), ("str_ops", "HI")],
 }
 
 
-def verify_tool_path_for_task(task_id: str, trace: List[Dict], required_tools: List[str]) -> Dict:
-    """Dispatch to specialized verifier if available, else use generic."""
-    if task_id in TOOL_PATH_VERIFIERS:
-        return TOOL_PATH_VERIFIERS[task_id](trace)
-    return verify_tool_path(trace, required_tools)
+def _extract_successful_tool_sequence(trace: List[Dict]) -> List[Tuple[str, str]]:
+    """Extract ordered (tool_name, output) pairs for successful tool events."""
+    seq = []
+    for event in trace:
+        if event.get("type") == "tool" and event.get("ok"):
+            tool_name = event.get("detail", "")
+            output = str(event.get("output", "")).strip()
+            seq.append((tool_name, output))
+    return seq
+
+
+def _extract_all_tool_events(trace: List[Dict]) -> List[Dict]:
+    """Extract all tool events (including failures) for diagnostics."""
+    return [e for e in trace if e.get("type") == "tool"]
+
+
+def verify_tool_path_ordered(trace: List[Dict],
+                             contract: List[Tuple[str, str]]) -> Dict:
+    """Verify tool path against an ordered contract of (tool, expected_output).
+
+    A passing path must have successful tool calls matching the contract in
+    the SAME ORDER with EXACT outputs. Extra successful tool calls before,
+    between, or after the contract entries are allowed (they may come from
+    other workflow steps), but the contract entries must appear as an ordered
+    subsequence of the successful tool calls.
+    """
+    success_seq = _extract_successful_tool_sequence(trace)
+    all_events = _extract_all_tool_events(trace)
+
+    # Check each contract entry in order
+    matched_indices = []
+    contract_idx = 0
+    for seq_idx, (tool_name, output) in enumerate(success_seq):
+        if contract_idx >= len(contract):
+            break
+        expected_tool, expected_output = contract[contract_idx]
+        if tool_name == expected_tool and output == expected_output:
+            matched_indices.append(seq_idx)
+            contract_idx += 1
+
+    all_matched = contract_idx == len(contract)
+
+    # Diagnostics
+    called_success = [t for t, _ in success_seq]
+    expected_tools = [t for t, _ in contract]
+    expected_outputs = [o for _, o in contract]
+
+    result = {
+        "passed": all_matched,
+        "contract": [{"tool": t, "expected_output": o} for t, o in contract],
+        "successful_sequence": [{"tool": t, "output": o} for t, o in success_seq],
+        "matched_contract_entries": contract_idx,
+        "total_contract_entries": len(contract),
+        "matched_indices": matched_indices,
+        "all_tool_events": [
+            {"tool": e.get("detail", ""), "ok": bool(e.get("ok")),
+             "output": str(e.get("output", ""))[:100]}
+            for e in all_events
+        ],
+    }
+
+    if not all_matched:
+        # Identify which entries failed
+        missing = []
+        for i in range(contract_idx, len(contract)):
+            missing.append({"tool": contract[i][0], "expected_output": contract[i][1]})
+        result["missing_or_wrong"] = missing
+
+    return result
+
+
+def verify_tool_path_for_task(task_id: str, trace: List[Dict],
+                              required_tools: Optional[List[str]] = None) -> Dict:
+    """Dispatch to the frozen contract for the given task_id.
+
+    Falls back to presence-only check for tasks without a frozen contract.
+    """
+    if task_id in B2_TOOL_PATH_CONTRACTS:
+        return verify_tool_path_ordered(trace, B2_TOOL_PATH_CONTRACTS[task_id])
+
+    # Fallback: presence-only (for non-B2 tasks)
+    tools = required_tools or []
+    success_seq = _extract_successful_tool_sequence(trace)
+    called = [t for t, _ in success_seq]
+    missing = [t for t in tools if t not in called]
+    return {
+        "passed": len(missing) == 0,
+        "contract": [{"tool": t, "expected_output": "(any)"} for t in tools],
+        "successful_sequence": [{"tool": t, "output": o} for t, o in success_seq],
+        "missing_tools": missing,
+    }

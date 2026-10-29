@@ -1,0 +1,51 @@
+{
+  "run_id": "20261029T040254Z_R2",
+  "protocol": "G3-DIAG-v2-R2",
+  "generated_at": "2026-10-29T04:04:14Z",
+  "artifacts": {
+    "gleppo/interpreter.py": {
+      "sha256": "ff4a9624ce5397d335f1c116cc0c20226bec69f30b4b9380a9bf0d100c8eb14b",
+      "size_bytes": 17347
+    },
+    "gleppo/genotype.py": {
+      "sha256": "df66110828e2c2ce9139f8e3cc55f7f2d57558209c55c8055861dc3c0dd6f3ed",
+      "size_bytes": 9460
+    },
+    "gleppo/tool_path.py": {
+      "sha256": "9a65cbcea50d16664e140cb6f4b07c83cac135ebc5d58e7ea1d772fcc1487a22",
+      "size_bytes": 4295
+    },
+    "gleppo/llm.py": {
+      "sha256": "6125edbdbe0526e0f9d07ce8abb5f3c70d3233ae84629c1a4b62894bf872e30a",
+      "size_bytes": 14872
+    },
+    "tests/test_r2_tool_path.py": {
+      "sha256": "825aa9ae4a02fa63a7b65ee82fb3fb2a89264bf03610c78d9d7bbba4b72537d5",
+      "size_bytes": 8606
+    },
+    "tests/test_r1_fastpath.py": {
+      "sha256": "a151211eab8ca1ce24247768d91b6844adae134477e6df3e4bac636da2be1d01",
+      "size_bytes": 14765
+    },
+    "scripts/_run_g3_diag_r2.py": {
+      "sha256": "158ea0a8b4f3622d66ea7a3fbedc1a3fb8c10d9e6461ff47392f848c13817585",
+      "size_bytes": 10434
+    },
+    "data/diagnostic_B2.jsonl": {
+      "sha256": "7ebe2ec735fd7dbfe634f2c850e9f7a33aad6f561929a26cd2261cd9d18b464e",
+      "size_bytes": 1003
+    },
+    "research/G3_DIAG_R2_RAW.json": {
+      "sha256": "2328fd2d1c0df7aaae9e4983b5e051dd9f998f5033bf2622c2b805207d2edc9a",
+      "size_bytes": 48710
+    },
+    "research/G3_DIAG_R2_LEDGER.jsonl": {
+      "sha256": "88c2fce336073622950ae7950540131538d267f6e78adcce1c5ab1c56828969a",
+      "size_bytes": 8612
+    },
+    "research/G3_DIAG_R2_REPORT.md": {
+      "sha256": "980e1e1add5eea3f5d7a7a17c2cafee1db8946f742ac7437dbfa12d9498142fe",
+      "size_bytes": 4868
+    }
+  }
+}

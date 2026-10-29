@@ -118,6 +118,11 @@ class Interpreter:
                     elif step.tool == "py_sandbox":
                         payload = self._extract_pysandbox_payload(str(payload), task)
                 except ValueError as e:
+                    # R2: if the task doesn't require this tool, skip the step
+                    # (e.g. str_ops on Family A tasks). Otherwise fail closed.
+                    if step.tool == "str_ops" and "str_ops" not in task.get("required_tools", []):
+                        i += 1
+                        continue
                     trace.append(TraceEvent("tool", False, step.tool or "", f"input_error: {e}").to_dict())
                     failure = "tool_error"
                     break
@@ -182,13 +187,60 @@ class Interpreter:
         )
 
     def _extract_calc_payload(self, llm_output: str, task: dict) -> str:
-        """B1: extract arithmetic expression from LLM output or task input."""
+        """R2: extract arithmetic expression, preferring tool-directed expressions.
+
+        Priority:
+        1. Explicit tool-directed: "use calc to compute X-Y" / "calc: X-Y"
+        2. First arithmetic expression in LLM output
+        3. First arithmetic expression in task input
+        """
         import re
-        # Try to find arithmetic expression in LLM output
-        m = re.search(r"([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*)", llm_output)
-        if m:
-            return m.group(1).strip().rstrip(".?, ")
-        # Fall back to task input
+
+        def _tool_directed(text: str) -> Optional[str]:
+            # "use calc to compute 49-6" / "calc to compute X+Y" / "calc: X*Y"
+            m = re.search(
+                r"(?:use\s+)?calc(?:\s+tool)?\s+to\s+(?:compute|calculate|evaluate|verify|find)\s+"
+                r"([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*?)(?=[.\s,]|$)",
+                text, re.IGNORECASE,
+            )
+            if m:
+                return m.group(1).strip().rstrip(".?, ")
+            # "calc: 49-6" or "calc: X*Y"
+            m = re.search(
+                r"calc(?:\s+tool)?\s*[:=]\s*([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*?)(?=[.\s,]|$)",
+                text, re.IGNORECASE,
+            )
+            if m:
+                return m.group(1).strip().rstrip(".?, ")
+            return None
+
+        def _first_expr(text: str) -> Optional[str]:
+            m = re.search(r"([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*)", text)
+            if m:
+                return m.group(1).strip().rstrip(".?, ")
+            return None
+
+        # Priority 1: tool-directed in LLM output
+        result = _tool_directed(llm_output)
+        if result:
+            return result
+
+        # Priority 2: tool-directed in task input (e.g. "Then use calc to compute 49-6")
+        result = _tool_directed(task.get("input", ""))
+        if result:
+            return result
+
+        # Priority 3: first expression in LLM output
+        result = _first_expr(llm_output)
+        if result:
+            return result
+
+        # Priority 4: first expression in task input
+        result = _first_expr(task.get("input", ""))
+        if result:
+            return result
+
+        # Ultimate fallback: derive from numbers
         return self._extract_expr_from_text(task.get("input", ""))
 
     def _extract_pysandbox_payload(self, llm_output: str, task: dict) -> str:
@@ -197,29 +249,155 @@ class Interpreter:
         Raises ValueError if no valid input found — never returns fake success.
         """
         import re
-        # Look for explicit result assignment
-        m = re.search(r"(?:result|out|answer)\s*=\s*(.+)", llm_output)
-        if m:
-            return f"result = {m.group(1).strip()}"
-        # Try to extract arithmetic expression
-        m = re.search(r"([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*)", llm_output)
-        if m:
-            return f"result = {m.group(1).strip()}"
-        # Try task input
-        m = re.search(r"([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*)", task.get("input", ""))
-        if m:
-            return f"result = {m.group(1).strip()}"
-        # B1: no valid input found — raise, don't fabricate
+
+        def _try_expr(text: str) -> Optional[str]:
+            # Explicit result assignment: "result = EXPR" (capture only the expression)
+            m = re.search(r"(?:result|out|answer)\s*=\s*([0-9+\-*/().\s]+?)(?:[.;,\n]|$)", text)
+            if m:
+                expr = m.group(1).strip().rstrip(".;, ")
+                if expr:
+                    return f"result = {expr}"
+            # Arithmetic expression
+            m = re.search(r"([0-9]+\s*[+\-*/]\s*[0-9][0-9+\-*/\s]*?)(?=[.;,\n]|$)", text)
+            if m:
+                return f"result = {m.group(1).strip().rstrip('.;, ')}"
+            return None
+
+        # LLM output first
+        result = _try_expr(llm_output)
+        if result:
+            return result
+
+        # Task input
+        result = _try_expr(task.get("input", ""))
+        if result:
+            return result
+
         raise ValueError("B1: no valid Python input extracted for py_sandbox")
 
     def _extract_strops_payload(self, llm_output: str, task: dict) -> str:
-        """R63: extract str_ops command from LLM output or task input."""
+        """R2: extract str_ops command from LLM output or task input.
+
+        Supports:
+        - Explicit syntax: upper|X, lower|X, reverse|X, split|X, join|X, replace|...
+        - Quoted natural language: transform 'X' to uppercase / lowercase / reverse
+        - Searches LLM output first, then task input.
+        Raises ValueError if no valid string operation found (never arithmetic fallback).
+        """
         import re
-        m = re.search(r"(upper|lower|reverse|split|join|replace)\s*[|:]\s*(.+)", llm_output, re.IGNORECASE)
-        if m:
-            return f"{m.group(1).lower()}|{m.group(2).strip()}"
-        # Fall back to task input
-        return self._extract_expr_from_text(task["input"])
+
+        def _try_extract(text: str) -> Optional[str]:
+            # Explicit command syntax: op|payload or op:payload
+            m = re.search(
+                r"(upper|lower|reverse|split|join|replace)\s*[|:]\s*(.+)",
+                text, re.IGNORECASE,
+            )
+            if m:
+                return f"{m.group(1).lower()}|{m.group(2).strip()}"
+
+            # Quoted natural language: transform/make/convert 'X' to uppercase/lowercase/reverse
+            m = re.search(
+                r"(?:transform|make|convert|rewrite|turn)\s+(?:the\s+word\s+)?['\"](\w+)['\"]\s+"
+                r"(?:to\s+|into\s+)?(uppercase|lowercase|upper\s*case|lower\s*case|capitals?|reverse)",
+                text, re.IGNORECASE,
+            )
+            if m:
+                word = m.group(1)
+                op = m.group(2).lower().replace(" ", "")
+                if op in ("uppercase", "uppercase", "capitals", "capital"):
+                    return f"upper|{word}"
+                if op in ("lowercase",):
+                    return f"lower|{word}"
+                if op == "reverse":
+                    return f"reverse|{word}"
+                return f"upper|{word}"
+
+            # Unquoted natural language: transform the string X to upper case
+            m = re.search(
+                r"(?:transform|make|convert|rewrite|turn)\s+(?:the\s+)?(?:string\s+|word\s+|token\s+)?(\w+)\s+"
+                r"(?:to\s+|into\s+)?(uppercase|lowercase|upper\s*case|lower\s*case|capitals?|reverse)",
+                text, re.IGNORECASE,
+            )
+            if m:
+                word = m.group(1)
+                op = m.group(2).lower().replace(" ", "")
+                if op in ("uppercase", "capitals", "capital"):
+                    return f"upper|{word}"
+                if op in ("lowercase",):
+                    return f"lower|{word}"
+                if op == "reverse":
+                    return f"reverse|{word}"
+                return f"upper|{word}"
+
+            # "make X all capitals" / "rewrite X in capitals" / "X shouted"
+            m = re.search(
+                r"(?:make|rewrite|turn|convert)\s+(\w+)\s+(?:all\s+)?(?:in\s+)?capitals?",
+                text, re.IGNORECASE,
+            )
+            if m:
+                return f"upper|{m.group(1)}"
+
+            # "upper-case the token X" / "upper-case X"
+            m = re.search(
+                r"upper[\s-]case\s+(?:the\s+)?(?:token\s+|string\s+|word\s+)?(\w+)",
+                text, re.IGNORECASE,
+            )
+            if m:
+                return f"upper|{m.group(1)}"
+
+            # "the uppercased form of X" / "uppercased X"
+            m = re.search(
+                r"uppercased?\s+(?:form\s+of\s+)?(\w+)",
+                text, re.IGNORECASE,
+            )
+            if m:
+                return f"upper|{m.group(1)}"
+
+            # "X in upper case" / "X upper-cased" / "X in capitals"
+            m = re.search(
+                r"(\w+)\s+(?:in\s+)?(?:upper[\s-]?case|upper[\s-]?cased|capitals?)",
+                text, re.IGNORECASE,
+            )
+            if m:
+                return f"upper|{m.group(1)}"
+
+            # "X ... uppercase/capitals" near end of phrase
+            m = re.search(
+                r"(\w+)\s+(?:shouted|yelled|all\s+caps|in\s+caps)",
+                text, re.IGNORECASE,
+            )
+            if m:
+                return f"upper|{m.group(1)}"
+
+            # Quoted natural language without "the word": 'X' ... uppercase
+            m = re.search(
+                r"['\"](\w+)['\"].*?(uppercase|lowercase|capitals?|reverse)",
+                text, re.IGNORECASE,
+            )
+            if m:
+                word = m.group(1)
+                op = m.group(2).lower()
+                if op in ("uppercase", "capital", "capitals"):
+                    return f"upper|{word}"
+                if op == "lowercase":
+                    return f"lower|{word}"
+                if op == "reverse":
+                    return f"reverse|{word}"
+
+            return None
+
+        # Search LLM output first
+        result = _try_extract(llm_output)
+        if result:
+            return result
+
+        # Then task input
+        result = _try_extract(task.get("input", ""))
+        if result:
+            return result
+
+        # Fail closed: no valid string operation found
+        raise ValueError("R2: no valid string operation extracted for str_ops")
 
     def _extract_expr_from_text(self, text: str) -> str:
         import re

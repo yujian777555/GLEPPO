@@ -180,3 +180,63 @@ def make_valid_genotype(
             Step(type="finalize", prompt_slot="answer", input_from="str_ops"),
         ]
     return Genotype(system_prompt=system_prompt, tools=tools, workflow=workflow, meta={})
+
+
+# R2: task-compatible reference workflows for B2 diagnostic tasks.
+# Each reference exposes EXACTLY the tools and ordered steps required by the
+# frozen B2 tool-path contract. Labeled 'task_compatible_reference', NOT the
+# unmodified default genotype.
+
+_TASK_COMPATIBLE_REFERENCES = {
+    "B2-001": {
+        "tools": ["calc", "str_ops"],
+        "workflow": [
+            Step(type="llm", prompt_slot="analyze", input_from="task"),
+            Step(type="tool", tool="calc", input_from="task"),
+            Step(type="tool", tool="str_ops", input_from="task"),
+            Step(type="finalize", prompt_slot="answer", input_from="last_tool_output"),
+        ],
+    },
+    "B2-002": {
+        "tools": ["py_sandbox", "calc"],
+        "workflow": [
+            Step(type="llm", prompt_slot="analyze", input_from="task"),
+            Step(type="tool", tool="py_sandbox", input_from="task"),
+            Step(type="tool", tool="calc", input_from="task"),
+            Step(type="finalize", prompt_slot="answer", input_from="last_tool_output"),
+        ],
+    },
+    "B2-003": {
+        "tools": ["calc", "str_ops"],
+        "workflow": [
+            Step(type="llm", prompt_slot="analyze", input_from="task"),
+            Step(type="tool", tool="calc", input_from="task"),
+            Step(type="tool", tool="str_ops", input_from="task"),
+            Step(type="finalize", prompt_slot="answer", input_from="last_tool_output"),
+        ],
+    },
+}
+
+_TASK_COMPATIBLE_PROMPT = (
+    "Compute step by step using the required tools in order. "
+    "Use tools to compute values and transform strings. "
+    "Your FINAL answer MUST start with 'Final answer: ' followed by ONLY the answer value. "
+    "Do NOT include markdown, reasoning, or text after the answer."
+)
+
+
+def make_task_compatible_reference(task_id: str) -> Genotype:
+    """R2: create a frozen task-compatible reference genotype for a B2 task.
+
+    The genotype exposes exactly the tools and ordered workflow steps required
+    by the frozen B2 tool-path contract. Labeled 'task_compatible_reference'.
+    """
+    spec = _TASK_COMPATIBLE_REFERENCES.get(task_id)
+    if spec is None:
+        raise ValueError(f"no task-compatible reference for {task_id}")
+    return Genotype(
+        system_prompt=_TASK_COMPATIBLE_PROMPT,
+        tools=list(spec["tools"]),
+        workflow=[Step.from_dict(s.to_dict()) for s in spec["workflow"]],
+        meta={"label": "task_compatible_reference", "task_id": task_id},
+    )

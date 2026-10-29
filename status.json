@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-29",
-  "phase": "GLEPPO_R16_COMPLETE",
-  "state": "R16_GO_ROOT_CAUSE_FOUND_M2_FIX_VALIDATED",
+  "phase": "GLEPPO_R17_COMPLETE",
+  "state": "R17_NO_GO_C1_HURTS_M2_POS",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -869,5 +869,13 @@
     "regression_tests": "18_of_18_PASS",
     "full_tests": "436_of_436_PASS",
     "decision": "GO_for_R17_independent_confirmation"
+  },
+  "r17_status": {
+    "run_id": "20261029T125653Z_R17",
+    "status": "INCONCLUSIVE_37of54",
+    "h1_m2_predictive": "SUPPORTED",
+    "h2_reduces_interventions": "SUPPORTED",
+    "h3_c2_improves": "NOT_SUPPORTED_C1_hurts_M2_POS",
+    "decision": "NO_GO_for_H3_format_constraint_harmful"
   }
 }

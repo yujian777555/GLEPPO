@@ -1,0 +1,893 @@
+{
+  "arms": [
+    "C0=crossover",
+    "C1=crossover_format_only"
+  ],
+  "budget_exhausted": false,
+  "group_a_tasks": [
+    "B2-001",
+    "B2-003"
+  ],
+  "group_aggregates": {
+    "A/C0": {
+      "child_answer_rate": 0.25,
+      "child_eff": 0,
+      "child_eff_rate": 0.0,
+      "child_fmt_rate": 0.0,
+      "child_path_rate": 1.0,
+      "n": 4
+    },
+    "A/C1": {
+      "child_answer_rate": 0.5,
+      "child_eff": 2,
+      "child_eff_rate": 0.5,
+      "child_fmt_rate": 1.0,
+      "child_path_rate": 1.0,
+      "n": 4
+    },
+    "B/C0": {
+      "child_answer_rate": 0.5833333333333334,
+      "child_eff": 7,
+      "child_eff_rate": 0.5833333333333334,
+      "child_fmt_rate": 1.0,
+      "child_path_rate": 1.0,
+      "n": 12
+    },
+    "B/C1": {
+      "child_answer_rate": 0.5,
+      "child_eff": 6,
+      "child_eff_rate": 0.5,
+      "child_fmt_rate": 1.0,
+      "child_path_rate": 1.0,
+      "n": 12
+    }
+  },
+  "group_b_tasks": [
+    "B2-018",
+    "B2-019",
+    "B2-020",
+    "B2-021"
+  ],
+  "ledger_counter_match": true,
+  "llm_stats": {
+    "actual_generations": 128,
+    "episodes": 0,
+    "evaluations": 0,
+    "failures": 0,
+    "max_generations_cap": 150,
+    "max_latency_s": 4.056808948516846,
+    "mean_latency_s": 0.5049480274319649,
+    "model": "qwen2.5-7b-instruct",
+    "requests": 128,
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "tool_invocations": 0,
+    "total_tokens": 2750
+  },
+  "max_generations": 150,
+  "max_wall_s": 300,
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "paired": {
+    "A": {
+      "c0_wins": 0,
+      "c1_wins": 2,
+      "ties": 2
+    },
+    "B": {
+      "c0_wins": 1,
+      "c1_wins": 0,
+      "ties": 11
+    }
+  },
+  "protocol": "GLEPPO-R8",
+  "revision_match": true,
+  "run_id": "20261029T084714Z_R8",
+  "status": "COMPLETE",
+  "token_delta_sum": 2750,
+  "token_sum_match": true,
+  "total_actual_generations": 128,
+  "total_units": 32,
+  "total_wall_s": 76.5398,
+  "units": [
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "First, let's calculate the expression using the `calc` tool:\n\n[tool:calc] 25*3-11\n\nThe result of the calculation is 64.\n\nNext, we will use the `str_op",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "A",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-a-seed-001",
+      "task_id": "B2-001",
+      "unit_key": "A/B2-001/r8-a-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "First, let's calculate the expression 25*3-11 using the calc tool.\n\n[tool:calc] 25*3-11\n\nNow that we have the result of the calculation, let's transfo",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "A",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-a-seed-002",
+      "task_id": "B2-001",
+      "unit_key": "A/B2-001/r8-a-seed-002/C0"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 25*3-11\nFinal answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "A",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-a-seed-001",
+      "task_id": "B2-001",
+      "unit_key": "A/B2-001/r8-a-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 25*3-11\n[tool:str_ops] sum\nFinal answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "A",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-a-seed-002",
+      "task_id": "B2-001",
+      "unit_key": "A/B2-001/r8-a-seed-002/C1"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 8*8-4\nThe result is 60.\n[tool:str_ops] hi\nTransforming 'hi' to uppercase gives 'HI'.\nNUMBER-STRING: 60-HI",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "A",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-a-seed-001",
+      "task_id": "B2-003",
+      "unit_key": "A/B2-003/r8-a-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "First, we use the calc tool to compute 8*8-4:\n[calc] 8*8-4\nThe result is 60.\nNext, we use the str_ops tool to transform 'hi' to uppercase:\n[str_ops] h",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "A",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 60-STRING_HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-a-seed-002",
+      "task_id": "B2-003",
+      "unit_key": "A/B2-003/r8-a-seed-002/C0"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 64\n[tool:str_ops] HI\nFinal answer: 64-HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "A",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-a-seed-001",
+      "task_id": "B2-003",
+      "unit_key": "A/B2-003/r8-a-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 64\n[tool:str_ops] HI\nFinal answer: 64-HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "A",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 60-STRING_HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-a-seed-002",
+      "task_id": "B2-003",
+      "unit_key": "A/B2-003/r8-a-seed-002/C1"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: FINAL-43",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: FINAL-FINAL5",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-001",
+      "task_id": "B2-018",
+      "unit_key": "B/B2-018/r8-b-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: FINAL-43",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: FINAL-FINAL23",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-002",
+      "task_id": "B2-018",
+      "unit_key": "B/B2-018/r8-b-seed-002/C0"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: FINAL-43",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: FINAL-FINAL17",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-003",
+      "task_id": "B2-018",
+      "unit_key": "B/B2-018/r8-b-seed-003/C0"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: FINAL-FINAL8",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: FINAL-FINAL5",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-001",
+      "task_id": "B2-018",
+      "unit_key": "B/B2-018/r8-b-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: FINAL-FINAL23",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: FINAL-FINAL23",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-002",
+      "task_id": "B2-018",
+      "unit_key": "B/B2-018/r8-b-seed-002/C1"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: FINAL-FINAL8",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: FINAL-FINAL17",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-003",
+      "task_id": "B2-018",
+      "unit_key": "B/B2-018/r8-b-seed-003/C1"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "First, let's compute `result = 6*4+1` using the `py_sandbox` tool.\n\n```python\n# Step 1: Calculate 6*4+1\nresult = 6*4+1\n```\nRunning the above code give",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 50",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-001",
+      "task_id": "B2-019",
+      "unit_key": "B/B2-019/r8-b-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "First, let's compute the expression `6*4+1` using the `py_sandbox` tool.\n```python\n# Execute the python expression\nresult = 6*4+1\nresult\n```\nNow that ",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 50",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-002",
+      "task_id": "B2-019",
+      "unit_key": "B/B2-019/r8-b-seed-002/C0"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "First, I will use the `py_sandbox` tool to compute the expression `6*4+1`.\n\n```python\n# Step 1: Compute 6*4+1\nresult = 6*4+1\nresult\n```\nThe result of ",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 50",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-003",
+      "task_id": "B2-019",
+      "unit_key": "B/B2-019/r8-b-seed-003/C0"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 50",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 50",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-001",
+      "task_id": "B2-019",
+      "unit_key": "B/B2-019/r8-b-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 50",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 50",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-002",
+      "task_id": "B2-019",
+      "unit_key": "B/B2-019/r8-b-seed-002/C1"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 50",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 50",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-003",
+      "task_id": "B2-019",
+      "unit_key": "B/B2-019/r8-b-seed-003/C1"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 7*3-2\n\"output\"[tool:str_ops] \nFinal answer: OUTPUT-UPPERCASED-19, after 'Final answer:' prefix.",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: UPPERED-CASED-OUTPUT-19",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-001",
+      "task_id": "B2-020",
+      "unit_key": "B/B2-020/r8-b-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 7*3-2\n\"OUTPUT\"\n[tool:str_ops] output.upper()\nFinal answer: UPPERCASED-19, after 'Final answer:' prefix.",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: UPPERED-23",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-002",
+      "task_id": "B2-020",
+      "unit_key": "B/B2-020/r8-b-seed-002/C0"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "First, I will calculate the expression 7*3-2 using the calc tool.\n\n[tool:calc] 7*3-2\n\nThe result from the calculation is 19.\n\nNext, I will use the str",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: OUTPUT-UPPERCASED-19",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-003",
+      "task_id": "B2-020",
+      "unit_key": "B/B2-020/r8-b-seed-003/C0"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: uppercased-word-19",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: UPPERED-CASED-OUTPUT-19",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-001",
+      "task_id": "B2-020",
+      "unit_key": "B/B2-020/r8-b-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: uppercased-word-19",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: UPPERED-23",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-002",
+      "task_id": "B2-020",
+      "unit_key": "B/B2-020/r8-b-seed-002/C1"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: uppercased-word-29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: OUTPUT-UPPERCASED-19",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-003",
+      "task_id": "B2-020",
+      "unit_key": "B/B2-020/r8-b-seed-003/C1"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 22",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 22",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-001",
+      "task_id": "B2-021",
+      "unit_key": "B/B2-021/r8-b-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 22",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 22",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-002",
+      "task_id": "B2-021",
+      "unit_key": "B/B2-021/r8-b-seed-002/C0"
+    },
+    {
+      "arm": "C0",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 22",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 22",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-003",
+      "task_id": "B2-021",
+      "unit_key": "B/B2-021/r8-b-seed-003/C0"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 22",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 22",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-001",
+      "task_id": "B2-021",
+      "unit_key": "B/B2-021/r8-b-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 22",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 22",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-002",
+      "task_id": "B2-021",
+      "unit_key": "B/B2-021/r8-b-seed-002/C1"
+    },
+    {
+      "arm": "C1",
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 22",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "B",
+      "operator": "crossover_format_only",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 22",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r8-b-seed-003",
+      "task_id": "B2-021",
+      "unit_key": "B/B2-021/r8-b-seed-003/C1"
+    }
+  ],
+  "units_completed": 32
+}

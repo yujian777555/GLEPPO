@@ -346,6 +346,43 @@ _TASK_COMPATIBLE_REFERENCES = {
             Step(type="finalize", prompt_slot="answer", input_from="last_tool_output"),
         ],
     },
+    "B2-018": {
+        "tools": ["calc", "str_ops"],
+        "workflow": [
+            Step(type="llm", prompt_slot="analyze", input_from="task"),
+            Step(type="tool", tool="calc", input_from="task"),
+            Step(type="tool", tool="str_ops", input_from="task"),
+            Step(type="finalize", prompt_slot="answer", input_from="last_tool_output"),
+        ],
+    },
+    "B2-019": {
+        "tools": ["py_sandbox", "calc"],
+        "workflow": [
+            Step(type="llm", prompt_slot="analyze", input_from="task"),
+            Step(type="tool", tool="py_sandbox", input_from="task"),
+            Step(type="tool", tool="calc", input_from="task"),
+            Step(type="finalize", prompt_slot="answer", input_from="last_tool_output"),
+        ],
+    },
+    "B2-020": {
+        "tools": ["calc", "str_ops"],
+        "workflow": [
+            Step(type="llm", prompt_slot="analyze", input_from="task"),
+            Step(type="tool", tool="calc", input_from="task"),
+            Step(type="tool", tool="str_ops", input_from="task"),
+            Step(type="finalize", prompt_slot="answer", input_from="last_tool_output"),
+        ],
+    },
+    "B2-021": {
+        "tools": ["str_ops", "calc", "py_sandbox"],
+        "workflow": [
+            Step(type="llm", prompt_slot="analyze", input_from="task"),
+            Step(type="tool", tool="str_ops", input_from="task"),
+            Step(type="tool", tool="calc", input_from="task"),
+            Step(type="tool", tool="py_sandbox", input_from="task"),
+            Step(type="finalize", prompt_slot="answer", input_from="last_tool_output"),
+        ],
+    },
 }
 
 _TASK_COMPATIBLE_PROMPT = (

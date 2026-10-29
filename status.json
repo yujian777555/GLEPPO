@@ -6,8 +6,8 @@
   "phase": "G3_DIAG_V2_R3_PROTOCOL_FROZEN",
   "state": "R3_OFFLINE_CI_PASS_CANARY_NOT_RUN_REMOTE_EXECUTION_REQUIRED",
   "reviewed_commit": "d1a10a04f237f98bab32867fb8e8400788219458",
-  "implementation_status": "R3_TASK_CONTRACT_METRIC_SEPARATION_RUNNER_VERIFIER_COMMITTED",
-  "experimental_status": "R3_PROTOCOL_AND_RUNNER_READY_NO_MODEL_CALLS",
+  "implementation_status": "R3_RUNNER_METRICS_VERIFIER_AND_TESTS_COMMITTED",
+  "experimental_status": "R3_PROTOCOL_TESTED_MODEL_EXPERIMENT_NOT_YET_EXECUTED",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,7 +33,7 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Execute scripts/_run_g3_r3.py on the existing A800 host; verify artifacts with scripts/verify_g3_r3.py. Do not start PC1 or controller training.",
+  "current_task": "Run scripts/_run_g3_r3.py on the existing A800 host, then independently verify the unique run directory. Do not start PC1 or controller training.",
   "next_gate": "R3_REMOTE_CANARY -> IF_PASS_R3_PAIRED_PILOT -> INDEPENDENT_REVIEW",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
@@ -633,7 +633,7 @@
     "r3_protocol": "FROZEN",
     "r3_runner": "scripts/_run_g3_r3.py",
     "r3_verifier": "scripts/verify_g3_r3.py",
-    "r3_offline_ci": "PASS_416_TESTS",
+    "r3_offline_ci": "PASS_418_TESTS",
     "r3_actual_model_calls": 0
   },
   "r1_fastpath_decision": {
@@ -718,22 +718,22 @@
     "verifier": "scripts/verify_g3_r3.py",
     "metrics_module": "gleppo/r3_metrics.py",
     "branch": "c7-g3-diag-v2-r1-fastpath",
-    "implementation_commit": "a5c6f14b1b33ef062c8d5180d764580542c97f1e",
-    "latest_plan_commit": "66f223504714cf3ba31011001b37e46a2d550a87",
+    "implementation_commit": "0d9d63f04a4d73e10d4dfc297e51b01d4c4aee3c",
+    "latest_plan_commit": "be5e7d417c78582b1d46bde687eb6ac84f09c35e",
     "offline_ci": {
-      "run_id": 40817885049,
-      "url": "https://github.com/yujian777555/GLEPPO/actions/runs/40817885049",
+      "run_id": 40818038141,
+      "url": "https://github.com/yujian777555/GLEPPO/actions/runs/40818038141",
       "status": "PASS",
       "python_compile": "PASS",
-      "focused_r3_tests": "PASS",
-      "full_offline_tests": 416,
+      "focused_r3_tests": "13/13 PASS",
+      "full_offline_tests": 418,
       "failures": 0
     },
     "model_canary": "NOT_RUN",
     "paired_pilot": "NOT_RUN",
     "actual_model_generate_calls": 0,
     "remote_execution_required": true,
-    "blocker": "The current chat execution environment has no SSH/terminal channel to the A800 host at /tmp/gleppo_prod. Offline GitHub Actions CI did not load Qwen and is not model-experiment evidence.",
+    "blocker": "The current chat execution environment has no SSH/terminal channel to the A800 host at /tmp/gleppo_prod. The successful hosted CI run was offline-only and did not load Qwen.",
     "expected_model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
     "generation_cap": 100,
     "wall_clock_cap_seconds": 300,

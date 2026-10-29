@@ -1,0 +1,37 @@
+name: R3 Offline Validation
+
+on:
+  push:
+    branches:
+      - c7-g3-diag-v2-r1-fastpath
+    paths:
+      - "gleppo/**"
+      - "scripts/_run_g3_r3.py"
+      - "scripts/verify_g3_r3.py"
+      - "tests/**"
+      - "data/diagnostic_B2_R3.jsonl"
+      - "research/G3_DIAG_R3_PROTOCOL.md"
+      - ".github/workflows/r3-offline-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  offline-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout frozen branch
+        uses: actions/checkout@v4
+        with:
+          ref: c7-g3-diag-v2-r1-fastpath
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile R3 scripts and metrics
+        run: python -m py_compile scripts/_run_g3_r3.py scripts/verify_g3_r3.py gleppo/r3_metrics.py
+      - name: Run focused R3 protocol tests
+        run: python -m unittest tests/test_r3_protocol.py -v
+      - name: Run full offline test suite
+        run: python -m unittest discover -s tests

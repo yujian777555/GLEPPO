@@ -3,11 +3,11 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-29",
-  "phase": "G3_DIAG_V2_R2_REVIEW_R3_VALIDITY_PILOT",
-  "state": "R2_ACCEPTED_WITH_LIMITATIONS_R3_CANARY_NOT_RUN",
+  "phase": "G3_DIAG_V2_R3_PROTOCOL_FROZEN",
+  "state": "R3_OFFLINE_CI_PASS_CANARY_NOT_RUN_REMOTE_EXECUTION_REQUIRED",
   "reviewed_commit": "d1a10a04f237f98bab32867fb8e8400788219458",
-  "implementation_status": "EVIDENCE_VERIFIER_FIXED_OPERATORS_FIXED_RUNTIME_LOCK_V2",
-  "experimental_status": "R2_DIAGNOSTIC_COMPLETE_OPERATOR_PERFORMANCE_NOT_ESTABLISHED",
+  "implementation_status": "R3_TASK_CONTRACT_METRIC_SEPARATION_RUNNER_VERIFIER_COMMITTED",
+  "experimental_status": "R3_PROTOCOL_AND_RUNNER_READY_NO_MODEL_CALLS",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
   "inactive_candidate": "M2_FMPS_FROZEN",
   "second_review": {
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Follow planner/latest_plan.md and research/G3_DIAG_R2_INDEPENDENT_REVIEW.md. Freeze R3 task/protocol/manifest, validate new B2-004 baseline on 3 predeclared seeds, then run bounded paired pilot only if canary gate passes.",
-  "next_gate": "R3_OFFLINE_ACCEPTANCE -> B2-004_CANARY -> R3_PAIRED_PILOT -> INDEPENDENT_REVIEW",
+  "current_task": "Execute scripts/_run_g3_r3.py on the existing A800 host; verify artifacts with scripts/verify_g3_r3.py. Do not start PC1 or controller training.",
+  "next_gate": "R3_REMOTE_CANARY -> IF_PASS_R3_PAIRED_PILOT -> INDEPENDENT_REVIEW",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -629,7 +629,12 @@
     "r2_independent_review": "ACCEPT_WITH_LIMITATIONS",
     "r3_plan": "planner/latest_plan.md",
     "r3_canary": "NOT_RUN",
-    "r3_pilot": "NOT_RUN"
+    "r3_pilot": "NOT_RUN",
+    "r3_protocol": "FROZEN",
+    "r3_runner": "scripts/_run_g3_r3.py",
+    "r3_verifier": "scripts/verify_g3_r3.py",
+    "r3_offline_ci": "PASS_416_TESTS",
+    "r3_actual_model_calls": 0
   },
   "r1_fastpath_decision": {
     "verdict": "ACCEPT_DIAGNOSTIC_STOP",
@@ -700,6 +705,51 @@
       "behavior_changed_diagnostic_only"
     ],
     "full_pilot_authorized_after_canary": true,
+    "formal_g3": "FAIL_UNCHANGED",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "family_c_access": false,
+    "controller_training": "NOT_AUTHORIZED"
+  },
+  "r3_execution": {
+    "protocol": "research/G3_DIAG_R3_PROTOCOL.md",
+    "task_file": "data/diagnostic_B2_R3.jsonl",
+    "runner": "scripts/_run_g3_r3.py",
+    "verifier": "scripts/verify_g3_r3.py",
+    "metrics_module": "gleppo/r3_metrics.py",
+    "branch": "c7-g3-diag-v2-r1-fastpath",
+    "implementation_commit": "a5c6f14b1b33ef062c8d5180d764580542c97f1e",
+    "latest_plan_commit": "66f223504714cf3ba31011001b37e46a2d550a87",
+    "offline_ci": {
+      "run_id": 40817885049,
+      "url": "https://github.com/yujian777555/GLEPPO/actions/runs/40817885049",
+      "status": "PASS",
+      "python_compile": "PASS",
+      "focused_r3_tests": "PASS",
+      "full_offline_tests": 416,
+      "failures": 0
+    },
+    "model_canary": "NOT_RUN",
+    "paired_pilot": "NOT_RUN",
+    "actual_model_generate_calls": 0,
+    "remote_execution_required": true,
+    "blocker": "The current chat execution environment has no SSH/terminal channel to the A800 host at /tmp/gleppo_prod. Offline GitHub Actions CI did not load Qwen and is not model-experiment evidence.",
+    "expected_model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "generation_cap": 100,
+    "wall_clock_cap_seconds": 300,
+    "seed_ids": [
+      "r3-paired-seed-001",
+      "r3-paired-seed-002",
+      "r3-paired-seed-003"
+    ],
+    "canary_gate": {
+      "tool_path_passes": 3,
+      "answer_correct_minimum": 2,
+      "accounting_consistent": true,
+      "revision_match": true
+    },
+    "exact_remote_command": "cd /tmp/gleppo_prod && git fetch origin c7-g3-diag-v2-r1-fastpath && git checkout c7-g3-diag-v2-r1-fastpath && git pull --ff-only origin c7-g3-diag-v2-r1-fastpath && git status --short && CUDA_VISIBLE_DEVICES=0 /202532803004/conda_envs/amber/bin/python scripts/_run_g3_r3.py",
+    "verify_command": "/202532803004/conda_envs/amber/bin/python scripts/verify_g3_r3.py research/runs/<RUN_ID>",
     "formal_g3": "FAIL_UNCHANGED",
     "pc1_approved": false,
     "pc1_executed": false,

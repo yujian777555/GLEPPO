@@ -1,0 +1,992 @@
+{
+  "budget_exhausted": true,
+  "c2_analysis": {
+    "total": 9,
+    "use_C0": 9,
+    "use_C1": 0
+  },
+  "group_aggregates": {
+    "FI/C0": {
+      "child_eff": 2,
+      "child_eff_rate": 0.6666666666666666,
+      "child_fmt_rate": 1.0,
+      "n": 3
+    },
+    "FI/C1": {
+      "child_eff": 3,
+      "child_eff_rate": 1.0,
+      "child_fmt_rate": 1.0,
+      "n": 3
+    },
+    "FI/C2": {
+      "child_eff": 2,
+      "child_eff_rate": 0.6666666666666666,
+      "child_fmt_rate": 1.0,
+      "n": 3
+    },
+    "FS/C0": {
+      "child_eff": 2,
+      "child_eff_rate": 0.2222222222222222,
+      "child_fmt_rate": 0.7777777777777778,
+      "n": 9
+    },
+    "FS/C1": {
+      "child_eff": 2,
+      "child_eff_rate": 0.2222222222222222,
+      "child_fmt_rate": 0.8888888888888888,
+      "n": 9
+    },
+    "FS/C2": {
+      "child_eff": 2,
+      "child_eff_rate": 0.3333333333333333,
+      "child_fmt_rate": 0.6666666666666666,
+      "n": 6
+    }
+  },
+  "ledger_counter_match": true,
+  "llm_stats": {
+    "actual_generations": 150,
+    "episodes": 0,
+    "evaluations": 0,
+    "failures": 0,
+    "max_generations_cap": 150,
+    "max_latency_s": 6.595170021057129,
+    "mean_latency_s": 1.3316842444737753,
+    "model": "qwen2.5-7b-instruct",
+    "requests": 150,
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "tool_invocations": 0,
+    "total_tokens": 8271
+  },
+  "max_generations": 150,
+  "max_wall_s": 300,
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "protocol": "GLEPPO-R15",
+  "revision_match": true,
+  "run_id": "20261029T123113Z_R15",
+  "status": "INCONCLUSIVE",
+  "tasks": [
+    "B2-049",
+    "B2-050",
+    "B2-051",
+    "B2-052",
+    "B2-053",
+    "B2-054"
+  ],
+  "token_delta_sum": 8271,
+  "token_sum_match": true,
+  "total_actual_generations": 150,
+  "total_units": 54,
+  "total_wall_s": 211.7851,
+  "trigger_diagnostic": [
+    {
+      "final_fmt": true,
+      "task": "B2-049",
+      "val_fmt": true
+    },
+    {
+      "final_fmt": true,
+      "task": "B2-049",
+      "val_fmt": true
+    },
+    {
+      "final_fmt": true,
+      "task": "B2-049",
+      "val_fmt": true
+    },
+    {
+      "final_fmt": false,
+      "task": "B2-050",
+      "val_fmt": true
+    },
+    {
+      "final_fmt": false,
+      "task": "B2-050",
+      "val_fmt": true
+    },
+    {
+      "final_fmt": true,
+      "task": "B2-050",
+      "val_fmt": true
+    },
+    {
+      "final_fmt": true,
+      "task": "B2-051",
+      "val_fmt": true
+    },
+    {
+      "final_fmt": true,
+      "task": "B2-051",
+      "val_fmt": true
+    },
+    {
+      "final_fmt": true,
+      "task": "B2-051",
+      "val_fmt": true
+    }
+  ],
+  "units": [
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 18*2-7\nFinal answer: DONE-NUMBER37",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-37",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-001",
+      "task_id": "B2-049",
+      "unit_key": "FS/B2-049/r15-final-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 18*2-7\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-37",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-002",
+      "task_id": "B2-049",
+      "unit_key": "FS/B2-049/r15-final-seed-002/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 18*2-7\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-003",
+      "task_id": "B2-049",
+      "unit_key": "FS/B2-049/r15-final-seed-003/C0"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 18*2-7\nFinal answer: DONE-29\n[tool:str_ops] done\nFinal answer: DONE-NUMBERDONE-UPPERCASE",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-37",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-001",
+      "task_id": "B2-049",
+      "unit_key": "FS/B2-049/r15-final-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 18*2-7\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-37",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-002",
+      "task_id": "B2-049",
+      "unit_key": "FS/B2-049/r15-final-seed-002/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 18*2-7\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-003",
+      "task_id": "B2-049",
+      "unit_key": "FS/B2-049/r15-final-seed-003/C1"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C0",
+        "reason": "validation_format_ok",
+        "val_fmt": true
+      },
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 18*2-7\nFinal answer: DONE-NUMBER37",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-37",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-001",
+      "task_id": "B2-049",
+      "unit_key": "FS/B2-049/r15-final-seed-001/C2"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C0",
+        "reason": "validation_format_ok",
+        "val_fmt": true
+      },
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 18*2-7\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-37",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-002",
+      "task_id": "B2-049",
+      "unit_key": "FS/B2-049/r15-final-seed-002/C2"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C0",
+        "reason": "validation_format_ok",
+        "val_fmt": true
+      },
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 18*2-7\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-003",
+      "task_id": "B2-049",
+      "unit_key": "FS/B2-049/r15-final-seed-003/C2"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Let's break down the steps:\n\n1. **Transform 'base' to uppercase using str_ops**:\n   - The string 'base' transformed to uppercase is 'BASE'.\n\n2. **Comp",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: BASE29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-001",
+      "task_id": "B2-050",
+      "unit_key": "FS/B2-050/r15-final-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Let's break down the task into steps:\n\n1. **Transform 'base' to uppercase using `str_ops`:**\n   - Input: \"base\"\n   - Output: \"BASE\"\n\n2. **Compute \\(6 ",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: BASE29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-002",
+      "task_id": "B2-050",
+      "unit_key": "FS/B2-050/r15-final-seed-002/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Let's follow the steps you've outlined:\n\n1. **Transform 'base' to uppercase**: Using the `str_ops` tool, we convert \"base\" to \"BASE\".\n\n2. **Compute 6*",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: BASE23",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-003",
+      "task_id": "B2-050",
+      "unit_key": "FS/B2-050/r15-final-seed-003/C0"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Step 1: Transform 'base' to uppercase using str_ops.\nThe result is 'BASE'.\n\nStep 2: Compute 6*3-2 using calc.\n6 * 3 - 2 = 18 - 2 = 16.\n\nStep 3: Use py",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: BASE29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-001",
+      "task_id": "B2-050",
+      "unit_key": "FS/B2-050/r15-final-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Let's proceed step by step as per your instructions:\n\n1. **Transform 'base' to uppercase using str_ops**:\n   - Transforming \"base\" to uppercase gives ",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: BASE29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-002",
+      "task_id": "B2-050",
+      "unit_key": "FS/B2-050/r15-final-seed-002/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "First, we'll transform 'base' to uppercase:\n\n1. **Transforming 'base' to uppercase**:\n   - Using `str_ops`, 'base' becomes 'BASE'.\n\nNext, we'll comput",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: BASE23",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-003",
+      "task_id": "B2-050",
+      "unit_key": "FS/B2-050/r15-final-seed-003/C1"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C0",
+        "reason": "validation_format_ok",
+        "val_fmt": true
+      },
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Let's break down the steps:\n\n1. **Transform 'base' to uppercase using str_ops**:\n   - The string 'base' transformed to uppercase is 'BASE'.\n\n2. **Comp",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: BASE29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-001",
+      "task_id": "B2-050",
+      "unit_key": "FS/B2-050/r15-final-seed-001/C2"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C0",
+        "reason": "validation_format_ok",
+        "val_fmt": true
+      },
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Let's break down the task into steps:\n\n1. **Transform 'base' to uppercase using `str_ops`:**\n   - Input: \"base\"\n   - Output: \"BASE\"\n\n2. **Compute \\(6 ",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: BASE29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-002",
+      "task_id": "B2-050",
+      "unit_key": "FS/B2-050/r15-final-seed-002/C2"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C0",
+        "reason": "validation_format_ok",
+        "val_fmt": true
+      },
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "Let's follow the steps you've outlined:\n\n1. **Transform 'base' to uppercase**: Using the `str_ops` tool, we convert \"base\" to \"BASE\".\n\n2. **Compute 6*",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: BASE23",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-003",
+      "task_id": "B2-050",
+      "unit_key": "FS/B2-050/r15-final-seed-003/C2"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "First, let's compute `result = 8*2+3` using the `py_sandbox` tool.\n\n```python\n# Step 1: Calculate 8*2+3\nresult = 8 * 2 + 3\nresult\n```\nThe result of `8",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 79",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-001",
+      "task_id": "B2-051",
+      "unit_key": "FI/B2-051/r15-final-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "First, I will use the `py_sandbox` tool to compute the expression \\( 8 \\times 2 + 3 \\).\n\n\\[ 8 \\times 2 + 3 = 16 + 3 = 19 \\]\n\nThe result from the first",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 79",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-002",
+      "task_id": "B2-051",
+      "unit_key": "FI/B2-051/r15-final-seed-002/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:py_sandbox] execute_result\n```python\nresult = 8*2+3\nresult\n```\n19\n[tool:calc] execute_result\n```python\n19*2\n```\n38\nFinal answer: 38",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 79",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-003",
+      "task_id": "B2-051",
+      "unit_key": "FI/B2-051/r15-final-seed-003/C0"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "First, let's compute `result = 8*2+3` using the `py_sandbox` tool.\n\n```python\n# Step 1: Calculate 8*2+3\nresult = 8 * 2 + 3\nresult\n```\nThe result of `8",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 79",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-001",
+      "task_id": "B2-051",
+      "unit_key": "FI/B2-051/r15-final-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "First, I will use the `py_sandbox` tool to compute the expression \\( 8 \\times 2 + 3 \\).\n\n\\[ 8 \\times 2 + 3 = 16 + 3 = 19 \\]\n\nNext, I will use the `cal",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 79",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-002",
+      "task_id": "B2-051",
+      "unit_key": "FI/B2-051/r15-final-seed-002/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:py_sandbox] result = 8*2+3\nThe result is 19.\n[tool:calc] 19*2\nThe result is 38.\n\nFinal answer: 38",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 79",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-003",
+      "task_id": "B2-051",
+      "unit_key": "FI/B2-051/r15-final-seed-003/C1"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C0",
+        "reason": "validation_format_ok",
+        "val_fmt": true
+      },
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "First, let's compute `result = 8*2+3` using the `py_sandbox` tool.\n\n```python\n# Step 1: Calculate 8*2+3\nresult = 8 * 2 + 3\nresult\n```\nThe result of `8",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 79",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-001",
+      "task_id": "B2-051",
+      "unit_key": "FI/B2-051/r15-final-seed-001/C2"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C0",
+        "reason": "validation_format_ok",
+        "val_fmt": true
+      },
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "First, I will use the `py_sandbox` tool to compute the expression \\( 8 \\times 2 + 3 \\).\n\n\\[ 8 \\times 2 + 3 = 16 + 3 = 19 \\]\n\nThe result from the first",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 79",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-002",
+      "task_id": "B2-051",
+      "unit_key": "FI/B2-051/r15-final-seed-002/C2"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C0",
+        "reason": "validation_format_ok",
+        "val_fmt": true
+      },
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:py_sandbox] execute_result\n```python\nresult = 8*2+3\nresult\n```\n19\n[tool:calc] execute_result\n```python\n19*2\n```\n38\nFinal answer: 38",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 79",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-003",
+      "task_id": "B2-051",
+      "unit_key": "FI/B2-051/r15-final-seed-003/C2"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 5*3-1\nThe result of the calculation 5*3-1 is 14.\n[tool:str_ops] output\nTransforming 'output' to uppercase gives 'OUTPUT'.\nFinal answer: OU",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: OUTPUT29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-001",
+      "task_id": "B2-052",
+      "unit_key": "FS/B2-052/r15-final-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 5*3-1\nThe result of 5*3-1 is 14.\n[tool:str_ops] output\nTransforming 'output' to uppercase gives 'OUTPUT'.\nFinal answer: OUTPUT-NUMBER:14",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: OUTPUT29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-002",
+      "task_id": "B2-052",
+      "unit_key": "FS/B2-052/r15-final-seed-002/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 5*3-1\nThe result of 5*3-1 is 14.\n[tool:str_ops] output\nTransforming \"output\" to uppercase gives \"OUTPUT\".\nFinal answer: OUTPUT-NUMBER",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: OUTPUT29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-003",
+      "task_id": "B2-052",
+      "unit_key": "FS/B2-052/r15-final-seed-003/C0"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 5*3-1\n[tool:str_ops] output\nFinal answer: OUTPUT-14OUTPUT-NUMBER",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: OUTPUT29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-001",
+      "task_id": "B2-052",
+      "unit_key": "FS/B2-052/r15-final-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 5*3-1\n[tool:str_ops] output\nFinal answer: OUTPUT-NUMBER=14OUTPUT",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: OUTPUT29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-002",
+      "task_id": "B2-052",
+      "unit_key": "FS/B2-052/r15-final-seed-002/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 5*3-1\n[tool:str_ops] output\nFinal answer: OUTPUT-NUMBER=14OUTPUT",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: OUTPUT29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r15-final-seed-003",
+      "task_id": "B2-052",
+      "unit_key": "FS/B2-052/r15-final-seed-003/C1"
+    }
+  ],
+  "units_completed": 33
+}

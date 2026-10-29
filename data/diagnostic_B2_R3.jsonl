@@ -1,16 +1,1 @@
-{
-  "task_id": "B2-004",
-  "family": "B",
-  "template_id": "R3-T1",
-  "description": "Two-stage tool dependency: py_sandbox computes 5*6+2 (32); calc then computes 32+9 (41). The final answer must use the second tool result, not the first intermediate.",
-  "input": "Use py_sandbox to compute result = 5*6+2. Then use calc to compute 32+9. Your final answer must copy the output of the second tool call only; do not report the first intermediate result. Return only that final numeric value after the required 'Final answer:' prefix.",
-  "gold": "41",
-  "required_tools": [
-    "py_sandbox",
-    "calc"
-  ],
-  "required_prompt_keywords": [
-    "compute",
-    "final answer"
-  ]
-}
+{"task_id":"B2-004","family":"B","template_id":"R3-T1","description":"Two-stage tool dependency: py_sandbox computes 5*6+2 (32); calc then computes 32+9 (41). The final answer must use the second tool result, not the first intermediate.","input":"Use py_sandbox to compute result = 5*6+2. Then use calc to compute 32+9. Your final answer must copy the output of the second tool call only; do not report the first intermediate result. Return only that final numeric value after the required 'Final answer:' prefix.","gold":"41","required_tools":["py_sandbox","calc"],"required_prompt_keywords":["compute","final answer"]}

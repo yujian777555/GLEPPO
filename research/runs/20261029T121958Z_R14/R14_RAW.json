@@ -1,0 +1,1006 @@
+{
+  "budget_exhausted": true,
+  "c2_analysis": {
+    "total": 9,
+    "use_C0": 3,
+    "use_C1": 6
+  },
+  "group_aggregates": {
+    "FI/C0": {
+      "child_eff": 3,
+      "child_eff_rate": 1.0,
+      "child_fmt_rate": 1.0,
+      "n": 3
+    },
+    "FI/C1": {
+      "child_eff": 3,
+      "child_eff_rate": 1.0,
+      "child_fmt_rate": 1.0,
+      "n": 3
+    },
+    "FS/C0": {
+      "child_eff": 3,
+      "child_eff_rate": 1.0,
+      "child_fmt_rate": 1.0,
+      "n": 3
+    },
+    "FS/C1": {
+      "child_eff": 3,
+      "child_eff_rate": 1.0,
+      "child_fmt_rate": 1.0,
+      "n": 3
+    },
+    "FS/C2": {
+      "child_eff": 3,
+      "child_eff_rate": 1.0,
+      "child_fmt_rate": 1.0,
+      "n": 3
+    },
+    "HIST/C0": {
+      "child_eff": 1,
+      "child_eff_rate": 0.16666666666666666,
+      "child_fmt_rate": 0.16666666666666666,
+      "n": 6
+    },
+    "HIST/C1": {
+      "child_eff": 3,
+      "child_eff_rate": 0.5,
+      "child_fmt_rate": 0.6666666666666666,
+      "n": 6
+    },
+    "HIST/C2": {
+      "child_eff": 3,
+      "child_eff_rate": 0.5,
+      "child_fmt_rate": 0.6666666666666666,
+      "n": 6
+    }
+  },
+  "historical": [
+    "B2-001",
+    "B2-003"
+  ],
+  "ledger_counter_match": true,
+  "llm_stats": {
+    "actual_generations": 150,
+    "episodes": 0,
+    "evaluations": 0,
+    "failures": 0,
+    "max_generations_cap": 150,
+    "max_latency_s": 2.514800786972046,
+    "mean_latency_s": 0.8345057646433512,
+    "model": "qwen2.5-7b-instruct",
+    "requests": 150,
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "tool_invocations": 0,
+    "total_tokens": 5205
+  },
+  "max_generations": 150,
+  "max_wall_s": 300,
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "new_tasks": [
+    "B2-045",
+    "B2-046",
+    "B2-047",
+    "B2-048"
+  ],
+  "protocol": "GLEPPO-R14",
+  "revision_match": true,
+  "run_id": "20261029T121958Z_R14",
+  "status": "INCONCLUSIVE",
+  "token_delta_sum": 5205,
+  "token_sum_match": true,
+  "total_actual_generations": 150,
+  "total_units": 54,
+  "total_wall_s": 137.369,
+  "trigger_diagnostic": [
+    {
+      "final_fmt": true,
+      "task": "B2-001",
+      "val_fmt": false
+    },
+    {
+      "final_fmt": true,
+      "task": "B2-001",
+      "val_fmt": false
+    },
+    {
+      "final_fmt": true,
+      "task": "B2-001",
+      "val_fmt": false
+    },
+    {
+      "final_fmt": false,
+      "task": "B2-003",
+      "val_fmt": false
+    },
+    {
+      "final_fmt": true,
+      "task": "B2-003",
+      "val_fmt": false
+    },
+    {
+      "final_fmt": false,
+      "task": "B2-003",
+      "val_fmt": false
+    },
+    {
+      "final_fmt": true,
+      "task": "B2-045",
+      "val_fmt": true
+    },
+    {
+      "final_fmt": true,
+      "task": "B2-045",
+      "val_fmt": true
+    },
+    {
+      "final_fmt": true,
+      "task": "B2-045",
+      "val_fmt": true
+    }
+  ],
+  "units": [
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 25*3-11\nThe result of 25*3-11 is 64.\n[tool:str_ops] sum\nTransforming 'sum' to uppercase gives 'SUM'.\nFinal answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-001",
+      "task_id": "B2-001",
+      "unit_key": "HIST/B2-001/r14-final-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "First, let's compute the expression using the calc tool:\n\n[tool:calc] 25*3-11\n\nThe result from the calculation is 64.\n\nNext, we will use the str_ops t",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 59-SUM",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-002",
+      "task_id": "B2-001",
+      "unit_key": "HIST/B2-001/r14-final-seed-002/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "First, let's compute the expression using the `calc` tool.\n\n[tool:calc] 25*3-11\n\nThe result of 25*3-11 is 64.\n\nNext, we will transform the word 'sum' ",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-003",
+      "task_id": "B2-001",
+      "unit_key": "HIST/B2-001/r14-final-seed-003/C0"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 25*3-11\n[tool:str_ops] sum\nFinal answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-001",
+      "task_id": "B2-001",
+      "unit_key": "HIST/B2-001/r14-final-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 25*3-11\n[tool:str_ops] sum\nFinal answer: 64-_SUM_",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 59-SUM",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-002",
+      "task_id": "B2-001",
+      "unit_key": "HIST/B2-001/r14-final-seed-002/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 25*3-11\n[tool:str_ops] sum\nFinal answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-003",
+      "task_id": "B2-001",
+      "unit_key": "HIST/B2-001/r14-final-seed-003/C1"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C1",
+        "reason": "validation_format_failed",
+        "val_fmt": false
+      },
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 25*3-11\n[tool:str_ops] sum\nFinal answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-001",
+      "task_id": "B2-001",
+      "unit_key": "HIST/B2-001/r14-final-seed-001/C2"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C1",
+        "reason": "validation_format_failed",
+        "val_fmt": false
+      },
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 25*3-11\n[tool:str_ops] sum\nFinal answer: 64-_SUM_",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 59-SUM",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-002",
+      "task_id": "B2-001",
+      "unit_key": "HIST/B2-001/r14-final-seed-002/C2"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C1",
+        "reason": "validation_format_failed",
+        "val_fmt": false
+      },
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 25*3-11\n[tool:str_ops] sum\nFinal answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 64-SUM",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-003",
+      "task_id": "B2-001",
+      "unit_key": "HIST/B2-001/r14-final-seed-003/C2"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "First, let's compute the expression 8*8-4 using the calc tool.\n\n[tool:calc] 8*8-4\n\nThe result is 60.\n\nNow, let's transform 'hi' to uppercase using the",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-001",
+      "task_id": "B2-003",
+      "unit_key": "HIST/B2-003/r14-final-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 8*8-4\nThe result of 8*8-4 is 60.\n[tool:str_ops] hi\nTransforming 'hi' to uppercase gives 'HI'.\nNUMBER-STRING: 60-HI",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 60-STRING_HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-002",
+      "task_id": "B2-003",
+      "unit_key": "HIST/B2-003/r14-final-seed-002/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 8*8-4\nThe result of 8*8-4 is 60.\n\n[tool:str_ops] hi\nTransforming 'hi' to uppercase gives 'HI'.\n\nNUMBER-STRING: 60-HI",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Calc answer: 64\nStr_ops answer: HI\nFinal answer: 64-HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-003",
+      "task_id": "B2-003",
+      "unit_key": "HIST/B2-003/r14-final-seed-003/C0"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 8*8-4\n[tool:str_ops] hi\n\nThe calculation from calc is 8*8-4 = 64.\nThe transformation from str_ops is 'hi' to 'HI'.\n\nTherefore, the answer ",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-001",
+      "task_id": "B2-003",
+      "unit_key": "HIST/B2-003/r14-final-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 8*8-4\n[tool:str_ops] hi\n\nUsing the tools:\nCalculation result: 64 - 4 = 60\nString transformation result: HI\n\nFinal answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 60-STRING_HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-002",
+      "task_id": "B2-003",
+      "unit_key": "HIST/B2-003/r14-final-seed-002/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 8*8-4\n[tool:str_ops] hi\n\nUsing the tools:\n\nFrom calc: 8*8-4 = 64-4 = 60\nFrom str_ops: 'hi' transformed to uppercase is 'HI'\n\nTherefore, th",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Calc answer: 64\nStr_ops answer: HI\nFinal answer: 64-HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-003",
+      "task_id": "B2-003",
+      "unit_key": "HIST/B2-003/r14-final-seed-003/C1"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C1",
+        "reason": "validation_format_failed",
+        "val_fmt": false
+      },
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 8*8-4\n[tool:str_ops] hi\n\nThe calculation from calc is 8*8-4 = 64.\nThe transformation from str_ops is 'hi' to 'HI'.\n\nTherefore, the answer ",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-001",
+      "task_id": "B2-003",
+      "unit_key": "HIST/B2-003/r14-final-seed-001/C2"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C1",
+        "reason": "validation_format_failed",
+        "val_fmt": false
+      },
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 8*8-4\n[tool:str_ops] hi\n\nUsing the tools:\nCalculation result: 64 - 4 = 60\nString transformation result: HI\n\nFinal answer: 60-HI",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 60-STRING_HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-002",
+      "task_id": "B2-003",
+      "unit_key": "HIST/B2-003/r14-final-seed-002/C2"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C1",
+        "reason": "validation_format_failed",
+        "val_fmt": false
+      },
+      "child_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 8*8-4\n[tool:str_ops] hi\n\nUsing the tools:\n\nFrom calc: 8*8-4 = 64-4 = 60\nFrom str_ops: 'hi' transformed to uppercase is 'HI'\n\nTherefore, th",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "HIST",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Calc answer: 64\nStr_ops answer: HI\nFinal answer: 64-HI",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-003",
+      "task_id": "B2-003",
+      "unit_key": "HIST/B2-003/r14-final-seed-003/C2"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 17*2-5\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-39",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-001",
+      "task_id": "B2-045",
+      "unit_key": "FS/B2-045/r14-final-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 17*2-5\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-39",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-002",
+      "task_id": "B2-045",
+      "unit_key": "FS/B2-045/r14-final-seed-002/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 17*2-5\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-39",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-003",
+      "task_id": "B2-045",
+      "unit_key": "FS/B2-045/r14-final-seed-003/C0"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 17*2-5\n[tool:str_ops] done\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-39",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-001",
+      "task_id": "B2-045",
+      "unit_key": "FS/B2-045/r14-final-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 17*2-5\n[tool:str_ops] done\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-39",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-002",
+      "task_id": "B2-045",
+      "unit_key": "FS/B2-045/r14-final-seed-002/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 17*2-5\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-39",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-003",
+      "task_id": "B2-045",
+      "unit_key": "FS/B2-045/r14-final-seed-003/C1"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C0",
+        "reason": "validation_format_ok",
+        "val_fmt": true
+      },
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 17*2-5\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-39",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-001",
+      "task_id": "B2-045",
+      "unit_key": "FS/B2-045/r14-final-seed-001/C2"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C0",
+        "reason": "validation_format_ok",
+        "val_fmt": true
+      },
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 17*2-5\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-39",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-002",
+      "task_id": "B2-045",
+      "unit_key": "FS/B2-045/r14-final-seed-002/C2"
+    },
+    {
+      "arm": "C2",
+      "c2_decision": {
+        "action": "use_C0",
+        "reason": "validation_format_ok",
+        "val_fmt": true
+      },
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:calc] 17*2-5\nFinal answer: DONE-29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FS",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: DONE-39",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-003",
+      "task_id": "B2-045",
+      "unit_key": "FS/B2-045/r14-final-seed-003/C2"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:py_sandbox] execute_result\n7*3-2\n21-2\n19\n[tool:calc] 19+8\nFinal answer: 27",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 35",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-001",
+      "task_id": "B2-046",
+      "unit_key": "FI/B2-046/r14-final-seed-001/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "First, I will use the `py_sandbox` tool to compute the expression \\( 7 \\times 3 - 2 \\).\n\n\\[ 7 \\times 3 - 2 = 21 - 2 = 19 \\]\n\nNext, I will use the `cal",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 35",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-002",
+      "task_id": "B2-046",
+      "unit_key": "FI/B2-046/r14-final-seed-002/C0"
+    },
+    {
+      "arm": "C0",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:py_sandbox] 7*3-2\nThe result of 7*3-2 is 19.\n[tool:calc] 19+8\nThe result of 19+8 is 27.\nFinal answer: 27",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 35",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-003",
+      "task_id": "B2-046",
+      "unit_key": "FI/B2-046/r14-final-seed-003/C0"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:py_sandbox] result = 7*3-2\nThe result of 7*3-2 is 19.\n\n[tool:calc] 19+8\nThe result of 19+8 is 27.\n\nFinal answer: 27",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 35",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-001",
+      "task_id": "B2-046",
+      "unit_key": "FI/B2-046/r14-final-seed-001/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "First, I will use the `py_sandbox` tool to compute the expression \\( 7 \\times 3 - 2 \\).\n\n\\[ 7 \\times 3 - 2 = 21 - 2 = 19 \\]\n\nNext, I will use the `cal",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 35",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-002",
+      "task_id": "B2-046",
+      "unit_key": "FI/B2-046/r14-final-seed-002/C1"
+    },
+    {
+      "arm": "C1",
+      "c2_decision": null,
+      "child_result": {
+        "answer_correct": true,
+        "answer_preview": "[tool:py_sandbox] result = 7*3-2\nThe result of 7*3-2 is 19.\n\n[tool:calc] 19+8\nThe result of 19+8 is 27.\n\nFinal answer: 27",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "child_valid": true,
+      "group": "FI",
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 35",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true
+      },
+      "seed_id": "r14-final-seed-003",
+      "task_id": "B2-046",
+      "unit_key": "FI/B2-046/r14-final-seed-003/C1"
+    }
+  ],
+  "units_completed": 33
+}

@@ -1,53 +1,61 @@
-# Planner Latest Plan — R3 Frozen Protocol / Offline CI Green / Model Canary Pending
+# Planner Latest Plan — R3 Independent Review Complete / R4 Proposal
 
-**Branch:** `c7-g3-diag-v2-r1-fastpath`  
-**Latest R3 code/test commit:** `0d9d63f04a4d73e10d4dfc297e51b01d4c4aee3c`  
-**Offline CI:** PASS — [run 7](https://github.com/yujian777555/GLEPPO/actions/runs/40818038141)  
-**R3 protocol:** `research/G3_DIAG_R3_PROTOCOL.md`
+**Branch:** `c7-g3-diag-v2-r1-fastpath`
+**R3 reviewed commit:** `1c51a718ebc85c4dd6b0ed6ebdad9e25238aba7e`
+**R3 Run ID:** `20261029T052350Z_R3`
+**Independent review:** `research/G3_DIAG_R3_INDEPENDENT_REVIEW.md`
 
-## Implemented and tested
+## R3 Independent Review Verdict
 
-- B2-004 added as one-line JSONL without modifying B2-002 or R1/R2 data.
-- Frozen B2-004 tool contract: `py_sandbox → 32`, then `calc → 41`.
-- Task-compatible reference workflow added and validated.
-- Metrics separated: answer correctness, format compliance, ordered tool-path validity, hard validity, effective success, and behavior-change diagnostic.
-- R3 runner added with a pre-inference SHA-256 manifest, frozen revision check, three-seed canary, conditional paired pilot, actual-generation cap 100, total wall-clock cap 300 seconds, unique run directories, ledger, and result manifest.
-- Independent verifier recomputes answer/format/path metrics and checks artifact hashes and ledger accounting.
-- Invalid operator outcomes are counted as paired failures, not omitted from aggregate results.
+**ACCEPT NEGATIVE RESULTS WITH LIMITATIONS.**
 
-GitHub Actions run 7 completed successfully:
-- Python compile: PASS.
-- Focused R3 tests: 13/13 PASS.
-- Full offline suite: **418 tests, 0 failures**.
+- All R3 metrics independently recomputed from `R3_RAW.json` paired_rows: 16/16 match reported values.
+- All integrity checks pass (hashes, ledger, tokens, counts).
+- **tool_subset_edit: NEGATIVE.** 0/9 child hard_validity (always breaks tool path). McNemar exact p=0.0156.
+- **crossover: NEGATIVE.** answer_correct 77.8%→44.4% (-33.3%). Format failures 6/9. McNemar p=0.125.
+- Statistical power LOW (n=9, effective n≈3 tasks). Cannot prove universality.
+- Offline selection audit: hard constraint filter rejects ALL tool_subset_edit children (0 survive). Format check identifies crossover degradation. All mechanisms are post-execution.
 
-## Actual model experiment status
+## What is established
 
-**Canary NOT RUN; actual model.generate calls = 0.** The successful CI run was a hosted CPU offline test run, not a Qwen inference experiment. The current chat execution environment does not expose an SSH/terminal channel to the existing A800 host. This is an execution-access blocker, not a canary result.
+1. R3 is internally consistent and independently verifiable.
+2. Both operators degrade child effective_success in the tested conditions.
+3. Post-execution hard constraint filtering (tool_path + format) is a viable selection strategy.
+4. Pre-execution prevention would require static analysis of child workflow/tool changes.
 
-## Execute on the existing A800 host
+## What is NOT established
 
-```bash
-cd /tmp/gleppo_prod
-git fetch origin c7-g3-diag-v2-r1-fastpath
-git checkout c7-g3-diag-v2-r1-fastpath
-git pull --ff-only origin c7-g3-diag-v2-r1-fastpath
-git status --short
-CUDA_VISIBLE_DEVICES=0 /202532803004/conda_envs/amber/bin/python scripts/_run_g3_r3.py
-```
+1. Universality of operator degradation (n=9, 3 tasks).
+2. That selection mechanisms generalize beyond the current task set.
+3. That the operators can ever produce beneficial children.
+4. Any performance improvement claim.
 
-The runner fails closed on the wrong branch or tracked modifications. It writes a unique run directory and freezes the source/task manifest before model loading. It starts the paired pilot only if the canary passes: tool path 3/3, answer correctness at least 2/3, correct model revision, and consistent generation/token accounting.
+## Next experiment: R4 Selection-Mechanism Validation (PROPOSAL)
 
-After execution, use the printed RUN_ID:
+**Status: PROPOSED — NOT AUTHORIZED. Requires Planner approval before execution.**
 
-```bash
-/202532803004/conda_envs/amber/bin/python scripts/verify_g3_r3.py research/runs/<RUN_ID>
-```
+| Parameter | Value |
+|-----------|-------|
+| Hypothesis | Hard filter (tool_path+format) + parent-child selection rejects ≥90% harmful children |
+| Falsification | Filter accepts >10% harmful OR rejects >20% beneficial |
+| Tasks | B2-001, B2-003, B2-004, B2-005 (new), B2-006 (new) |
+| Seeds | 5 pre-registered |
+| Operators | tool_subset_edit, crossover, workflow_step_edit (control) |
+| Selection mechanisms | M1-M4 (unfiltered, hard filter, filter+select, random) |
+| Max model.generate | 150 |
+| Max wall clock | 600s |
+| Statistical method | McNemar exact, Wilson 95% CI |
+| Stop rules | Budget exhausted → INCONCLUSIVE; Canary fail → STOP |
 
-Preserve and report a canary failure. If the full predeclared paired matrix cannot finish within 100 actual generations or 300 seconds, label it INCONCLUSIVE. Do not adjust gold or relax the tool-path contract.
+**Requires before execution:**
+1. Freeze new tasks B2-005, B2-006 with gold labels and tool-path contracts.
+2. Pre-register R4 protocol with SHA-256 manifest.
+3. Planner authorization for 150 model.generate calls.
 
-## Frozen boundaries
+## Frozen boundaries (unchanged)
 
 - Formal G3 remains FAIL.
-- PC1 remains unapproved and unexecuted.
+- PC1 remains unapproved/unexecuted.
 - Family C remains unaccessed.
 - Controller training remains unauthorized.
+- R1/R2/R3 raw data preserved.

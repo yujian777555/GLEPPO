@@ -225,24 +225,31 @@ def aggregate_pilot(pilot: Dict[str, Any]) -> Dict[str, Any]:
                 if not pair or not pair.get("parent"):
                     continue
                 child_row = pair.get("children", {}).get(op, {})
-                child = child_row.get("episode")
-                if not child_row.get("operator_valid") or not child:
+                if not child_row or not child_row.get("attempted"):
                     continue
                 parent = pair["parent"]
+                child = child_row.get("episode")
+                child_valid = bool(child_row.get("operator_valid")) and bool(child)
+                child_correct = bool(child.get("answer_correct")) if child_valid else False
+                child_hard = bool(child.get("hard_validity")) if child_valid else False
+                child_path = bool(child.get("tool_path_valid")) if child_valid else False
+                child_format = bool(child.get("format_compliant")) if child_valid else False
+                child_effective = bool(child.get("effective_success")) if child_valid else False
                 rows.append({
                     "task_id": task_id, "seed_id": seed_id,
+                    "operator_valid": child_valid,
                     "parent_answer_correct": bool(parent["answer_correct"]),
-                    "child_answer_correct": bool(child["answer_correct"]),
-                    "paired_correctness_delta": int(bool(child["answer_correct"])) - int(bool(parent["answer_correct"])),
+                    "child_answer_correct": child_correct,
+                    "paired_correctness_delta": int(child_correct) - int(bool(parent["answer_correct"])),
                     "parent_hard_validity": bool(parent["hard_validity"]),
-                    "child_hard_validity": bool(child["hard_validity"]),
+                    "child_hard_validity": child_hard,
                     "parent_tool_path_valid": bool(parent["tool_path_valid"]),
-                    "child_tool_path_valid": bool(child["tool_path_valid"]),
+                    "child_tool_path_valid": child_path,
                     "parent_format_compliant": bool(parent["format_compliant"]),
-                    "child_format_compliant": bool(child["format_compliant"]),
+                    "child_format_compliant": child_format,
                     "parent_effective_success": bool(parent["effective_success"]),
-                    "child_effective_success": bool(child["effective_success"]),
-                    "behavior_changed": bool(child_row.get("behavior_changed")),
+                    "child_effective_success": child_effective,
+                    "behavior_changed": bool(child_row.get("behavior_changed")) if child_valid else False,
                 })
         n = len(rows)
         if not n:
@@ -250,6 +257,7 @@ def aggregate_pilot(pilot: Dict[str, Any]) -> Dict[str, Any]:
             continue
         aggregate[op] = {
             "paired_comparisons": n,
+            "operator_invalid_count": sum(not r["operator_valid"] for r in rows),
             "parent_answer_correct_rate": sum(r["parent_answer_correct"] for r in rows) / n,
             "child_answer_correct_rate": sum(r["child_answer_correct"] for r in rows) / n,
             "parent_hard_validity_rate": sum(r["parent_hard_validity"] for r in rows) / n,
@@ -293,6 +301,7 @@ def make_report(results: Dict[str, Any]) -> str:
             lines.extend([
                 f"### {op}", "",
                 f"- Paired comparisons: {data.get('paired_comparisons', 0)}",
+                f"- Invalid operator outcomes (counted as failures): {data.get('operator_invalid_count', 0)}",
                 f"- Parent/child answer-correct rate: {data.get('parent_answer_correct_rate')} / {data.get('child_answer_correct_rate')}",
                 f"- Parent/child tool-path rate: {data.get('parent_tool_path_rate')} / {data.get('child_tool_path_rate')}",
                 f"- Parent/child hard-validity rate: {data.get('parent_hard_validity_rate')} / {data.get('child_hard_validity_rate')}",

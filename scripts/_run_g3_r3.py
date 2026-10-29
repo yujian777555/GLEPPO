@@ -44,6 +44,8 @@ FROZEN_FILES = [
     "gleppo/llm.py",
     "gleppo/operators.py",
     "gleppo/tasks.py",
+    "tests/test_r3_protocol.py",
+    ".github/workflows/r3-offline-validation.yml",
 ]
 
 

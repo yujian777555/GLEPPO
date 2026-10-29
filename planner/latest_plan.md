@@ -1,28 +1,34 @@
-# Planner Latest Plan — G3-DIAG-v2-R2 Tool-Path Repair
+# Planner Latest Plan — R2 Independent Review / R3 Performance-Validity Pilot
 
-**Status:** R1 ACCEPTED AS DIAGNOSTIC STOP · R2 AUTHORIZED  
+**Status:** R2 ACCEPTED WITH LIMITATIONS · R3 TASK/METRIC GATE NEXT  
 **Branch:** `c7-g3-diag-v2-r1-fastpath`  
-**R1 commit:** `b8b70354433113bead0bbfa3560cda79f592d4f9`  
-**Detailed R2 decision:** `planner/G3_DIAG_R2_TOOL_PATH_REPAIR.md`
+**R2 commit:** `d1a10a04f237f98bab32867fb8e8400788219458`  
+**Independent review:** `research/G3_DIAG_R2_INDEPENDENT_REVIEW.md`
 
-## Decision
+## R2 verdict
 
-Accept R1 as a protocol-compliant diagnostic stop. The hard cap, per-generation ledger, and fail-closed tool-path verifier behaved correctly. No operator comparison occurred, so R1 is not evidence for or against `tool_subset_edit` or `crossover`.
+R2 is accepted as bounded diagnostic evidence. Raw/ledger audit confirms 30 unique monotonically increasing generation IDs, 771 output-token delta sum matching runtime total, paired reference/child seed digests, and 3/3 baseline tool paths passing.
 
-## Immediate executor task
+However, `behavior_changed=3/3` is not operator effectiveness:
+- `tool_subset_edit`: child path validity 0/3, answer correctness 1/3; parent correctness was 2/3.
+- `crossover`: child path validity 3/3, answer correctness 0/3; parent correctness was 2/3.
+- Baseline answer correctness is 2/3 because B2-002 follows the required path but returns `37` rather than gold `43`.
 
-1. Fix `Interpreter._extract_strops_payload` in `gleppo/interpreter.py` (not the LLM module header). Parse quoted natural-language string transformations into valid `str_ops` commands; remove arithmetic-expression fallback and fail closed with `ValueError` when no valid transform is present.
-2. Fix `_extract_calc_payload` to select the tool-directed expression `49-6` for B2-002 while retaining the correct expression for B2-001/B2-003.
-3. Fix the experiment harness: the default genotype has only `calc,str_ops`, so it cannot satisfy B2-002's `py_sandbox -> calc` contract. Construct and freeze a task-compatible reference workflow for each B2 task; do not weaken the contracts or call it the unmodified default genotype.
-4. Add focused regression tests, run them and the full offline suite. No real-model run before this passes.
-5. Then run a fresh R2 baseline with a new run ID, hard cap **30 actual generations**, wall cap **300 seconds**. If any baseline tool path fails, stop before operator comparisons. If all pass, compare one `tool_subset_edit` child and one `crossover` child against paired references within the same cap.
+Formal G3 remains FAIL. Do not start PC1 or controller training.
 
-## Frozen boundaries
+## Immediate task — R3 protocol and validity gate
 
-- R1 raw/report/ledger/manifest remain immutable.
-- R2 uses fresh `G3_DIAG_R2_*` artifacts.
-- No Family C, no PC1, no controller training.
-- Formal G3 remains FAIL until separately reviewed.
-- A tool-path pass is a validity gate, not proof of performance improvement.
+1. Preserve all R2/R1/v2 artifacts unchanged.
+2. Update `status.json` so it no longer claims R2 has not run.
+3. Keep B2-002 as a documented baseline failure. Create a new separately identified task B2-004 for a two-stage tool task; never overwrite B2-002 or put the gold answer in the task prompt.
+4. Freeze a new R3 protocol, task JSONL, and SHA-256 manifest before any model calls.
+5. Add offline tests that distinguish:
+   - hard validity (required tool path + format compliance),
+   - gold answer correctness,
+   - behavior change (diagnostic only).
+6. Baseline canary: B2-004, three predeclared distinct seeds. Proceed only if tool path passes 3/3 and answer correctness is at least 2/3. Otherwise stop and revise offline.
+7. If canary passes, run the paired pilot on B2-001, B2-003 and B2-004 with at least three paired seeds per task, comparing the task-compatible reference, `tool_subset_edit`, and `crossover`. Hard cap: **100 actual model generations**, **300 seconds**. If the complete predeclared matrix cannot fit, stop and label INCONCLUSIVE.
+8. Report answer correctness, hard-validity rate, path pass rate, paired correctness deltas, and format failures. A child with a failed required path is invalid even if its answer string matches gold.
+9. Do not begin PC1, controller training, or Family C. Formal G3 remains FAIL pending a separate review of a complete, sufficiently replicated protocol.
 
-**Required handoff:** source diff, focused/full test logs and exit codes, then R2 raw traces, per-generation ledger, report, SHA-256 manifest and independent verification.
+**R3 acceptance is a pilot gate, not formal G3 authorization.**

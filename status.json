@@ -3,9 +3,9 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-29",
-  "phase": "G3_DIAG_V2_R3_COMPLETE",
-  "state": "R3_PILOT_COMPLETE_NEGATIVE_RESULTS_REVIEWED",
-  "reviewed_commit": "1c51a718ebc85c4dd6b0ed6ebdad9e25238aba7e",
+  "phase": "G3_DIAG_V2_R4_COMPLETE",
+  "state": "R4_INCONCLUSIVE_BUDGET_EXHAUSTED_STATIC_FILTER_PARTIAL",
+  "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
   "selected_candidate": "M1_ECOS_EXECUTION_CONDITIONED_OPERATOR_SELECTION",
@@ -768,5 +768,16 @@
     "crossover": "NEGATIVE_minus33pct_correctness_mcnemar_p0.125",
     "selection_audit": "POSTHOC_FILTER_WORKS_BUT_ZERO_SURVIVORS_FOR_tool_subset_edit",
     "next_experiment": "R4_PROPOSAL_5tasks_x_5seeds_x_3operators_150calls"
+  },
+  "r4_status": {
+    "run_id": "20261029T060743Z_R4",
+    "status": "INCONCLUSIVE",
+    "reason": "budget_exhausted_150of150_b2_004_missing",
+    "units_completed": "37/40",
+    "parent_eff": 0.73,
+    "child_eff": 0.216,
+    "s1_harmful_rate": 0.556,
+    "s3_harmful_rate": 0.0,
+    "conclusion": "SAFETY_ONLY_static_filter_reduces_but_cannot_eliminate_harmful_offspring"
   }
 }

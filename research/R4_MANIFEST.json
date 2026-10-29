@@ -1,0 +1,127 @@
+{
+  "protocol_id": "G3-DIAG-v2-R4",
+  "created_at": "2026-10-29T06:02:53Z",
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "tasks": {
+    "B2-001": {
+      "task_id": "B2-001",
+      "tools": [
+        "calc",
+        "str_ops"
+      ],
+      "contract": [
+        [
+          "calc",
+          "64"
+        ],
+        [
+          "str_ops",
+          "SUM"
+        ]
+      ],
+      "structure": "two-tool string-transform SUM-STRING"
+    },
+    "B2-003": {
+      "task_id": "B2-003",
+      "tools": [
+        "calc",
+        "str_ops"
+      ],
+      "contract": [
+        [
+          "calc",
+          "60"
+        ],
+        [
+          "str_ops",
+          "HI"
+        ]
+      ],
+      "structure": "two-tool string-transform NUMBER-STRING"
+    },
+    "B2-004": {
+      "task_id": "B2-004",
+      "tools": [
+        "py_sandbox",
+        "calc"
+      ],
+      "contract": [
+        [
+          "py_sandbox",
+          "32"
+        ],
+        [
+          "calc",
+          "41"
+        ]
+      ],
+      "structure": "two-tool numeric chain intermediate!=final"
+    },
+    "B2-005": {
+      "task_id": "B2-005",
+      "tools": [
+        "calc",
+        "py_sandbox"
+      ],
+      "contract": [
+        [
+          "calc",
+          "58"
+        ],
+        [
+          "py_sandbox",
+          "71"
+        ]
+      ],
+      "structure": "two-tool REVERSED order vs B2-004"
+    },
+    "B2-006": {
+      "task_id": "B2-006",
+      "tools": [
+        "calc",
+        "str_ops",
+        "py_sandbox"
+      ],
+      "contract": [
+        [
+          "calc",
+          "40"
+        ],
+        [
+          "str_ops",
+          "FINAL"
+        ],
+        [
+          "py_sandbox",
+          "42"
+        ]
+      ],
+      "structure": "three-tool complex format-degradation-risk"
+    }
+  },
+  "seeds": [
+    "r4-paired-seed-001",
+    "r4-paired-seed-002",
+    "r4-paired-seed-003",
+    "r4-paired-seed-004",
+    "r4-paired-seed-005"
+  ],
+  "operators": [
+    "tool_subset_edit",
+    "crossover"
+  ],
+  "max_generations": 150,
+  "max_wall_s": 300,
+  "selection_mechanisms": [
+    "S0_unfiltered",
+    "S1_static_filter",
+    "S2_static_select",
+    "S3_post_exec_diag"
+  ],
+  "data/diagnostic_B2.jsonl": {
+    "sha256": "7ebe2ec735fd7dbfe634f2c850e9f7a33aad6f561929a26cd2261cd9d18b464e"
+  },
+  "data/diagnostic_B2_R4.jsonl": {
+    "sha256": "483ed0ec372907759775391e7b0f2a0ec3273c74909a467dc4e13f1e2525f0a7"
+  }
+}

@@ -1,61 +1,57 @@
-# Planner Latest Plan — R3 Independent Review Complete / R4 Proposal
+# Planner Latest Plan — R4 Complete (INCONCLUSIVE) / R5 Proposal
 
 **Branch:** `c7-g3-diag-v2-r1-fastpath`
-**R3 reviewed commit:** `1c51a718ebc85c4dd6b0ed6ebdad9e25238aba7e`
-**R3 Run ID:** `20261029T052350Z_R3`
-**Independent review:** `research/G3_DIAG_R3_INDEPENDENT_REVIEW.md`
+**R4 Run ID:** `20261029T060743Z_R4`
+**Status:** INCONCLUSIVE (budget exhausted, B2-004 missing)
 
-## R3 Independent Review Verdict
+## R4 Results Summary
 
-**ACCEPT NEGATIVE RESULTS WITH LIMITATIONS.**
+- **Parent effective_success:** 73.0% (27/37)
+- **Child effective_success:** 21.6% (8/37)
+- **Paired:** improved=1, degraded=20, same=16
+- **tool_subset_edit:** 0/19 child effective_success (confirms R3)
+- **crossover:** 8/18 child effective_success (6 degraded)
 
-- All R3 metrics independently recomputed from `R3_RAW.json` paired_rows: 16/16 match reported values.
-- All integrity checks pass (hashes, ledger, tokens, counts).
-- **tool_subset_edit: NEGATIVE.** 0/9 child hard_validity (always breaks tool path). McNemar exact p=0.0156.
-- **crossover: NEGATIVE.** answer_correct 77.8%→44.4% (-33.3%). Format failures 6/9. McNemar p=0.125.
-- Statistical power LOW (n=9, effective n≈3 tasks). Cannot prove universality.
-- Offline selection audit: hard constraint filter rejects ALL tool_subset_edit children (0 survive). Format check identifies crossover degradation. All mechanisms are post-execution.
+### Selection Mechanisms
 
-## What is established
+| Mechanism | Harmful Rate | Verdict |
+|-----------|-------------|---------|
+| S0 Unfiltered | 78.4% | Baseline |
+| S1 Static filter | **55.6%** | Partial improvement |
+| S3 Post-execution | **0.0%** | Perfect diagnostic |
 
-1. R3 is internally consistent and independently verifiable.
-2. Both operators degrade child effective_success in the tested conditions.
-3. Post-execution hard constraint filtering (tool_path + format) is a viable selection strategy.
-4. Pre-execution prevention would require static analysis of child workflow/tool changes.
+**Hypothesis "S1 alone eliminates harmful offspring": FALSIFIED.**
 
-## What is NOT established
+## What Is Established
 
-1. Universality of operator degradation (n=9, 3 tasks).
-2. That selection mechanisms generalize beyond the current task set.
-3. That the operators can ever produce beneficial children.
-4. Any performance improvement claim.
+1. S1 static filter reduces harmful rate 78%→56% — meaningful safety improvement.
+2. S3 post-execution achieves 0% harmful — but requires execution cost.
+3. Operators consistently degrade child performance across 4 tasks.
+4. New tasks B2-005 (reversed order) and B2-006 (three-tool) confirm degradation.
 
-## Next experiment: R4 Selection-Mechanism Validation (PROPOSAL)
+## What Is NOT Established
 
-**Status: PROPOSED — NOT AUTHORIZED. Requires Planner approval before execution.**
+1. S1 generalizes beyond these 4 tasks.
+2. Operators can ever produce beneficial children.
+3. Selection improves final performance.
+
+## R5 Proposal (requires authorization)
+
+**Goal:** Complete the matrix with fixed budget.
 
 | Parameter | Value |
 |-----------|-------|
-| Hypothesis | Hard filter (tool_path+format) + parent-child selection rejects ≥90% harmful children |
-| Falsification | Filter accepts >10% harmful OR rejects >20% beneficial |
-| Tasks | B2-001, B2-003, B2-004, B2-005 (new), B2-006 (new) |
-| Seeds | 5 pre-registered |
-| Operators | tool_subset_edit, crossover, workflow_step_edit (control) |
-| Selection mechanisms | M1-M4 (unfiltered, hard filter, filter+select, random) |
-| Max model.generate | 150 |
-| Max wall clock | 600s |
-| Statistical method | McNemar exact, Wilson 95% CI |
-| Stop rules | Budget exhausted → INCONCLUSIVE; Canary fail → STOP |
+| Tasks | B2-001, B2-003, B2-004, B2-005, B2-006 (5 tasks) |
+| Seeds | 3 per task (reduced from 5) |
+| Operators | tool_subset_edit, crossover |
+| Units | 5 × 3 × 2 = 30 |
+| Estimated generations | 30 × 2 × 2 = 120 |
+| Hard cap | 150 generations |
+| Wall cap | 300s |
+| Fix | Include B2-004 (data file path) |
 
-**Requires before execution:**
-1. Freeze new tasks B2-005, B2-006 with gold labels and tool-path contracts.
-2. Pre-register R4 protocol with SHA-256 manifest.
-3. Planner authorization for 150 model.generate calls.
-
-## Frozen boundaries (unchanged)
+## Frozen Boundaries (unchanged)
 
 - Formal G3 remains FAIL.
-- PC1 remains unapproved/unexecuted.
-- Family C remains unaccessed.
-- Controller training remains unauthorized.
-- R1/R2/R3 raw data preserved.
+- PC1, controller training, Family C: NOT AUTHORIZED.
+- R1/R2/R3/R4 data preserved.

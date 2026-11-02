@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-02",
-  "phase": "GLEPPO_R22_GATE_CHECK",
-  "state": "R22_BLOCKED_PC1_G3_GATES_NOT_MET",
+  "phase": "GLEPPO_R23_REVIEW_HARNESS_REAUDIT",
+  "state": "R23_STATIC_REASSESSMENT_FOUND_REVIEW_HARNESS_GAPS",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Independently audit R21-C1 raw evidence and DAC contracts; reconcile PC1 blockers and freeze controller training plan. Do not start PC1 or controller training until all trusted approvals and formal G3 gates pass.",
-  "next_gate": "R21_C1_INDEPENDENT_REVIEW -> PC1_BLOCKER_REMEDIATION -> TRUSTED_PLANNER_APPROVAL + INDEPENDENT_REVIEW_ACCEPT + PRODUCTION_G3 -> PC1 -> CONTROLLER_TRAINING",
+  "current_task": "Correct R22 review-harness gaps; independently re-audit R21-C1 raw evidence and DAC gold isolation; re-audit all PC1 blockers and formal G3 failure. Do not execute PC1/G3 or controller training.",
+  "next_gate": "R23_R21_C1_REAUDIT -> PC1_CURRENT_BRANCH_BLOCKER_MATRIX -> INDEPENDENT_REVIEW_ACCEPT + TRUSTED_PLANNER_APPROVAL + FORMAL_G3 -> PC1 -> CONTROLLER_TRAINING",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -922,22 +922,40 @@
   },
   "training_readiness": {
     "r21_c1_reported_decision": "GO",
-    "r21_c1_independent_review": "PENDING_ON_CURRENT_COMMIT",
+    "r21_c1_independent_review": "PROVISIONAL_R22_HARNESS_INSUFFICIENT_REQUIRES_R23_REAUDIT",
+    "r22_review_claim": "NOT_ACCEPTED_AS_FULL_INDEPENDENT_REVIEW",
     "pc1_protocol": "PROPOSED_NOT_APPROVED",
     "historical_pc1_review": "REQUEST_CHANGES_REQUIRES_CURRENT_BRANCH_REAUDIT",
     "formal_g3": "FAIL",
     "pc1_executed": false,
     "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
     "family_c_accessed": false,
-    "next_executor_prompt": "planner/GLEPPO_R22_CONTROLLER_TRAINING_PROMPT.md",
-    "handoff_prompt": "planner/GLEPPO_R22_HANDOFF.md"
+    "next_executor_prompt": "planner/GLEPPO_R23_REAUDIT_AND_TRAINING_GATE_PROMPT.md",
+    "handoff_prompt": "planner/GLEPPO_R23_HANDOFF.md"
   },
   "r22_status": {
-    "r21_c1_review": "PASS_data_dac_gold_isolated",
+    "r21_c1_review": "PROVISIONAL_REQUIRES_R23_REAUDIT",
     "mcnemar_p": "0.000061035",
     "pc1_protocol": "PROPOSED_NOT_APPROVED",
     "formal_g3": "FAIL",
     "controller_training": "NOT_AUTHORIZED",
-    "decision": "BLOCKED_gates_not_met"
+    "decision": "BLOCKED_GATES_NOT_MET_AND_R22_REVIEW_NOT_FULLY_ESTABLISHED",
+    "r21_c1_reported_result": "C0_9of24_C4_24of24_REPORTED",
+    "r22_review_harness": "STATIC_REASSESSMENT_FOUND_GAPS"
+  },
+  "r23_static_reassessment": {
+    "reviewed_commit": "ff34219185d1b0f5e07afb31e08b4060b365c1ca",
+    "report": "research/R22_REVIEW_HARNESS_STATIC_REASSESSMENT.md",
+    "review_type": "STATIC_SOURCE_INSPECTION_ONLY",
+    "findings": [
+      "Manifest SHA values are printed but not compared to expected result-manifest values.",
+      "C4 source_valid is treated as effective_success without semantic equivalence proof.",
+      "DEV/CONFIRM checks do not assert exact per-unit coverage.",
+      "DAC leakage audit is a narrow string scan of answer_binding.py, not dependency-closure or dynamic testing.",
+      "PASS verdict is printed unconditionally without fail-closed assertions.",
+      "Gate script hardcodes R21 review PASS while status.training_readiness says PENDING_ON_CURRENT_COMMIT.",
+      "No full independent-review report is committed in R22."
+    ],
+    "conclusion": "R22 full independent-review PASS is provisional and requires R23 re-audit; underlying R21 raw result is not thereby invalidated."
   }
 }

@@ -1,57 +1,39 @@
-# Planner Latest Plan — R4 Complete (INCONCLUSIVE) / R5 Proposal
+# GLEPPO 最新执行计划 — R21-C1 复审与 R22 控制器训练门禁
 
-**Branch:** `c7-g3-diag-v2-r1-fastpath`
-**R4 Run ID:** `20261029T060743Z_R4`
-**Status:** INCONCLUSIVE (budget exhausted, B2-004 missing)
+**仓库：** `yujian777555/GLEPPO`  
+**工作分支：** `c7-g3-diag-v2-r1-fastpath`  
+**R21-C1 基线：** `90f964a9ddc9eabd0096cb504755bd1c7c13c23a`  
+**更新时间：** 2026-11-02
 
-## R4 Results Summary
+## 当前结论
 
-- **Parent effective_success:** 73.0% (27/37)
-- **Child effective_success:** 21.6% (8/37)
-- **Paired:** improved=1, degraded=20, same=16
-- **tool_subset_edit:** 0/19 child effective_success (confirms R3)
-- **crossover:** 8/18 child effective_success (6 degraded)
+R21-C1 报告为 GO：C0 有效成功 9/24，C4(DAC) 24/24，配对 C4 wins=15、C0 wins=0，McNemar exact p≈0.000061。该结果支持 DAC 在当前八个任务上的有效性，但不是演化控制器训练结果，也不能证明普遍泛化。
 
-### Selection Mechanisms
+## 当前硬门禁
 
-| Mechanism | Harmful Rate | Verdict |
-|-----------|-------------|---------|
-| S0 Unfiltered | 78.4% | Baseline |
-| S1 Static filter | **55.6%** | Partial improvement |
-| S3 Post-execution | **0.0%** | Perfect diagnostic |
+- R21-C1 独立复审：待在当前准确 commit 上完成；
+- PC1 协议：`PROPOSED_NOT_APPROVED`；
+- 历史 PC1 独立复审：`REQUEST_CHANGES`，必须对当前分支逐项复核；
+- 正式 G3：`FAIL`；
+- PC1：未执行；
+- 控制器训练：未授权、未启动；
+- Family C：禁止访问。
 
-**Hypothesis "S1 alone eliminates harmful offspring": FALSIFIED.**
+**不得把 R21-C1 的 GO 当作 PC1 批准或训练许可。**
 
-## What Is Established
+## 下一阶段顺序
 
-1. S1 static filter reduces harmful rate 78%→56% — meaningful safety improvement.
-2. S3 post-execution achieves 0% harmful — but requires execution cost.
-3. Operators consistently degrade child performance across 4 tasks.
-4. New tasks B2-005 (reversed order) and B2-006 (three-tool) confirm degradation.
+1. R21-C1 原始证据独立复算与 DAC 无金标泄漏审计；
+2. 修复并复核 PC1 历史审查中的全部 blocker；
+3. 验证 A/B 训练集与验证集真正按任务/模板隔离；
+4. 冻结 EC 控制器训练算法、状态/动作/奖励、强基线、种子、预算和停止条件；
+5. 取得可信 Planner 批准、独立复审 ACCEPT、production runtime 与正式 G3 通过；
+6. PC1 获批并通过后，才启动真实 EC 控制器训练；
+7. 训练后在未见确认任务上独立评估。
 
-## What Is NOT Established
+## 执行规范
 
-1. S1 generalizes beyond these 4 tasks.
-2. Operators can ever produce beneficial children.
-3. Selection improves final performance.
+完整 Executor 指令：[`planner/GLEPPO_R22_CONTROLLER_TRAINING_PROMPT.md`](GLEPPO_R22_CONTROLLER_TRAINING_PROMPT.md)  
+接班提示词：[`planner/GLEPPO_R22_HANDOFF.md`](GLEPPO_R22_HANDOFF.md)
 
-## R5 Proposal (requires authorization)
-
-**Goal:** Complete the matrix with fixed budget.
-
-| Parameter | Value |
-|-----------|-------|
-| Tasks | B2-001, B2-003, B2-004, B2-005, B2-006 (5 tasks) |
-| Seeds | 3 per task (reduced from 5) |
-| Operators | tool_subset_edit, crossover |
-| Units | 5 × 3 × 2 = 30 |
-| Estimated generations | 30 × 2 × 2 = 120 |
-| Hard cap | 150 generations |
-| Wall cap | 300s |
-| Fix | Include B2-004 (data file path) |
-
-## Frozen Boundaries (unchanged)
-
-- Formal G3 remains FAIL.
-- PC1, controller training, Family C: NOT AUTHORIZED.
-- R1/R2/R3/R4 data preserved.
+本轮允许离线审计、修复、测试、预算和训练预注册；不允许绕过 PC1/G3 门禁启动训练。

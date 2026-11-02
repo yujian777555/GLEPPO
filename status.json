@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-02",
-  "phase": "GLEPPO_R23_REVIEW_HARNESS_REAUDIT",
-  "state": "R23_STATIC_REASSESSMENT_FOUND_REVIEW_HARNESS_GAPS",
+  "phase": "GLEPPO_R23_REAUDIT_COMPLETE",
+  "state": "R23_REAUDIT_COMPLETE_REQUIRES_INDEPENDENT_REVIEW",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -957,5 +957,14 @@
       "No full independent-review report is committed in R22."
     ],
     "conclusion": "R22 full independent-review PASS is provisional and requires R23 re-audit; underlying R21 raw result is not thereby invalidated."
+  },
+  "r23_status": {
+    "r21_c1_verifier": "PASS_fail_closed_10_tamper_tests",
+    "dac_gold_isolation": "PASS_ast_based",
+    "pc1_blocker_matrix": "COMPLETE_10_rounds_REQUEST_CHANGES",
+    "g3_failure": "DECOMPOSED_format_tool_path_dac_not_g3",
+    "controller_prereg": "COMPLETE_not_authorized",
+    "tests": "450_of_450_PASS",
+    "decision": "R23_REAUDIT_COMPLETE_REQUIRES_INDEPENDENT_REVIEW"
   }
 }

@@ -1,45 +1,57 @@
-# GLEPPO 最新执行计划 — R23 复审程序纠偏与训练门禁推进
+# GLEPPO 最新执行计划 — R24 纠偏审计与门禁顺序修复
 
 **仓库：** `yujian777555/GLEPPO`  
 **工作分支：** `c7-g3-diag-v2-r1-fastpath`  
-**基线：** `ff34219185d1b0f5e07afb31e08b4060b365c1ca`  
+**R23 基线：** `2c66291ea896246a4f90b1f713c81a7ce931682c`  
 **更新时间：** 2026-11-02
 
 ## 当前结论
 
-R21-C1 原始报告记录 C0=9/24、C4=24/24、配对 C4 wins=15、C0 wins=0、both=9，报告 McNemar exact p=0.000061035。
+R23 是有价值的阶段性进展，但静态复核发现其部分审计宣称仍缺乏可执行证据：
+- R21-C1 报告结论为 `ACCEPT_WITH_LIMITATIONS`；
+- 十项 tamper 场景只生成了临时损坏副本，没有实际调用 verifier；
+- verifier 的 seed、unit-key/group、manifest size/hash 和 ledger provenance 检查仍不完整；
+- C4 `source_valid` 仍是 `effective_success` 的代理；
+- DAC AST 审计仅扫描一个文件并无条件打印 PASS；
+- PC1 matrix 是历史摘要，当前分支逐项复核尚未完成；
+- G3 最终效能门与训练前置条件形成循环；
+- PC1 与 ECOS preregistration 的 reward 尚未对齐；
+- R23 的 450/450 测试尚无与精确 R23 SHA 绑定的可检索 CI 证据。
 
-但是 R22 的 `scripts/_r22_review.py` 没有真正比较 manifest 哈希、没有严格逐单元断言、没有完整 DAC 依赖/动态隔离测试，且最终 PASS 文本无条件打印；`scripts/_r22_gates.py` 还硬编码 R21 review PASS，与 `status.json` 的 PENDING 状态冲突。
+详细证据：`research/R23_STATIC_REASSESSMENT.md`。
 
-因此，**R22 的完整独立复审 PASS 暂不接受为已充分证明**。这不等于 R21 原始结果已被推翻，而是需要 R23 完成真正的可复现独立复审。
+## 当前硬状态
 
-## 当前硬门禁
-
-- R21-C1 独立复审：`PROVISIONAL_REQUIRES_R23_REAUDIT`；
+- R21-C1：`ACCEPT_WITH_LIMITATIONS_REQUIRES_FINAL_INDEPENDENT_REVIEW`；
 - PC1 协议：`PROPOSED_NOT_APPROVED`；
-- 历史 PC1 复审：`REQUEST_CHANGES_REQUIRES_CURRENT_BRANCH_REAUDIT`；
-- 正式 G3：`FAIL`；
-- PC1：未执行；
-- 控制器训练：未授权、未启动；
-- Family C：禁止访问。
+- PC1 当前分支 blocker audit：`NOT_COMPLETE`；
+- Formal G3：`FAIL`；
+- ECOS controller training：`NOT_AUTHORIZED_NOT_STARTED`；
+- Family C：禁止访问；
+- R24：仅允许离线代码、协议和测试修复；不允许模型/API 调用。
 
-## R23 执行顺序
+## R24 工作顺序
 
-1. 修复 R22 审查脚本缺陷，建立真正 fail-closed verifier 和 tamper tests；
-2. 独立复算 R21-C1 数据、哈希、账本、分组和配对统计；
-3. 审计 DAC 全依赖闭包和动态 gold isolation；
-4. 当前分支逐项复核 PC1 历史 blocker，修复离线缺陷；
-5. 分解正式 G3 FAIL 的具体机制和判据；
-6. 冻结 M1 ECOS 控制器训练方案、基线、任务拆分、预算和停止规则；
-7. 取得当前 commit 的独立复审 ACCEPT、可信 Planner 批准、正式 G3 通过及 PC1 批准/执行通过；
-8. 只有上述门禁全部通过，才启动真实演化控制器训练。
+1. 参数化 R21 verifier，让 tamper tests 真正对临时副本执行并断言拒绝；
+2. 补齐精确 seed、unit-key、split、manifest、ledger provenance 和 C4 outcome semantics；
+3. 完成 DAC 真实依赖路径审计及实际运行的 metamorphic tests；
+4. 对历史 PC1 findings 逐项复核当前代码和测试；
+5. 提出 G3-PREFLIGHT / G3-EFFICACY 双阶段门禁修订，消除训练前置循环；
+6. 对齐 PC1 与 ECOS reward，补齐 state/action/operator/PPO/数据拆分/统计/预算；
+7. 在 exact R24 SHA 上运行 CI、全量测试和 clean-clone；
+8. 交由独立 reviewer 复审，不得自我批准。
 
-## 明确禁止
+## 科学实验顺序提案（须独立审查与授权）
 
-本轮不执行 PC1、不执行正式 G3、不启动控制器训练、不访问 Family C、不微调 Qwen。DAC 作为所有控制器实验臂共享的固定组件，不得把其收益归因于 PPO。
+`G3-PREFLIGHT`（训练前安全与工程正确性）
+→ `PC1`（协议审批后执行 A/B-only myopia diagnostic）
+→ `ECOS controller training`（PC1 达到预注册 GO 后）
+→ `G3-EFFICACY`（训练后在未见确认集评估因果改进）。
+
+原 Formal G3 状态仍为 FAIL。不能将 preflight 结果改写成正式 G3 PASS。PC1 和训练均须分别满足审批门禁。
 
 ## 执行文件
 
-- 完整 Executor 指令：[`planner/GLEPPO_R23_REAUDIT_AND_TRAINING_GATE_PROMPT.md`](GLEPPO_R23_REAUDIT_AND_TRAINING_GATE_PROMPT.md)
-- 接班提示词：[`planner/GLEPPO_R23_HANDOFF.md`](GLEPPO_R23_HANDOFF.md)
-- R22 静态复核：[`research/R22_REVIEW_HARNESS_STATIC_REASSESSMENT.md`](../research/R22_REVIEW_HARNESS_STATIC_REASSESSMENT.md)
+- 静态复核：`research/R23_STATIC_REASSESSMENT.md`
+- R24 执行提示词：`planner/GLEPPO_R24_CORRECTIVE_AUDIT_PROMPT.md`
+- R24 接班提示词：`planner/GLEPPO_R24_HANDOFF.md`

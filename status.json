@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-02",
-  "phase": "GLEPPO_R21_C1_COMPLETE",
-  "state": "R21_C1_GO_DAC_100pct_VS_C0_37pct",
+  "phase": "GLEPPO_R21_C1_REVIEW_AND_R22_TRAINING_GATE",
+  "state": "R21_C1_GO_AWAITING_INDEPENDENT_REVIEW_PC1_AND_G3",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Run scripts/_run_g3_r3.py on the existing A800 host, then independently verify the unique run directory. Do not start PC1 or controller training.",
-  "next_gate": "R3_REMOTE_CANARY -> IF_PASS_R3_PAIRED_PILOT -> INDEPENDENT_REVIEW",
+  "current_task": "Independently audit R21-C1 raw evidence and DAC contracts; reconcile PC1 blockers and freeze controller training plan. Do not start PC1 or controller training until all trusted approvals and formal G3 gates pass.",
+  "next_gate": "R21_C1_INDEPENDENT_REVIEW -> PC1_BLOCKER_REMEDIATION -> TRUSTED_PLANNER_APPROVAL + INDEPENDENT_REVIEW_ACCEPT + PRODUCTION_G3 -> PC1 -> CONTROLLER_TRAINING",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -777,7 +777,7 @@
     "parent_eff": 0.73,
     "child_eff": 0.216,
     "s1_harmful_rate": 0.556,
-    "s3_harmful_rate": 0.0,
+    "s3_harmful_rate": 0,
     "conclusion": "SAFETY_ONLY_static_filter_reduces_but_cannot_eliminate_harmful_offspring"
   },
   "r5_status": {
@@ -919,5 +919,17 @@
     "h2_effective_success": "SUPPORTED",
     "h3_generalization": "SUPPORTED_DEV_CONFIRM",
     "decision": "GO_DAC_strong_consistent_significant"
+  },
+  "training_readiness": {
+    "r21_c1_reported_decision": "GO",
+    "r21_c1_independent_review": "PENDING_ON_CURRENT_COMMIT",
+    "pc1_protocol": "PROPOSED_NOT_APPROVED",
+    "historical_pc1_review": "REQUEST_CHANGES_REQUIRES_CURRENT_BRANCH_REAUDIT",
+    "formal_g3": "FAIL",
+    "pc1_executed": false,
+    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+    "family_c_accessed": false,
+    "next_executor_prompt": "planner/GLEPPO_R22_CONTROLLER_TRAINING_PROMPT.md",
+    "handoff_prompt": "planner/GLEPPO_R22_HANDOFF.md"
   }
 }

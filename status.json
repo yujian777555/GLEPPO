@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-02",
-  "phase": "GLEPPO_R21_C1_REVIEW_AND_R22_TRAINING_GATE",
-  "state": "R21_C1_GO_AWAITING_INDEPENDENT_REVIEW_PC1_AND_G3",
+  "phase": "GLEPPO_R22_GATE_CHECK",
+  "state": "R22_BLOCKED_PC1_G3_GATES_NOT_MET",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -931,5 +931,13 @@
     "family_c_accessed": false,
     "next_executor_prompt": "planner/GLEPPO_R22_CONTROLLER_TRAINING_PROMPT.md",
     "handoff_prompt": "planner/GLEPPO_R22_HANDOFF.md"
+  },
+  "r22_status": {
+    "r21_c1_review": "PASS_data_dac_gold_isolated",
+    "mcnemar_p": "0.000061035",
+    "pc1_protocol": "PROPOSED_NOT_APPROVED",
+    "formal_g3": "FAIL",
+    "controller_training": "NOT_AUTHORIZED",
+    "decision": "BLOCKED_gates_not_met"
   }
 }

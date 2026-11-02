@@ -1,0 +1,2098 @@
+{
+  "budget_exhausted": false,
+  "confirm_tasks": [
+    "B2-069",
+    "B2-070",
+    "B2-071",
+    "B2-072"
+  ],
+  "dev_tasks": [
+    "B2-065",
+    "B2-066",
+    "B2-067",
+    "B2-068"
+  ],
+  "group_aggregates": {
+    "CONFIRM/C0": {
+      "ans_rate": 0.4166666666666667,
+      "eff": 4,
+      "eff_rate": 0.3333333333333333,
+      "n": 12
+    },
+    "CONFIRM/C4": {
+      "ans_rate": 0.0,
+      "eff": 0,
+      "eff_rate": 0.0,
+      "n": 12
+    },
+    "DEV/C0": {
+      "ans_rate": 0.4166666666666667,
+      "eff": 5,
+      "eff_rate": 0.4166666666666667,
+      "n": 12
+    },
+    "DEV/C4": {
+      "ans_rate": 0.0,
+      "eff": 0,
+      "eff_rate": 0.0,
+      "n": 12
+    }
+  },
+  "ledger_counter_match": true,
+  "llm_stats": {
+    "actual_generations": 96,
+    "episodes": 0,
+    "evaluations": 0,
+    "failures": 0,
+    "max_generations_cap": 150,
+    "max_latency_s": 3.981468915939331,
+    "mean_latency_s": 0.9191230287154516,
+    "model": "qwen2.5-7b-instruct",
+    "requests": 96,
+    "revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "tool_invocations": 0,
+    "total_tokens": 3620
+  },
+  "max_generations": 150,
+  "max_wall_s": 300,
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "paired": {
+    "c0_eff": 9,
+    "c4_eff": 0,
+    "total": 24
+  },
+  "protocol": "GLEPPO-R21",
+  "revision_match": true,
+  "run_id": "20261102T121502Z_R21",
+  "status": "COMPLETE",
+  "token_delta_sum": 3620,
+  "token_sum_match": true,
+  "total_actual_generations": 96,
+  "total_units": 24,
+  "total_wall_s": 100.8373,
+  "units": [
+    {
+      "c0_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 25",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 25",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "25",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "Final answer: 25",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 25",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "25",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-001",
+      "task_id": "B2-065",
+      "unit_key": "B2-065/r21-seed-001"
+    },
+    {
+      "c0_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 25",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 25",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "25",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "Final answer: 25",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 25",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "25",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-002",
+      "task_id": "B2-065",
+      "unit_key": "B2-065/r21-seed-002"
+    },
+    {
+      "c0_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 25",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 25",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "25",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "Final answer: 25",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 29",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 25",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "25",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-003",
+      "task_id": "B2-065",
+      "unit_key": "B2-065/r21-seed-003"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "First, we compute the expression \\(8 \\times 3 - 2\\) using the `calc` tool:\n\n\\[8 \\times 3 = 24\\]\n\\[24 - 2 = 22\\]\n\nNext, we use the `str_ops` tool to transform the string 'ok' to uppercase:\n\n'OK' \n\nNow,",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "str_ops"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Step 1: Calculate 8*3-2 using the calc tool.\nCalculation: 8*3-2 = 24-2 = 22\n\nStep 2: Transform 'ok' to uppercase using the str_ops tool.\nTransformation: 'ok' -> 'OK'\n\nStep 3: Combine the results into ",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "22",
+            "type": "tool"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "OK",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "First, we compute the expression \\(8 \\times 3 - 2\\) using the `calc` tool:\n\n\\[8 \\times 3 = 24\\]\n\\[24 - 2 = 22\\]\n\nNext, we use the `str_ops` tool to transform the string 'ok' to uppercase:\n\n'OK' \n\nNow,",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: OK46",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc",
+              "str_ops"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: OK-22",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "22",
+            "type": "tool"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "OK",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-001",
+      "task_id": "B2-066",
+      "unit_key": "B2-066/r21-seed-001"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 8*3-2\nThe result of 8*3-2 is 22.\n[tool:str_ops] ok\nTransforming 'ok' to uppercase gives 'OK'.\nOK-NUMBER format: OK-22",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "str_ops"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Step 1: Calculate 8*3-2 using the calc tool.\nResult from calc: 22\n\nStep 2: Transform 'ok' to uppercase using the str_ops tool.\nResult from str_ops: OK\n\nStep 3: Combine the results into the requested f",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "22",
+            "type": "tool"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "OK",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "[tool:calc] 8*3-2\nThe result of 8*3-2 is 22.\n[tool:str_ops] ok\nTransforming 'ok' to uppercase gives 'OK'.\nOK-NUMBER format: OK-22",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: 22-OK",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc",
+              "str_ops"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: OK-22",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "22",
+            "type": "tool"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "OK",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-002",
+      "task_id": "B2-066",
+      "unit_key": "B2-066/r21-seed-002"
+    },
+    {
+      "c0_result": {
+        "answer_correct": true,
+        "answer_preview": "First, let's compute the expression \\(8 \\times 3 - 2\\) using the `calc` tool.\n\n[tool:calc] 8*3-2\n\nNow, we'll transform the string 'ok' to uppercase using the `str_ops` tool.\n\n[tool:str_ops] ok.upper()",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "str_ops"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Step 1: Calculate 8 * 3 - 2 using the `calc` tool.\nCalculation: 8 * 3 - 2 = 24 - 2 = 22\n\nStep 2: Transform 'ok' to uppercase using the `str_ops` tool.\nTransformation: 'OK'\n\nFinal Answer: OK-NUMBER 22",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "22",
+            "type": "tool"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "OK",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "First, let's compute the expression \\(8 \\times 3 - 2\\) using the `calc` tool.\n\n[tool:calc] 8*3-2\n\nNow, we'll transform the string 'ok' to uppercase using the `str_ops` tool.\n\n[tool:str_ops] ok.upper()",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: OK54(NUMBER)",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc",
+              "str_ops"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolstr_ops|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: OK-22",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "22",
+            "type": "tool"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "OK",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-003",
+      "task_id": "B2-066",
+      "unit_key": "B2-066/r21-seed-003"
+    },
+    {
+      "c0_result": {
+        "answer_correct": true,
+        "answer_preview": "First, let's compute `result = 5*4+2` using the `py_sandbox` tool.\n\n```python\n# Step 1: Calculate 5*4+2\nresult = 5*4+2\nresult\n```\nThe result of 5*4+2 is 22. Now, let's use the `calc` tool to compute 2",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "First, let's compute `result = 5*4+2` using the py_sandbox tool.\n\n```python\n# Computation in py_sandbox\nresult = 5*4 + 2\nresult\n```\n\nThe result of `5*4+2` is `22`.\n\nNext, we will use the calc tool to ",
+            "type": "llm"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "22",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "15",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "First, let's compute `result = 5*4+2` using the `py_sandbox` tool.\n\n```python\n# Step 1: Calculate 5*4+2\nresult = 5*4+2\nresult\n```\nThe result of 5*4+2 is 22. Now, let's use the `calc` tool to compute 2",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 15",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "py_sandbox",
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 15",
+            "type": "llm"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "22",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "15",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-001",
+      "task_id": "B2-067",
+      "unit_key": "B2-067/r21-seed-001"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "First, let's compute the result of `5*4+2` using the `py_sandbox` tool.\n\n```python\n# Computing 5*4+2\nresult = 5*4 + 2\nresult\n```\n\nThe result is 22. Now, let's use the `calc` tool to compute `22-7`.\n\n`",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "First, let's compute `result = 5*4+2` using the `py_sandbox` tool.\n\n```python\n# Computation using py_sandbox for 5*4+2\nresult = 5*4+2\n```\nThe result of `5*4+2` is 22.\n\nNow, let's compute `22-7` using ",
+            "type": "llm"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "22",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "15",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "First, let's compute the result of `5*4+2` using the `py_sandbox` tool.\n\n```python\n# Computing 5*4+2\nresult = 5*4 + 2\nresult\n```\n\nThe result is 22. Now, let's use the `calc` tool to compute `22-7`.\n\n`",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 15",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "py_sandbox",
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 15",
+            "type": "llm"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "22",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "15",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-002",
+      "task_id": "B2-067",
+      "unit_key": "B2-067/r21-seed-002"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "First, let's compute `result = 5*4+2` using the `py_sandbox` tool.\n\n```python\n# Computing 5*4+2\nresult = 5*4+2\nresult\n```\nThe result of `5*4+2` is 22.\n\nNow, we will use the `calc` tool to compute `22-",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "First, let's compute `result = 5*4+2` using the `py_sandbox` tool.\n\n```python\nresult = 5*4+2\n```\nThe result of this computation is:\n```\n22\n```\n\nNext, we will use the `calc` tool to compute `22-7`.\n\nTh",
+            "type": "llm"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "22",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "15",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "First, let's compute `result = 5*4+2` using the `py_sandbox` tool.\n\n```python\n# Computing 5*4+2\nresult = 5*4+2\nresult\n```\nThe result of `5*4+2` is 22.\n\nNow, we will use the `calc` tool to compute `22-",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 15",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "py_sandbox",
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolpy_sandbox|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 15",
+            "type": "llm"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "22",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "15",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-003",
+      "task_id": "B2-067",
+      "unit_key": "B2-067/r21-seed-003"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 9*2-4\n[tool:py_sandbox] 14*2\nThe result is 28.",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "First, let's compute \\(9 \\times 2 - 4\\) using the `calc` tool:\n\n\\[ 9 \\times 2 - 4 = 18 - 4 = 14 \\]\n\nNow, we will use the `py_sandbox` to compute \\(14 \\times 2\\):\n\n\\[ 14 \\times 2 = 28 \\]\n\n**Final answe",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "14",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "28",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "[tool:calc] 9*2-4\n[tool:py_sandbox] 14*2\nThe result is 28.",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 28",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 28",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "14",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "28",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-001",
+      "task_id": "B2-068",
+      "unit_key": "B2-068/r21-seed-001"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 9*2-4\n[tool:py_sandbox] 14*2\nThe result from py_sandbox is: 28",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "First, let's compute \\(9 \\times 2 - 4\\) using the `calc` tool.\n\n\\[ 9 \\times 2 - 4 = 18 - 4 = 14 \\]\n\nNow, we will use `py_sandbox` to compute the result of \\(14 \\times 2\\).\n\n```python\nresult = 14 * 2\nr",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "14",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "28",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "[tool:calc] 9*2-4\n[tool:py_sandbox] 14*2\nThe result from py_sandbox is: 28",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 28",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 28",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "14",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "28",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-002",
+      "task_id": "B2-068",
+      "unit_key": "B2-068/r21-seed-002"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "[tool:calc] 9*2-4\n[tool:py_sandbox] 14*2\nThe result from py_sandbox is: 28",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Step 1: Compute 9*2-4 using calc.\nUsing a calculator, 9*2-4 equals 14.\n\nStep 2: Use py_sandbox to compute result = 14*2.\nNow, let's compute 14*2 using py_sandbox.\n\n```python\n# Step 2: Compute 14*2\nres",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "14",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "28",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "[tool:calc] 9*2-4\n[tool:py_sandbox] 14*2\nThe result from py_sandbox is: 28",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 28",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 28",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "14",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "28",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-003",
+      "task_id": "B2-068",
+      "unit_key": "B2-068/r21-seed-003"
+    },
+    {
+      "c0_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 29",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "29",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "Final answer: 29",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 29",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "29",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-001",
+      "task_id": "B2-069",
+      "unit_key": "B2-069/r21-seed-001"
+    },
+    {
+      "c0_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 29",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "29",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "Final answer: 29",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 29",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "29",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-002",
+      "task_id": "B2-069",
+      "unit_key": "B2-069/r21-seed-002"
+    },
+    {
+      "c0_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 29",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "29",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "Final answer: 29",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 29",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 29",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "29",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-003",
+      "task_id": "B2-069",
+      "unit_key": "B2-069/r21-seed-003"
+    },
+    {
+      "c0_result": {
+        "answer_correct": true,
+        "answer_preview": "Step 1: Transform 'yes' to uppercase using str_ops.\nResult: 'YES'\n\nStep 2: Compute 3*7-2 using calc.\n3*7-2 = 21-2 = 19\n\nFinal answer: YES-19",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "str_ops"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolstr_ops|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Step 1: Transform 'yes' to uppercase using str_ops.\nThe result is 'YES'.\n\nStep 2: Compute 3*7-2 using calc.\n3*7-2 = 21-2 = 19\n\nFinal answer: YES-19",
+            "type": "llm"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "YES",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "19",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "Step 1: Transform 'yes' to uppercase using str_ops.\nResult: 'YES'\n\nStep 2: Compute 3*7-2 using calc.\n3*7-2 = 21-2 = 19\n\nFinal answer: YES-19",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: YES31",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "str_ops",
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolstr_ops|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: YES35",
+            "type": "llm"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "YES",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "19",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-001",
+      "task_id": "B2-070",
+      "unit_key": "B2-070/r21-seed-001"
+    },
+    {
+      "c0_result": {
+        "answer_correct": true,
+        "answer_preview": "Step 1: Transform 'yes' to uppercase using str_ops.\nResult: 'YES'\n\nStep 2: Compute 3*7-2 using calc.\nCalculation: 3*7-2 = 21-2 = 19\n\nFinal Answer: YES-19",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "str_ops"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolstr_ops|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Step 1: Transform 'yes' to uppercase using str_ops.\nUsing str_ops, 'yes' becomes 'YES'.\n\nStep 2: Compute 3*7-2 using calc.\n3*7-2 = 21-2 = 19.\n\nStep 3: Report in YES-NUMBER format.\nThe final answer is ",
+            "type": "llm"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "YES",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "19",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "Step 1: Transform 'yes' to uppercase using str_ops.\nResult: 'YES'\n\nStep 2: Compute 3*7-2 using calc.\nCalculation: 3*7-2 = 21-2 = 19\n\nFinal Answer: YES-19",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: YES41",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "str_ops",
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolstr_ops|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: YES29",
+            "type": "llm"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "YES",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "19",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-002",
+      "task_id": "B2-070",
+      "unit_key": "B2-070/r21-seed-002"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "First, I will transform 'yes' to uppercase using the `str_ops` tool.\n\n[tool:str_ops] yes\n\nThe result from `str_ops` is \"YES\". \n\nNext, I will compute 3*7-2 using the `calc` tool.\n\n[tool:calc] 3*7-2\n\nTh",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "str_ops"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolstr_ops|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Step 1: Transform 'yes' to uppercase using str_ops.\nThe result is 'YES'.\n\nStep 2: Compute 3*7-2 using calc.\n3*7-2 = 21-2 = 19.\n\nFinal answer: YES-19",
+            "type": "llm"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "YES",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "19",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "First, I will transform 'yes' to uppercase using the `str_ops` tool.\n\n[tool:str_ops] yes\n\nThe result from `str_ops` is \"YES\". \n\nNext, I will compute 3*7-2 using the `calc` tool.\n\n[tool:calc] 3*7-2\n\nTh",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: YES25",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "str_ops",
+              "calc"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolstr_ops|toolcalc|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: YES29",
+            "type": "llm"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "YES",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "19",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-003",
+      "task_id": "B2-070",
+      "unit_key": "B2-070/r21-seed-003"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "First, let's compute \\(4*6-3\\) using the `calc` tool.\n\n\\[4*6-3 = 24-3 = 21\\]\n\nNow, we'll use the `py_sandbox` tool to compute the result of \\(21+5\\).\n\n```python\n# Calculation using python sandbox\nresu",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "First, let's compute \\(4 \\times 6 - 3\\) using the `calc` tool.\n\n\\[ 4 \\times 6 - 3 = 24 - 3 = 21 \\]\n\nNow, let's use the `py_sandbox` to compute \\(21 + 5\\).\n\n```python\nresult = 21 + 5\nresult\n```\n\nThe re",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "21",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "26",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "First, let's compute \\(4*6-3\\) using the `calc` tool.\n\n\\[4*6-3 = 24-3 = 21\\]\n\nNow, we'll use the `py_sandbox` tool to compute the result of \\(21+5\\).\n\n```python\n# Calculation using python sandbox\nresu",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 26",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 26",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "21",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "26",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-001",
+      "task_id": "B2-071",
+      "unit_key": "B2-071/r21-seed-001"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "First, let's compute \\(4 \\times 6 - 3\\) using the `calc` tool.\n\n[tool:calc] 4*6-3\n\nNext, we will use the `py_sandbox` tool to compute \\(21 + 5\\).\n\n[tool:py_sandbox] 21+5\n41",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Step 1: Compute 4*6-3 using the calc tool.\n4*6-3 = 24-3 = 21\n\nStep 2: Now, use the py_sandbox tool to compute the result of 21+5.\n21+5 = 26\n\nThe result from the py_sandbox computation is 26.",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "21",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "26",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "First, let's compute \\(4 \\times 6 - 3\\) using the `calc` tool.\n\n[tool:calc] 4*6-3\n\nNext, we will use the `py_sandbox` tool to compute \\(21 + 5\\).\n\n[tool:py_sandbox] 21+5\n41",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 26",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 26",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "21",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "26",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-002",
+      "task_id": "B2-071",
+      "unit_key": "B2-071/r21-seed-002"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "First, I will compute \\(4 \\times 6 - 3\\) using the `calc` tool.\n\n\\[4 \\times 6 - 3 = 24 - 3 = 21\\]\n\nNext, I will use the `py_sandbox` tool to compute \\(21 + 5\\).\n\n\\[21 + 5 = 26\\]\n\nThe result from the `",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Step 1: Compute 4*6-3 using the calc tool.\nCalculation: 4*6-3 = 24-3 = 21\n\nStep 2: Use py_sandbox to compute result = 21+5.\nCalculation: result = 21 + 5 = 26\n\nFinal answer: The py_sandbox result is 26",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "21",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "26",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "First, I will compute \\(4 \\times 6 - 3\\) using the `calc` tool.\n\n\\[4 \\times 6 - 3 = 24 - 3 = 21\\]\n\nNext, I will use the `py_sandbox` tool to compute \\(21 + 5\\).\n\n\\[21 + 5 = 26\\]\n\nThe result from the `",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": true,
+        "answer_preview": "Final answer: 26",
+        "effective_success": true,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: 26",
+            "type": "llm"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "21",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "26",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-003",
+      "task_id": "B2-071",
+      "unit_key": "B2-071/r21-seed-003"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "1. Transform 'end' to uppercase using str_ops:\n   - Result: 'END'\n\n2. Compute 5*3-1 using calc:\n   - Calculation: \\(5 \\times 3 - 1 = 15 - 1 = 14\\)\n\n3. Use py_sandbox to compute result = 14+6:\n   - Cal",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "py_sandbox",
+              "str_ops"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolstr_ops|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Step 1: Transform 'end' to uppercase using str_ops.\nUsing the `str_ops` tool:\n```python\ntransformed_string = str_ops.upper('end')\n```\nThe transformed string is \"END\".\n\nStep 2: Compute 5*3-1 using calc",
+            "type": "llm"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "END",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "14",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "20",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "1. Transform 'end' to uppercase using str_ops:\n   - Result: 'END'\n\n2. Compute 5*3-1 using calc:\n   - Calculation: \\(5 \\times 3 - 1 = 15 - 1 = 14\\)\n\n3. Use py_sandbox to compute result = 14+6:\n   - Cal",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: END-NUMBER 30",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "str_ops",
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolstr_ops|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: END-NUMBER20",
+            "type": "llm"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "END",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "14",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "20",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-001",
+      "task_id": "B2-072",
+      "unit_key": "B2-072/r21-seed-001"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "1. Transform 'end' to uppercase using `str_ops`:\n   - Result: 'END'\n\n2. Compute \\( 5 \\times 3 - 1 \\) using `calc`:\n   - Calculation: \\( 5 \\times 3 - 1 = 15 - 1 = 14 \\)\n\n3. Use `py_sandbox` to compute ",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "py_sandbox",
+              "str_ops"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolstr_ops|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Step 1: Transform 'end' to uppercase using str_ops.\nUsing the str_ops tool, we transform 'end' to 'END'.\n\nStep 2: Compute 5*3-1 using calc.\nUsing the calc tool, we calculate 5*3-1 which equals 14.\n\nSt",
+            "type": "llm"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "END",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "14",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "20",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "1. Transform 'end' to uppercase using `str_ops`:\n   - Result: 'END'\n\n2. Compute \\( 5 \\times 3 - 1 \\) using `calc`:\n   - Calculation: \\( 5 \\times 3 - 1 = 15 - 1 = 14 \\)\n\n3. Use `py_sandbox` to compute ",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: END-NUMBER 30",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "str_ops",
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolstr_ops|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: UPPERCASE-NUMBER",
+            "type": "llm"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "END",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "14",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "20",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-002",
+      "task_id": "B2-072",
+      "unit_key": "B2-072/r21-seed-002"
+    },
+    {
+      "c0_result": {
+        "answer_correct": false,
+        "answer_preview": "1. Transform 'end' to uppercase using str_ops:\n   - Result: 'END'\n\n2. Compute 5*3-1 using calc:\n   - Calculation: 5*3-1 = 15-1 = 14\n\n3. Use py_sandbox to compute result = 14+6:\n   - Calculation in py_",
+        "effective_success": false,
+        "format_compliant": false,
+        "hard_validity": false,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "6f3ccae0",
+            "tools": [
+              "calc",
+              "py_sandbox",
+              "str_ops"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolstr_ops|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Step 1: Transform 'end' to uppercase using str_ops.\nUsing the str_ops tool, we transform 'end' to uppercase, resulting in 'END'.\n\nStep 2: Compute 5*3-1 using calc.\nUsing the calc tool, we calculate 5*",
+            "type": "llm"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "END",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "14",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "20",
+            "type": "tool"
+          }
+        ]
+      },
+      "c4_result": {
+        "abstain_reason": "invalid_contract",
+        "answer": "1. Transform 'end' to uppercase using str_ops:\n   - Result: 'END'\n\n2. Compute 5*3-1 using calc:\n   - Calculation: 5*3-1 = 15-1 = 14\n\n3. Use py_sandbox to compute result = 14+6:\n   - Calculation in py_",
+        "method": "llm_fallback",
+        "source_valid": false
+      },
+      "child_valid": true,
+      "parent_result": {
+        "answer_correct": false,
+        "answer_preview": "Final answer: END-NUMBER26",
+        "effective_success": false,
+        "format_compliant": true,
+        "hard_validity": true,
+        "tool_path_valid": true,
+        "trace": [
+          {
+            "prompt_sig": "a93f44dc",
+            "tools": [
+              "str_ops",
+              "calc",
+              "py_sandbox"
+            ],
+            "type": "meta",
+            "workflow_sig": "llm|toolstr_ops|toolcalc|toolpy_sandbox|finalize"
+          },
+          {
+            "detail": "analyze",
+            "ok": true,
+            "output": "Final answer: END-NUMBER20",
+            "type": "llm"
+          },
+          {
+            "detail": "str_ops",
+            "ok": true,
+            "output": "END",
+            "type": "tool"
+          },
+          {
+            "detail": "calc",
+            "ok": true,
+            "output": "14",
+            "type": "tool"
+          },
+          {
+            "detail": "py_sandbox",
+            "ok": true,
+            "output": "20",
+            "type": "tool"
+          }
+        ]
+      },
+      "seed_id": "r21-seed-003",
+      "task_id": "B2-072",
+      "unit_key": "B2-072/r21-seed-003"
+    }
+  ],
+  "units_completed": 24
+}

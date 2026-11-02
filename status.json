@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-02",
-  "phase": "GLEPPO_R23_REAUDIT_COMPLETE",
-  "state": "R23_REAUDIT_COMPLETE_REQUIRES_INDEPENDENT_REVIEW",
+  "phase": "GLEPPO_R24_CORRECTIVE_AUDIT",
+  "state": "R23_EVIDENCE_AND_GATE_DESIGN_REQUIRE_CORRECTION",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Correct R22 review-harness gaps; independently re-audit R21-C1 raw evidence and DAC gold isolation; re-audit all PC1 blockers and formal G3 failure. Do not execute PC1/G3 or controller training.",
-  "next_gate": "R23_R21_C1_REAUDIT -> PC1_CURRENT_BRANCH_BLOCKER_MATRIX -> INDEPENDENT_REVIEW_ACCEPT + TRUSTED_PLANNER_APPROVAL + FORMAL_G3 -> PC1 -> CONTROLLER_TRAINING",
+  "current_task": "Correct R23 verifier/tamper/DAC audit gaps, complete finding-by-finding current-branch PC1 audit, resolve G3 preflight-vs-efficacy gate cycle, and make ECOS preregistration executable. Offline only.",
+  "next_gate": "R24_CORRECTIONS -> INDEPENDENT_REVIEW_ACCEPT -> G3_PREFLIGHT + TRUSTED_PLANNER_APPROVAL + PC1_PROTOCOL_APPROVAL -> PC1 -> ECOS_TRAINING -> G3_EFFICACY",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -921,17 +921,18 @@
     "decision": "GO_DAC_strong_consistent_significant"
   },
   "training_readiness": {
-    "r21_c1_reported_decision": "GO",
-    "r21_c1_independent_review": "PROVISIONAL_R22_HARNESS_INSUFFICIENT_REQUIRES_R23_REAUDIT",
+    "r21_c1_reported_decision": "GO_REPORTED",
+    "r21_c1_independent_review": "ACCEPT_WITH_LIMITATIONS_REQUIRES_FINAL_INDEPENDENT_REVIEW",
     "r22_review_claim": "NOT_ACCEPTED_AS_FULL_INDEPENDENT_REVIEW",
     "pc1_protocol": "PROPOSED_NOT_APPROVED",
-    "historical_pc1_review": "REQUEST_CHANGES_REQUIRES_CURRENT_BRANCH_REAUDIT",
+    "historical_pc1_review": "REQUEST_CHANGES_REQUIRES_FINDING_BY_FINDING_CURRENT_BRANCH_AUDIT",
     "formal_g3": "FAIL",
     "pc1_executed": false,
     "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
     "family_c_accessed": false,
-    "next_executor_prompt": "planner/GLEPPO_R23_REAUDIT_AND_TRAINING_GATE_PROMPT.md",
-    "handoff_prompt": "planner/GLEPPO_R23_HANDOFF.md"
+    "next_executor_prompt": "planner/GLEPPO_R24_CORRECTIVE_AUDIT_PROMPT.md",
+    "handoff_prompt": "planner/GLEPPO_R24_HANDOFF.md",
+    "gate_sequence": "CIRCULAR_PREREQUISITE_IDENTIFIED_REQUIRES_AMENDMENT"
   },
   "r22_status": {
     "r21_c1_review": "PROVISIONAL_REQUIRES_R23_REAUDIT",
@@ -959,12 +960,44 @@
     "conclusion": "R22 full independent-review PASS is provisional and requires R23 re-audit; underlying R21 raw result is not thereby invalidated."
   },
   "r23_status": {
-    "r21_c1_verifier": "PASS_fail_closed_10_tamper_tests",
-    "dac_gold_isolation": "PASS_ast_based",
-    "pc1_blocker_matrix": "COMPLETE_10_rounds_REQUEST_CHANGES",
-    "g3_failure": "DECOMPOSED_format_tool_path_dac_not_g3",
-    "controller_prereg": "COMPLETE_not_authorized",
-    "tests": "450_of_450_PASS",
-    "decision": "R23_REAUDIT_COMPLETE_REQUIRES_INDEPENDENT_REVIEW"
+    "r21_c1_verifier": "PARTIAL_REQUIRES_R24_CORRECTION",
+    "dac_gold_isolation": "PARTIAL_SINGLE_FILE_AST_AUDIT",
+    "pc1_blocker_matrix": "SUMMARY_ONLY_CURRENT_BRANCH_AUDIT_NOT_COMPLETE",
+    "g3_failure": "FORMAL_G3_FAIL_GATE_SEQUENCE_CIRCULAR",
+    "controller_prereg": "OUTLINE_NOT_EXECUTABLE_NOT_AUTHORIZED",
+    "tests": "450_OF_450_REPORTED_NOT_INDEPENDENTLY_REPRODUCED_ON_R23_SHA",
+    "decision": "R23_PARTIAL_REQUIRES_R24_CORRECTIONS_AND_INDEPENDENT_REVIEW",
+    "r21_c1_review": "ACCEPT_WITH_LIMITATIONS",
+    "tamper_tests": "NOT_EXECUTED_AGAINST_TEMP_COPIES"
+  },
+  "r24_static_reassessment": {
+    "reviewed_commit": "2c66291ea896246a4f90b1f713c81a7ce931682c",
+    "report": "research/R23_STATIC_REASSESSMENT.md",
+    "review_type": "READ_ONLY_STATIC_SOURCE_AND_PROTOCOL_REVIEW",
+    "findings": [
+      "Tamper tests never call run_verifier; they mutate temp copies and append LOGIC_OK.",
+      "R21 verifier does not compare frozen-manifest hash or file sizes and does not use EXPECTED_SEEDS.",
+      "R21 verifier does not fully validate unit-key/seed/group provenance; C4 source_valid remains a proxy for effective_success.",
+      "DAC audit scans only answer_binding.py and prints PASS without executing claimed metamorphic tests.",
+      "PC1 matrix is summary-only; current-branch audit is incomplete; script lists nine named reviews while report claims ten.",
+      "Formal G3 passage is required before training while G3 decomposition says training is needed for final G3 rerun.",
+      "PC1 generation_reward and ECOS effective_success improvement reward are not reconciled.",
+      "ECOS preregistration lacks exact state/action/reward, operator, PPO, split, baseline, power and budget definitions.",
+      "Latest plan and training_readiness fields were stale relative to R23.",
+      "450/450 tests are reported in commit message; no exact-R23 CI status was returned."
+    ],
+    "conclusion": "R23 is a partial audit milestone. Corrective offline work and independent review are required; PC1/training remain unauthorized."
+  },
+  "r24": {
+    "status": "PLANNED_OFFLINE_CORRECTIVE_AUDIT",
+    "reviewed_base": "2c66291ea896246a4f90b1f713c81a7ce931682c",
+    "report": "research/R23_STATIC_REASSESSMENT.md",
+    "executor_prompt": "planner/GLEPPO_R24_CORRECTIVE_AUDIT_PROMPT.md",
+    "handoff_prompt": "planner/GLEPPO_R24_HANDOFF.md",
+    "model_calls": 0,
+    "pc1_executed": false,
+    "formal_g3_efficacy_executed": false,
+    "controller_training_started": false,
+    "family_c_accessed": false
   }
 }

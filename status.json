@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-10-29",
-  "phase": "GLEPPO_R20_COMPLETE",
-  "state": "R20_DAC_IMPLEMENTED_VALIDATED_OFFLINE",
+  "phase": "GLEPPO_R21_BLOCKED",
+  "state": "R21_BLOCKED_A800_UNREACHABLE",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -900,5 +900,13 @@
     "full_tests": "450_of_450_PASS",
     "model_calls": 0,
     "decision": "DAC_IMPLEMENTED_ready_for_R21"
+  },
+  "r21_status": {
+    "status": "BLOCKED",
+    "reason": "A800_host_unreachable",
+    "r20_audit": "PASS_no_task_branching_no_gold",
+    "test_count": "450_of_450_PASS",
+    "r21_design": "FROZEN_8_tasks_C0_vs_C4",
+    "offline_ready": true
   }
 }

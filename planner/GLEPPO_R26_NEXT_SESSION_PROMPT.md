@@ -215,3 +215,14 @@ Do not create empty placeholder reports. If a deliverable cannot yet be complete
 - End each Executor task with: base SHA, result SHA, final HEAD, remote branch/SHA, changed files, tests, model/API calls, PC1 status, Family C status, training status, and remaining blockers.
 
 **Immediate first task:** perform the exact-ref recovery, read the R25 reports, retrieve the ten historical PC1 review rounds, and build the complete finding inventory. Do not start controller training or registered PC1.
+
+## 9. Stage 1 Executor task prompt
+
+A dedicated Executor prompt is available at:
+
+planner/GLEPPO_R26_STAGE1_PC1_AUDIT_EXECUTOR_PROMPT.md
+
+When the user asks to begin execution, first read that file and issue it as the exact Stage 1 task to the Executor. It is a read-only historical/current-branch audit. Do not ask the Executor to implement fixes in Stage 1. The Executor must reconcile the R25 summary's approximately 43 findings against the 39 named IDs in its category table, using original round reports.
+
+The Executor must stop if branch ancestry or starting refs do not match. No registered PC1, Family C access, ECOS/PPO training, formal G3 efficacy, or new model/API calls are authorized.
+

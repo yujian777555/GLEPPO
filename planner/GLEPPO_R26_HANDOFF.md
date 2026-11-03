@@ -141,3 +141,7 @@ The Stage 1 prompt explicitly forbids source fixes, registered PC1, Family C acc
 
 **Current state:** the prompt has been written and linked from latest_plan.md. Stage 1 execution itself has not started.
 
+### Prompt revision note
+
+The Stage 1 Executor prompt was revised after adding handoff commits so that 3558c65b704efa05bf1f7ad85a2bebf89b1f4414 is treated as an ancestry anchor, not as an exact current HEAD. The Executor must verify that the actual current HEAD descends from this anchor and the R25 base, then record the actual local and remote SHAs. Latest prompt revision commit: 527d5a0bdf8f44fa5055e889880f697304f050b5.
+

@@ -4,7 +4,7 @@
 **Project:** GLEPPO only  
 **Repository:** yujian777555/GLEPPO  
 **Required branch:** r25-handoff  
-**Expected starting HEAD:** 3558c65b704efa05bf1f7ad85a2bebf89b1f4414  
+**Required ancestry anchor:** 3558c65b704efa05bf1f7ad85a2bebf89b1f4414  
 **R25 scientific boundary:** a8ff1827434a88b2fef02a89aaf3e120e0a017a7  
 **Task type:** READ-ONLY SOURCE AUDIT + EVIDENCE INVENTORY  
 **Stage result:** R26_STAGE1_PC1_AUDIT_DRAFT  
@@ -28,7 +28,7 @@ Before reading or changing anything:
 
 1. Fetch origin and enumerate local/remote branches and tags.
 2. Check out r25-handoff. Do not work on main or another project branch.
-3. Verify that HEAD is exactly 3558c65b704efa05bf1f7ad85a2bebf89b1f4414, or document every intervening commit and verify that the branch still descends from R25 base a8ff1827434a88b2fef02a89aaf3e120e0a017a7.
+3. Verify that HEAD descends from the required ancestry anchor 3558c65b704efa05bf1f7ad85a2bebf89b1f4414 and from the R25 base a8ff1827434a88b2fef02a89aaf3e120e0a017a7. The branch has received handoff-document commits after the anchor, so do not require HEAD to equal the anchor. Record the actual HEAD and origin/r25-handoff SHA before any edit.
 4. Record:
    - current branch;
    - HEAD SHA;

@@ -275,3 +275,39 @@ The immediate Executor task is planner/GLEPPO_R26_STAGE1C_EXECUTOR_PROMPT.md. It
 
 Do not start Stage 2 fixes until Planner has reviewed Stage 1C and issued a separate task. No registered PC1, Family C, ECOS/PPO training, Formal G3 efficacy, production runtime, external API calls, production signing key, or frozen R1–R25 evidence edits are authorized.
 
+## 12. Latest Planner decision — Stage 1C 42/42 claim rejected
+
+Read first:
+- research/R26_STAGE1C_PLANNER_REVIEW.md
+- research/R26_PC1_FINDING_LEVEL_VERIFICATION.md
+- research/R26_PC1_TEST_EVIDENCE.md
+- research/R26_PC1_AUDIT_SUMMARY.md
+- planner/GLEPPO_R26_STAGE1D_EXECUTOR_PROMPT.md
+- updated planner/latest_plan.md
+- updated planner/GLEPPO_R26_HANDOFF.md
+- status.json
+
+Stage 1C Executor reported 42/42 VERIFIED_FIXED and 450/450 PASS. Planner rejects the blanket disposition because the verifier only checks file existence and counts def test_ strings; it does not inspect behavior, test assertions, execute tests or derive a finding status. Its own output says NEEDS_DETAILED_VERIFICATION.
+
+The test mapping is invalid:
+- tests/test_c7.py does not import gleppo.pc1 or gleppo.evaluator; its 17 tests cover C7 genotype/operators/interpreter/task answer format.
+- tests/test_c7r1c2_protocol.py tests scripts/protocol_hash.py text normalization/hash update, not PC1 structured protocol semantics.
+- 450/450 has no raw output/log/CI URL and has not been independently reproduced.
+
+Category arithmetic is inconsistent:
+- Protocol 9 IDs but count 8;
+- Approval 5 IDs but count 6;
+- Provenance 9 IDs but count 7;
+- R24 double-listed in Budget and Cost;
+- category counts sum to 41, not 42.
+
+Planner inspected current source:
+- execute_registered_pc1() at gleppo/pc1.py:1111–1117 still refuses registered execution;
+- SyntheticGateHarness at 1400–1411 explicitly is not a collection/rollout runner;
+- ApprovalGate at 1320–1365 calls TrustedApprovalArtifact.verify(), but approval_key is injected and independent production trust-anchor provenance is not established; tests use a static test-only key;
+- structured protocol and typed JSON CRN implementation exists, but the Stage 1C test mapping does not prove its semantics.
+
+The immediate Executor task is planner/GLEPPO_R26_STAGE1D_EXECUTOR_PROMPT.md. Inspect the actual PC1 test suites, map every formal Finding to exact source and test functions, reproduce safe targeted offline tests, save raw outputs, correct category counts and dispositions, and preserve all gate boundaries. Do not modify source or test code.
+
+Current Planner status: R26_STAGE1C_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+

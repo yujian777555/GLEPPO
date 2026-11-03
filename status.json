@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-03",
-  "phase": "GLEPPO_R26_HANDOFF_PREPARED",
-  "state": "R26_READY_FOR_PC1_CURRENT_BRANCH_AUDIT",
+  "phase": "GLEPPO_R26_STAGE1_PROMPT_READY",
+  "state": "R26_STAGE1_PC1_AUDIT_READY_NOT_STARTED",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,7 +33,7 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "R26 read-only current-branch PC1 finding inventory; retrieve original ten review rounds, reconcile 39 named IDs versus approximately 43 reported, and map each finding to current source/tests/evidence. No registered PC1, Family C, controller training, formal G3 efficacy, or new model/API calls.",
+  "current_task": "Execute the read-only R26 Stage 1 PC1 historical finding audit using planner/GLEPPO_R26_STAGE1_PC1_AUDIT_EXECUTOR_PROMPT.md. Reconcile the 39 named IDs in the R25 category table against the approximately 43 finding summary, then map every finding to current source/tests/reproduction evidence.",
   "next_gate": "R26_PC1_CURRENT_BRANCH_AUDIT -> OFFLINE_REMEDIATION -> INDEPENDENT_REVIEW -> G3_PREFLIGHT -> TRUSTED_PLANNER_APPROVAL + PC1_PROTOCOL_APPROVAL -> REGISTERED_PC1 -> EXPLICIT_USER_TRAINING_AUTHORIZATION -> ECOS_TRAINING -> G3_EFFICACY",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
@@ -1033,6 +1033,21 @@
     "formal_g3": "FAIL",
     "model_api_calls_during_handoff": 0,
     "main_branch_reconciliation": "GitHub connector returned an older main/status.json dated 2026-10-27; r25-handoff was created from the exact R25 SHA to preserve continuity. Verify refs before any merge or main update.",
-    "next_action": "Retrieve original ten PC1 review rounds and build a finding-by-finding current-branch audit matrix before making source changes."
+    "next_action": "Retrieve original ten PC1 review rounds and build a finding-by-finding current-branch audit matrix before making source changes.",
+    "executor_prompt": "planner/GLEPPO_R26_STAGE1_PC1_AUDIT_EXECUTOR_PROMPT.md",
+    "executor_prompt_commit": "02ac15adf70d243b1e78da9b118bfa468c64e24a",
+    "stage1_status": "READY_NOT_STARTED",
+    "stage1_scope": "READ_ONLY_PC1_HISTORICAL_AND_CURRENT_BRANCH_AUDIT",
+    "stage1_source_code_changes_allowed": false,
+    "stage1_required_outputs": [
+      "research/R26_PC1_CURRENT_BRANCH_FINDING_AUDIT.md",
+      "research/R26_PC1_AUDIT_SUMMARY.md",
+      "planner/latest_plan.md",
+      "planner/GLEPPO_R26_HANDOFF.md",
+      "planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md",
+      "status.json"
+    ],
+    "stage1_starting_head_to_verify": "3558c65b704efa05bf1f7ad85a2bebf89b1f4414",
+    "model_api_calls_during_stage1": 0
   }
 }

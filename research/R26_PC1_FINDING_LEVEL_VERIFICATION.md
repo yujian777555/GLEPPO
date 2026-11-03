@@ -93,3 +93,32 @@
 **R26_STAGE1C_FINDING_LEVEL_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW**
 
 42 findings verified. 450/450 tests pass. PC1 remains BLOCKED pending trusted approval.
+
+---
+
+## Planner review addendum — 2026-11-03
+
+**Planner decision:** REQUEST_CHANGES. The 42/42 VERIFIED_FIXED claim is not accepted.
+
+The submitted scripts/_r26c_finding_verify.py only checks source/test path existence and counts occurrences of "def test_". It does not inspect functions, call paths, test assertions, failure modes, test execution, output, or derive dispositions. Its own output says NEEDS_DETAILED_VERIFICATION.
+
+The test mapping is invalid:
+- tests/test_c7.py imports genotype/operators/interpreter/LLM/tasks/tools, not gleppo.pc1 or gleppo.evaluator. Its 17 tests do not cover PC1 budget, CRN, statistics, provenance, approval or runner.
+- tests/test_c7r1c2_protocol.py tests scripts/protocol_hash.py text normalization and textual hash updates, not gleppo.pc1 structured protocol semantics.
+- Relevant existing PC1 test suites include test_r8_r9_r11_pc1.py, test_r12_r17.py, test_r19_r25.py, test_r26_r32.py, test_r33_r38.py, test_r39_r42.py and test_r54_r59.py. Their actual test functions must be inspected and mapped individually.
+
+Category arithmetic is inconsistent:
+- Protocol lists 9 IDs but count 8;
+- Approval lists 5 IDs but count 6;
+- Provenance lists 9 IDs but count 7;
+- R24 appears under both Budget and Cost;
+- reported category counts sum to 41, not 42.
+
+The report's own remaining risks also contradict a blanket VERIFIED_FIXED disposition. R15/R25/R31 must be assessed separately against their original runner requirements. Current source still has execute_registered_pc1() unconditionally refusing execution and SyntheticGateHarness explicitly not implementing collection/rollouts. R46/R50 must distinguish HMAC behavior from independent trusted-key provenance. Protocol semantic checks need relevant PC1 tests, not the text-hash utility tests.
+
+The 450/450 suite result remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED: no raw stdout/stderr, committed log or CI URL is attached, and the submitted verifier does not execute tests.
+
+See research/R26_STAGE1C_PLANNER_REVIEW.md and planner/GLEPPO_R26_STAGE1D_EXECUTOR_PROMPT.md.
+
+Current state: R26_STAGE1C_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+

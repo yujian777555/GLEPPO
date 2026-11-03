@@ -1119,7 +1119,8 @@
     "family_c_accessed": false,
     "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
     "formal_g3": "FAIL",
-    "model_api_calls": 0
+    "model_api_calls": 0,
+    "report_commit": "ddec2a4c63b40f76cb8d83658c4f729235f72216"
   },
   "r26_stage1c": {
     "status": "PROMPT_PREPARED_NOT_STARTED",
@@ -1149,6 +1150,8 @@
     "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
     "formal_g3": "FAIL",
     "model_api_calls": 0,
-    "next_action": "Verify refs; search for FIRST review; map all 42 formal findings to exact source/test/reproduction evidence; crosswalk SECOND blockers and R54-R61 remediation; run only safe offline tests; no code fixes."
+    "next_action": "Verify refs; search for FIRST review; map all 42 formal findings to exact source/test/reproduction evidence; crosswalk SECOND blockers and R54-R61 remediation; run only safe offline tests; no code fixes.",
+    "prompt_commit": "6bdafcc1ef637d0bafb1367ec58eff0289f3c55a",
+    "review_report": "research/R26_STAGE1B_PLANNER_REVIEW.md"
   }
 }

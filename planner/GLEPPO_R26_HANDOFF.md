@@ -192,3 +192,56 @@ No production source fixes. No registered PC1. No Family C access. No ECOS/PPO t
 
 At each stage update status.json, latest_plan.md, this handoff and the next-session prompt. Record exact current HEAD, remote SHA, changed files, test commands/results and all gate states.
 
+---
+
+## 12. R26 Stage 1B Executor result and Planner review (2026-11-03)
+
+Executor reported Stage 1B complete at:
+- commit: bcdc24f4d3c7bbaf390678670c54f642b9948a99;
+- branch: r25-handoff;
+- reported tests: 450/450 PASS;
+- formal headings: 42 (R12–R53);
+- SECOND blockers: 5–6 unnumbered;
+- TENTH remediation records: 8 (R54–R61);
+- all 42 formal findings: UNVERIFIABLE.
+
+Planner independently checked refs:
+- r25-handoff HEAD at review: bcdc24f4d3c7bbaf390678670c54f642b9948a99;
+- main HEAD: 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e;
+- main is 104 commits behind r25-handoff, with no commits ahead;
+- R25 base is 23 commits behind Stage 1B, with no commits ahead;
+- Stage 1B report commit parent/source snapshot: a1940a220bc2b7cdc4e6ba4fe0c723fbfb33c4ec.
+
+Planner accepts Stage 1B as a historical taxonomy milestone only. It does not accept the seven-domain keyword-presence scan as a source audit. The reported 450/450 result has no attached raw output or CI URL and has not been independently reproduced by Planner.
+
+Planner's source inspection found:
+- gleppo/pc1.py:1111–1117: execute_registered_pc1 unconditionally refuses;
+- gleppo/pc1.py:1400–1411: SyntheticGateHarness is explicitly not a full collection/rollout runner;
+- gleppo/pc1.py:1320–1365: ApprovalGate accepts an injected approval_key; provenance of an independent trusted key is not demonstrated;
+- tests/test_r54_r59.py uses a static test-only key;
+- tests/test_r39_r42.py:96–100 has a tautological same-call assertion; tests/test_r8_r9_r11_pc1.py:50–64 includes a stronger end-to-end different-genotype seed test;
+- evaluator effective_seed_parts includes replica_index, while pc1.crn_seed has no replica_index parameter; actual call-site semantics require verification.
+
+Full Planner review: research/R26_STAGE1B_PLANNER_REVIEW.md.
+
+## 13. Immediate next task — R26 Stage 1C
+
+Read and execute planner/GLEPPO_R26_STAGE1C_EXECUTOR_PROMPT.md.
+
+Stage 1C is a finding-level semantic source audit:
+1. Verify refs and distinguish source snapshot, report commit and current HEAD.
+2. Search history for FIRST review; bound missing-source conclusions.
+3. Build a crosswalk for all 42 formal IDs, SECOND blockers and R54–R61 remediation items.
+4. For every R12–R53 finding, inspect the actual source control path and test body; record exact lines, reproduction command/output, disposition, residual risk and acceptance test.
+5. Audit CRN, budget/CTX, statistics, protocol hash/schema, approval trust-anchor provenance, plan/evidence provenance, runner and gate sequence.
+6. Inspect tests for side effects before running; use only safe offline tests.
+7. Keep production source unchanged.
+
+The formal-heading count 42 is accepted. The distinct actionable issue-cluster count remains unresolved. Do not report 42 unique actionable issues without a cross-round deduplication crosswalk.
+
+## 14. Current hard boundaries
+
+No registered PC1 execution. No Family C access. No ECOS/PPO training. No Formal G3 efficacy rerun. No external model/API calls. No production runtime calls. No source or test code changes. No production approval key/signature. No modifications to frozen R1–R25 evidence/manifests. No merge/reset/rebase/force-push of main.
+
+Current Planner status: R26_STAGE1B_TAXONOMY_MILESTONE_ACCEPTED; FINDING_LEVEL_SOURCE_AUDIT_REQUIRED; PC1 BLOCKED.
+

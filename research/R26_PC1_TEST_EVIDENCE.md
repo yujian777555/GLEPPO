@@ -34,3 +34,20 @@
 - Hash checks must compare actual bytes
 - CRN must verify all seed components
 - Approval must verify trusted artifact
+
+---
+
+## Planner correction — 2026-11-03
+
+The Stage 1C mapping above is **not accepted as finding-level test coverage**.
+
+- tests/test_c7.py has 17 tests for genotype/operator/crossover, answer formatting and evidence-presence behavior. It does not import gleppo.pc1 or gleppo.evaluator; it cannot support the mapped PC1 budget, CRN, statistics, provenance, approval or runner findings.
+- tests/test_c7r1c2_protocol.py has 10 tests for scripts/protocol_hash.py text normalization and textual hash update/verification. It does not test gleppo.pc1.parse_protocol_document() or protocol_consistency_check().
+- The 450/450 full-suite result is Executor-reported only. No raw stdout/stderr, saved log or CI run URL is attached. Planner has not independently reproduced it.
+- scripts/_r26c_finding_verify.py does not execute tests. It only checks file existence and counts test-function declarations; it prints NEEDS_DETAILED_VERIFICATION.
+
+Relevant PC1 test candidates that must be inspected by exact function and assertion include:
+tests/test_r8_r9_r11_pc1.py, tests/test_r12_r17.py, tests/test_r19_r25.py, tests/test_r26_r32.py, tests/test_r33_r38.py, tests/test_r39_r42.py and tests/test_r54_r59.py.
+
+Until Stage 1D supplies exact test-function-to-finding mappings and safe reproducible outputs, the Stage 1C test evidence cannot substantiate 42/42 VERIFIED_FIXED.
+

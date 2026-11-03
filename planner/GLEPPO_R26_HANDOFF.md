@@ -145,3 +145,50 @@ The Stage 1 prompt explicitly forbids source fixes, registered PC1, Family C acc
 
 The Stage 1 Executor prompt was revised after adding handoff commits so that 3558c65b704efa05bf1f7ad85a2bebf89b1f4414 is treated as an ancestry anchor, not as an exact current HEAD. The Executor must verify that the actual current HEAD descends from this anchor and the R25 base, then record the actual local and remote SHAs. Latest prompt revision commit: 527d5a0bdf8f44fa5055e889880f697304f050b5.
 
+---
+
+## 9. R26 Stage 1 Executor result and Planner review (2026-11-03)
+
+Executor reported Stage 1 complete at commit 60f60e5c40ef65b6b5395182d322863780e9784f:
+- branch r25-handoff;
+- nine review files recovered (SECOND through TENTH);
+- parser output 43 candidate identifiers;
+- all candidates UNVERIFIABLE;
+- PC1 BLOCKED;
+- no PC1, Family C, controller training, Formal G3 or model/API execution.
+
+Planner inspected the source review files and the extraction script. Stage 1 is accepted only as a **preliminary historical inventory milestone**, not as a completed current-source audit.
+
+Reasons:
+1. The parser counts “R60-R61 Independent Review Result” as R60 even though it is a review-result heading.
+2. The parser misses bold IDs in Markdown remediation tables.
+3. Formal finding headings in THIRD–TENTH are R12–R53, 42 headings.
+4. SECOND has five initial numbered blocker bullets, while status.json reports six because one bullet combines two independently testable concerns.
+5. SECOND remediation logs contain R8–R11; TENTH remediation logs contain R54–R61. These must be classified separately from formal review findings and deduplicated.
+6. Stage 1's 72-line audit file has no full per-issue source/test/reproduction matrix.
+7. FIRST report has not yet been located; the two guessed paths not found are not an exhaustive Git-history search.
+
+Planner review: research/R26_STAGE1_PLANNER_REVIEW.md.  
+Stage 1B Executor prompt: planner/GLEPPO_R26_STAGE1B_EXECUTOR_PROMPT.md.
+
+## 10. Current continuation task — R26 Stage 1B
+
+The next Executor task is to:
+- verify the exact branch refs and ancestry;
+- search history/refs for a FIRST review artifact;
+- build a semantically classified historical register (formal findings, unnumbered blockers, remediation items, review results, duplicates/splits);
+- reconcile the SECOND five-bullet/six-blocker discrepancy;
+- correct the Stage 1 parser taxonomy;
+- audit each distinct actionable issue against current source, test bodies and safe offline reproduction;
+- produce a full row-by-row current-source audit matrix.
+
+Do not force a single aggregate count until the counting unit and deduplication rules are explicit. The “43 unique findings” Stage 1 claim is provisional and is not accepted as a final count.
+
+Current source audit is NOT COMPLETE. All candidate issues remain UNVERIFIABLE until actual current-branch source and test evidence is recorded.
+
+## 11. R26 Stage 1B boundaries
+
+No production source fixes. No registered PC1. No Family C access. No ECOS/PPO training. No Formal G3 efficacy. No external model/API or production runtime calls. No changes to frozen R1–R25 raw evidence/manifests. No main merge/reset/force-push.
+
+At each stage update status.json, latest_plan.md, this handoff and the next-session prompt. Record exact current HEAD, remote SHA, changed files, test commands/results and all gate states.
+

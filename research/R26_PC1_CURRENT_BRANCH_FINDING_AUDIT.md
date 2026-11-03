@@ -70,3 +70,18 @@
 **R26_STAGE1_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW**
 
 43 unique findings identified. R25 table incomplete (39 listed). All findings need current-branch verification. PC1 remains BLOCKED.
+
+---
+
+## Planner review note (2026-11-03) — preliminary inventory, not a completed source audit
+
+Planner reviewed the Stage 1 extraction at commit 60f60e5c40ef65b6b5395182d322863780e9784f and found that the claimed 43 unique findings are not yet established.
+
+The helper scripts/_r26_findings.py counts the heading “R60-R61 Independent Review Result” as R60, although this is a review-result section rather than a formal finding heading. It also misses IDs inside bold Markdown table cells, including remediation-log entries. Direct inspection finds 42 formal numbered independent-review finding headings in THIRD through TENTH (R12-R53). TENTH separately contains remediation-log entries R54-R61; SECOND contains remediation-log references R8-R11. These record types must be separated and deduplicated before stating an aggregate historical blocker count.
+
+The initial SECOND review has five numbered blocker bullets, while status.json says six blockers; one bullet combines accounting and smoke planned-slot defects and may need a documented split.
+
+This file is therefore a **Stage 1 preliminary inventory summary**, not a row-by-row current-source audit. All candidate issues remain UNVERIFIABLE. The source/test matrix has not yet been completed. See research/R26_STAGE1_PLANNER_REVIEW.md and planner/GLEPPO_R26_STAGE1B_EXECUTOR_PROMPT.md.
+
+Current decision: PRELIMINARY_HISTORICAL_INVENTORY_COMPLETE; COUNT_TAXONOMY_AND_CURRENT_SOURCE_AUDIT_REQUIRED. PC1 remains BLOCKED.
+

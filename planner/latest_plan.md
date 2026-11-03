@@ -1,106 +1,105 @@
-# GLEPPO 最新执行计划 — R26 Stage 1C：逐项 Finding 语义验证
+# GLEPPO 最新执行计划 — R26 Stage 1D：纠正逐项审计证据与 Finding 判定
 
 **仓库：** yujian777555/GLEPPO  
-**延续分支：** r25-handoff  
+**分支：** r25-handoff  
 **R25 基线：** a8ff1827434a88b2fef02a89aaf3e120e0a017a7  
-**Stage 1B 报告提交：** bcdc24f4d3c7bbaf390678670c54f642b9948a99  
-**Stage 1B 源码快照：** a1940a220bc2b7cdc4e6ba4fe0c723fbfb33c4ec  
-**Stage 1B Planner 复审：** research/R26_STAGE1B_PLANNER_REVIEW.md  
+**Stage 1C 源码快照：** 2a2cd1f2126aa14c5edeca71c79dc2f488f827b4  
+**Stage 1C Executor 提交：** 021380c6a3879e13d87cca014537e71dc882a085  
+**Stage 1C Planner 复审：** research/R26_STAGE1C_PLANNER_REVIEW.md  
 **更新时间：** 2026-11-03  
-**当前状态：** R26_STAGE1B_TAXONOMY_MILESTONE_ACCEPTED_FINDING_LEVEL_AUDIT_REQUIRED
+**当前状态：** R26_STAGE1C_REQUEST_CHANGES_EVIDENCE_RECONCILIATION_REQUIRED
 
-## 一、Stage 1B 验收边界
+## 一、Stage 1C Planner 复审结论
 
-Planner 接受 Stage 1B 的历史分类里程碑：
-- 正式审查 Finding 标题：42 个，R12–R53；
-- SECOND 无编号 blocker：5–6 个，拆分规则未定；
-- TENTH remediation records：8 个，R54–R61；
-- R60–R61 Independent Review Result：review-result 标题，不是正式 Finding。
+**不接受 42/42 VERIFIED_FIXED。**
 
-但 42 个正式标题不等于已经证明 42 个独立问题簇。历史跨轮重复、拆分、合并和 SECOND 5/6 差异仍须建立 crosswalk。
+Stage 1C 提交了 42 行 Finding 表，但验证脚本 scripts/_r26c_finding_verify.py 仅检查源码/测试文件是否存在、统计 def test_ 字符串数量，并没有检查函数调用、测试断言、历史失败模式或真实执行结果。脚本自身输出 NEEDS_DETAILED_VERIFICATION。
 
-Stage 1B 的七域检查脚本 scripts/_r26b_source_audit.py 主要检查关键词是否存在，不是语义源码审计。450/450 测试是 Executor 报告值，Planner 未独立复现，也没有附原始 stdout/stderr 或 CI URL。所有 42 项继续保持 UNVERIFIABLE。
+测试映射也不成立：
+- tests/test_c7.py 只导入 genotype/operators/interpreter/LLM/tasks/tools，不导入 gleppo.pc1 或 gleppo.evaluator，不能证明 PC1 的 budget/CRN/statistics/approval/runner。
+- tests/test_c7r1c2_protocol.py 测试 scripts/protocol_hash.py 的文本哈希规范化，不测试 PC1 structured protocol semantics。
+- 报告没有 raw stdout/stderr、测试日志或 CI URL；450/450 仍是 Executor 报告值，Planner 未独立复现。
 
-详细复审：research/R26_STAGE1B_PLANNER_REVIEW.md。
+类别表算术也有错误：
+- Protocol 列出 9 个 ID、计数却写 8；
+- Approval 列出 5 个 ID、计数却写 6；
+- Provenance 列出 9 个 ID、计数却写 7；
+- R24 同时出现在 Budget 和 Cost；
+- 所有类别计数相加为 41，而不是 42。
 
-## 二、当前仓库引用
+详细复审：research/R26_STAGE1C_PLANNER_REVIEW.md。
 
-Planner 核对时：
-- r25-handoff = bcdc24f4d3c7bbaf390678670c54f642b9948a99；
-- main = 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e；
-- main 相对 r25-handoff 落后 104 commits，未领先；
-- R25 base 相对 bcdc24f 落后 23 commits，未领先；
-- bcdc24f 的父提交是 a1940a220bc2b7cdc4e6ba4fe0c723fbfb33c4ec。
+## 二、已确认的源码事实
 
-Executor 开始时必须重新核实这些 refs。继续只在 r25-handoff 工作，不自动更新 main。
+1. Runner：
+   - gleppo/pc1.py:1111–1117 的 execute_registered_pc1() 仍然无条件拒绝；
+   - gleppo/pc1.py:1400–1411 的 SyntheticGateHarness 明确不执行任务加载、Evaluator、rollout 或 raw artifact 写入。
+   - R15、R25、R31 必须分别按原始验收标准判定，不能一律 VERIFIED_FIXED。
 
-## 三、Stage 1C 目标
+2. Approval：
+   - gleppo/pc1.py:1320–1365 的 ApprovalGate 已调用 TrustedApprovalArtifact.verify()，并检查 canonical status/hash；
+   - approval_key 仍由调用者注入，外部独立 trust-anchor provenance 未证明；
+   - tests/test_r54_r59.py 使用 test-only static key。
+   - 必须区分 HMAC 代码正确性与生产授权来源可信度。
 
-执行提示词：planner/GLEPPO_R26_STAGE1C_EXECUTOR_PROMPT.md。
+3. Protocol/CRN：
+   - 当前源码包含结构化协议检查和 typed JSON seed 逻辑；
+   - 但 Stage 1C 没有把实际 PC1 测试函数与这些逻辑正确对应。
 
-本阶段必须把 42 个正式 Finding 从“存在某些关键词/模块”推进到逐项证据审计。每项都要给出原始问题、源码路径和行号、真实调用路径、对应测试函数、测试实际断言、复现命令和结果、Disposition、剩余风险、最小修复建议和验收测试。
+## 三、Stage 1D 执行任务
 
-重点审查：
+完整提示词：planner/GLEPPO_R26_STAGE1D_EXECUTOR_PROMPT.md。
 
-1. Seed/CRN：有效 RNG seed、replica_index、action/genotype 隔离、cache key、pc1.crn_seed 与 evaluator.effective_seed_parts 的关系。
-2. Budget/CTX：logical slots、replica execution、cache bundle、planned/actual、episode deltas、atomic update、reconciliation。
-3. Statistics：sample roles、coverage、duplicate/missing records、cluster/episode/task provenance、estimator/bootstrap、fail-closed。
-4. Protocol：canonical parsing、duplicate keys、schema、strict types、hash/version/status lifecycle、真实文件修改检测。
-5. Approval：HMAC 正确性与可信密钥来源必须区分；测试密钥不能冒充生产 trust anchor；检查 action/status/document/hash/version/replay/expiry/branch binding。
-6. Plan/provenance/evidence：plan identity、registered hash、protocol/runtime/evaluator binding、manifest、path safety、replay。
-7. Runner/gates：SyntheticGateHarness 不等于 registered runner；核实 execute_registered_pc1、所有 gates、拒绝路径和绕过风险。
+本阶段只纠正证据和 Finding 判定，不修改生产源码或测试代码。
 
-Planner 已观察到：
-- gleppo/pc1.py:1111–1117 的 execute_registered_pc1() 无条件拒绝 registered PC1；
-- gleppo/pc1.py:1400–1411 的 SyntheticGateHarness 明确不是完整 collection/rollout runner；
-- gleppo/pc1.py:1320–1365 的 ApprovalGate 使用调用者注入的 approval_key，可信密钥来源尚未证明；
-- tests/test_r54_r59.py 使用 test-only static key；
-- tests/test_r39_r42.py:96–100 有同一函数调用与自身比较的 tautological assertion；tests/test_r8_r9_r11_pc1.py:50–64 有更强的跨 genotype instrumented test，需要一起评估；
-- evaluator.effective_seed_parts 包含 replica_index，而 pc1.crn_seed 没有该参数，必须查明二者真实调用关系。
+必须逐项检查 R12–R53：
+- 找到原始 Finding 的验收标准；
+- 检查当前源码的真实函数和调用路径；
+- 检查正确的测试函数与具体断言；
+- 对安全测试进行离线复现；
+- 记录 raw output、退出码和测试日志；
+- 使用 VERIFIED_FIXED / PARTIALLY_FIXED / OPEN / REGRESSION / NOT_APPLICABLE / UNVERIFIABLE；
+- 对没有证据的 Finding 不得继续标为 VERIFIED_FIXED。
 
-这些是审计线索，不是未经验证的最终缺陷判决。
+优先检查的真实 PC1 测试文件：
+- tests/test_r8_r9_r11_pc1.py
+- tests/test_r12_r17.py
+- tests/test_r19_r25.py
+- tests/test_r26_r32.py
+- tests/test_r33_r38.py
+- tests/test_r39_r42.py
+- tests/test_r54_r59.py
+
+文件名不等于覆盖证明，必须审查函数和断言。
 
 ## 四、交付物
 
-- research/R26_PC1_FINDING_LEVEL_VERIFICATION.md：42 个正式 Finding 的逐项矩阵及 SECOND/R54–R61 crosswalk。
-- research/R26_PC1_TEST_EVIDENCE.md：测试安全审查、精确命令、原始结果、覆盖映射和跳过原因。
-- research/R26_PC1_FINDING_REGISTER.md：只在有证据时更新 crosswalk 和 deduplication，不强行合并。
-- research/R26_PC1_CURRENT_BRANCH_FINDING_AUDIT.md：保留 Stage 1B 初步记录，补充 Stage 1C 真正的逐项审计结果。
-- research/R26_PC1_AUDIT_SUMMARY.md：更新真实 disposition 和剩余阻塞。
+- research/R26_STAGE1D_CORRECTED_FINDING_AUDIT.md
+- research/R26_STAGE1D_TEST_EVIDENCE.md
+- research/R26_PC1_FINDING_LEVEL_VERIFICATION.md（保留 Stage 1C Executor 原始主张，追加 Planner/Stage 1D 修正）
+- research/R26_PC1_TEST_EVIDENCE.md
+- research/R26_PC1_AUDIT_SUMMARY.md
+- research/R26_STAGE1C_PLANNER_REVIEW.md
 - planner/latest_plan.md
 - planner/GLEPPO_R26_HANDOFF.md
 - planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md
 - status.json
 
-若不能完成所有 42 项，逐项列明完成/未完成，不能宣称完整。
-
-## 五、严格边界
+## 五、硬边界
 
 - 不执行 registered PC1；
-- 不访问、列出、读取、加载、检查、调参或执行 Family C；
+- 不访问、列出、读取或加载 Family C；
 - 不训练 ECOS/PPO；
 - 不运行 Formal G3 efficacy；
 - 不调用外部模型/API；
 - 不启动 production runtime；
 - 不修改生产源码或测试代码；
-- 不创建审批 artifact 或签名，不读取/配置生产签名密钥；
-- 不修改冻结的 R1–R25 raw evidence/manifests；
-- 不 merge/reset/rebase/force-push 或更新 main；
-- 不混用其他项目的代码和产物。
+- 不读取或配置生产审批密钥；
+- 不修改冻结 R1–R25 raw evidence/manifests；
+- 不 merge/reset/rebase/force-push 或更新 main。
 
-只允许运行经过安全审查的离线测试。450/450 aggregate pass 不能替代逐项行为覆盖证据。
+## 六、下一步
 
-## 六、Stage 1C 验收标准
+先核实 refs，再审查真实 PC1 测试，纠正 42 个 Finding 的 disposition，运行安全的 targeted offline tests，并保存原始结果。
 
-只有当：
-1. FIRST review 搜索范围和结果已记录；
-2. 42 个 formal IDs 均有可追溯原始来源；
-3. SECOND blocker 和 R54–R61 remediation crosswalk 清楚；
-4. 每项 Finding 都有真实源码/测试/复现证据，或明确、可解释的 UNVERIFIABLE 原因；
-5. runner 与 approval trust-anchor 缺口被准确表达；
-6. 测试无 Family C/API/生产 runtime/PC1/训练副作用；
-7. 状态、提交和证据路径一致；
-
-才可提交 Planner 独立复审。
-
-**下一步：严格执行 planner/GLEPPO_R26_STAGE1C_EXECUTOR_PROMPT.md。Stage 1C 仍然只审计，不修复生产源码。**
+**Stage 1D 通过 Planner 复审之前，不得进入代码修复，更不得申请 PC1 执行或 PPO 训练。**

@@ -122,3 +122,22 @@ Update all of the following:
 Do not create empty placeholder reports. Record exact base SHA, result SHA, final HEAD, remote branch/SHA, changed files, test commands/results, API/model calls, PC1 status, Family C status, training status, and remaining blockers.
 
 **Current R26 state:** prompt and handoff prepared only. The current-branch PC1 audit has not yet started. No code tests or experiments were run during this handoff update.
+
+## 8. Stage 1 Executor prompt
+
+A separate, detailed Executor task prompt has now been added:
+
+- planner/GLEPPO_R26_STAGE1_PC1_AUDIT_EXECUTOR_PROMPT.md
+- Prompt commit: 02ac15adf70d243b1e78da9b118bfa468c64e24a
+
+It is intentionally narrower than the general R26 Planner prompt. It directs the Executor to:
+1. recover and verify the exact branch/ref state;
+2. retrieve all original PC1 review rounds;
+3. reconcile the 39 named IDs in the R25 category table against the “approximately 43” summary;
+4. map every historical finding to current source, tests, reproduction commands, and evidence;
+5. produce a read-only audit report and state handoff.
+
+The Stage 1 prompt explicitly forbids source fixes, registered PC1, Family C access, controller training, formal G3 efficacy, and external model/API calls. Findings are to remain unresolved when evidence is incomplete; the Executor must not fabricate missing historical findings or claim a complete audit prematurely.
+
+**Current state:** the prompt has been written and linked from latest_plan.md. Stage 1 execution itself has not started.
+

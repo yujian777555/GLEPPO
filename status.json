@@ -2,9 +2,9 @@
   "project": "GLEPPO",
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
-  "updated_at": "2026-11-02",
-  "phase": "GLEPPO_R26_STAGE1_COMPLETE",
-  "state": "R26_STAGE1_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+  "updated_at": "2026-11-03",
+  "phase": "GLEPPO_R26_STAGE1B_READY",
+  "state": "R26_STAGE1_PRELIMINARY_INVENTORY_PLANNER_REVIEW_REQUEST_CHANGES",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Execute the read-only R26 Stage 1 PC1 historical finding audit using planner/GLEPPO_R26_STAGE1_PC1_AUDIT_EXECUTOR_PROMPT.md. Reconcile the 39 named IDs in the R25 category table against the approximately 43 finding summary, then map every finding to current source/tests/reproduction evidence.",
-  "next_gate": "R26_PC1_CURRENT_BRANCH_AUDIT -> OFFLINE_REMEDIATION -> INDEPENDENT_REVIEW -> G3_PREFLIGHT -> TRUSTED_PLANNER_APPROVAL + PC1_PROTOCOL_APPROVAL -> REGISTERED_PC1 -> EXPLICIT_USER_TRAINING_AUTHORIZATION -> ECOS_TRAINING -> G3_EFFICACY",
+  "current_task": "R26 Stage 1B: build a semantically classified historical PC1 finding register, search history/refs for the FIRST review, reconcile formal findings vs unnumbered blockers vs remediation-log items vs review-result sections, and complete a row-by-row current-source/test audit. No production source fixes.",
+  "next_gate": "R26_STAGE1B_FINDING_REGISTER_AND_CURRENT_SOURCE_AUDIT -> PLANNER_REVIEW -> STAGE2_OFFLINE_REMEDIATION_ONLY_IF_CONFIRMED",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -1033,10 +1033,10 @@
     "formal_g3": "FAIL",
     "model_api_calls_during_handoff": 0,
     "main_branch_reconciliation": "GitHub connector returned an older main/status.json dated 2026-10-27; r25-handoff was created from the exact R25 SHA to preserve continuity. Verify refs before any merge or main update.",
-    "next_action": "Retrieve original ten PC1 review rounds and build a finding-by-finding current-branch audit matrix before making source changes.",
+    "next_action": "Execute planner/GLEPPO_R26_STAGE1B_EXECUTOR_PROMPT.md. Stage 1's 43 count is provisional; complete taxonomy and current-source matrix before any remediation.",
     "executor_prompt": "planner/GLEPPO_R26_STAGE1_PC1_AUDIT_EXECUTOR_PROMPT.md",
     "executor_prompt_commit": "02ac15adf70d243b1e78da9b118bfa468c64e24a",
-    "stage1_status": "READY_NOT_STARTED",
+    "stage1_status": "PRELIMINARY_INVENTORY_COMPLETE_PLANNER_REVIEW_REQUEST_CHANGES",
     "stage1_scope": "READ_ONLY_PC1_HISTORICAL_AND_CURRENT_BRANCH_AUDIT",
     "stage1_source_code_changes_allowed": false,
     "stage1_required_outputs": [
@@ -1050,14 +1050,57 @@
     "model_api_calls_during_stage1": 0,
     "executor_prompt_latest_revision_commit": "527d5a0bdf8f44fa5055e889880f697304f050b5",
     "ancestry_anchor": "3558c65b704efa05bf1f7ad85a2bebf89b1f4414",
-    "stage1_rule": "Current HEAD must descend from the ancestry anchor and R25 base; record actual HEAD and remote SHA. Do not require HEAD to equal the anchor because handoff-document commits follow it."
+    "stage1_rule": "Current HEAD must descend from the ancestry anchor and R25 base; record actual HEAD and remote SHA. Do not require HEAD to equal the anchor because handoff-document commits follow it.",
+    "stage1b_prompt": "planner/GLEPPO_R26_STAGE1B_EXECUTOR_PROMPT.md",
+    "stage1b_status": "READY_NOT_STARTED"
   },
   "r26_stage1": {
-    "actual_findings": 43,
     "r25_table_count": 39,
     "discrepancy": "6_in_R25_not_defined_10_defined_not_in_R25",
     "disposition": "all_43_unverifiable",
     "pc1_status": "BLOCKED",
-    "decision": "R26_STAGE1_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW"
+    "decision": "R26_STAGE1_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+    "executor_reported_unique_findings": 43,
+    "executor_disposition": "43_candidate_items_UNVERIFIABLE",
+    "executor_decision": "R26_STAGE1_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+    "planner_review": {
+      "decision": "REQUEST_CHANGES_FOR_COUNT_TAXONOMY_AND_CURRENT_SOURCE_MATRIX",
+      "preliminary_inventory_accepted": true,
+      "final_unique_actionable_issue_count": "UNRESOLVED_PENDING_STAGE1B",
+      "formal_review_finding_headings": "42 (R12-R53 in THIRD through TENTH)",
+      "parser_false_positive": "R60-R61 Independent Review Result heading is counted as R60",
+      "parser_false_negatives": "Bold/table IDs in remediation logs are not captured",
+      "second_review_initial_blocker_bullets": 5,
+      "second_review_status_blocker_count": 6,
+      "second_review_split_rule": "One numbered bullet combines accounting and smoke planned-slot concerns; document whether these are separate actionable issues",
+      "remediation_log_ids": "SECOND includes R8-R11; TENTH includes R54-R61; classify separately from formal review findings",
+      "historical_reports_found": "9 (SECOND through TENTH)",
+      "first_review_report": "NOT_FOUND_IN_GUESSED_PATHS; exhaustive history/ref search still required",
+      "current_source_matrix": "NOT_COMPLETE",
+      "current_candidate_disposition": "UNVERIFIABLE_PENDING_CURRENT_SOURCE_AUDIT",
+      "report": "research/R26_STAGE1_PLANNER_REVIEW.md"
+    }
+  },
+  "r26_stage1b": {
+    "status": "PROMPT_PREPARED_NOT_STARTED",
+    "prompt": "planner/GLEPPO_R26_STAGE1B_EXECUTOR_PROMPT.md",
+    "scope": "HISTORICAL_FINDING_REGISTER_RECONCILIATION_AND_READ_ONLY_CURRENT_SOURCE_AUDIT",
+    "production_source_changes_allowed": false,
+    "registered_pc1_executed": false,
+    "family_c_accessed": false,
+    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+    "formal_g3": "FAIL",
+    "model_api_calls": 0,
+    "required_outputs": [
+      "research/R26_PC1_FINDING_REGISTER.md",
+      "research/R26_PC1_CURRENT_BRANCH_FINDING_AUDIT.md",
+      "research/R26_PC1_AUDIT_SUMMARY.md",
+      "research/R26_STAGE1_PLANNER_REVIEW.md",
+      "planner/latest_plan.md",
+      "planner/GLEPPO_R26_HANDOFF.md",
+      "planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md",
+      "status.json"
+    ],
+    "next_action": "Verify refs; search history for FIRST review; classify all formal findings, unnumbered blockers, remediation items and review-result headings; deduplicate; then audit each actionable issue against current source and safe offline tests."
   }
 }

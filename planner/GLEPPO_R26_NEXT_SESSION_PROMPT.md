@@ -226,3 +226,23 @@ When the user asks to begin execution, first read that file and issue it as the 
 
 The Executor must stop if branch ancestry or starting refs do not match. No registered PC1, Family C access, ECOS/PPO training, formal G3 efficacy, or new model/API calls are authorized.
 
+## 10. Latest Planner review — Stage 1B is now the immediate task
+
+The Executor's R26 Stage 1 result at 60f60e5 is accepted only as a preliminary inventory milestone. Do not accept “43 unique findings” as a final count.
+
+Read first:
+- research/R26_STAGE1_PLANNER_REVIEW.md
+- research/R26_PC1_CURRENT_BRANCH_FINDING_AUDIT.md
+- research/R26_PC1_AUDIT_SUMMARY.md
+- planner/GLEPPO_R26_STAGE1B_EXECUTOR_PROMPT.md
+- updated planner/latest_plan.md
+- updated planner/GLEPPO_R26_HANDOFF.md
+
+Planner identified a parser false positive: the heading “R60-R61 Independent Review Result” is counted as R60. Formal finding headings in THIRD–TENTH are R12–R53 (42); R8–R11 and R54–R61 occur in remediation logs and must be separately classified. SECOND has five initial blocker bullets while status.json reports six because one bullet combines two issues. The FIRST review has not yet been found.
+
+The Stage 1 audit report is not a 43-row current-source matrix. All candidate issues remain UNVERIFIABLE. Stage 1B must build a semantically classified register, search history for the FIRST report, reconcile the count by explicit record types and deduplication rules, then map every distinct actionable issue to current source/tests and safe offline reproduction.
+
+Use planner/GLEPPO_R26_STAGE1B_EXECUTOR_PROMPT.md as the exact Executor task. Stage 1B is read-only with respect to production code.
+
+Hard boundaries remain: no registered PC1, no Family C, no controller training, no Formal G3 efficacy, no external model/API calls, no production runtime, no frozen R1–R25 evidence edits.
+

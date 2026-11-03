@@ -246,3 +246,32 @@ Use planner/GLEPPO_R26_STAGE1B_EXECUTOR_PROMPT.md as the exact Executor task. St
 
 Hard boundaries remain: no registered PC1, no Family C, no controller training, no Formal G3 efficacy, no external model/API calls, no production runtime, no frozen R1–R25 evidence edits.
 
+## 11. Latest Planner review — Stage 1B taxonomy accepted, source audit not accepted
+
+Read:
+- research/R26_STAGE1B_PLANNER_REVIEW.md
+- research/R26_PC1_FINDING_LEVEL_VERIFICATION.md when created
+- research/R26_PC1_TEST_EVIDENCE.md when created
+- planner/GLEPPO_R26_STAGE1C_EXECUTOR_PROMPT.md
+- updated planner/latest_plan.md
+- updated planner/GLEPPO_R26_HANDOFF.md
+- status.json
+
+Planner verified the r25-handoff branch at bcdc24f4d3c7bbaf390678670c54f642b9948a99; main was 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e and 104 commits behind. R25 base was an ancestor of Stage 1B.
+
+The 42 formal heading count R12–R53 is accepted. The number of distinct actionable issue clusters remains unresolved. SECOND has 5–6 unnumbered blockers; TENTH has 8 remediation records R54–R61; R60–R61 review-result heading is not a formal finding.
+
+The Stage 1B seven-domain script checks keyword presence, not semantic correctness. The reported 450/450 tests are not attached to raw output or a CI URL and have not been independently reproduced by Planner.
+
+Planner source inspection established:
+- execute_registered_pc1 in gleppo/pc1.py:1111–1117 always refuses registered execution;
+- SyntheticGateHarness in gleppo/pc1.py:1400–1411 explicitly is not a full collection/rollout runner;
+- ApprovalGate receives approval_key as an injected value; external trust-anchor provenance is not established;
+- the approval tests use a test-only static key;
+- one R39 test assertion compares a seed call with itself, although another R8 test exercises two distinct genotypes end-to-end;
+- evaluator effective seed includes replica_index, while pc1.crn_seed has no replica_index parameter; inspect call sites before drawing a conclusion.
+
+The immediate Executor task is planner/GLEPPO_R26_STAGE1C_EXECUTOR_PROMPT.md. It requires a row-by-row semantic audit of all 42 formal findings, crosswalk of SECOND blockers and R54–R61 remediation items, safe offline test evidence, and explicit residual risks. It is read-only with respect to production and test code.
+
+Do not start Stage 2 fixes until Planner has reviewed Stage 1C and issued a separate task. No registered PC1, Family C, ECOS/PPO training, Formal G3 efficacy, production runtime, external API calls, production signing key, or frozen R1–R25 evidence edits are authorized.
+

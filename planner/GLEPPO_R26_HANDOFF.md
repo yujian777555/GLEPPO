@@ -245,3 +245,63 @@ No registered PC1 execution. No Family C access. No ECOS/PPO training. No Formal
 
 Current Planner status: R26_STAGE1B_TAXONOMY_MILESTONE_ACCEPTED; FINDING_LEVEL_SOURCE_AUDIT_REQUIRED; PC1 BLOCKED.
 
+---
+
+## 15. R26 Stage 1C Executor report and Planner decision (2026-11-03)
+
+Executor report:
+- branch r25-handoff;
+- commit 021380c6a3879e13d87cca014537e71dc882a085;
+- source snapshot reported as 2a2cd1f2126aa14c5edeca71c79dc2f488f827b4;
+- 42 formal IDs R12–R53 claimed VERIFIED_FIXED;
+- 450/450 PASS claimed;
+- remaining risks: runner, approval and protocol.
+
+Planner verified:
+- current branch HEAD at review: 021380c6a3879e13d87cca014537e71dc882a085;
+- parent/source snapshot: 2a2cd1f2126aa14c5edeca71c79dc2f488f827b4;
+- main: 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e;
+- main is 114 commits behind Stage 1C, 0 ahead;
+- R25 base is 33 commits behind Stage 1C, 0 ahead;
+- Stage 1C changed only the finding report, test evidence report, helper verifier and status.json; no production source/test code changed.
+
+### Planner rejection
+
+The 42/42 VERIFIED_FIXED claim is rejected.
+
+The script scripts/_r26c_finding_verify.py only checks Path.exists(), counts occurrences of def test_, and prints a summary. It does not inspect function behavior, test assertions, call paths, execute tests or derive dispositions. It ends with NEEDS_DETAILED_VERIFICATION.
+
+The cited test mapping is invalid:
+- tests/test_c7.py imports genotype/operators/interpreter/LLM/tasks/tools, not gleppo.pc1 or gleppo.evaluator; its 17 tests do not cover the claimed PC1 domains.
+- tests/test_c7r1c2_protocol.py tests scripts/protocol_hash.py text normalization and text hash updates, not PC1 structured protocol semantics.
+- the 450/450 result has no raw stdout/stderr, committed log or CI URL and has not been independently reproduced by Planner.
+
+Category arithmetic is also inconsistent: Protocol lists 9 IDs but says 8; Approval lists 5 but says 6; Provenance lists 9 but says 7; R24 appears under both Budget and Cost; reported counts sum to 41.
+
+### Important current source facts
+
+- execute_registered_pc1() at gleppo/pc1.py:1111–1117 still refuses registered execution.
+- SyntheticGateHarness at gleppo/pc1.py:1400–1411 explicitly does not load tasks, invoke evaluators, execute rollouts or write raw artifacts.
+- ApprovalGate at gleppo/pc1.py:1320–1365 now calls TrustedApprovalArtifact.verify() and checks canonical status/hash; however approval_key is caller-injected and independent production trust-anchor provenance is not demonstrated. tests/test_r54_r59.py uses a static test-only key.
+- Structured protocol and typed JSON CRN implementation exists, but the Stage 1C test mapping does not verify it.
+
+Full Planner decision: research/R26_STAGE1C_PLANNER_REVIEW.md.
+
+## 16. Immediate next task — R26 Stage 1D
+
+Read and execute planner/GLEPPO_R26_STAGE1D_EXECUTOR_PROMPT.md.
+
+Stage 1D must:
+1. inspect the real PC1 test suites: test_r8_r9_r11_pc1.py, test_r12_r17.py, test_r19_r25.py, test_r26_r32.py, test_r33_r38.py, test_r39_r42.py, test_r54_r59.py;
+2. map every R12–R53 finding to original acceptance criteria, current source symbol/line, exact test function and assertions;
+3. run only safe targeted offline tests after inspecting imports/fixtures/side effects;
+4. save raw output, exit code and test logs;
+5. correct the category counts and the 42 per-finding dispositions;
+6. distinguish the synthetic accounting harness from a real runner;
+7. distinguish HMAC mechanics from independent trust-anchor provenance;
+8. preserve Stage 1C's original report as a historical Executor claim and append the corrected Planner/Stage 1D outcome.
+
+No production source or test code changes are authorized in Stage 1D.
+
+Current status: R26_STAGE1C_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+

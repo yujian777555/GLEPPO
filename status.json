@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-03",
-  "phase": "GLEPPO_R26_STAGE1C_COMPLETE",
-  "state": "R26_STAGE1C_FINDING_LEVEL_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+  "phase": "GLEPPO_R26_STAGE1D_READY",
+  "state": "R26_STAGE1C_REPORT_RECEIVED_REQUEST_CHANGES_FINDING_LEVEL_EVIDENCE_RECONCILIATION_REQUIRED",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "R26 Stage 1C: perform semantic, finding-by-finding source and test verification for formal IDs R12-R53; crosswalk SECOND blockers and R54-R61 remediation records; inspect test bodies and run only safe offline tests. Production and test code remain read-only.",
-  "next_gate": "R26_STAGE1C_FINDING_LEVEL_VERIFICATION -> PLANNER_INDEPENDENT_REVIEW -> STAGE2_OFFLINE_REMEDIATION_ONLY_FOR_CONFIRMED_DEFECTS",
+  "current_task": "R26 Stage 1D: inspect actual PC1 test suites, map R12-R53 to exact source symbols and test functions/assertions, reproduce only safe targeted offline tests with raw logs, correct all per-finding dispositions and category counts. No production source or test code changes.",
+  "next_gate": "R26_STAGE1D_CORRECTED_SEMANTIC_AUDIT -> PLANNER_INDEPENDENT_REVIEW -> STAGE2_REMEDIATION_ONLY_FOR_CONFIRMED_DEFECTS",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -1033,7 +1033,7 @@
     "formal_g3": "FAIL",
     "model_api_calls_during_handoff": 0,
     "main_branch_reconciliation": "GitHub connector returned an older main/status.json dated 2026-10-27; r25-handoff was created from the exact R25 SHA to preserve continuity. Verify refs before any merge or main update.",
-    "next_action": "Execute planner/GLEPPO_R26_STAGE1C_EXECUTOR_PROMPT.md. All 42 formal findings remain UNVERIFIABLE until semantic source/test verification.",
+    "next_action": "Execute planner/GLEPPO_R26_STAGE1D_EXECUTOR_PROMPT.md. Do not accept the Stage 1C 42/42 VERIFIED_FIXED claim; inspect correct PC1 tests and correct dispositions.",
     "executor_prompt": "planner/GLEPPO_R26_STAGE1_PC1_AUDIT_EXECUTOR_PROMPT.md",
     "executor_prompt_commit": "02ac15adf70d243b1e78da9b118bfa468c64e24a",
     "stage1_status": "PRELIMINARY_INVENTORY_COMPLETE_PLANNER_REVIEW_REQUEST_CHANGES",
@@ -1053,9 +1053,11 @@
     "stage1_rule": "Current HEAD must descend from the ancestry anchor and R25 base; record actual HEAD and remote SHA. Do not require HEAD to equal the anchor because handoff-document commits follow it.",
     "stage1b_prompt": "planner/GLEPPO_R26_STAGE1B_EXECUTOR_PROMPT.md",
     "stage1b_status": "READY_NOT_STARTED",
-    "current_state": "R26_STAGE1B_TAXONOMY_MILESTONE_ACCEPTED_FINDING_LEVEL_SOURCE_AUDIT_REQUIRED",
+    "current_state": "R26_STAGE1C_REPORT_RECEIVED_REQUEST_CHANGES_FINDING_LEVEL_EVIDENCE_RECONCILIATION_REQUIRED",
     "stage1c_prompt": "planner/GLEPPO_R26_STAGE1C_EXECUTOR_PROMPT.md",
-    "stage1c_status": "READY_NOT_STARTED"
+    "stage1c_status": "READY_NOT_STARTED",
+    "stage1d_prompt": "planner/GLEPPO_R26_STAGE1D_EXECUTOR_PROMPT.md",
+    "stage1d_status": "READY_NOT_STARTED"
   },
   "r26_stage1": {
     "r25_table_count": 39,
@@ -1123,12 +1125,67 @@
     "report_commit": "ddec2a4c63b40f76cb8d83658c4f729235f72216"
   },
   "r26_stage1c": {
-    "findings_verified": 42,
-    "source_files": "42_of_42",
-    "test_files": "2_test_c7_test_c7r1c2",
-    "tests": "450_of_450_PASS",
-    "disposition": "all_42_VERIFIED_FIXED",
-    "remaining_risks": "PC1_runner_approval_gates_protocol",
-    "decision": "R26_STAGE1C_FINDING_LEVEL_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW"
+    "executor_reported": {
+      "findings_verified": 42,
+      "source_files": "42_of_42",
+      "test_files": "2_test_c7_test_c7r1c2",
+      "tests": "450_of_450_PASS",
+      "disposition": "all_42_VERIFIED_FIXED",
+      "decision": "R26_STAGE1C_FINDING_LEVEL_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+      "commit": "021380c6a3879e13d87cca014537e71dc882a085",
+      "source_snapshot": "2a2cd1f2126aa14c5edeca71c79dc2f488f827b4"
+    },
+    "planner_review": {
+      "decision": "REQUEST_CHANGES",
+      "report": "research/R26_STAGE1C_PLANNER_REVIEW.md",
+      "report_commit": "c8f0732f6f351ebec40a72b243b3f26d6afda2d7",
+      "blanket_42_verified_fixed_claim": "NOT_ACCEPTED",
+      "reasons": [
+        "Verifier only checks Path.exists and counts def test_ occurrences; no source behavior/test assertion/test execution verification",
+        "test_c7.py does not import gleppo.pc1 or gleppo.evaluator and does not cover mapped PC1 findings",
+        "test_c7r1c2_protocol.py tests scripts/protocol_hash.py text normalization, not PC1 structured protocol semantics",
+        "450/450 lacks raw stdout/stderr, committed log or CI URL and was not independently reproduced by Planner",
+        "Category counts inconsistent: Protocol 9 IDs/count 8; Approval 5 IDs/count 6; Provenance 9 IDs/count 7; R24 double-listed; total reported counts 41"
+      ],
+      "runner": "R15/R25/R31 require separate assessment; execute_registered_pc1 still refuses; SyntheticGateHarness is not a real collection/rollout runner",
+      "approval": "ApprovalGate calls TrustedApprovalArtifact.verify, but injected approval_key provenance is not independently established; tests use a test-only key",
+      "current_disposition": "42_VERIFIED_FIXED_CLAIM_REJECTED_PENDING_FINDING_LEVEL_EVIDENCE",
+      "pc1": "BLOCKED"
+    }
+  },
+  "r26_stage1d": {
+    "status": "PROMPT_PREPARED_NOT_STARTED",
+    "prompt": "planner/GLEPPO_R26_STAGE1D_EXECUTOR_PROMPT.md",
+    "scope": "CORRECTED_SEMANTIC_AUDIT_AND_TEST_EVIDENCE_RECONCILIATION",
+    "production_source_changes_allowed": false,
+    "test_code_changes_allowed": false,
+    "formal_findings": "R12-R53 (42)",
+    "required_tests": [
+      "tests/test_r8_r9_r11_pc1.py",
+      "tests/test_r12_r17.py",
+      "tests/test_r19_r25.py",
+      "tests/test_r26_r32.py",
+      "tests/test_r33_r38.py",
+      "tests/test_r39_r42.py",
+      "tests/test_r54_r59.py"
+    ],
+    "required_outputs": [
+      "research/R26_STAGE1D_CORRECTED_FINDING_AUDIT.md",
+      "research/R26_STAGE1D_TEST_EVIDENCE.md",
+      "research/R26_PC1_FINDING_LEVEL_VERIFICATION.md",
+      "research/R26_PC1_TEST_EVIDENCE.md",
+      "research/R26_PC1_AUDIT_SUMMARY.md",
+      "research/R26_STAGE1C_PLANNER_REVIEW.md",
+      "planner/latest_plan.md",
+      "planner/GLEPPO_R26_HANDOFF.md",
+      "planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md",
+      "status.json"
+    ],
+    "model_api_calls": 0,
+    "registered_pc1_executed": false,
+    "family_c_accessed": false,
+    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+    "formal_g3": "FAIL",
+    "next_action": "Verify refs; inspect actual PC1 test functions and assertions; correct all 42 dispositions; run safe targeted offline tests with raw logs; reconcile category counts; no code changes."
   }
 }

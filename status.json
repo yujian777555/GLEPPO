@@ -1047,7 +1047,9 @@
       "planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md",
       "status.json"
     ],
-    "stage1_starting_head_to_verify": "3558c65b704efa05bf1f7ad85a2bebf89b1f4414",
-    "model_api_calls_during_stage1": 0
+    "model_api_calls_during_stage1": 0,
+    "executor_prompt_latest_revision_commit": "527d5a0bdf8f44fa5055e889880f697304f050b5",
+    "ancestry_anchor": "3558c65b704efa05bf1f7ad85a2bebf89b1f4414",
+    "stage1_rule": "Current HEAD must descend from the ancestry anchor and R25 base; record actual HEAD and remote SHA. Do not require HEAD to equal the anchor because handoff-document commits follow it."
   }
 }

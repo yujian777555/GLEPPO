@@ -96,3 +96,16 @@ R25 汇总称“约 43 项、10 轮”，但分类表当前能数出 39 个命�
 **先做只读盘点，不训练、不执行 PC1：**检索原始十轮 PC1 review reports，完成所有历史 finding 的精确清单和 39/约43 数量核对；随后将每个 finding 映射到 r25-handoff 当前源码、测试和可复现证据，形成完整审计矩阵。完成后提交独立复审材料，再决定是否进入离线修复。
 
 每轮结束记录 base SHA、result SHA、final HEAD、remote branch/SHA、文件清单、测试命令与结果、API/model calls、PC1/Family C/training 状态和剩余阻塞项。
+
+## R26 Stage 1 Executor 提示词
+
+已新增可直接交给执行端的详细任务提示词：
+
+- planner/GLEPPO_R26_STAGE1_PC1_AUDIT_EXECUTOR_PROMPT.md
+- 提示词创建提交：02ac15adf70d243b1e78da9b118bfa468c64e24a
+- 预期执行基线：3558c65b704efa05bf1f7ad85a2bebf89b1f4414（执行前必须重新核验远端分支 HEAD）
+
+该提示词要求先恢复仓库引用，再检索原始十轮 PC1 审查记录，核对 39 个命名 ID 与“约 43 项”的差异，并逐项映射当前源码、测试和复现证据。Stage 1 只允许审计文档与状态维护，不允许修改源码。
+
+硬边界保持不变：registered PC1 不执行、Family C 不访问、ECOS/PPO 不训练、Formal G3 不重跑、模型/API 调用为 0。
+

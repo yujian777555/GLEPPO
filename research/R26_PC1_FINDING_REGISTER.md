@@ -101,3 +101,14 @@ The exact test map is also not accepted. Of 39 rows claiming a test, only 5 func
 
 Do not treat either 22/15 or the detailed 27/13 as final accepted dispositions until Stage 1G completes the evidence-based recount and per-Finding semantic review.
 
+
+
+---
+
+## Stage 1G Planner correction — 2026-11-04
+
+Stage 1G corrects the submitted row arithmetic to 27/13/1/1 = 42. Planner independently confirms 42 test classes and 218 declarations, but only 37/39 mapped file/class/function/line tuples match.
+
+The exact evidence map is still incomplete: generic assertion labels replace actual expressions; source call paths and uncovered conditions are absent. R39 maps to a tautological same-call assertion; R53 maps to a seed-schema test unrelated to status/hash invariance; R49's related test does not prove the full approval lifecycle. R19 is over-classified while the canonical protocol is explicitly PROPOSED / NOT APPROVED.
+
+See research/R26_STAGE1G_PLANNER_REVIEW.md. Stage 1H is required. Do not treat 27 VERIFIED_FIXED as accepted until the semantic review is complete. PC1 remains BLOCKED.

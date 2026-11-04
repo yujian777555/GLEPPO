@@ -3,7 +3,7 @@
 **Updated:** 2026-11-04  
 **Repository:** yujian777555/GLEPPO  
 **Branch:** r25-handoff  
-**Current stage:** R26 Stage 1I-R1 — corrective semantic evidence map and validator (Executor not yet started)  
+**Current stage:** R26 Stage 1I-R2 — semantic evidence correction and validator hardening (Executor not yet started)  
 **Latest Planner decision on Stage 1I:** REQUEST_CHANGES  
 **PC1:** BLOCKED
 
@@ -344,3 +344,54 @@ PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; 
 PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; registered PC1 NOT EXECUTED; controller training NOT AUTHORIZED / NOT STARTED; model/API calls 0 (Executor-reported); production runtime 0 (Executor-reported); 450/450 EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
 
 **Next gate:** Planner independent review of Stage 1I-R1. Do not proceed to protocol reconciliation or PC1.
+
+---
+
+## 16. Stage 1I-R1 Planner review — REQUEST_CHANGES (2026-11-04)
+
+**R1 final HEAD:** 4d2ff06ee01146533501589b264d33ddd30ffcbe  
+**R1 parent:** 539f74d5c898abc144992fff4a413a30744c1cc9  
+**R1 source snapshot:** 29325cfa16441154c833f381f208747b57627a79  
+**Planner review:** research/R26_STAGE1I_R1_PLANNER_REVIEW.md  
+**R2 prompt:** planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md  
+**Decision:** Stage 1I-R1 NOT ACCEPTED.
+
+### Accepted
+
+- 42 unique JSON IDs R12–R53.
+- 42 unique Markdown headings.
+- Markdown/JSON disposition consistency.
+- 26/14/1/1 arithmetic mechanically correct.
+- R53 PARTIALLY_FIXED and R18 MANUAL classifications retained.
+- No production source or tests/ changes in R1 commit.
+- Main unchanged.
+
+### Blocking corrections
+
+1. Relevant tests omitted from many rows, including R12 cache-hit tests, R14 r_hat test, R17 record-field test, R20 override/task/replicate tests, R23 round-trip replay, R39 six direct CRN tests and R20 cross-genotype test, R40 mutation tests, and R41 tamper/defensive-copy tests.
+2. False call paths: R28 constant-only test described as reconcile; R30/R37 early guards attributed to validate_records; R44 isolated loader test described as registered analysis binding; R47 test does not reach plan ID/version checks; R50 direct art.verify test described as ApprovalGate.check.
+3. Wrong/nonexistent source symbols: R17 build_evidence/save_evidence; R23 build_evidence/replay_evidence; R25 GatedPC1Runner; R48/R52 validate_reward_schema. R20 crn_seed file path is wrong.
+4. Twelve source symbol entries have null line ranges; validator does not check source_symbols.
+5. Validator wrong_file_path test duplicates missing-file test. Null declaration line numbers can pass. Nested schema types and source ranges are not validated.
+6. Several VERIFIED_FIXED rows overclaim evidence, including R12, R17, R26, R28, R40, R44 and R51.
+7. R45 mentions _DuplicateKeyChecker but has NONE evidence type and no manual source citation.
+
+The 26/14/1/1 count is not a target. Re-evaluate all 42 rows.
+
+### R2 deliverables
+
+- corrected 42-row JSON map and synchronized Markdown;
+- all relevant tests per multi-part Finding;
+- exact source symbols/files/ranges, no null source ranges;
+- truthful test-to-source call paths and branch reachability;
+- strict AST validator with typed schema and line/source-range validation;
+- targeted self-tests including existing-file/wrong-owner, null declaration line and null source-symbol range;
+- corrected provenance with exact R1 final SHA/source snapshot;
+- updated report, status, latest plan and handoff.
+
+### Gates remain
+
+PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; registered PC1 NOT EXECUTED; controller training NOT AUTHORIZED / NOT STARTED. 450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED. Model/API and production-runtime zero counters remain Executor attestations.
+
+**Next:** Stage 1I-R2 Executor completion → Planner independent review. No protocol reconciliation or PC1.
+

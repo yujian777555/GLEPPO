@@ -1,11 +1,11 @@
 # GLEPPO R26 Handoff — R25 Independent-Review Boundary
 
-**Updated:** 2026-11-03  
+**Updated:** 2026-11-04  
 **Repository:** yujian777555/GLEPPO  
 **Continuation branch:** r25-handoff  
 **R25 base:** a8ff1827434a88b2fef02a89aaf3e120e0a017a7  
 **R26 prompt:** planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md  
-**Current handoff state:** R26_READY_FOR_PC1_CURRENT_BRANCH_AUDIT
+**Current handoff state:** R26_STAGE1G_REQUEST_CHANGES_SEMANTIC_EVIDENCE_RECONCILIATION_REQUIRED
 
 ---
 
@@ -430,3 +430,52 @@ Read planner/GLEPPO_R26_STAGE1G_EXECUTOR_PROMPT.md. Recount the detailed rows, r
 
 Hard boundaries remain: no registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no update of main.
 
+
+
+---
+
+## 20. R26 Stage 1G Planner independent review — 2026-11-04
+
+**Decision:** REQUEST_CHANGES. Stage 1G corrected the disposition arithmetic and most declaration names, but did not complete the semantic evidence audit.
+
+Review: research/R26_STAGE1G_PLANNER_REVIEW.md  
+Next Executor prompt: planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md
+
+Accepted:
+- detailed dispositions sum to 42: 27/13/1/1;
+- category counts sum to 42;
+- 42 test classes and 218 declared functions independently confirmed;
+- 37/39 mapped file/class/function/line tuples match;
+- R18/R45/R46 are NONE for direct behavioral tests;
+- 450/450 remains not independently reproduced;
+- no production source/test code changed.
+
+Rejected:
+- R31 and R49 function names are still wrong;
+- test evidence uses generic assertion labels and omits exact expressions, source call paths, acceptance coverage and uncovered conditions;
+- scripts/_r26g_extract_tests.py inventories declarations but does not validate the 42-row map;
+- R39 is mapped to a tautological same-call assertion;
+- R53 is mapped to an unrelated seed-schema mutation test;
+- R49's related test does not exercise the approval lifecycle;
+- R19 is VERIFIED_FIXED while the canonical protocol is explicitly PROPOSED / NOT APPROVED;
+- R18 manual evidence lacks exact line references in Stage 1G;
+- report provenance fields contain unresolved placeholders;
+- latest_plan, handoff and next-session prompt were not advanced by Stage 1G.
+
+Verified refs:
+- r25-handoff = 69781d1166f9e28e7535915aad00af859c1b2734;
+- source snapshot = 29325cfa16441154c833f381f208747b57627a79;
+- main = 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e;
+- main → Stage 1G: 168 ahead / 0 behind;
+- R25 base → Stage 1G: 87 ahead / 0 behind.
+
+For Stage 1G commit 69781d1, GitHub status has zero entries, check-runs are zero and no Actions run targets that exact SHA. Keep 450/450 as EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
+
+Current state:
+R26_STAGE1G_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_SEMANTIC_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+
+### Stage 1H task
+
+Read planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md. Correct R31/R49; map all actual assertions and source call paths; include all relevant tests for multi-part Findings; correct R39/R49/R53 semantic mappings; re-evaluate all VERIFIED_FIXED items (R19 must be PARTIALLY_FIXED absent formal approval); add R18 manual evidence lines; replace provenance placeholders; update all durable handoff and cumulative audit files.
+
+Hard boundaries remain: no registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no update of main.

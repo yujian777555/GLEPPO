@@ -113,3 +113,21 @@ Full independent review: research/R26_STAGE1I_R1_PLANNER_REVIEW.md.
 
 The Executor-reported 15/15 validator self-tests and 450/450 suite remain un-reproduced by Planner. R1 remains REQUEST_CHANGES. Next task is Stage 1I-R2 under planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md. Do not proceed to protocol reconciliation or PC1.
 
+
+---
+
+## Addendum: Stage 1I-R2 Corrective Work (2026-11-04)
+
+Stage 1I-R1 Planner decision: REQUEST_CHANGES. Stage 1I-R2 corrective work completed.
+
+**R2 corrective report:** research/R26_STAGE1I_R2_CORRECTIVE_REPORT.md
+
+Key corrections:
+- Acceptance criteria expanded for all 42 rows (no compression)
+- Test evidence expanded from 40 to 193 entries
+- All false call paths and source symbols corrected
+- 0 null source-symbol line ranges
+- Dispositions re-evaluated: 28 VERIFIED_FIXED / 12 PARTIALLY_FIXED / 1 OPEN / 1 UNVERIFIABLE = 42
+- Validator hardened with 20 adversarial self-tests (ALL PASS)
+
+**Status:** Stage 1I-R2 executor work complete. Awaiting Planner independent review.

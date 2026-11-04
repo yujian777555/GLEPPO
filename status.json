@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-04",
-  "phase": "GLEPPO_R26_STAGE1I_R1_REQUEST_CHANGES_STAGE1I_R2_CORRECTIVE",
-  "state": "R26_STAGE1I_R1_SEMANTIC_EVIDENCE_AND_VALIDATOR_NOT_YET_AUDITABLE",
+  "phase": "GLEPPO_R26_STAGE1I_R2_COMPLETE",
+  "state": "R26_STAGE1I_R2_READY_FOR_PLANNER_REVIEW",
   "reviewed_commit": "4d2ff06ee01146533501589b264d33ddd30ffcbe",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Stage 1I-R2: correct incomplete Finding evidence arrays, false call paths/source symbols, unresolved source ranges, overclaimed dispositions, and harden the AST validator.",
-  "next_gate": "STAGE1I_R2_EXECUTOR_COMPLETION -> PLANNER_INDEPENDENT_REVIEW -> (ONLY_IF_ACCEPTED) R26_ECOS_PROTOCOL_RECONCILIATION",
+  "current_task": "Stage 1I-R2 complete. Awaiting Planner independent review.",
+  "next_gate": "PLANNER_INDEPENDENT_REVIEW_OF_STAGE1I_R2 -> (ONLY_IF_ACCEPTED) R26_ECOS_PROTOCOL_RECONCILIATION",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -1707,25 +1707,43 @@
     "markdown_json_disposition_consistency": "42_OF_42_PASS"
   },
   "r26_stage1i_r2": {
-    "status": "PROMPT_ISSUED_NOT_STARTED",
-    "prompt": "planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md",
-    "prompt_commit": "0ec74db66becd9001437bbd9bb1f88879eaf272a",
-    "planner_review": "research/R26_STAGE1I_R1_PLANNER_REVIEW.md",
-    "planner_review_commit": "dcdcef5b2e7e68a6590d95c90c4caf453399c127",
-    "scope": "correct all 42 semantic rows, complete test arrays, fix call paths/source symbols, strict AST validator",
-    "required_artifacts": [
-      "research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.json",
-      "research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md",
-      "scripts/_r26i_validator.py",
-      "research/R26_STAGE1I_R2_CORRECTIVE_REPORT.md"
-    ],
-    "production_source_changes_allowed": false,
-    "test_code_changes_allowed": false,
-    "model_api_calls": 0,
-    "registered_pc1_executed": false,
-    "family_c_accessed": false,
-    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
-    "formal_g3": "FAIL",
-    "next_action": "Complete R2, update durable records and status, then stop for Planner independent review."
+    "status": "EXECUTOR_COMPLETE_AWAITING_PLANNER_REVIEW",
+    "date": "2026-11-04",
+    "semantic_map_json": "research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.json",
+    "semantic_map_md": "research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md",
+    "corrective_report": "research/R26_STAGE1I_R2_CORRECTIVE_REPORT.md",
+    "validator_path": "scripts/_r26i_validator.py",
+    "validator_self_tests": "PASS_20_OF_20",
+    "map_validation": "PASS",
+    "map_findings_total": 42,
+    "map_test_evidence_entries": 193,
+    "map_null_source_ranges": 0,
+    "dispositions": {
+      "VERIFIED_FIXED": 28,
+      "PARTIALLY_FIXED": 12,
+      "OPEN": 1,
+      "UNVERIFIABLE": 1
+    },
+    "disposition_arithmetic": "28+12+1+1=42",
+    "provenance": {
+      "r1_source_snapshot": "29325cfa16441154c833f381f208747b57627a79",
+      "r1_parent": "539f74d5c898abc144992fff4a413a30744c1cc9",
+      "r1_final_commit": "4d2ff06ee01146533501589b264d33ddd30ffcbe",
+      "r1_planner_review_commit": "dcdcef5b2e7e68a6590d95c90c4caf453399c127",
+      "r2_parent": "3d97847adf6f68dafe1f54855d27fe00e99e16ae",
+      "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e"
+    },
+    "hard_boundaries": {
+      "production_source_changes": false,
+      "test_suite_changes": false,
+      "registered_pc1_executed": false,
+      "family_c_accessed": false,
+      "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+      "formal_g3": "FAIL",
+      "model_api_calls": 0,
+      "production_runtime_calls": 0,
+      "main_modified": false
+    },
+    "full_suite": "450/450_EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED"
   }
 }

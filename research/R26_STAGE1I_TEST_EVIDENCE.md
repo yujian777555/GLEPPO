@@ -101,3 +101,13 @@ Planner did not execute the helper or 450-test suite. The 15 self-tests and 450/
 
 See research/R26_STAGE1I_R1_PLANNER_REVIEW.md and execute Stage 1I-R2 from planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md.
 
+
+---
+
+## Addendum: Stage 1I-R2 Validator Evidence (2026-11-04)
+
+Validator: scripts/_r26i_validator.py (AST-based, hardened)
+Self-test: 20 adversarial cases, ALL PASS, exit code 0
+Map validation: PASSED (42 findings, 39 mapped, 3 NONE, 218 declarations)
+Semantic map: 193 test_evidence entries, 0 null source ranges
+Dispositions from JSON: 28/12/1/1 = 42

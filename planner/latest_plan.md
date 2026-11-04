@@ -124,3 +124,8 @@ GLEPPO 的 ECOS 研究假设仍然保留，但 PPO 优势尚未得到实验证�
 - 不得混用其他项目的代码、数据或报告。
 
 **下一步只有：Stage 1I-R2 Executor 完成 → Planner 独立复审。不得进入 R26_ECOS_PROTOCOL_RECONCILIATION、PC1、Family C 或训练。**
+
+## Stage 1I-R2 ��� (2026-11-04)
+
+R2 ������ɣ�criteria ��չ��193 ������Ŀ��call path ������0 ���кš����� 28/12/1/1��validator 20 ���Բ�ͨ����
+״̬��R26_STAGE1I_R2_READY_FOR_PLANNER_REVIEW����һ�ؿڣ�Planner �������ˡ�

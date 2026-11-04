@@ -1,11 +1,11 @@
-# GLEPPO R26 — Next-Session Planner Prompt
+# GLEPPO R26 â€” Next-Session Planner Prompt
 
 **Project:** GLEPPO  
 **Repository:** yujian777555/GLEPPO  
 **Continuation branch:** r25-handoff  
 **R25 base commit:** a8ff1827434a88b2fef02a89aaf3e120e0a017a7  
 **R25 decision:** R25_ACCEPTED_WITH_LIMITATIONS  
-**Prompt purpose:** Resume GLEPPO from the exact R26 Stage 1I Planner REQUEST_CHANGES boundary and execute Stage 1I-R1 corrective work. Do not restart the project or proceed to PC1/protocol reconciliation.
+**Prompt purpose:** Resume GLEPPO from the exact R26 Stage 1I-R1 Planner REQUEST_CHANGES boundary and execute Stage 1I-R2 corrective work. Do not restart the project or proceed to PC1/protocol reconciliation.
 
 ---
 
@@ -23,7 +23,7 @@ The user has explicitly required durable handoff maintenance. At every meaningfu
 
 Do actual source-level research and verification. Do not replace research with repeated planning documents, and do not describe repository maintenance itself as a scientific result.
 
-## 1. Mandatory first actions — recover the exact repository state
+## 1. Mandatory first actions â€” recover the exact repository state
 
 1. Fetch the repository and inspect all local and remote refs.
 2. Check out r25-handoff; verify that its ancestry includes the exact R25 base commit a8ff1827434a88b2fef02a89aaf3e120e0a017a7.
@@ -43,7 +43,7 @@ Do actual source-level research and verification. Do not replace research with r
 
 If the expected branch or R25 ancestry cannot be verified, stop before modifying files and report the exact mismatch.
 
-## 2. R25 is the current scientific boundary — preserve these facts
+## 2. R25 is the current scientific boundary â€” preserve these facts
 
 R25's final decision is **R25_ACCEPTED_WITH_LIMITATIONS**, not an authorization to execute the next experiment.
 
@@ -78,11 +78,11 @@ The DAC review accepted the declarative TaskContract/ComputationStep design, abs
 
 The accepted proposed sequence is:
 
-**G3-PREFLIGHT → approved PC1 → ECOS training → G3-EFFICACY**
+**G3-PREFLIGHT â†’ approved PC1 â†’ ECOS training â†’ G3-EFFICACY**
 
 G3-PREFLIGHT READY is not Formal G3 PASS. The original Formal G3 FAIL remains in force.
 
-## 3. R26 primary objective — complete a real PC1 current-branch audit
+## 3. R26 primary objective â€” complete a real PC1 current-branch audit
 
 Do not start by training or executing PC1. First establish exactly which historical PC1 findings remain open on the current branch.
 
@@ -95,7 +95,7 @@ The R25 PC1 report groups the historical findings as follows:
 - Plan/provenance: R22, R29, R35, R37, R41, R44, R47, R51, R55, R58, R60
 - PC1 runner: R15, R25, R31
 
-**Important reconciliation check:** these category lists enumerate 39 named finding IDs, while the R25 report says “approximately 43 findings”. Do not repeat “43” as an exact verified count. Retrieve the original ten-round reports, enumerate every distinct finding, identify duplicates/overlaps, and reconcile the difference. If the original source reports do not support an exact total, document the count as unresolved.
+**Important reconciliation check:** these category lists enumerate 39 named finding IDs, while the R25 report says â€œapproximately 43 findingsâ€. Do not repeat â€œ43â€ as an exact verified count. Retrieve the original ten-round reports, enumerate every distinct finding, identify duplicates/overlaps, and reconcile the difference. If the original source reports do not support an exact total, document the count as unresolved.
 
 ### Required audit matrix
 
@@ -134,14 +134,14 @@ After the read-only matrix is complete:
 
 1. Prioritize only confirmed defects that can affect scientific validity, protocol integrity, budget accounting, provenance, or safety gates.
 2. Make small, isolated fixes with regression tests. Do not bundle unrelated refactors.
-3. Preserve historical R1–R25 raw evidence, manifests, and reports. Do not rewrite old results to make them look cleaner.
+3. Preserve historical R1â€“R25 raw evidence, manifests, and reports. Do not rewrite old results to make them look cleaner.
 4. Run offline unit/regression tests and synthetic PC1 analysis fixtures only.
 5. Keep all gates default-deny. Missing, malformed, stale, or mismatched evidence must fail closed.
 6. A synthetic fixture test is not a registered PC1 execution. Label it accurately.
 7. Do not claim independent review, CI success, model execution, token/cost figures, or approval unless the exact evidence exists and has been checked.
 8. Do not execute registered PC1 in R26 without a separately recorded trusted Planner approval, independent review acceptance, and explicit user authorization.
 
-## 5. Resolve PPO necessity scientifically — do not assume PPO is needed
+## 5. Resolve PPO necessity scientifically â€” do not assume PPO is needed
 
 R25 explicitly requires comparison of these four arms:
 
@@ -152,7 +152,7 @@ R25 explicitly requires comparison of these four arms:
 | A2 | Deterministic rule-based controller |
 | A3 | PPO ECOS controller |
 
-The central question is not “can PPO be trained?” It is:
+The central question is not â€œcan PPO be trained?â€ It is:
 
 **Does PPO provide a reproducible and practically meaningful improvement over a competent rule-based controller, under the same task distribution, operator set, evaluator, constraints, and evaluation budget?**
 
@@ -160,13 +160,13 @@ Before any new run:
 1. Inspect the current ECOS preregistration and implementation. Extract the exact state, action, reward, five operators, episode definition, training split, validation split, confirmation split, stopping rule, and budget.
 2. Inventory whether a valid, reproducible A3 PPO checkpoint already exists. Do not assume one exists.
 3. If no valid PPO checkpoint exists, explicitly state that A3 cannot yet be fairly evaluated without training. Do not substitute an untrained policy and call it PPO.
-4. Separate the no-training comparison that can be conducted with A0–A2 from the A3 training/evaluation stage. Do not claim the former proves PPO superiority or necessity.
-5. Prepare a preregistered A0–A3 comparison with matched tasks, seeds, evaluator, operator semantics, constraints, and accounting. Freeze primary metrics and decision thresholds before looking at confirmation results.
+4. Separate the no-training comparison that can be conducted with A0â€“A2 from the A3 training/evaluation stage. Do not claim the former proves PPO superiority or necessity.
+5. Prepare a preregistered A0â€“A3 comparison with matched tasks, seeds, evaluator, operator semantics, constraints, and accounting. Freeze primary metrics and decision thresholds before looking at confirmation results.
 6. Use the R25-required metrics: effective_success_rate, answer_accuracy, tool_path_validity, format_compliance, constraint_violation_rate, hypervolume where mathematically appropriate, and inference/training cost.
 7. Audit reward hacking risks, especially format/path violations and reward/evaluator mismatch. Keep DAC as the same shared fixed component in every arm.
 8. Use DEV only for design/tuning and keep CONFIRM untouched until the protocol is frozen. Do not use Family C.
 
-A0–A3 is a required comparison, not permission to train. If A3 requires new training, stop at a complete protocol and authorization request until PC1 and all other prerequisites are satisfied and the user explicitly authorizes training.
+A0â€“A3 is a required comparison, not permission to train. If A3 requires new training, stop at a complete protocol and authorization request until PC1 and all other prerequisites are satisfied and the user explicitly authorizes training.
 
 Decision logic must be predeclared:
 - If A2 is statistically and practically non-inferior to A3, or A3's gain does not justify its complexity/cost, recommend against PPO as the claimed contribution.
@@ -178,11 +178,11 @@ Decision logic must be predeclared:
 Until separately approved in writing by the user and all relevant gates pass:
 
 - **No registered PC1 execution.**
-- **No Family C access** — no loading, execution, tuning, or exploratory inspection.
+- **No Family C access** â€” no loading, execution, tuning, or exploratory inspection.
 - **No ECOS/PPO controller training.**
 - **No formal G3 efficacy rerun.**
 - **No new external model/API calls.**
-- **No modification of frozen R1–R25 evidence or manifests.**
+- **No modification of frozen R1â€“R25 evidence or manifests.**
 - **No fabricated signatures, approval records, seeds, results, costs, tokens, CI runs, or model outputs.**
 - **No GLEET code reuse or artifacts imported from another repository.**
 - Do not merge/reset/force-push main or any other branch without first verifying ancestry and obtaining the required approval.
@@ -193,13 +193,13 @@ The user has previously specified DeepSeek Flash rather than DeepSeek V4 Pro for
 
 Commit the following, updating them as the work progresses:
 
-1. research/R26_PC1_CURRENT_BRANCH_FINDING_AUDIT.md — complete finding inventory and source/test evidence.
-2. research/R26_PC1_REMEDIATION_REPORT.md — only confirmed defects, fixes, tests, and unresolved items.
-3. research/R26_ECOS_A0_A3_COMPARISON_PROTOCOL.md — fair comparison protocol, checkpoint inventory, power/seed/budget plan, primary metrics, and stop rules.
-4. planner/latest_plan.md — concise current execution plan and exact next Executor task.
-5. planner/GLEPPO_R26_HANDOFF.md — current state, decisions, evidence, blockers, and next-session instructions.
-6. planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md — update if the next stage changes.
-7. status.json — machine-readable state, exact commit, gate statuses, and evidence paths.
+1. research/R26_PC1_CURRENT_BRANCH_FINDING_AUDIT.md â€” complete finding inventory and source/test evidence.
+2. research/R26_PC1_REMEDIATION_REPORT.md â€” only confirmed defects, fixes, tests, and unresolved items.
+3. research/R26_ECOS_A0_A3_COMPARISON_PROTOCOL.md â€” fair comparison protocol, checkpoint inventory, power/seed/budget plan, primary metrics, and stop rules.
+4. planner/latest_plan.md â€” concise current execution plan and exact next Executor task.
+5. planner/GLEPPO_R26_HANDOFF.md â€” current state, decisions, evidence, blockers, and next-session instructions.
+6. planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md â€” update if the next stage changes.
+7. status.json â€” machine-readable state, exact commit, gate statuses, and evidence paths.
 
 Do not create empty placeholder reports. If a deliverable cannot yet be completed, mark it NOT_STARTED and explain the blocker in latest_plan.md and status.json.
 
@@ -226,9 +226,9 @@ When the user asks to begin execution, first read that file and issue it as the 
 
 The Executor must stop if branch ancestry or starting refs do not match. No registered PC1, Family C access, ECOS/PPO training, formal G3 efficacy, or new model/API calls are authorized.
 
-## 10. Latest Planner review — Stage 1B is now the immediate task
+## 10. Latest Planner review â€” Stage 1B is now the immediate task
 
-The Executor's R26 Stage 1 result at 60f60e5 is accepted only as a preliminary inventory milestone. Do not accept “43 unique findings” as a final count.
+The Executor's R26 Stage 1 result at 60f60e5 is accepted only as a preliminary inventory milestone. Do not accept â€œ43 unique findingsâ€ as a final count.
 
 Read first:
 - research/R26_STAGE1_PLANNER_REVIEW.md
@@ -238,15 +238,15 @@ Read first:
 - updated planner/latest_plan.md
 - updated planner/GLEPPO_R26_HANDOFF.md
 
-Planner identified a parser false positive: the heading “R60-R61 Independent Review Result” is counted as R60. Formal finding headings in THIRD–TENTH are R12–R53 (42); R8–R11 and R54–R61 occur in remediation logs and must be separately classified. SECOND has five initial blocker bullets while status.json reports six because one bullet combines two issues. The FIRST review has not yet been found.
+Planner identified a parser false positive: the heading â€œR60-R61 Independent Review Resultâ€ is counted as R60. Formal finding headings in THIRDâ€“TENTH are R12â€“R53 (42); R8â€“R11 and R54â€“R61 occur in remediation logs and must be separately classified. SECOND has five initial blocker bullets while status.json reports six because one bullet combines two issues. The FIRST review has not yet been found.
 
 The Stage 1 audit report is not a 43-row current-source matrix. All candidate issues remain UNVERIFIABLE. Stage 1B must build a semantically classified register, search history for the FIRST report, reconcile the count by explicit record types and deduplication rules, then map every distinct actionable issue to current source/tests and safe offline reproduction.
 
 Use planner/GLEPPO_R26_STAGE1B_EXECUTOR_PROMPT.md as the exact Executor task. Stage 1B is read-only with respect to production code.
 
-Hard boundaries remain: no registered PC1, no Family C, no controller training, no Formal G3 efficacy, no external model/API calls, no production runtime, no frozen R1–R25 evidence edits.
+Hard boundaries remain: no registered PC1, no Family C, no controller training, no Formal G3 efficacy, no external model/API calls, no production runtime, no frozen R1â€“R25 evidence edits.
 
-## 11. Latest Planner review — Stage 1B taxonomy accepted, source audit not accepted
+## 11. Latest Planner review â€” Stage 1B taxonomy accepted, source audit not accepted
 
 Read:
 - research/R26_STAGE1B_PLANNER_REVIEW.md
@@ -259,23 +259,23 @@ Read:
 
 Planner verified the r25-handoff branch at bcdc24f4d3c7bbaf390678670c54f642b9948a99; main was 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e and 104 commits behind. R25 base was an ancestor of Stage 1B.
 
-The 42 formal heading count R12–R53 is accepted. The number of distinct actionable issue clusters remains unresolved. SECOND has 5–6 unnumbered blockers; TENTH has 8 remediation records R54–R61; R60–R61 review-result heading is not a formal finding.
+The 42 formal heading count R12â€“R53 is accepted. The number of distinct actionable issue clusters remains unresolved. SECOND has 5â€“6 unnumbered blockers; TENTH has 8 remediation records R54â€“R61; R60â€“R61 review-result heading is not a formal finding.
 
 The Stage 1B seven-domain script checks keyword presence, not semantic correctness. The reported 450/450 tests are not attached to raw output or a CI URL and have not been independently reproduced by Planner.
 
 Planner source inspection established:
-- execute_registered_pc1 in gleppo/pc1.py:1111–1117 always refuses registered execution;
-- SyntheticGateHarness in gleppo/pc1.py:1400–1411 explicitly is not a full collection/rollout runner;
+- execute_registered_pc1 in gleppo/pc1.py:1111â€“1117 always refuses registered execution;
+- SyntheticGateHarness in gleppo/pc1.py:1400â€“1411 explicitly is not a full collection/rollout runner;
 - ApprovalGate receives approval_key as an injected value; external trust-anchor provenance is not established;
 - the approval tests use a test-only static key;
 - one R39 test assertion compares a seed call with itself, although another R8 test exercises two distinct genotypes end-to-end;
 - evaluator effective seed includes replica_index, while pc1.crn_seed has no replica_index parameter; inspect call sites before drawing a conclusion.
 
-The immediate Executor task is planner/GLEPPO_R26_STAGE1C_EXECUTOR_PROMPT.md. It requires a row-by-row semantic audit of all 42 formal findings, crosswalk of SECOND blockers and R54–R61 remediation items, safe offline test evidence, and explicit residual risks. It is read-only with respect to production and test code.
+The immediate Executor task is planner/GLEPPO_R26_STAGE1C_EXECUTOR_PROMPT.md. It requires a row-by-row semantic audit of all 42 formal findings, crosswalk of SECOND blockers and R54â€“R61 remediation items, safe offline test evidence, and explicit residual risks. It is read-only with respect to production and test code.
 
-Do not start Stage 2 fixes until Planner has reviewed Stage 1C and issued a separate task. No registered PC1, Family C, ECOS/PPO training, Formal G3 efficacy, production runtime, external API calls, production signing key, or frozen R1–R25 evidence edits are authorized.
+Do not start Stage 2 fixes until Planner has reviewed Stage 1C and issued a separate task. No registered PC1, Family C, ECOS/PPO training, Formal G3 efficacy, production runtime, external API calls, production signing key, or frozen R1â€“R25 evidence edits are authorized.
 
-## 12. Latest Planner decision — Stage 1C 42/42 claim rejected
+## 12. Latest Planner decision â€” Stage 1C 42/42 claim rejected
 
 Read first:
 - research/R26_STAGE1C_PLANNER_REVIEW.md
@@ -302,16 +302,16 @@ Category arithmetic is inconsistent:
 - category counts sum to 41, not 42.
 
 Planner inspected current source:
-- execute_registered_pc1() at gleppo/pc1.py:1111–1117 still refuses registered execution;
-- SyntheticGateHarness at 1400–1411 explicitly is not a collection/rollout runner;
-- ApprovalGate at 1320–1365 calls TrustedApprovalArtifact.verify(), but approval_key is injected and independent production trust-anchor provenance is not established; tests use a static test-only key;
+- execute_registered_pc1() at gleppo/pc1.py:1111â€“1117 still refuses registered execution;
+- SyntheticGateHarness at 1400â€“1411 explicitly is not a collection/rollout runner;
+- ApprovalGate at 1320â€“1365 calls TrustedApprovalArtifact.verify(), but approval_key is injected and independent production trust-anchor provenance is not established; tests use a static test-only key;
 - structured protocol and typed JSON CRN implementation exists, but the Stage 1C test mapping does not prove its semantics.
 
 The immediate Executor task is planner/GLEPPO_R26_STAGE1D_EXECUTOR_PROMPT.md. Inspect the actual PC1 test suites, map every formal Finding to exact source and test functions, reproduce safe targeted offline tests, save raw outputs, correct category counts and dispositions, and preserve all gate boundaries. Do not modify source or test code.
 
 Current Planner status: R26_STAGE1C_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
 
-## 13. Latest Planner decision — Stage 1D REQUEST_CHANGES (2026-11-04)
+## 13. Latest Planner decision â€” Stage 1D REQUEST_CHANGES (2026-11-04)
 
 Read first:
 - research/R26_STAGE1D_PLANNER_REVIEW.md
@@ -334,11 +334,11 @@ Stage 1D correctly replaced the invalid Stage 1C test mapping with seven PC1-rel
 Current status:
 R26_STAGE1D_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEDGER_AND_TEST_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
 
-Next task: execute planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md. Restore all 42 IDs R12–R53, retain R18 separately from R24, reconcile one category and one disposition per Finding, map exact test class/function/assertions/source calls for all 42, and record unsupported tests honestly. Do not modify production source or test code.
+Next task: execute planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md. Restore all 42 IDs R12â€“R53, retain R18 separately from R24, reconcile one category and one disposition per Finding, map exact test class/function/assertions/source calls for all 42, and record unsupported tests honestly. Do not modify production source or test code.
 
-No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.
+No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1â€“R25 evidence, and no main merge/update.
 
-## 14. Latest Planner decision — Stage 1E REQUEST_CHANGES (2026-11-04)
+## 14. Latest Planner decision â€” Stage 1E REQUEST_CHANGES (2026-11-04)
 
 Read first:
 - research/R26_STAGE1E_PLANNER_REVIEW.md
@@ -369,9 +369,9 @@ R26_STAGE1E_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_DISPOSITION_REVI
 
 Next task: execute planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md. Rebuild all 42 mappings from real test declarations, use NONE when absent, inspect assertions and call paths, and re-evaluate all dispositions. Keep 450/450 not independently reproduced.
 
-No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.
+No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1â€“R25 evidence, and no main merge/update.
 
-## 15. Latest Planner decision — Stage 1F REQUEST_CHANGES (2026-11-04)
+## 15. Latest Planner decision â€” Stage 1F REQUEST_CHANGES (2026-11-04)
 
 Read first:
 - research/R26_STAGE1F_PLANNER_REVIEW.md
@@ -382,7 +382,7 @@ Read first:
 - updated planner/GLEPPO_R26_HANDOFF.md
 - status.json
 
-Stage 1F has all 42 IDs R12–R53 exactly once and correct category arithmetic. R18 is manual documentation evidence; R24/R45/R52/R53 are PARTIALLY_FIXED; R15 is OPEN; R46 is UNVERIFIABLE. The 218 test declaration count is correct, and 450/450 remains not independently reproduced.
+Stage 1F has all 42 IDs R12â€“R53 exactly once and correct category arithmetic. R18 is manual documentation evidence; R24/R45/R52/R53 are PARTIALLY_FIXED; R15 is OPEN; R46 is UNVERIFIABLE. The 218 test declaration count is correct, and 450/450 remains not independently reproduced.
 
 However:
 - detailed row dispositions count 27/13/1/1, while summary/status/commit message say 22/15/1/1 (only 39);
@@ -397,11 +397,11 @@ R26_STAGE1F_REPORT_RECEIVED_REQUEST_CHANGES; DISPOSITION_COUNT_AND_EXACT_TEST_MA
 
 Next task: execute planner/GLEPPO_R26_STAGE1G_EXECUTOR_PROMPT.md. Recount dispositions from the rows, correct all numeric counts and ID lists, replace all 34 nonexistent function names with exact declarations or NONE, add actual assertions and source call paths, and re-evaluate the evidence for every VERIFIED_FIXED item.
 
-No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.
+No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1â€“R25 evidence, and no main merge/update.
 
 
 
-## 16. Latest Planner decision — Stage 1G REQUEST_CHANGES (2026-11-04)
+## 16. Latest Planner decision â€” Stage 1G REQUEST_CHANGES (2026-11-04)
 
 Read first:
 - research/R26_STAGE1G_PLANNER_REVIEW.md
@@ -430,9 +430,9 @@ R26_STAGE1G_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_SEMANTIC_EVIDENC
 
 Next task: execute planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md. Correct all mappings, enumerate exact assertions and source call paths, map every relevant test for multi-part findings, correct R39/R49/R53, re-evaluate all VERIFIED_FIXED dispositions (at minimum downgrade R19 absent formal approval), add R18 line references, and update all durable handoff files.
 
-No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.
+No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1â€“R25 evidence, and no main merge/update.
 
-## 17. Latest Planner decision — Stage 1H REQUEST_CHANGES (2026-11-04)
+## 17. Latest Planner decision â€” Stage 1H REQUEST_CHANGES (2026-11-04)
 
 Read first:
 - research/R26_STAGE1H_PLANNER_REVIEW.md
@@ -459,11 +459,11 @@ R26_STAGE1H_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_SEMANTIC_EVIDENCE_AND
 
 Next task: execute planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md. Produce the full 42-Finding semantic evidence map, correct R53 and R39 cross-evidence, complete R18 manual evidence, validate the declaration map with the helper, re-evaluate all VERIFIED_FIXED dispositions, and update all handoff records.
 
-No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.
+No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1â€“R25 evidence, and no main merge/update.
 
 ---
 
-## 18. Latest Planner update — Stage 1H REQUEST_CHANGES + ECOS scientific-integrity correction (2026-11-04)
+## 18. Latest Planner update â€” Stage 1H REQUEST_CHANGES + ECOS scientific-integrity correction (2026-11-04)
 
 ### Exact refs at the start of the latest Planner update
 
@@ -494,7 +494,7 @@ Stage 1H is **REQUEST_CHANGES**. It has 42 unique Findings and 39/39 exact decla
 Execute `planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md`. It has a Planner addendum. Complete the original 42-Finding semantic evidence task; do not treat this addendum as permission to expand into experiments or production code changes.
 
 The final report must:
-- map every R12–R53 Finding to original acceptance criteria, actual assertions, source symbols/call paths, intended branches, and uncovered conditions;
+- map every R12â€“R53 Finding to original acceptance criteria, actual assertions, source symbols/call paths, intended branches, and uncovered conditions;
 - correct R53 as indirect status-consistency evidence only (no direct status-only hash-invariance test);
 - cross-reference R16/R20 instrumented tests for R39 action/genotype exclusion;
 - complete R18's manual evidence and distinguish planned slots from actual CTX, model tokens, cache bundles and production cost;
@@ -531,7 +531,7 @@ After Stage 1I is independently accepted, a separate `R26_ECOS_PROTOCOL_RECONCIL
 
 ---
 
-## 19. Latest Planner decision — Stage 1I REQUEST_CHANGES; Stage 1I-R1 required (2026-11-04)
+## 19. Latest Planner decision â€” Stage 1I REQUEST_CHANGES; Stage 1I-R1 required (2026-11-04)
 
 ### Exact reviewed repository state
 
@@ -542,7 +542,7 @@ After Stage 1I is independently accepted, a separate `R26_ECOS_PROTOCOL_RECONCIL
 - Main: 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e
 - Branch relation at review: 202 ahead / 0 behind main
 - Planner review: research/R26_STAGE1I_PLANNER_REVIEW.md
-- Decision: REQUEST_CHANGES — Stage 1I is NOT accepted.
+- Decision: REQUEST_CHANGES â€” Stage 1I is NOT accepted.
 
 ### Read first
 
@@ -596,7 +596,7 @@ Do not force the previous 26/14/1/1 counts. Recompute from the 42 JSON rows. R53
 - No production source or tests/ changes.
 - No model/API calls or production runtime.
 - No production signing-key access.
-- No R1–R25 evidence/manifest changes.
+- No R1â€“R25 evidence/manifest changes.
 - No main merge/update/reset/rebase/force-push.
 - No cross-project code/data/report reuse.
 
@@ -607,12 +607,78 @@ After Stage 1I-R1 is committed and all durable records are updated, stop and wai
 
 ---
 
-## Stage 1I-R1 ���� (2026-11-04)
+---
 
-Stage 1I-R1 ������������ɲ��ύ����һ�ؿڣ�Planner �������� Stage 1I-R1��
+## 20. Latest Planner decision — Stage 1I-R1 REQUEST_CHANGES; Stage 1I-R2 required (2026-11-04)
 
-�������ݣ�42 ������֤��ӳ�䣨JSON + MD����validator �Բ������R39/R53/R18 ���������
+### Exact repository state
 
-Ӳ�߽粻�䣺PC1 BLOCKED��Formal G3 FAIL��Family C NOT ACCESSED��controller training NOT AUTHORIZED��model/API calls 0��production runtime 0��
+- Repository: yujian777555/GLEPPO
+- Branch: r25-handoff
+- R1 final HEAD: 4d2ff06ee01146533501589b264d33ddd30ffcbe
+- R1 parent: 539f74d5c898abc144992fff4a413a30744c1cc9
+- R1 source snapshot: 29325cfa16441154c833f381f208747b57627a79
+- R1 Planner review commit: dcdcef5b2e7e68a6590d95c90c4caf453399c127
+- Main: 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e
+- Branch relation at review: 211 ahead / 0 behind main
+- Decision: REQUEST_CHANGES — R1 NOT accepted.
+- Full review: research/R26_STAGE1I_R1_PLANNER_REVIEW.md
+- R2 Executor prompt: planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md
 
-ֻ�� Planner ���� Stage 1I-R1 �󣬲��ܽ��� R26_ECOS_PROTOCOL_RECONCILIATION��
+### Read first
+
+1. status.json
+2. research/R26_STAGE1I_R1_PLANNER_REVIEW.md
+3. planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md
+4. research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.json
+5. research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md
+6. scripts/_r26i_validator.py
+7. research/R26_STAGE1I_R1_CORRECTIVE_REPORT.md
+8. planner/latest_plan.md
+9. planner/GLEPPO_R26_HANDOFF.md
+10. research/R26_PC1_AUDIT_SUMMARY.md
+11. Original THIRD through TENTH review findings and all cited test/source files.
+
+### Why R1 was rejected
+
+The 42 IDs and Markdown/JSON disposition synchronization pass. The 26/14/1/1 arithmetic is correct. But the semantic evidence map is not yet reliable:
+- relevant direct tests are omitted for R12, R14, R17, R20, R23, R39, R40, R41 and other multi-part findings;
+- R28 maps a constants-only test to BudgetLedger.reconcile;
+- R30/R37 call paths claim validate_records although run_pc1_analysis rejects missing values earlier;
+- R44 cites an isolated artifact loader test, not an end-to-end registered analysis path;
+- R47's alternative mapping test fails at registered hash comparison before plan ID/version checks;
+- R50's wrong-hash test calls art.verify directly, not ApprovalGate.check;
+- R51 uses a protocol-content hash test as evidence for the plan hash;
+- R17/R23/R25/R48/R52 cite nonexistent source symbols;
+- R20 assigns crn_seed to the wrong file and claims a nonexistent call path;
+- 12 source symbol ranges are null;
+- validator null line values can pass, and wrong_file_path self-test duplicates missing-file test;
+- several VERIFIED_FIXED rows are unsupported by their mapped tests.
+
+### Current task — Stage 1I-R2
+
+Execute planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md exactly.
+
+Correct the full 42-row semantic map, preserve every original acceptance subcondition, enumerate all relevant tests, repair source symbols and exact line ranges, correct call paths/branch reachability, re-evaluate dispositions, and harden the AST validator with targeted negative self-tests.
+
+Do not force the old 26/14/1/1 counts. R53 remains PARTIALLY_FIXED absent a direct hash-invariance test. R18 remains MANUAL; production tokens/latency UNMEASURED.
+
+### Hard gates
+
+- PC1 BLOCKED; R4 PROPOSED / NOT APPROVED.
+- Formal G3 FAIL.
+- Family C NOT ACCESSED.
+- Registered PC1 NOT EXECUTED.
+- Controller training NOT AUTHORIZED / NOT STARTED.
+- No production source or tests/ changes.
+- No model/API calls or production runtime.
+- No signing-key access.
+- No R1–R25 evidence/manifest changes.
+- No main merge/update/reset/rebase/force-push.
+- No cross-project code/data/report reuse.
+- 450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
+
+### Stop condition
+
+After Stage 1I-R2 is committed and all durable records are updated, stop and wait for Planner independent review. Do not enter R26_ECOS_PROTOCOL_RECONCILIATION, PC1, Family C, controller training or Formal G3.
+

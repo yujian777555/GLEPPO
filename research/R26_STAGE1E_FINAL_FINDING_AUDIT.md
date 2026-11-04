@@ -97,3 +97,14 @@
 **R26_STAGE1E_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW**
 
 42 findings, 42 dispositions, categories reconciled. PC1 remains BLOCKED.
+
+---
+
+## Planner correction — 2026-11-04
+
+The 42-row ID/category/disposition arithmetic is accepted. The test map is not accepted as exact evidence. The source snapshot in the header (da3dfef) is the parent of the Stage 1E report commit (65f83df), not the current branch HEAD.
+
+R24, R52 and R53 are currently marked VERIFIED_FIXED without complete acceptance evidence. At minimum they must be PARTIALLY_FIXED absent exact existing tests satisfying their original criteria. R18 may remain VERIFIED_FIXED after the current SMOKE_RAW/COST_BASELINE manual comparison is recorded precisely.
+
+See research/R26_STAGE1E_PLANNER_REVIEW.md. Current Planner decision: REQUEST_CHANGES; PC1 BLOCKED.
+

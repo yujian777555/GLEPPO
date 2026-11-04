@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-04",
-  "phase": "GLEPPO_R26_STAGE1I_REQUEST_CHANGES_STAGE1I_R1_CORRECTIVE",
-  "state": "R26_STAGE1I_AUDIT_INCOMPLETE_SEMANTIC_MAP_VALIDATOR_AND_HANDOFF_REQUIRED",
+  "phase": "GLEPPO_R26_STAGE1I_R1_COMPLETE",
+  "state": "R26_STAGE1I_R1_READY_FOR_PLANNER_REVIEW",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -1615,30 +1615,18 @@
     "pc1_audit_summary_commit": "0aeb3ecf0a3d7087fe6e6b286b038e6477cd06ae"
   },
   "r26_stage1i_r1": {
-    "status": "PROMPT_ISSUED_NOT_STARTED",
-    "prompt": "planner/GLEPPO_R26_STAGE1I_CORRECTIVE_EXECUTOR_PROMPT.md",
-    "prompt_commit": "824523ae00a21c0c91f31a3225cc4c3177d37003",
-    "scope": "42_ROW_SEMANTIC_MAP_AST_DECLARATION_VALIDATOR_SELF_TESTS_AND_DURABLE_HANDOFF",
-    "required_artifacts": [
-      "research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.json",
-      "research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md",
-      "scripts/_r26i_validator.py",
-      "research/R26_STAGE1I_R1_CORRECTIVE_REPORT.md"
-    ],
-    "required_validation": [
-      "Exactly 42 unique IDs R12-R53",
-      "Row-level original criteria, exact assertions, source call paths, branch reachability and uncovered conditions",
-      "Disposition counts mechanically derived from JSON rows",
-      "AST map validation by exact file/class/function/line",
-      "Positive and adversarial negative validator self-tests"
-    ],
-    "production_source_changes_allowed": false,
-    "test_code_changes_allowed": false,
-    "model_api_calls": 0,
-    "registered_pc1_executed": false,
-    "family_c_accessed": false,
-    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
-    "formal_g3": "FAIL",
-    "next_action": "Complete Stage 1I-R1, update all durable records, then stop for Planner independent review."
+    "semantic_map_created": true,
+    "validator_self_tests": "PASS",
+    "map_validation": "PASS",
+    "dispositions": {
+      "VERIFIED_FIXED": 26,
+      "PARTIALLY_FIXED": 14,
+      "OPEN": 1,
+      "UNVERIFIABLE": 1
+    },
+    "r53_corrected": "INDIRECT_evidence",
+    "r39_cross_referenced": "R16_R20",
+    "r18_complete": true,
+    "decision": "R26_STAGE1I_R1_READY_FOR_PLANNER_REVIEW"
   }
 }

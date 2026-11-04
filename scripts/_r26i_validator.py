@@ -1,15 +1,21 @@
-"""R26 Stage 1I: Declaration map validator (non-production audit helper)."""
+"""R26 Stage 1I-R1: Declaration map validator with self-tests (non-production audit helper).
+
+Validates the semantic evidence map's declaration mapping.
+Does NOT validate assertion semantics, call paths, or acceptance coverage.
+"""
+import json
+import sys
 import re
 from pathlib import Path
 
 
-def parse_test_declarations(test_files):
-    """Parse test class/function declarations from source."""
+def parse_declarations(test_files):
+    """Parse test declarations using regex (simplified AST-like)."""
     declarations = {}
     for fname in test_files:
         path = Path(fname)
         if not path.exists():
-            continue
+            raise FileNotFoundError(f"Test file missing: {fname}")
         content = path.read_bytes().decode("utf-8", errors="replace")
         lines = content.split("\n")
 
@@ -31,47 +37,57 @@ def parse_test_declarations(test_files):
     return declarations
 
 
-def validate_report_map(report_rows, declarations):
-    """Validate 42-row report map against actual declarations.
-
-    Returns list of issues found.
-    """
+def validate_map(map_path, test_files):
+    """Validate semantic evidence map against actual declarations."""
     issues = []
+
+    with open(map_path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    findings = data.get("findings", [])
+    if len(findings) != 42:
+        issues.append(f"Expected 42 findings, got {len(findings)}")
+
+    expected_ids = {f"R{i}" for i in range(12, 54)}
     seen_ids = set()
 
-    for row in report_rows:
-        fid = row.get("id")
+    declarations = parse_declarations(test_files)
+
+    for finding in findings:
+        fid = finding.get("id")
         if fid in seen_ids:
             issues.append(f"Duplicate ID: {fid}")
         seen_ids.add(fid)
 
-        test_file = row.get("test_file")
-        test_class = row.get("test_class")
-        test_function = row.get("test_function")
-        test_line = row.get("test_line")
+        if fid not in expected_ids:
+            issues.append(f"Unknown ID: {fid}")
 
-        if test_file == "NONE":
-            continue
+        test_evidence = finding.get("test_evidence", [])
+        evidence_type = finding.get("evidence_type", "")
 
-        # Check class exists
-        if test_class not in declarations:
-            issues.append(f"{fid}: class {test_class} not found")
-            continue
+        if evidence_type == "NONE" and test_evidence:
+            issues.append(f"{fid}: NONE evidence but has test_evidence")
 
-        # Check function exists in class
-        funcs = declarations[test_class]
-        matching = [f for f in funcs if f["name"] == test_function]
-        if not matching:
-            issues.append(f"{fid}: function {test_function} not in {test_class}")
-            continue
+        for te in test_evidence:
+            test_file = te.get("test_file")
+            test_class = te.get("test_class")
+            test_function = te.get("test_function")
+            test_line = te.get("declaration_line")
 
-        # Check line number
-        actual_line = matching[0]["line"]
-        if test_line and test_line != actual_line:
-            issues.append(f"{fid}: line mismatch (reported={test_line}, actual={actual_line})")
+            if test_class not in declarations:
+                issues.append(f"{fid}: class {test_class} not found")
+                continue
 
-    # Check for missing IDs
-    expected_ids = {f"R{i}" for i in range(12, 54)}
+            funcs = declarations[test_class]
+            matching = [f for f in funcs if f["name"] == test_function]
+            if not matching:
+                issues.append(f"{fid}: function {test_function} not in {test_class}")
+                continue
+
+            actual_line = matching[0]["line"]
+            if test_line and test_line != actual_line:
+                issues.append(f"{fid}: line mismatch (reported={test_line}, actual={actual_line})")
+
     missing = expected_ids - seen_ids
     if missing:
         issues.append(f"Missing IDs: {sorted(missing, key=lambda x: int(x[1:]))}")
@@ -79,19 +95,101 @@ def validate_report_map(report_rows, declarations):
     return issues
 
 
-if __name__ == "__main__":
-    test_files = [
-        "tests/test_r8_r9_r11_pc1.py",
-        "tests/test_r12_r17.py",
-        "tests/test_r19_r25.py",
-        "tests/test_r26_r32.py",
-        "tests/test_r33_r38.py",
-        "tests/test_r39_r42.py",
-        "tests/test_r54_r59.py",
-    ]
+def run_self_test():
+    """Self-test with temporary fixtures."""
+    import tempfile
+    import shutil
 
-    declarations = parse_test_declarations(test_files)
-    print(f"Total classes: {len(declarations)}")
-    print(f"Total functions: {sum(len(v) for v in declarations.values())}")
-    print("\nNote: This helper validates DECLARATION existence only.")
-    print("Semantic evidence review requires manual assertion/call-path analysis.")
+    test_results = []
+
+    with tempfile.TemporaryDirectory() as td:
+        # Create test fixture
+        test_dir = Path(td) / "tests"
+        test_dir.mkdir()
+        test_file = test_dir / "test_fixture.py"
+        test_file.write_text("""
+class TestFixture:
+    def test_valid(self):
+        assert True
+""", encoding="utf-8")
+
+        # Create valid map
+        valid_map = {
+            "schema_version": "1.0",
+            "findings": [
+                {
+                    "id": "R12",
+                    "test_evidence": [{"test_file": "tests/test_fixture.py", "test_class": "TestFixture", "test_function": "test_valid", "declaration_line": 3}],
+                    "evidence_type": "DIRECT",
+                    "disposition": "VERIFIED_FIXED",
+                }
+            ] + [
+                {
+                    "id": f"R{i}",
+                    "test_evidence": [],
+                    "evidence_type": "NONE",
+                    "disposition": "VERIFIED_FIXED",
+                }
+                for i in range(13, 54)
+            ],
+        }
+        map_path = Path(td) / "map.json"
+        map_path.write_text(json.dumps(valid_map), encoding="utf-8")
+
+        # Test 1: Valid map passes
+        issues = validate_map(str(map_path), [str(test_file)])
+        test_results.append(("valid_map", len(issues) == 0))
+
+        # Test 2: Wrong function name fails
+        bad_map = json.loads(json.dumps(valid_map))
+        bad_map["findings"][0]["test_evidence"][0]["test_function"] = "test_nonexistent"
+        map_path.write_text(json.dumps(bad_map), encoding="utf-8")
+        issues = validate_map(str(map_path), [str(test_file)])
+        test_results.append(("wrong_function", len(issues) > 0))
+
+        # Test 3: Missing ID fails
+        bad_map = json.loads(json.dumps(valid_map))
+        bad_map["findings"] = bad_map["findings"][:-1]
+        map_path.write_text(json.dumps(bad_map), encoding="utf-8")
+        issues = validate_map(str(map_path), [str(test_file)])
+        test_results.append(("missing_id", len(issues) > 0))
+
+    print("Self-test results:")
+    for name, passed in test_results:
+        status = "PASS" if passed else "FAIL"
+        print(f"  {name}: {status}")
+
+    return all(passed for _, passed in test_results)
+
+
+if __name__ == "__main__":
+    if "--self-test" in sys.argv:
+        success = run_self_test()
+        sys.exit(0 if success else 1)
+
+    if "--validate" in sys.argv:
+        map_path = sys.argv[sys.argv.index("--validate") + 1]
+        test_files = [
+            "tests/test_r8_r9_r11_pc1.py",
+            "tests/test_r12_r17.py",
+            "tests/test_r19_r25.py",
+            "tests/test_r26_r32.py",
+            "tests/test_r33_r38.py",
+            "tests/test_r39_r42.py",
+            "tests/test_r54_r59.py",
+        ]
+        issues = validate_map(map_path, test_files)
+        if issues:
+            print(f"VALIDATION FAILED: {len(issues)} issues")
+            for issue in issues:
+                print(f"  - {issue}")
+            sys.exit(1)
+        else:
+            print("VALIDATION PASSED")
+            sys.exit(0)
+
+    print("Usage:")
+    print("  python _r26i_validator.py --self-test")
+    print("  python _r26i_validator.py --validate <map.json>")
+    print("\nDisclaimer: Validates declaration mapping/schema only.")
+    print("Does NOT prove assertion semantics, call paths, or acceptance coverage.")

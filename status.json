@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-04",
-  "phase": "GLEPPO_R26_STAGE1G_COMPLETE",
-  "state": "R26_STAGE1G_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+  "phase": "GLEPPO_R26_STAGE1H_READY",
+  "state": "R26_STAGE1G_REPORT_RECEIVED_REQUEST_CHANGES_EXACT_TEST_MAP_AND_SEMANTIC_EVIDENCE_RECONCILIATION_REQUIRED",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "R26 Stage 1G: reconcile the Stage 1F detailed-row disposition counts with summary/status; replace 34 non-existent test function names with exact declarations or NONE; provide per-Finding line/assertion/source-call evidence. Documentation-only; no production source or test-code changes.",
-  "next_gate": "R26_STAGE1G_EXACT_TEST_MAP_AND_DISPOSITION_RECONCILIATION -> PLANNER_INDEPENDENT_REVIEW -> SEPARATE_AUTHORIZATION_FOR_ANY_REMEDIATION",
+  "current_task": "R26 Stage 1H: correct R31/R49 mappings; supply exact assertions, source call paths, intended-branch analysis and uncovered acceptance conditions for all 42 findings; correct R39/R49/R53 semantics; re-evaluate VERIFIED_FIXED dispositions (R19 remains PARTIALLY_FIXED absent formal approval); add R18 line references; update durable handoff.",
+  "next_gate": "R26_STAGE1H_SEMANTIC_EVIDENCE_AND_DISPOSITION_RECONCILIATION -> PLANNER_INDEPENDENT_REVIEW -> SEPARATE_AUTHORIZATION_FOR_ANY_TEST_REMEDIATION",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -1348,11 +1348,123 @@
       "R46"
     ],
     "test_evidence": "450_REPORTED_NOT_REPRODUCED",
-    "decision": "R26_STAGE1G_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW"
+    "decision": "R26_STAGE1G_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+    "executor_reported_result": {
+      "commit": "69781d1166f9e28e7535915aad00af859c1b2734",
+      "source_snapshot": "29325cfa16441154c833f381f208747b57627a79",
+      "dispositions": {
+        "VERIFIED_FIXED": 27,
+        "PARTIALLY_FIXED": 13,
+        "OPEN": 1,
+        "UNVERIFIABLE": 1,
+        "total": 42
+      },
+      "test_classes": 42,
+      "declared_test_functions": 218,
+      "reported_map_rows": 42,
+      "reported_direct_test_rows": 39,
+      "none_rows": [
+        "R18",
+        "R45",
+        "R46"
+      ],
+      "test_evidence": "450_REPORTED_NOT_REPRODUCED",
+      "executor_decision": "R26_STAGE1G_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW"
+    },
+    "planner_review": {
+      "decision": "REQUEST_CHANGES",
+      "report": "research/R26_STAGE1G_PLANNER_REVIEW.md",
+      "report_commit": "6bcc7aacb3ee9ec46e92ca487854ce07098717e6",
+      "report_head_reviewed": "69781d1166f9e28e7535915aad00af859c1b2734",
+      "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
+      "main_ahead_behind": "branch_ahead_168_behind_0",
+      "r25_base_ahead_behind": "branch_ahead_87_behind_0",
+      "exact_test_map": {
+        "claimed_rows": 39,
+        "exact_file_class_function_line_tuples": 37,
+        "mismatches": [
+          {
+            "id": "R31",
+            "claimed": "test_all_booleans_true_still_denied",
+            "actual": "test_all_booleans_true_still_denied_for_proposed_protocol",
+            "line": 372
+          },
+          {
+            "id": "R49",
+            "claimed": "test_mutation_status_not_checked",
+            "actual": "test_mutation_status_not_checked_by_consistency",
+            "line": 118
+          }
+        ],
+        "none_rows": [
+          "R18",
+          "R45",
+          "R46"
+        ]
+      },
+      "semantic_findings": {
+        "R39": "Mapped test is tautological same-call equality; map delimiter/component-isolation tests instead.",
+        "R49": "Actual related test only checks protocol_consistency_check status behavior; no full approval lifecycle transition.",
+        "R53": "Mapped test_mutation_seed_contract_fails is unrelated to status/hash invariance; no direct status-only content-hash invariance test.",
+        "R19": "Submitted VERIFIED_FIXED conflicts with original explicit approval criterion; protocol remains PROPOSED / NOT APPROVED; downgrade to PARTIALLY_FIXED absent valid approval evidence.",
+        "R18": "Manual evidence values reconcile, but Stage 1G report must include exact raw/cost line references."
+      },
+      "accepted": [
+        "Submitted disposition arithmetic 27/13/1/1 sums to 42",
+        "Category counts sum to 42",
+        "42 distinct test classes independently confirmed",
+        "218 declared test functions independently confirmed",
+        "450/450 remains not independently reproduced",
+        "No production source or test code changed"
+      ],
+      "rejected": [
+        "Claim that all 39 mapped function declarations are exact",
+        "Generic assertion labels in place of actual assertion expressions",
+        "Missing source call paths, intended branch and uncovered acceptance conditions",
+        "R39 tautological mapped test",
+        "R53 unrelated seed-schema test mapping",
+        "R19 VERIFIED_FIXED without explicit protocol approval",
+        "Missing R18 line references",
+        "Unresolved report SHA placeholders",
+        "Stale latest_plan, handoff and next-session prompt"
+      ],
+      "ci_for_head": {
+        "commit_status_entries": 0,
+        "check_runs": 0,
+        "actions_runs": 0
+      },
+      "pc1": "BLOCKED"
+    }
   },
   "model_api_calls": 0,
   "registered_pc1_executed": false,
   "family_c_accessed": false,
   "controller_training": "NOT_STARTED_NOT_AUTHORIZED",
-  "formal_g3": "FAIL"
+  "formal_g3": "FAIL",
+  "r26_stage1h": {
+    "status": "PROMPT_PREPARED_NOT_STARTED",
+    "prompt": "planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md",
+    "prompt_commit": "a24528ac2fd2af4346ba0bafc2ce91176664167d",
+    "scope": "SEMANTIC_EVIDENCE_AND_DISPOSITION_RECONCILIATION",
+    "production_source_changes_allowed": false,
+    "test_code_changes_allowed": false,
+    "required": [
+      "Correct R31 and R49 exact function names",
+      "Build exact test start/end, assertion, source symbol and call-path map for all 42 findings",
+      "List all relevant tests for multi-part findings and identify uncovered acceptance conditions",
+      "Correct R39 tautological evidence anchor",
+      "Correct R49 and R53 semantic mappings and explain lifecycle/hash gaps",
+      "Re-evaluate all VERIFIED_FIXED dispositions; R19 must be PARTIALLY_FIXED absent formal protocol approval",
+      "Add R18 manual evidence line references",
+      "Replace unresolved report commit/HEAD placeholders",
+      "Update status, latest_plan, handoff, next-session prompt and cumulative PC1 records",
+      "Keep 450/450 as not independently reproduced"
+    ],
+    "model_api_calls": 0,
+    "registered_pc1_executed": false,
+    "family_c_accessed": false,
+    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+    "formal_g3": "FAIL",
+    "next_action": "Verify refs; perform documentation-only semantic evidence and disposition reconciliation."
+  }
 }

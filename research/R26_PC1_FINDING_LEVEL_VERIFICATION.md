@@ -169,3 +169,16 @@ Disposition arithmetic is corrected to 27/13/1/1 = 42. The 42-class / 218-functi
 The test-evidence table still lacks actual assertion expressions, source call paths, intended-branch analysis and uncovered acceptance conditions. R39 is mapped to a tautology; R53 to an unrelated seed-schema test; R19 remains marked verified despite the protocol being PROPOSED / NOT APPROVED.
 
 Full review: research/R26_STAGE1G_PLANNER_REVIEW.md. Stage 1H required. PC1 remains BLOCKED.
+
+---
+
+## Stage 1H Planner correction — 2026-11-04
+
+**Decision:** REQUEST_CHANGES.
+
+The 42-ID register, 26/14/1/1 disposition arithmetic and 39/39 declaration map are independently verified. However, the evidence file remains a declaration inventory rather than a semantic evidence map. It omits exact assertions, source call paths, intended branch, original acceptance criteria and uncovered conditions.
+
+R53 remains incorrectly mapped to seed_schema mutation; R39 lacks cross-reference to R16/R20 instrumented genotype tests; R18 manual evidence is incomplete. The extractor remains an inventory tool and durable handoff files were not updated.
+
+Full review: research/R26_STAGE1H_PLANNER_REVIEW.md. Stage 1I required. PC1 remains BLOCKED.
+

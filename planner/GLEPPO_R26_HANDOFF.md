@@ -5,7 +5,7 @@
 **Continuation branch:** r25-handoff  
 **R25 base:** a8ff1827434a88b2fef02a89aaf3e120e0a017a7  
 **R26 prompt:** planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md  
-**Current handoff state:** R26_STAGE1G_REQUEST_CHANGES_SEMANTIC_EVIDENCE_RECONCILIATION_REQUIRED
+**Current handoff state:** R26_STAGE1H_REQUEST_CHANGES; R26_STAGE1I_ACTIVE; ECOS_SCIENTIFIC_PROTOCOL_RECONCILIATION_REQUIRED
 
 ---
 
@@ -526,4 +526,99 @@ R26_STAGE1H_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_SEMANTIC_EVIDENCE_AND
 Read planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md. Complete the semantic evidence map for all 42 Findings, correct R53, cross-reference R16/R20 for R39, add complete R18 manual evidence, upgrade the declaration-map validator, re-evaluate all VERIFIED_FIXED items, and update all durable handoff/cumulative records.
 
 Hard boundaries remain: no registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no update of main.
+
+---
+
+## 22. R26 Stage 1H Planner review and ECOS scientific-integrity correction — 2026-11-04
+
+**Current continuation branch:** `r25-handoff`  
+**Stage 1H reviewed Executor HEAD:** `532ee8adf498e83967016723d28cb1e7dc30bf5f`  
+**Stage 1H parent:** `0b1d5cac084966040a2a1820675605cc428776fc`  
+**Stage 1H source snapshot:** `29325cfa16441154c833f381f208747b57627a79`  
+**Main at this Planner review:** `6bad0b77835a2d00c62287c0c7d9d91d1d186d5e`  
+**r25-handoff at the start of this Planner update:** `571c34201dde4e63705319670e446cb0e058f086`  
+**Branch relation at that start point:** 194 ahead / 0 behind main  
+**Planner decision:** Stage 1H = REQUEST_CHANGES  
+**Current task:** R26 Stage 1I; see `planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md`.
+
+### 22.1 Stage 1H decision
+
+Accepted:
+- 42 formal Finding IDs R12–R53 occur exactly once;
+- disposition arithmetic is 26 VERIFIED_FIXED / 14 PARTIALLY_FIXED / 1 OPEN / 1 UNVERIFIABLE;
+- all 39 direct declaration tuples match the frozen source snapshot;
+- R31/R49 declaration names corrected;
+- R19 is PARTIALLY_FIXED;
+- 218 test functions independently counted;
+- 450/450 remains Executor-reported and not independently reproduced.
+
+Rejected:
+- evidence remains a declaration inventory, not a semantic map of assertions, call paths, intended branches, and uncovered acceptance conditions;
+- R53 points to an unrelated seed_schema test; status-consistency is indirect only and does not prove status-only hash invariance;
+- R39 action/genotype exclusion lacks the R16/R20 instrumented cross-genotype evidence cross-reference;
+- R18 manual evidence omits critical token/units/production-cost caveats;
+- `_r26h_extract.py` does not validate the report's 42-row map;
+- durable handoff/cumulative records were not updated by Stage 1H;
+- Stage 1H exact SHA has no status entries, check-runs, or Actions run; 450/450 remains unverified.
+
+Full decision: `research/R26_STAGE1H_PLANNER_REVIEW.md`.
+
+### 22.2 New scientific-integrity finding: R21-C1 does not establish operator value
+
+A separate read-only Planner review was added:
+
+`research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md`
+
+It corrects an unsupported inference in `research/R25_ECOS_SCIENTIFIC_REVIEW.md`: “Fixed strategy enough? UNLIKELY — R21-C1 shows operator matters.”
+
+R21-C1 compares C0 (LLM arithmetic execution) with C4 (DAC deterministic answer computation). It does not compare operators or controller policies. Therefore:
+- R21-C1 supports the DAC/arithmetic-correctness claim under its documented limitations;
+- fixed-operator insufficiency remains UNTESTED;
+- adaptive selection vs best fixed remains UNTESTED;
+- PPO vs rule-based and PPO vs identical-state contextual Bandit remain UNTESTED.
+
+Do not rewrite the historical R25 review. Cite the R26 Planner addendum and preserve this correction in all future research claims.
+
+### 22.3 ECOS protocol drift discovered
+
+The following artifacts are materially inconsistent and cannot be treated as one already-frozen controller contract:
+- `PHASE1_DESIGN.md`: 32-D state, per-generation operator action, generation reward, γ=0.95, sequential episode-return framing, broad baseline suite;
+- `R24_ECOS_CONTROLLER_PREREGISTRATION.md`: immediate child-parent effective_success reward, γ=0.99, high-level state description, 4/4/4 task split, 1,000-episode budget;
+- `PC1_PROTOCOL_R4_PROPOSED.md` and shared code: PC1 myopia diagnostic uses generation_reward and γ=0.95; R4 is PROPOSED / NOT APPROVED;
+- `gleppo/reward.py` and `gleppo/evolution.py`: actual shared generation reward uses Δbest + 0.1·valid_rate + 0.25·Δmean, clipped [-0.5,1.0], with γ=0.95.
+
+Do not silently select one version or edit frozen protocol documents. A separate `R26_ECOS_PROTOCOL_RECONCILIATION` is required after Stage 1I Planner acceptance and before any PC1 approval or controller training.
+
+### 22.4 Stage 1I instructions
+
+Executor must continue the existing Stage 1I task; do not restart or jump to PC1. The Stage 1I prompt has been updated with a Planner addendum:
+- complete the 42-Finding semantic evidence map;
+- correct R53 and R39 cross-evidence;
+- complete R18 manual evidence;
+- validate the exact declaration map;
+- re-evaluate all VERIFIED_FIXED dispositions;
+- include the R21-C1 attribution correction and protocol-drift warning in durable handoff;
+- do not resolve protocol drift or modify production source/tests in this stage.
+
+### 22.5 Current gates
+
+- PC1: BLOCKED; R4 remains PROPOSED / NOT APPROVED.
+- Formal G3: FAIL.
+- Family C: NOT ACCESSED.
+- Registered PC1: NOT EXECUTED.
+- Controller training: NOT AUTHORIZED / NOT STARTED.
+- External model/API calls: 0.
+- Production runtime calls: 0.
+- Main branch: unchanged.
+
+### 22.6 Next-session reading order
+
+1. `status.json`
+2. `research/R26_STAGE1H_PLANNER_REVIEW.md`
+3. `research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md`
+4. `planner/latest_plan.md`
+5. `planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md`
+6. This handoff and `planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md`
+
+**Immediate next action:** Executor completes Stage 1I; Planner then performs an independent semantic-evidence review. Only after acceptance may a separate ECOS protocol-reconciliation stage begin.
 

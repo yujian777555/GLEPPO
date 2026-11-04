@@ -341,3 +341,49 @@ Read and execute planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md. Restore all 42 f
 
 Hard boundaries remain: no registered PC1, no Family C, no training, no Formal G3 efficacy, no model/API calls, no production key access, no R1–R25 frozen evidence changes, and no update of main.
 
+---
+
+## 18. R26 Stage 1E Planner independent review — 2026-11-04
+
+**Decision:** REQUEST_CHANGES. Stage 1E bookkeeping is accepted; the exact test evidence map and several dispositions are not.
+
+Review: research/R26_STAGE1E_PLANNER_REVIEW.md  
+Next Executor prompt: planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md
+
+Accepted:
+- all 42 IDs R12–R53 are present exactly once;
+- categories sum to 42;
+- dispositions sum to 42;
+- R18 restored separately from R24;
+- R46 has one disposition, UNVERIFIABLE;
+- the seven-suite 218 test-function count is correct;
+- 450/450 is correctly marked not independently reproduced;
+- no production source/test code changed.
+
+Rejected:
+- 42-row map uses class/function names that do not match actual declarations;
+- only 3 row class names match actual classes, only 1 function name exists (under a different class), and 0 exact class/function pairs match;
+- assertion labels are descriptions, not actual assertions;
+- test paths, line ranges, source symbols and call-path checks are missing;
+- R24's existing test does not validate cost-report units/labels;
+- R52 lacks direct tests for estimator unknown/missing keys and seed schema version/encoding;
+- R53 lacks a direct status-only content-hash invariance test.
+
+At minimum, R24, R52 and R53 must be PARTIALLY_FIXED absent new exact evidence. R18 may remain VERIFIED_FIXED after a precise manual comparison of current raw and cost documents.
+
+Verified refs at review:
+- r25-handoff = 65f83dfc7334d674ad1d96539872f71f1ae44303;
+- Stage 1E source snapshot/parent = da3dfefee9a86ff3833a6fa4f9cf0f71fd0b1375;
+- main = 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e;
+- main → Stage 1E: 140 ahead / 0 behind;
+- R25 base → Stage 1E: 59 ahead / 0 behind.
+
+Current state:
+R26_STAGE1E_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_DISPOSITION_REVIEW_REQUIRED; PC1 BLOCKED.
+
+### Stage 1F task
+
+Read and execute planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md. Rebuild the exact 42-row evidence map from actual test declarations, include file paths/line ranges/assertions/source call paths, use NONE where no direct test exists, and re-evaluate all dispositions. Do not modify production source or test code.
+
+Hard boundaries remain: no registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no update of main.
+

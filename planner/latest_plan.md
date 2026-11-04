@@ -1,318 +1,107 @@
-# GLEPPO 最新执行计划 — R26 Stage 1H：语义证据与 Disposition 复核
+# GLEPPO 最新执行计划 — R26 Stage 1I
 
-**仓库：** yujian777555/GLEPPO  
-**分支：** r25-handoff  
-**R25 基线：** a8ff1827434a88b2fef02a89aaf3e120e0a017a7  
-**Stage 1C 源码快照：** 2a2cd1f2126aa14c5edeca71c79dc2f488f827b4  
-**Stage 1C Executor 提交：** 021380c6a3879e13d87cca014537e71dc882a085  
-**Stage 1C Planner 复审：** research/R26_STAGE1C_PLANNER_REVIEW.md  
+**仓库：** `yujian777555/GLEPPO`  
+**项目边界：** 仅 GLEPPO；不得混入 openissue、agentfotagent、CausalEvo-DSH、EvoPareto-Agent 或其他项目  
+**工作分支：** `r25-handoff`  
+**本轮 Planner 复核起始 HEAD：** `571c34201dde4e63705319670e446cb0e058f086`  
+**本轮复核时 main：** `6bad0b77835a2d00c62287c0c7d9d91d1d186d5e`  
+**起始分支关系：** r25-handoff 相对 main ahead 194 / behind 0  
+**R25 基线：** `a8ff1827434a88b2fef02a89aaf3e120e0a017a7`  
 **更新时间：** 2026-11-04  
-**当前状态：** R26_STAGE1G_REQUEST_CHANGES_SEMANTIC_EVIDENCE_RECONCILIATION_REQUIRED
-
-## 一、Stage 1C Planner 复审结论
-
-**不接受 42/42 VERIFIED_FIXED。**
-
-Stage 1C 提交了 42 行 Finding 表，但验证脚本 scripts/_r26c_finding_verify.py 仅检查源码/测试文件是否存在、统计 def test_ 字符串数量，并没有检查函数调用、测试断言、历史失败模式或真实执行结果。脚本自身输出 NEEDS_DETAILED_VERIFICATION。
-
-测试映射也不成立：
-- tests/test_c7.py 只导入 genotype/operators/interpreter/LLM/tasks/tools，不导入 gleppo.pc1 或 gleppo.evaluator，不能证明 PC1 的 budget/CRN/statistics/approval/runner。
-- tests/test_c7r1c2_protocol.py 测试 scripts/protocol_hash.py 的文本哈希规范化，不测试 PC1 structured protocol semantics。
-- 报告没有 raw stdout/stderr、测试日志或 CI URL；450/450 仍是 Executor 报告值，Planner 未独立复现。
-
-类别表算术也有错误：
-- Protocol 列出 9 个 ID、计数却写 8；
-- Approval 列出 5 个 ID、计数却写 6；
-- Provenance 列出 9 个 ID、计数却写 7；
-- R24 同时出现在 Budget 和 Cost；
-- 所有类别计数相加为 41，而不是 42。
-
-详细复审：research/R26_STAGE1C_PLANNER_REVIEW.md。
-
-## 二、已确认的源码事实
-
-1. Runner：
-   - gleppo/pc1.py:1111–1117 的 execute_registered_pc1() 仍然无条件拒绝；
-   - gleppo/pc1.py:1400–1411 的 SyntheticGateHarness 明确不执行任务加载、Evaluator、rollout 或 raw artifact 写入。
-   - R15、R25、R31 必须分别按原始验收标准判定，不能一律 VERIFIED_FIXED。
-
-2. Approval：
-   - gleppo/pc1.py:1320–1365 的 ApprovalGate 已调用 TrustedApprovalArtifact.verify()，并检查 canonical status/hash；
-   - approval_key 仍由调用者注入，外部独立 trust-anchor provenance 未证明；
-   - tests/test_r54_r59.py 使用 test-only static key。
-   - 必须区分 HMAC 代码正确性与生产授权来源可信度。
-
-3. Protocol/CRN：
-   - 当前源码包含结构化协议检查和 typed JSON seed 逻辑；
-   - 但 Stage 1C 没有把实际 PC1 测试函数与这些逻辑正确对应。
-
-## 三、Stage 1D 执行任务
-
-完整提示词：planner/GLEPPO_R26_STAGE1D_EXECUTOR_PROMPT.md。
-
-本阶段只纠正证据和 Finding 判定，不修改生产源码或测试代码。
-
-必须逐项检查 R12–R53：
-- 找到原始 Finding 的验收标准；
-- 检查当前源码的真实函数和调用路径；
-- 检查正确的测试函数与具体断言；
-- 对安全测试进行离线复现；
-- 记录 raw output、退出码和测试日志；
-- 使用 VERIFIED_FIXED / PARTIALLY_FIXED / OPEN / REGRESSION / NOT_APPLICABLE / UNVERIFIABLE；
-- 对没有证据的 Finding 不得继续标为 VERIFIED_FIXED。
-
-优先检查的真实 PC1 测试文件：
-- tests/test_r8_r9_r11_pc1.py
-- tests/test_r12_r17.py
-- tests/test_r19_r25.py
-- tests/test_r26_r32.py
-- tests/test_r33_r38.py
-- tests/test_r39_r42.py
-- tests/test_r54_r59.py
-
-文件名不等于覆盖证明，必须审查函数和断言。
-
-## 四、交付物
-
-- research/R26_STAGE1D_CORRECTED_FINDING_AUDIT.md
-- research/R26_STAGE1D_TEST_EVIDENCE.md
-- research/R26_PC1_FINDING_LEVEL_VERIFICATION.md（保留 Stage 1C Executor 原始主张，追加 Planner/Stage 1D 修正）
-- research/R26_PC1_TEST_EVIDENCE.md
-- research/R26_PC1_AUDIT_SUMMARY.md
-- research/R26_STAGE1C_PLANNER_REVIEW.md
-- planner/latest_plan.md
-- planner/GLEPPO_R26_HANDOFF.md
-- planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md
-- status.json
-
-## 五、硬边界
-
-- 不执行 registered PC1；
-- 不访问、列出、读取或加载 Family C；
-- 不训练 ECOS/PPO；
-- 不运行 Formal G3 efficacy；
-- 不调用外部模型/API；
-- 不启动 production runtime；
-- 不修改生产源码或测试代码；
-- 不读取或配置生产审批密钥；
-- 不修改冻结 R1–R25 raw evidence/manifests；
-- 不 merge/reset/rebase/force-push 或更新 main。
-
-## 六、下一步
-
-先核实 refs，再审查真实 PC1 测试，纠正 42 个 Finding 的 disposition，运行安全的 targeted offline tests，并保存原始结果。
-
-**Stage 1D 通过 Planner 复审之前，不得进入代码修复，更不得申请 PC1 执行或 PPO 训练。**
+**当前阶段：** R26 Stage 1I — Finding-level semantic evidence completion  
+**当前状态：** Stage 1H Planner = REQUEST_CHANGES；Stage 1I prompt 已增加科学性与协议一致性约束，等待 Executor 执行
 
 ---
 
-## 七、2026-11-04 Planner 独立复审：Stage 1D REQUEST_CHANGES
+## 一、当前 Planner 结论
 
-**复审文档：** research/R26_STAGE1D_PLANNER_REVIEW.md  
-**下一阶段提示词：** planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md
+**GLEPPO Idea 保留为可证伪研究假设；PPO 优势尚未证明；PC1 仍 BLOCKED；不启动训练。**
 
-Stage 1D 相比 Stage 1C 有实质进步，但仍未通过 Planner 验收：
+研究主线仍为 ECOS（Execution-Conditioned Operator Selection）：根据 Agent 执行反馈、种群状态和算子历史，在 Agent 基因型演化过程中选择变异/重组算子。
 
-1. R18 是正式 Finding，却从 42 项中遗漏；R18 和 R24 必须分别保留。
-2. Provenance 列出 9 个 ID，却写数量 7。
-3. 30/8/1/1 合计只有 40；逐项表实际只有 41 个不同 ID。
-4. R46 同时进入 PARTIALLY_FIXED 和 UNVERIFIABLE，必须只有一个 disposition。
-5. 测试证据仅映射 5 个 Finding，且若干函数名称不准确；必须补全 42 行精确函数/断言/源码调用映射。
-6. _r26d_test_inspect.py 只统计测试名称和 imports，不是语义验证器。
-7. 450/450 没有原始日志或以 Stage 1D HEAD 为目标的 CI 记录，仍标记 EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED。
-8. R45 缺少重复协议 JSON key 的直接测试；R48/R52 缺少部分 estimator/seed schema 变异测试；R49/R53 缺少状态变化不影响内容哈希的直接测试。
-9. R43 已有 gate-level negative test test_proposed_rejects_all_flags_true，应纠正“缺少 gate-level test”的错误理由；但 expected_protocol_hash 仍未被使用。
+核心科学问题不是“能不能训练 PPO”，而是：
 
-当前分支 r25-handoff HEAD 为 ca0c9098b83a44229bbedaf5f478ae09d7c16db1，main 为 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e，分支相对 main ahead 124 / behind 0。R25 基线到当前 Stage 1D ahead 43 / behind 0。
+> 当不同演化算子会改变后续种群状态并产生可重复的延迟收益时，序贯控制器能否利用这种跨代依赖，在相同状态、算子库、评估预算和任务条件下，优于最佳固定算子、规则控制器及上下文 Bandit？
 
-### 当前 Planner 状态
+当前没有实验结论证明上述优势成立。PPO 只是候选控制器，不是已被证明的创新本身。
 
-R26_STAGE1D_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEDGER_AND_TEST_EVIDENCE_RECONCILIATION_REQUIRED; PC1_BLOCKED
+## 二、必须纠正的证据归因
 
-### 下一步
+R25 的 `research/R25_ECOS_SCIENTIFIC_REVIEW.md` 曾写：
 
-执行 planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md：
-- 恢复完整 R12–R53 的 42 行；
-- 单独恢复 R18，不能合并到 R24；
-- 每个 Finding 只有一个 disposition；
-- 类别数和 disposition 数都必须严格合计 42；
-- 给出全部 42 个精确 test function / assertion / source call 映射；
-- 如缺少测试，诚实保留 PARTIALLY_FIXED / UNVERIFIABLE；
-- 提供 450/450 原始日志，否则维持未独立复现；
-- 不修改生产源码和测试代码。
+> Fixed strategy enough? UNLIKELY — R21-C1 shows operator matters.
 
-**PC1 仍 BLOCKED；不得进入注册实验、Family C 或 PPO 训练。**
+该推断不成立。
 
----
+R21-C1 实际比较的是 C0（LLM 算术执行）与 C4（DAC 确定性答案计算），不是五种演化算子，也不是固定策略、随机策略、规则策略、Bandit 或 PPO 的对照。R21-C1 的 9/24 vs 24/24、McNemar p=0.000061 支持的是 DAC/算术正确性结果，不能作为“算子选择有益”或“固定算子不够”的证据。
 
-## 八、2026-11-04 Planner 独立复审：Stage 1E REQUEST_CHANGES
+当前应采用以下状态：
+- 固定算子是否不足：**UNTESTED**；
+- 自适应算子选择是否优于最佳固定算子：**UNTESTED**；
+- PPO 是否优于规则控制器：**UNTESTED**；
+- PPO 是否优于相同状态输入的 LinUCB/Neural Bandit：**UNTESTED**；
+- 五个算子存在异质性：历史 pilot 可作为动机，但不能据此宣称自适应控制器有优势；
+- 状态向量和奖励函数的有效性：仍需消融、对照和效度检验。
 
-**复审文档：** research/R26_STAGE1E_PLANNER_REVIEW.md  
-**下一阶段提示词：** planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md
+详细 Planner 复核：`research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md`。历史 R25 文件保留，不覆盖、不改写。
 
-Stage 1E 的台账算术已经修正并获接受：
-- R12–R53 共 42 个 ID，逐项完整且唯一；
-- R18 已恢复，且与 R24 分开；
-- 类别数合计 42；
-- 30 + 10 + 1 + 1 = 42；
-- R46 仅为 UNVERIFIABLE；
-- 7 个 PC1 测试文件的函数声明计数 218 正确；
-- 450/450 正确标注为 EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED；
-- Stage 1E 仅改报告和 status，没有改源码或测试代码。
+## 三、当前协议不一致问题
 
-但 42 行测试映射不成立。Planner 对照七个 PC1 测试文件发现：
-- 42 行映射中只有 3 个 class 名称能匹配真实类声明；
-- 只有 1 个 function 名称存在，但属于不同的真实类；
-- 0/42 个 class/function 组合完全匹配；
-- assertion 列只是概括性描述，不是实际断言；
-- 缺少每项测试路径、行号、源码符号、调用路径和原始 Finding 验收条件。
+目前不能把不同文档视为已经统一的可执行协议：
 
-至少 R24、R52、R53 的 VERIFIED_FIXED 判定缺少必要证据，应降为 PARTIALLY_FIXED，除非能找到并准确映射此前未识别的现有直接测试。R18 可以在记录当前 SMOKE_RAW 与 COST_BASELINE 的精确比对后保留 VERIFIED_FIXED。
+| 来源 | 状态/关键定义 | 未决问题 |
+|---|---|---|
+| `research/PHASE1_DESIGN.md` | 32-D 状态；每代选择一个算子；generation reward；γ=0.95；15 代 episode；B0–B6 与消融 | 作为 Phase 1 设计基线，需与后续预注册核对 |
+| `research/R24_ECOS_CONTROLLER_PREREGISTRATION.md` | child-parent immediate effective_success reward；γ=0.99；4/4/4 task split；1,000 episodes | 与 Phase 1 reward、γ 和 split 不一致；标记 PREREGISTERED 但 NOT AUTHORIZED |
+| `research/PC1_PROTOCOL_R4_PROPOSED.md` | PC1 myopia diagnostic；使用 generation_reward；γ=0.95；45,440 planned slots / 50,000 cap | 仅为 PROPOSED / NOT APPROVED 的诊断协议，不是训练授权 |
+| `gleppo/reward.py` / `gleppo/evolution.py` | 实际共享 generation_reward：Δbest + 0.1·valid_rate + 0.25·Δmean，clip [-0.5,1.0]；γ=0.95 | 与 R24 即时 child-parent reward、γ=0.99 存在冲突 |
 
-当前 Planner 状态：
+这些定义不能由 Executor 静默选择或改写。Stage 1I 只需把冲突作为未决问题保留。Stage 1I 通过 Planner 独立复审后，必须另行完成 `R26_ECOS_PROTOCOL_RECONCILIATION`，统一状态、动作、episode/rollout/CTX 单位、奖励、γ/GAE λ、数据划分、基线、主指标、预算账本和停止规则；在该审查通过前，不得申请 PC1 批准或训练。
 
-R26_STAGE1E_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_DISPOSITION_REVIEW_REQUIRED; PC1_BLOCKED
+## 四、当前执行任务：R26 Stage 1I
 
-### 下一步
+**Executor 提示词：** `planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md`
 
-执行 planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md：
-1. 逐项核对 R12–R53 的原始失败模式与验收标准；
-2. 只使用真实存在的 test class/function；无直接测试写 NONE；
-3. 记录精确文件、行号、assertion、源码调用和是否进入目标分支；
-4. 重评全部 42 项 disposition，不为保持 30 VERIFIED_FIXED 而保留不充分判定；
-5. 至少重新评估 R24、R52、R53；
-6. 保持 450/450 未独立复现状态；
-7. 不修改生产源码和测试代码。
+完整上一轮 Planner 复审：`research/R26_STAGE1H_PLANNER_REVIEW.md`  
+新增科学性审查：`research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md`
 
-PC1 仍 BLOCKED；Family C 不访问；控制器训练不启动；Formal G3 仍 FAIL。
+Stage 1I 目标是完成 R12–R53 共 42 个 PC1 Finding 的真实语义证据审计，而不是只列测试函数名称。
 
----
+必须完成：
+1. 每个 Finding 记录原始验收条件、真实测试断言、源码符号、调用路径、目标分支是否到达、已证明/间接支持/未覆盖条件；
+2. 修正 R53：status-consistency 测试仅是间接证据；没有直接 status-only hash invariance 测试；
+3. R39 必须交叉引用 R16/R20 的跨基因型 instrumented evaluator 测试，不能使用同一调用与自身比较的恒真断言；
+4. 补齐 R18 手工证据、planned slots 与 actual CTX 的单位区别、token/production cost 未测量说明；
+5. 把 `scripts/_r26h_extract.py` 升级为真实的 42-ID / declaration-map validator；明确它不能证明断言语义；
+6. 重新评估所有 VERIFIED_FIXED，不以维持既有数量为目标；
+7. 更新 Stage 1I 报告、累计 PC1 审计记录、status、latest_plan、handoff 和 next-session prompt；
+8. 最终报告增加 Scientific integrity handoff，引用本轮 Planner 科学性复核。
 
-## 九、2026-11-04 Planner 独立复审：Stage 1F REQUEST_CHANGES
+Stage 1I 仅允许文档和非生产审计 helper 修改；不允许生产源码或测试代码变更。不得执行注册 PC1，不得访问 Family C，不得训练控制器，不得调用真实模型/API，不得运行 Formal G3 efficacy。
 
-**复审文档：** research/R26_STAGE1F_PLANNER_REVIEW.md  
-**下一阶段提示词：** planner/GLEPPO_R26_STAGE1G_EXECUTOR_PROMPT.md
+## 五、Stage 1I 之后的顺序
 
-Stage 1F 有实际进步：
-- R12–R53 共 42 个 ID，唯一且完整；
-- 类别统计正确，合计 42；
-- R18 作为手工文档证据单独保留；
-- R24/R45/R52/R53 降为 PARTIALLY_FIXED；
-- R15 为 OPEN，R46 为 UNVERIFIABLE；
-- 218 个测试函数声明数经独立复核正确；
-- 450/450 保持未独立复现；
-- 未修改生产源码和测试代码。
+1. Stage 1I Executor 提交完整证据与 handoff。
+2. Planner 独立复审：逐条检查 42 个 Finding 的语义证据与 disposition；Executor 自报结果不等于 Planner 验收。
+3. Stage 1I 接受后，单独执行 `R26_ECOS_PROTOCOL_RECONCILIATION`：核对 Phase 1 / R24 / PC1 R4 / 实际代码，形成唯一候选协议及完整差异表；不得覆盖历史注册文件。
+4. 对协议进行独立科学审查，尤其确认 R21-C1 不再被用作算子选择证据。
+5. 只有在所有前置门禁、可信 Planner 审批、独立审查和用户授权齐备后，才可讨论是否批准 PC1。PC1 未获批准前不得执行。
+6. PC1 若按批准协议执行且通过，之后再单独审议控制器训练授权；训练后仍需正式 G3 efficacy 和严格基线比较。
 
-但仍有两个阻断问题：
+PC1 的 PASS 只证明预注册的非短视诊断达到门槛，不等于 PPO 已经优于 Bandit，也不等于论文创新已经成立。
 
-1. **Disposition 数量错误。** 42 行详细表实际为 27 VERIFIED_FIXED、13 PARTIALLY_FIXED、1 OPEN、1 UNVERIFIABLE；summary、status.json 和 commit message 写成 22/15/1/1，仅合计 39。ID 清单本身是 27/13。
-2. **测试函数映射仍不准确。** 39 行声称有测试映射，39 个 class 名称均存在，但只有 5 个 function 名称与指定文件/类中的真实声明匹配；另外 34 个函数名不存在。三个 NONE 行是 R18、R45、R46。辅助脚本只盘点声明，不验证 42 行映射或断言。
+## 六、硬边界（持续有效）
 
-另：Stage 1F 报告头部的 HEAD=29325cf 是该报告提交的 parent，不是当前报告 commit。必须区分 source snapshot/parent、report commit 和 current branch HEAD。
+- PC1：BLOCKED；`PC1_PROTOCOL_R4_PROPOSED.md` 仍 PROPOSED / NOT APPROVED。
+- Formal G3：FAIL。
+- Family C：NOT ACCESSED；禁止列出、读取、加载、检查、调参或执行。
+- Controller training：NOT AUTHORIZED / NOT STARTED。
+- Registered PC1：NOT EXECUTED。
+- External model/API calls：0。
+- Production runtime calls：0。
+- 不读取或配置生产签名密钥。
+- 不改写冻结 R1–R25 raw evidence、manifest 或历史报告。
+- 不修改 `main`，不 merge/reset/rebase/force-push。
+- 不跨项目复用代码、数据或报告。
 
-当前状态：
-
-R26_STAGE1F_REPORT_RECEIVED_REQUEST_CHANGES; DISPOSITION_COUNT_AND_EXACT_TEST_MAP_RECONCILIATION_REQUIRED; PC1 BLOCKED
-
-### 下一步
-
-执行 planner/GLEPPO_R26_STAGE1G_EXECUTOR_PROMPT.md：
-- 从 42 行详细表重新核算所有 disposition；
-- 纠正数字与 ID 列表；
-- 把 34 个不存在的函数名改成精确声明，或写 NONE；
-- 对每项记录文件、类、函数、行号、实际断言、源码调用路径和未覆盖条件；
-- 复核所有 VERIFIED_FIXED 是否满足原始验收标准；
-- 更新 status、latest_plan、handoff 和接班提示词。
-
-Stage 1G 仅做文档和证据校正，不得修改生产源码或测试代码。PC1 仍 BLOCKED；Family C 不访问；控制器训练不启动；Formal G3 仍 FAIL。
-
-
-
----
-
-## 十、2026-11-04 Planner 独立复审：Stage 1G REQUEST_CHANGES
-
-**复审文档：** research/R26_STAGE1G_PLANNER_REVIEW.md  
-**下一阶段提示词：** planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md
-
-Stage 1G 已经修正了 Stage 1F 的数量错误：
-- 27 VERIFIED_FIXED；
-- 13 PARTIALLY_FIXED；
-- 1 OPEN；
-- 1 UNVERIFIABLE；
-- 合计 42。
-
-独立解析七个测试文件后，确认 42 个测试类、218 个测试函数；但 39 个映射中只有 37 个文件/类/函数/行号组合完全匹配。R31、R49 的函数名仍然错误。
-
-更关键的是，Stage 1G 测试证据表仍然只有通用断言标签，没有真实断言表达式、源码调用路径、原始验收条件覆盖和未覆盖项。
-
-关键语义问题：
-- R39 映射到的 test_same_params_reproducible 是同一调用与自身比较的恒真断言；
-- R53 映射到 seed_schema 测试，与状态哈希不变性无关；
-- R49 现有相关测试只验证 protocol_consistency_check，不验证完整审批生命周期；
-- R19 原始要求包括正式 Planner/协议审批，但当前协议明确 PROPOSED / NOT APPROVED，必须重新评估，至少应降为 PARTIALLY_FIXED，除非找到有效审批证据；
-- R18 手工证据需要补充精确行号。
-
-此外，Stage 1G 未更新 latest_plan/handoff/next-session prompt；报告 SHA 字段仍是占位符。
-
-当前状态：
-
-R26_STAGE1G_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_SEMANTIC_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
-
-### 下一步
-
-执行 planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md：
-1. 修正 R31/R49；
-2. 对 42 项补充真实断言、源码符号、调用路径和未覆盖条件；
-3. 每个多条件 Finding 列出所有相关测试，不得只选一个方法；
-4. 修正 R39/R49/R53 的语义映射；
-5. 重新评估所有 VERIFIED_FIXED，尤其 R19；
-6. 加入 R18 的原始文件行引用；
-7. 更新 status、latest_plan、handoff、接班提示词及累计审计文档。
-
-Stage 1H 仍然只允许文档和非生产审计脚本修改。不得修改生产源码或测试代码。PC1 仍 BLOCKED；Family C 不访问；控制器训练不启动；Formal G3 仍 FAIL；模型/API 调用保持 0。
-
----
-
-## 十一、2026-11-04 Planner 独立复审：Stage 1H REQUEST_CHANGES
-
-**复审文档：** research/R26_STAGE1H_PLANNER_REVIEW.md  
-**下一阶段提示词：** planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md
-
-Stage 1H 的实质进展已经独立确认：
-- R12–R53 共 42 个 Finding ID，全部且仅出现一次；
-- Disposition：26 VERIFIED_FIXED、14 PARTIALLY_FIXED、1 OPEN、1 UNVERIFIABLE，合计 42；
-- 39 个测试映射全部匹配冻结源码快照中的实际文件、类、函数和声明行；
-- R31/R49 函数名修正；
-- R19 正确降级为 PARTIALLY_FIXED；
-- R39 已选择 delimiter 和字段隔离测试；
-- 218 个测试函数声明数确认。
-
-但 Stage 1H 尚未完成语义证据审计：
-1. 测试证据文件仍只有 ID/File/Class/Function/Line/Evidence Type，没有实际断言、源码符号、调用路径、目标分支和验收条件覆盖情况。
-2. R53 仍映射到 seed_schema 修改测试（line 130），而非状态修改测试（line 118）；且 line 118 也只能作为间接证据，不能证明状态从内容哈希中排除。
-3. R39 的 action/genotype 排除应引用 R16/R20 的 InstrumentedInterpreter 跨基因型测试；本轮证据表没有建立交叉引用。
-4. R18 缺少 production token UNMEASURED、planned slots NOT actual CTX 和生产成本未测量的精确行引用。
-5. _r26h_extract.py 仍然只是声明清单打印器，不校验 42 行报告映射。
-6. Stage 1H 没有更新 latest_plan/handoff/next-session prompt 和累计 PC1 记录。
-7. Stage 1H 报告没有记录自己的最终报告 commit/HEAD。
-8. 532ee8a 的 GitHub status/check-runs/Actions 均无记录，450/450 仍未独立复现。
-
-完整决定：research/R26_STAGE1H_PLANNER_REVIEW.md。当前状态：
-
-R26_STAGE1H_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_SEMANTIC_EVIDENCE_AND_DURABLE_HANDOFF_RECONCILIATION_REQUIRED; PC1 BLOCKED.
-
-### 下一步：R26 Stage 1I
-
-执行 planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md：
-- 为 42 个 Finding 建立真正的语义证据表；
-- 每项记录原始验收标准、实际断言、源码调用链、目标分支、已证明和未覆盖条件；
-- 修正 R53 的间接证据映射；
-- 将 R16/R20 跨基因型测试交叉引用到 R39；
-- 补齐 R18 的全部手工证据与单位说明；
-- 将 extractor 升级为真实的 42-ID / 39-mapping 声明校验器；
-- 重新审查 26 个 VERIFIED_FIXED；
-- 更新 status、handoff 和累计审计文档。
-
-Stage 1I 仍然只允许文档和非生产审计工具修改。不得修改生产源码或测试代码。PC1 仍 BLOCKED；Family C 不访问；控制器训练不启动；Formal G3 仍 FAIL；模型/API 调用保持 0。
-
+**Stage 1I 的唯一当前动作：** 按最新 Executor prompt 完成 42 个 Finding 的语义证据审计，并保留本轮科学性修正；不得跳过独立复审直接进入 PC1 或训练。

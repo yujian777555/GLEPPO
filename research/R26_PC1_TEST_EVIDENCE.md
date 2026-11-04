@@ -83,3 +83,14 @@ The extractor helper only inventories class/function declarations and does not v
 
 See research/R26_STAGE1F_PLANNER_REVIEW.md. Stage 1G must correct the map and dispositions. 450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
 
+
+
+---
+
+## Stage 1G Planner correction — 2026-11-04
+
+The 218 declared-method count and 42 distinct test classes are independently confirmed. However, only 37/39 claimed file/class/function/line mappings are exact; R31 and R49 function names are wrong.
+
+The Stage 1G Assertion column contains generic descriptions, not assertion expressions. No source call paths, intended-branch checks, or uncovered acceptance conditions are supplied. R39's mapped test is tautological; R53's mapped test is unrelated to status/hash invariance. The helper script is an inventory extractor, not a semantic map validator.
+
+450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED. See research/R26_STAGE1G_PLANNER_REVIEW.md. Stage 1H required.

@@ -151,3 +151,25 @@ Full review: research/R26_STAGE1E_PLANNER_REVIEW.md.
 Next: R26 Stage 1F, planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md.  
 PC1 remains BLOCKED.
 
+---
+
+## 10. Stage 1F Planner correction — 2026-11-04
+
+**Planner decision:** REQUEST_CHANGES. Stage 1F has 42 unique Finding IDs and correct category arithmetic, but its disposition summary and test map are not accepted.
+
+The 42 detailed rows recount to:
+- 27 VERIFIED_FIXED;
+- 13 PARTIALLY_FIXED;
+- 1 OPEN;
+- 1 UNVERIFIABLE.
+
+The report summary, status.json and commit message instead say 22/15/1/1, which sums to 39. The ID lists in that summary contain 27 verified IDs and 13 partial IDs.
+
+The 39 mapped class names exist in the stated test files, but only 5 function names match a real declaration in the stated class/file. The other 34 do not exist. Only 5/42 class/function/file triplets are exact. The helper script inventories declarations but does not validate the map.
+
+The 218 count is accepted only as a declared-method inventory. 450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED. R18 may remain VERIFIED_FIXED on manual raw/document comparison with exact line references.
+
+Full review: research/R26_STAGE1F_PLANNER_REVIEW.md.  
+Next: R26 Stage 1G, planner/GLEPPO_R26_STAGE1G_EXECUTOR_PROMPT.md.  
+PC1 remains BLOCKED.
+

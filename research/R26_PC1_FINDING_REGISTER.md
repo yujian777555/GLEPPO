@@ -72,3 +72,12 @@
 | **Total unique actionable** | **42-43** |
 
 **Note:** SECOND blockers need split rule to determine if 5 or 6 distinct issues.
+
+---
+
+## Planner correction — 2026-11-04
+
+R18 remains a formal Finding in the R12–R53 register. It must not be omitted or merged into R24 merely because both concern cost documentation. Stage 1D's corrected category table omitted R18 and therefore contained only 41 unique IDs. Restore R18 as a separate row in Stage 1E and reconcile the category/disposition counts to exactly 42.
+
+Stage 1D Planner decision: REQUEST_CHANGES. See research/R26_STAGE1D_PLANNER_REVIEW.md.
+

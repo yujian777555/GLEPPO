@@ -3,8 +3,8 @@
 **Updated:** 2026-11-04  
 **Repository:** yujian777555/GLEPPO  
 **Branch:** r25-handoff  
-**Current stage:** R26 Stage 1H — semantic evidence and disposition reconciliation  
-**Latest Planner decision on Stage 1G:** REQUEST_CHANGES  
+**Current stage:** R26 Stage 1I — semantic evidence completion (Executor not yet started)  
+**Latest Planner decision on Stage 1H:** REQUEST_CHANGES  
 **PC1:** BLOCKED
 
 ## 1. Historical inventory
@@ -229,4 +229,43 @@ Not accepted:
 Full review: research/R26_STAGE1H_PLANNER_REVIEW.md.  
 Next: R26 Stage 1I, planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md.  
 PC1 remains BLOCKED.
+
+---
+
+## 13. Stage 1H Planner decision and Stage 1I handoff — 2026-11-04
+
+**Stage 1H Planner decision:** REQUEST_CHANGES.  
+**Next Executor prompt:** `planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md`.  
+**Full review:** `research/R26_STAGE1H_PLANNER_REVIEW.md`.
+
+Accepted:
+- 42 unique formal Findings R12–R53;
+- 26 VERIFIED_FIXED / 14 PARTIALLY_FIXED / 1 OPEN / 1 UNVERIFIABLE;
+- 39/39 exact declaration tuples;
+- 218 declared test functions;
+- R19 PARTIALLY_FIXED;
+- 450/450 remains not independently reproduced.
+
+Still blocking:
+- no exact assertion/call-path/intended-branch/acceptance-coverage semantic map;
+- R53 is mapped to an unrelated seed-schema test; status-consistency is indirect only;
+- R39 needs R16/R20 instrumented cross-genotype evidence;
+- R18 manual evidence needs exact units/token/production-cost caveats;
+- helper does not validate the 42-row map;
+- durable cumulative records need the Stage 1I semantic evidence before they can be finalized.
+
+## 14. ECOS scientific-integrity correction
+
+See `research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md`.
+
+R21-C1 compares C0 LLM arithmetic execution with C4 DAC deterministic answer computation. It is not an operator/controller comparison. It does not establish that operator choice matters or that fixed-operator evolution is inadequate. Fixed-vs-adaptive, PPO-vs-rule, and PPO-vs-identical-state contextual Bandit remain UNTESTED.
+
+The current controller specifications also disagree:
+- Phase 1 design: 32-D state, generation-level reward, γ=0.95, sequential evolution episode, broad baseline suite;
+- R24 preregistration: immediate child-parent effective_success reward, γ=0.99, 4/4/4 task split, 1,000-episode budget;
+- PC1 R4 proposal and shared implementation: generation_reward and γ=0.95; R4 is PROPOSED / NOT APPROVED.
+
+Do not silently select or amend a protocol in Stage 1I. After Stage 1I acceptance, conduct a separate `R26_ECOS_PROTOCOL_RECONCILIATION` before any PC1 approval or training request.
+
+Current gates remain: PC1 BLOCKED; Formal G3 FAIL; Family C NOT ACCESSED; registered PC1 NOT EXECUTED; controller training NOT AUTHORIZED / NOT STARTED; model/API calls 0.
 

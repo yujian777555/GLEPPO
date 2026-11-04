@@ -201,3 +201,32 @@ Not accepted:
 Full review: research/R26_STAGE1G_PLANNER_REVIEW.md.  
 Next: R26 Stage 1H, planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md.  
 PC1 remains BLOCKED.
+
+---
+
+## 12. Stage 1H Planner correction — 2026-11-04
+
+**Planner decision:** REQUEST_CHANGES.
+
+Accepted:
+- 42 unique formal IDs R12–R53;
+- disposition arithmetic 26/14/1/1 = 42;
+- category counts sum to 42;
+- 39/39 exact declaration mappings;
+- R31/R49 corrected and R19 downgraded;
+- 218 declared test functions;
+- 450/450 remains not independently reproduced.
+
+Not accepted:
+- Stage 1H evidence table has no actual assertion expressions, source call paths, intended-branch analysis, acceptance coverage or uncovered conditions;
+- R53 remains mapped to the unrelated seed_schema mutation test at line 130;
+- R39 action/genotype exclusion lacks R16/R20 cross-genotype evidence references;
+- R18 lacks complete unit/token/production-cost references;
+- helper does not validate the report map;
+- handoff/cumulative records are stale;
+- Stage 1H report omits its final commit SHA.
+
+Full review: research/R26_STAGE1H_PLANNER_REVIEW.md.  
+Next: R26 Stage 1I, planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md.  
+PC1 remains BLOCKED.
+

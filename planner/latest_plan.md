@@ -1,4 +1,4 @@
-# GLEPPO 最新执行计划 — R26 Stage 1E：42 项 Finding 台账与测试证据校正
+# GLEPPO 最新执行计划 — R26 Stage 1F：精确测试证据映射与判定复核
 
 **仓库：** yujian777555/GLEPPO  
 **分支：** r25-handoff  
@@ -7,7 +7,7 @@
 **Stage 1C Executor 提交：** 021380c6a3879e13d87cca014537e71dc882a085  
 **Stage 1C Planner 复审：** research/R26_STAGE1C_PLANNER_REVIEW.md  
 **更新时间：** 2026-11-04  
-**当前状态：** R26_STAGE1D_REQUEST_CHANGES_FINDING_LEDGER_AND_TEST_EVIDENCE_RECONCILIATION_REQUIRED
+**当前状态：** R26_STAGE1E_REQUEST_CHANGES_EXACT_TEST_MAP_AND_DISPOSITION_REVIEW_REQUIRED
 
 ## 一、Stage 1C Planner 复审结论
 

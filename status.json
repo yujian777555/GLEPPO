@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-04",
-  "phase": "GLEPPO_R26_STAGE1F_COMPLETE",
-  "state": "R26_STAGE1F_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+  "phase": "GLEPPO_R26_STAGE1G_READY",
+  "state": "R26_STAGE1F_REPORT_RECEIVED_REQUEST_CHANGES_DISPOSITION_COUNT_AND_EXACT_TEST_MAP_RECONCILIATION_REQUIRED",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "R26 Stage 1F: reconstruct the exact 42-Finding test map from real test declarations; inspect assertions and call paths; correct coverage labels; re-evaluate all dispositions, especially R24, R52 and R53. Documentation/source-audit only; no production source or test-code changes.",
-  "next_gate": "R26_STAGE1F_EXACT_TEST_EVIDENCE_AND_DISPOSITION_RECONCILIATION -> PLANNER_INDEPENDENT_REVIEW -> OFFLINE_REMEDIATION_ONLY_FOR_CONFIRMED_GAPS",
+  "current_task": "R26 Stage 1G: reconcile the Stage 1F detailed-row disposition counts with summary/status; replace 34 non-existent test function names with exact declarations or NONE; provide per-Finding line/assertion/source-call evidence. Documentation-only; no production source or test-code changes.",
+  "next_gate": "R26_STAGE1G_EXACT_TEST_MAP_AND_DISPOSITION_RECONCILIATION -> PLANNER_INDEPENDENT_REVIEW -> SEPARATE_AUTHORIZATION_FOR_ANY_REMEDIATION",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -1277,6 +1277,88 @@
     "r18_manual_evidence": true,
     "test_map": "42_rows_from_actual_declarations",
     "test_evidence": "450_REPORTED_NOT_REPRODUCED",
-    "decision": "R26_STAGE1F_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW"
-  }
+    "decision": "R26_STAGE1F_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+    "executor_reported_dispositions": {
+      "VERIFIED_FIXED": 22,
+      "PARTIALLY_FIXED": 15,
+      "OPEN": 1,
+      "UNVERIFIABLE": 1
+    },
+    "detailed_table_recount": {
+      "VERIFIED_FIXED": 27,
+      "PARTIALLY_FIXED": 13,
+      "OPEN": 1,
+      "UNVERIFIABLE": 1,
+      "total": 42
+    },
+    "planner_review": {
+      "decision": "REQUEST_CHANGES",
+      "report": "research/R26_STAGE1F_PLANNER_REVIEW.md",
+      "report_commit": "620e0ea87e8a47998f474524459cdc17b6a9512b",
+      "report_head_reviewed": "1a29d1cc722d3cc20491310c896d204b8290c625",
+      "source_snapshot_or_parent": "29325cfa16441154c833f381f208747b57627a79",
+      "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
+      "main_ahead_behind": "branch_ahead_154_behind_0",
+      "r25_base_ahead_behind": "branch_ahead_73_behind_0",
+      "exact_test_map": {
+        "claimed_rows": 39,
+        "exact_file_class_function_matches": 5,
+        "nonexistent_function_names": 34,
+        "none_rows": [
+          "R18",
+          "R45",
+          "R46"
+        ]
+      },
+      "accepted": [
+        "42 unique formal IDs R12-R53",
+        "Category counts sum to 42",
+        "R18 retained as manual documentation evidence with no behavioral test",
+        "R24/R45/R52/R53 marked PARTIALLY_FIXED",
+        "R15 OPEN and R46 UNVERIFIABLE",
+        "218 declared test-function inventory count independently confirmed",
+        "450/450 remains not independently reproduced",
+        "No production source or test code changed"
+      ],
+      "rejected": [
+        "Disposition summary 22/15/1/1 sums to 39 and conflicts with detailed rows",
+        "Detailed row recount is 27/13/1/1; not accepted as final until semantic review",
+        "34 of 39 claimed test function names do not exist in stated file/class",
+        "Only 5 of 42 file/class/function mappings are exact",
+        "Extractor helper does not validate the mapping or assertions",
+        "Test evidence file lacks exact 42-row line/assertion/source-call map",
+        "Report metadata labels parent SHA as HEAD"
+      ],
+      "pc1": "BLOCKED"
+    }
+  },
+  "r26_stage1g": {
+    "status": "PROMPT_PREPARED_NOT_STARTED",
+    "prompt": "planner/GLEPPO_R26_STAGE1G_EXECUTOR_PROMPT.md",
+    "prompt_commit": "0b1b0f9b583cd58b8980c6d6c7208ffa7d27876c",
+    "scope": "DISPOSITION_COUNT_AND_EXACT_TEST_MAP_RECONCILIATION",
+    "production_source_changes_allowed": false,
+    "test_code_changes_allowed": false,
+    "required": [
+      "Recount detailed 42 rows and reconcile numeric counts and ID lists",
+      "Replace 34 non-existent test function names with exact declarations or NONE",
+      "Provide exact test file/class/function/line/assertion/source-call mapping for all 42 findings",
+      "Review whether each test reaches the intended behavior branch",
+      "Re-evaluate all VERIFIED_FIXED dispositions against original acceptance criteria",
+      "Add exact line references for R18 manual raw/document comparison",
+      "Correct report provenance fields and all status/handoff documents",
+      "Preserve 450/450 as not independently reproduced"
+    ],
+    "model_api_calls": 0,
+    "registered_pc1_executed": false,
+    "family_c_accessed": false,
+    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+    "formal_g3": "FAIL",
+    "next_action": "Verify refs; perform exact map and disposition correction; documentation-only; no production source or test changes."
+  },
+  "model_api_calls": 0,
+  "registered_pc1_executed": false,
+  "family_c_accessed": false,
+  "controller_training": "NOT_STARTED_NOT_AUTHORIZED",
+  "formal_g3": "FAIL"
 }

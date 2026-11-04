@@ -51,3 +51,15 @@ tests/test_r8_r9_r11_pc1.py, tests/test_r12_r17.py, tests/test_r19_r25.py, tests
 
 Until Stage 1D supplies exact test-function-to-finding mappings and safe reproducible outputs, the Stage 1C test evidence cannot substantiate 42/42 VERIFIED_FIXED.
 
+---
+
+## Stage 1D Planner correction — 2026-11-04
+
+The Stage 1D test inventory identifies seven PC1-related suites with 218 declared test functions. The number is an accurate source inventory count, not a 42-Finding coverage proof.
+
+The Stage 1D per-Finding table maps only five Findings and uses abbreviated/nonexistent test names. It does not provide exact function/assertion/source-call mappings for all 42. The test-inspection helper counts names/imports but does not inspect semantic assertions.
+
+The 450/450 result has no raw log and no Actions/check-run result for commit ca0c909. Keep it EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
+
+See research/R26_STAGE1D_PLANNER_REVIEW.md. Stage 1E must complete the evidence reconciliation before acceptance.
+

@@ -1,10 +1,10 @@
 # GLEPPO R26 PC1 Audit Summary
 
-**Updated:** 2026-11-03  
+**Updated:** 2026-11-04  
 **Repository:** yujian777555/GLEPPO  
 **Branch:** r25-handoff  
-**Current stage:** R26 Stage 1G — disposition count and exact test-map reconciliation  
-**Latest Planner decision on Stage 1F:** REQUEST_CHANGES  
+**Current stage:** R26 Stage 1H — semantic evidence and disposition reconciliation  
+**Latest Planner decision on Stage 1G:** REQUEST_CHANGES  
 **PC1:** BLOCKED
 
 ## 1. Historical inventory
@@ -173,3 +173,31 @@ Full review: research/R26_STAGE1F_PLANNER_REVIEW.md.
 Next: R26 Stage 1G, planner/GLEPPO_R26_STAGE1G_EXECUTOR_PROMPT.md.  
 PC1 remains BLOCKED.
 
+
+
+---
+
+## 11. Stage 1G Planner correction — 2026-11-04
+
+**Planner decision:** REQUEST_CHANGES.
+
+Accepted:
+- 42 rows count to 27 VERIFIED_FIXED / 13 PARTIALLY_FIXED / 1 OPEN / 1 UNVERIFIABLE;
+- category counts sum to 42;
+- 42 classes and 218 test declarations independently confirmed;
+- 37/39 mapped file/class/function/line tuples match.
+
+Not accepted:
+- R31 and R49 function names;
+- generic assertion labels instead of exact assertion expressions;
+- missing source call paths and uncovered acceptance conditions;
+- R39 tautological test mapping;
+- R53 unrelated seed-schema test mapping;
+- R19 VERIFIED_FIXED while canonical protocol remains PROPOSED / NOT APPROVED;
+- missing R18 exact line references;
+- unresolved report commit/HEAD placeholders;
+- stale handoff documents.
+
+Full review: research/R26_STAGE1G_PLANNER_REVIEW.md.  
+Next: R26 Stage 1H, planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md.  
+PC1 remains BLOCKED.

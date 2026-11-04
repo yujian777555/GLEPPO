@@ -1,4 +1,4 @@
-# GLEPPO 最新执行计划 — R26 Stage 1F：精确测试证据映射与判定复核
+# GLEPPO 最新执行计划 — R26 Stage 1G：Disposition 与精确测试映射校正
 
 **仓库：** yujian777555/GLEPPO  
 **分支：** r25-handoff  
@@ -7,7 +7,7 @@
 **Stage 1C Executor 提交：** 021380c6a3879e13d87cca014537e71dc882a085  
 **Stage 1C Planner 复审：** research/R26_STAGE1C_PLANNER_REVIEW.md  
 **更新时间：** 2026-11-04  
-**当前状态：** R26_STAGE1E_REQUEST_CHANGES_EXACT_TEST_MAP_AND_DISPOSITION_REVIEW_REQUIRED
+**当前状态：** R26_STAGE1F_REQUEST_CHANGES_DISPOSITION_COUNT_AND_EXACT_TEST_MAP_RECONCILIATION_REQUIRED
 
 ## 一、Stage 1C Planner 复审结论
 
@@ -185,4 +185,44 @@ R26_STAGE1E_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_DISPOSITION_REVI
 7. 不修改生产源码和测试代码。
 
 PC1 仍 BLOCKED；Family C 不访问；控制器训练不启动；Formal G3 仍 FAIL。
+
+---
+
+## 九、2026-11-04 Planner 独立复审：Stage 1F REQUEST_CHANGES
+
+**复审文档：** research/R26_STAGE1F_PLANNER_REVIEW.md  
+**下一阶段提示词：** planner/GLEPPO_R26_STAGE1G_EXECUTOR_PROMPT.md
+
+Stage 1F 有实际进步：
+- R12–R53 共 42 个 ID，唯一且完整；
+- 类别统计正确，合计 42；
+- R18 作为手工文档证据单独保留；
+- R24/R45/R52/R53 降为 PARTIALLY_FIXED；
+- R15 为 OPEN，R46 为 UNVERIFIABLE；
+- 218 个测试函数声明数经独立复核正确；
+- 450/450 保持未独立复现；
+- 未修改生产源码和测试代码。
+
+但仍有两个阻断问题：
+
+1. **Disposition 数量错误。** 42 行详细表实际为 27 VERIFIED_FIXED、13 PARTIALLY_FIXED、1 OPEN、1 UNVERIFIABLE；summary、status.json 和 commit message 写成 22/15/1/1，仅合计 39。ID 清单本身是 27/13。
+2. **测试函数映射仍不准确。** 39 行声称有测试映射，39 个 class 名称均存在，但只有 5 个 function 名称与指定文件/类中的真实声明匹配；另外 34 个函数名不存在。三个 NONE 行是 R18、R45、R46。辅助脚本只盘点声明，不验证 42 行映射或断言。
+
+另：Stage 1F 报告头部的 HEAD=29325cf 是该报告提交的 parent，不是当前报告 commit。必须区分 source snapshot/parent、report commit 和 current branch HEAD。
+
+当前状态：
+
+R26_STAGE1F_REPORT_RECEIVED_REQUEST_CHANGES; DISPOSITION_COUNT_AND_EXACT_TEST_MAP_RECONCILIATION_REQUIRED; PC1 BLOCKED
+
+### 下一步
+
+执行 planner/GLEPPO_R26_STAGE1G_EXECUTOR_PROMPT.md：
+- 从 42 行详细表重新核算所有 disposition；
+- 纠正数字与 ID 列表；
+- 把 34 个不存在的函数名改成精确声明，或写 NONE；
+- 对每项记录文件、类、函数、行号、实际断言、源码调用路径和未覆盖条件；
+- 复核所有 VERIFIED_FIXED 是否满足原始验收标准；
+- 更新 status、latest_plan、handoff 和接班提示词。
+
+Stage 1G 仅做文档和证据校正，不得修改生产源码或测试代码。PC1 仍 BLOCKED；Family C 不访问；控制器训练不启动；Formal G3 仍 FAIL。
 

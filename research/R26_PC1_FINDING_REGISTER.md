@@ -81,3 +81,13 @@ R18 remains a formal Finding in the R12–R53 register. It must not be omitted o
 
 Stage 1D Planner decision: REQUEST_CHANGES. See research/R26_STAGE1D_PLANNER_REVIEW.md.
 
+---
+
+## Stage 1E Planner correction — 2026-11-04
+
+The Stage 1E category and ID reconciliation is accepted: R12–R53 are 42 distinct formal Findings; R18 is retained separately from R24.
+
+The Stage 1E disposition counts 30/10/1/1 are only Executor-reported pending exact evidence review. The exact test map contains class/function names that do not match the actual test declarations. At minimum R24, R52 and R53 must be PARTIALLY_FIXED absent direct existing tests satisfying their original acceptance criteria. R18 may remain VERIFIED_FIXED after precise manual comparison of current raw and cost artifacts.
+
+The authoritative Planner decision is REQUEST_CHANGES. See research/R26_STAGE1E_PLANNER_REVIEW.md. Stage 1F must produce the corrected evidence-backed disposition register; do not treat the Stage 1E counts as accepted dispositions.
+

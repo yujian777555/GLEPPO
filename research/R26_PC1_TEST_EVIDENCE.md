@@ -94,3 +94,14 @@ The 218 declared-method count and 42 distinct test classes are independently con
 The Stage 1G Assertion column contains generic descriptions, not assertion expressions. No source call paths, intended-branch checks, or uncovered acceptance conditions are supplied. R39's mapped test is tautological; R53's mapped test is unrelated to status/hash invariance. The helper script is an inventory extractor, not a semantic map validator.
 
 450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED. See research/R26_STAGE1G_PLANNER_REVIEW.md. Stage 1H required.
+
+---
+
+## Stage 1H Planner correction — 2026-11-04
+
+The 39 direct declaration mappings are exact, but the Stage 1H evidence file still contains only ID/File/Class/Function/Line/Evidence Type. It does not include actual assertions, source symbols/call paths, intended-branch analysis, or acceptance conditions proved/uncovered.
+
+R53 is still mapped to test_mutation_seed_contract_fails (seed_schema mutation) rather than the related status-consistency test; that status test remains indirect and does not prove status-only hash invariance. R39 must cross-reference R16/R20 instrumented genotype tests. R18 requires complete manual unit/token/production-cost evidence.
+
+450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED. See research/R26_STAGE1H_PLANNER_REVIEW.md. Stage 1I required.
+

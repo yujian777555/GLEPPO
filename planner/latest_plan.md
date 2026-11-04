@@ -1,4 +1,4 @@
-# GLEPPO 最新执行计划 — R26 Stage 1G：Disposition 与精确测试映射校正
+# GLEPPO 最新执行计划 — R26 Stage 1H：语义证据与 Disposition 复核
 
 **仓库：** yujian777555/GLEPPO  
 **分支：** r25-handoff  
@@ -7,7 +7,7 @@
 **Stage 1C Executor 提交：** 021380c6a3879e13d87cca014537e71dc882a085  
 **Stage 1C Planner 复审：** research/R26_STAGE1C_PLANNER_REVIEW.md  
 **更新时间：** 2026-11-04  
-**当前状态：** R26_STAGE1F_REQUEST_CHANGES_DISPOSITION_COUNT_AND_EXACT_TEST_MAP_RECONCILIATION_REQUIRED
+**当前状态：** R26_STAGE1G_REQUEST_CHANGES_SEMANTIC_EVIDENCE_RECONCILIATION_REQUIRED
 
 ## 一、Stage 1C Planner 复审结论
 
@@ -226,3 +226,48 @@ R26_STAGE1F_REPORT_RECEIVED_REQUEST_CHANGES; DISPOSITION_COUNT_AND_EXACT_TEST_MA
 
 Stage 1G 仅做文档和证据校正，不得修改生产源码或测试代码。PC1 仍 BLOCKED；Family C 不访问；控制器训练不启动；Formal G3 仍 FAIL。
 
+
+
+---
+
+## 十、2026-11-04 Planner 独立复审：Stage 1G REQUEST_CHANGES
+
+**复审文档：** research/R26_STAGE1G_PLANNER_REVIEW.md  
+**下一阶段提示词：** planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md
+
+Stage 1G 已经修正了 Stage 1F 的数量错误：
+- 27 VERIFIED_FIXED；
+- 13 PARTIALLY_FIXED；
+- 1 OPEN；
+- 1 UNVERIFIABLE；
+- 合计 42。
+
+独立解析七个测试文件后，确认 42 个测试类、218 个测试函数；但 39 个映射中只有 37 个文件/类/函数/行号组合完全匹配。R31、R49 的函数名仍然错误。
+
+更关键的是，Stage 1G 测试证据表仍然只有通用断言标签，没有真实断言表达式、源码调用路径、原始验收条件覆盖和未覆盖项。
+
+关键语义问题：
+- R39 映射到的 test_same_params_reproducible 是同一调用与自身比较的恒真断言；
+- R53 映射到 seed_schema 测试，与状态哈希不变性无关；
+- R49 现有相关测试只验证 protocol_consistency_check，不验证完整审批生命周期；
+- R19 原始要求包括正式 Planner/协议审批，但当前协议明确 PROPOSED / NOT APPROVED，必须重新评估，至少应降为 PARTIALLY_FIXED，除非找到有效审批证据；
+- R18 手工证据需要补充精确行号。
+
+此外，Stage 1G 未更新 latest_plan/handoff/next-session prompt；报告 SHA 字段仍是占位符。
+
+当前状态：
+
+R26_STAGE1G_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_SEMANTIC_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+
+### 下一步
+
+执行 planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md：
+1. 修正 R31/R49；
+2. 对 42 项补充真实断言、源码符号、调用路径和未覆盖条件；
+3. 每个多条件 Finding 列出所有相关测试，不得只选一个方法；
+4. 修正 R39/R49/R53 的语义映射；
+5. 重新评估所有 VERIFIED_FIXED，尤其 R19；
+6. 加入 R18 的原始文件行引用；
+7. 更新 status、latest_plan、handoff、接班提示词及累计审计文档。
+
+Stage 1H 仍然只允许文档和非生产审计脚本修改。不得修改生产源码或测试代码。PC1 仍 BLOCKED；Family C 不访问；控制器训练不启动；Formal G3 仍 FAIL；模型/API 调用保持 0。

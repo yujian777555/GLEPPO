@@ -139,3 +139,10 @@ Updated: FINAL_FINDING_AUDIT.md (addendum), TEST_EVIDENCE.md, PC1_AUDIT_SUMMARY.
 ## Hard Boundary Attestation
 
 No production source changes. No tests/ changes. No PC1. No Family C. No controller training. No Formal G3. No model/API calls. No main modification.
+
+## Planner Independent Review Addendum
+
+Planner decision: **REQUEST_CHANGES**. The R2 structural improvements are accepted, but R39, R41 and R48 are overclassified as VERIFIED_FIXED. A narrow R2.1 correction is required; see `research/R26_STAGE1I_R2_PLANNER_REVIEW.md` and `planner/GLEPPO_R26_STAGE1I_R2_1_CORRECTIVE_EXECUTOR_PROMPT.md`.
+
+The 28/12/1/1 counts remain Executor-reported and are not accepted. Expected corrected counts are 25/15/1/1 after downgrading R39, R41 and R48. The 450/450 suite and 20/20 helper tests remain Executor-reported, not independently reproduced.
+

@@ -49,3 +49,14 @@ All 7 PC1 test files inspected:
 - No production model loading
 - No Family C access
 - No registered PC1 execution
+
+---
+
+## Planner correction — 2026-11-04
+
+The 218 declared-method count is correct as a test inventory. It does not establish 42-Finding coverage.
+
+Only 5 of 39 claimed class/function/file mappings match real declarations; 34 mapped function names do not exist in the stated class/file. The three NONE rows are R18, R45 and R46. The helper script does not validate mappings or inspect assertions. This document still lacks a complete 42-row exact map with line numbers, assertions and source call paths.
+
+450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED. See research/R26_STAGE1F_PLANNER_REVIEW.md. Stage 1G is required.
+

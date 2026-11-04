@@ -129,3 +129,25 @@ Full review: research/R26_STAGE1D_PLANNER_REVIEW.md.
 
 Next: R26 Stage 1E, prompt planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md. PC1 remains BLOCKED.
 
+---
+
+## 9. Stage 1E Planner correction — 2026-11-04
+
+**Planner decision:** REQUEST_CHANGES. Stage 1E bookkeeping is accepted, but the exact test evidence map is not.
+
+Accepted:
+- 42 formal IDs R12–R53 appear exactly once;
+- category and disposition arithmetic both sum to 42;
+- R18 restored separately from R24;
+- R46 has one disposition;
+- 218 test-function count is correct;
+- 450/450 remains labelled EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
+
+Critical issue: the 42-row test map does not use actual test declarations. Across the seven PC1-related suites, only 3 mapped class names exist, only 1 mapped function name exists (under a different class), and no class/function pair matches. Assertion descriptions are not actual assertions. Exact file paths, line ranges, source symbols and call paths are missing.
+
+At minimum R24, R52 and R53 must be PARTIALLY_FIXED absent direct acceptance evidence. R18 may remain VERIFIED_FIXED after a precise manual comparison to the current raw artifact.
+
+Full review: research/R26_STAGE1E_PLANNER_REVIEW.md.  
+Next: R26 Stage 1F, planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md.  
+PC1 remains BLOCKED.
+

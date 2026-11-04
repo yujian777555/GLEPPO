@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-04",
-  "phase": "GLEPPO_R26_STAGE1E_COMPLETE",
-  "state": "R26_STAGE1E_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+  "phase": "GLEPPO_R26_STAGE1F_READY",
+  "state": "R26_STAGE1E_REPORT_RECEIVED_REQUEST_CHANGES_EXACT_TEST_MAP_AND_DISPOSITION_REVIEW_REQUIRED",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "R26 Stage 1E: restore all 42 formal Finding rows R12-R53 including R18; reconcile category and single-disposition counts; map every Finding to exact test class/function/assertions/source calls; correct unsupported test claims; attach attributable 450-test raw log if it exists. Documentation/evidence reconciliation only; no production source or test-code changes.",
-  "next_gate": "R26_STAGE1E_FINDING_LEDGER_AND_TEST_EVIDENCE_RECONCILIATION -> PLANNER_INDEPENDENT_REVIEW -> STAGE2_OFFLINE_REMEDIATION_ONLY_FOR_CONFIRMED_DEFECTS",
+  "current_task": "R26 Stage 1F: reconstruct the exact 42-Finding test map from real test declarations; inspect assertions and call paths; correct coverage labels; re-evaluate all dispositions, especially R24, R52 and R53. Documentation/source-audit only; no production source or test-code changes.",
+  "next_gate": "R26_STAGE1F_EXACT_TEST_EVIDENCE_AND_DISPOSITION_RECONCILIATION -> PLANNER_INDEPENDENT_REVIEW -> OFFLINE_REMEDIATION_ONLY_FOR_CONFIRMED_GAPS",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -1033,7 +1033,7 @@
     "formal_g3": "FAIL",
     "model_api_calls_during_handoff": 0,
     "main_branch_reconciliation": "GitHub connector returned an older main/status.json dated 2026-10-27; r25-handoff was created from the exact R25 SHA to preserve continuity. Verify refs before any merge or main update.",
-    "next_action": "Execute planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md. Stage 1D is not accepted as a complete 42-Finding audit.",
+    "next_action": "Execute planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md. Stage 1E bookkeeping is accepted; exact evidence map and R24/R52/R53 dispositions require correction.",
     "executor_prompt": "planner/GLEPPO_R26_STAGE1_PC1_AUDIT_EXECUTOR_PROMPT.md",
     "executor_prompt_commit": "02ac15adf70d243b1e78da9b118bfa468c64e24a",
     "stage1_status": "PRELIMINARY_INVENTORY_COMPLETE_PLANNER_REVIEW_REQUEST_CHANGES",
@@ -1053,13 +1053,15 @@
     "stage1_rule": "Current HEAD must descend from the ancestry anchor and R25 base; record actual HEAD and remote SHA. Do not require HEAD to equal the anchor because handoff-document commits follow it.",
     "stage1b_prompt": "planner/GLEPPO_R26_STAGE1B_EXECUTOR_PROMPT.md",
     "stage1b_status": "READY_NOT_STARTED",
-    "current_state": "R26_STAGE1D_REPORT_RECEIVED_REQUEST_CHANGES_FINDING_LEDGER_AND_TEST_EVIDENCE_RECONCILIATION_REQUIRED",
+    "current_state": "R26_STAGE1E_REPORT_RECEIVED_REQUEST_CHANGES_EXACT_TEST_MAP_AND_DISPOSITION_REVIEW_REQUIRED",
     "stage1c_prompt": "planner/GLEPPO_R26_STAGE1C_EXECUTOR_PROMPT.md",
     "stage1c_status": "READY_NOT_STARTED",
     "stage1d_prompt": "planner/GLEPPO_R26_STAGE1D_EXECUTOR_PROMPT.md",
     "stage1d_status": "READY_NOT_STARTED",
     "stage1e_prompt": "planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md",
-    "stage1e_status": "READY_NOT_STARTED"
+    "stage1e_status": "READY_NOT_STARTED",
+    "stage1f_prompt": "planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md",
+    "stage1f_status": "READY_NOT_STARTED"
   },
   "r26_stage1": {
     "r25_table_count": 39,
@@ -1221,6 +1223,66 @@
     },
     "test_map": "42_rows_complete",
     "test_evidence": "450_REPORTED_NOT_REPRODUCED",
-    "decision": "R26_STAGE1E_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW"
+    "decision": "R26_STAGE1E_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+    "planner_review": {
+      "decision": "REQUEST_CHANGES",
+      "report": "research/R26_STAGE1E_PLANNER_REVIEW.md",
+      "report_commit": "e0dcd3c94efb5bedf3f92a7631383ddf297de161",
+      "report_head_reviewed": "65f83dfc7334d674ad1d96539872f71f1ae44303",
+      "source_snapshot_parent": "da3dfefee9a86ff3833a6fa4f9cf0f71fd0b1375",
+      "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
+      "main_ahead_behind": "branch_ahead_140_behind_0",
+      "r25_base_ahead_behind": "branch_ahead_59_behind_0",
+      "accepted": [
+        "42 formal IDs R12-R53 present exactly once",
+        "Category counts sum to 42",
+        "Disposition arithmetic 30+10+1+1=42",
+        "R18 restored separately from R24",
+        "R46 appears only once as UNVERIFIABLE",
+        "218 declared test-function inventory count correct",
+        "450/450 honestly marked not independently reproduced",
+        "No production source or test code changed"
+      ],
+      "rejected": [
+        "42-row exact test map uses class/function names that do not match actual declarations",
+        "Only 3 row class names match actual declarations",
+        "Only 1 mapped function name exists, under a different class",
+        "Zero exact class/function pairs match",
+        "Assertion descriptions are not actual assertion expressions",
+        "Missing per-Finding test paths, line ranges, source symbols and call-path evidence",
+        "R24 VERIFIED_FIXED lacks required semantic units/label test",
+        "R52 VERIFIED_FIXED lacks full estimator/seed schema mutation tests",
+        "R53 VERIFIED_FIXED lacks direct status-only content-hash invariance test"
+      ],
+      "mandatory_minimum_dispositions": {
+        "R24": "PARTIALLY_FIXED",
+        "R52": "PARTIALLY_FIXED",
+        "R53": "PARTIALLY_FIXED"
+      },
+      "pc1": "BLOCKED"
+    }
+  },
+  "r26_stage1f": {
+    "status": "PROMPT_PREPARED_NOT_STARTED",
+    "prompt": "planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md",
+    "prompt_commit": "bb3f227c9255f099885f10aeb6192b2666a1d604",
+    "scope": "EXACT_42_FINDING_TEST_MAP_AND_DISPOSITION_RECONCILIATION",
+    "production_source_changes_allowed": false,
+    "test_code_changes_allowed": false,
+    "required": [
+      "Exact real test file/class/function/line/assertion/source-call mapping for all 42 findings",
+      "NONE where no direct test exists",
+      "Correct per-file coverage labels",
+      "Re-evaluate every disposition",
+      "At minimum R24/R52/R53 PARTIALLY_FIXED absent exact existing evidence",
+      "R18 manual cost artifact comparison",
+      "Preserve 450/450 not independently reproduced"
+    ],
+    "model_api_calls": 0,
+    "registered_pc1_executed": false,
+    "family_c_accessed": false,
+    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+    "formal_g3": "FAIL",
+    "next_action": "Verify refs; inspect original findings and actual test bodies; rebuild exact test map; correct dispositions and handoff; no production source/test changes."
   }
 }

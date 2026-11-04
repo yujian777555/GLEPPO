@@ -91,3 +91,13 @@ The Stage 1E disposition counts 30/10/1/1 are only Executor-reported pending exa
 
 The authoritative Planner decision is REQUEST_CHANGES. See research/R26_STAGE1E_PLANNER_REVIEW.md. Stage 1F must produce the corrected evidence-backed disposition register; do not treat the Stage 1E counts as accepted dispositions.
 
+---
+
+## Stage 1F Planner correction — 2026-11-04
+
+Stage 1F's 42 detailed rows contain 42 unique formal IDs R12–R53 and correct category arithmetic. However, the submitted disposition summary is inconsistent: detailed rows recount to 27 VERIFIED_FIXED / 13 PARTIALLY_FIXED / 1 OPEN / 1 UNVERIFIABLE, while status and commit message report 22/15/1/1.
+
+The exact test map is also not accepted. Of 39 rows claiming a test, only 5 function names match the actual declaration in the stated class/file; 34 are not declared. R18, R45 and R46 are NONE. See research/R26_STAGE1F_PLANNER_REVIEW.md.
+
+Do not treat either 22/15 or the detailed 27/13 as final accepted dispositions until Stage 1G completes the evidence-based recount and per-Finding semantic review.
+

@@ -125,7 +125,21 @@ GLEPPO çš„ ECOS ç ”ç©¶å‡è®¾ä»ç„¶ä¿ç•™ï¼Œä½† PPO ä¼˜åŠ¿å°šæœªå¾—åˆ°å®žéªŒè¯æ˜
 
 **ä¸‹ä¸€æ­¥åªæœ‰ï¼šStage 1I-R2 Executor å®Œæˆ â†’ Planner ç‹¬ç«‹å¤å®¡ã€‚ä¸å¾—è¿›å…¥ R26_ECOS_PROTOCOL_RECONCILIATIONã€PC1ã€Family C æˆ–è®­ç»ƒã€‚**
 
-## Stage 1I-R2 Íê³É (2026-11-04)
+---
 
-R2 ¾ÀÕýÍê³É£ºcriteria À©Õ¹¡¢193 ²âÊÔÌõÄ¿¡¢call path ÐÞÕý¡¢0 ¿ÕÐÐºÅ¡¢´¦ÖÃ 28/12/1/1¡¢validator 20 Ïî×Ô²âÍ¨¹ý¡£
-×´Ì¬£ºR26_STAGE1I_R2_READY_FOR_PLANNER_REVIEW¡£ÏÂÒ»¹Ø¿Ú£ºPlanner ¶ÀÁ¢¸´ºË¡£
+## Current Planner override â€” Stage 1I-R2.1 (2026-11-04)
+
+**R2 decision: REQUEST_CHANGES.** The structural map work is accepted, but R39, R41 and R48 overstate VERIFIED_FIXED. Corrected expected disposition counts are 25 VERIFIED_FIXED / 15 PARTIALLY_FIXED / 1 OPEN / 1 UNVERIFIABLE.
+
+**Current task:** execute `planner/GLEPPO_R26_STAGE1I_R2_1_CORRECTIVE_EXECUTOR_PROMPT.md`.
+
+Scope is intentionally narrow:
+- downgrade R39, R41 and R48 to PARTIALLY_FIXED and document the exact uncovered seed/artifact conditions;
+- fix the validator's missing source end_line > EOF check and add a specific adversarial test (21 total);
+- restore valid UTF-8 in latest_plan and NEXT_SESSION_PROMPT;
+- update provenance and durable records.
+
+Do not repeat the 42-row audit. No production source/tests changes, model/API calls, production runtime, PC1, Family C or controller training.
+
+**Next gate:** R2.1 Executor completion -> Planner independent review. If accepted, proceed directly to R26_ECOS_PROTOCOL_RECONCILIATION, not directly to PC1 or training.
+

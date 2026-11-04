@@ -1586,9 +1586,9 @@
   },
   "latest_planner_verified_refs": {
     "branch": "r25-handoff",
-    "branch_head_before_status_update": "0331cf97a5d7983d9c043fae802a0c11907707c7",
+    "branch_head_before_status_update": "8bf5038a8e0ef30e4786e96d44315b870b21e2f7",
     "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
-    "ahead_by_before_status_update": 219,
+    "ahead_by_before_status_update": 222,
     "behind_by": 0,
     "main_modified": false
   },
@@ -1628,7 +1628,9 @@
     "r2_next_session_prompt_commit": "701a8c75cd56dd19ea1094055b35ededf13bee67",
     "r2_pc1_audit_summary_commit": "036190b286b4d593da7e04fb016b5b59c35d7615",
     "r1_final_audit_planner_addendum_commit": "2f17c7843773ad4b397746c797fc55610ddbbd96",
-    "r1_test_evidence_planner_addendum_commit": "0331cf97a5d7983d9c043fae802a0c11907707c7"
+    "r1_test_evidence_planner_addendum_commit": "0331cf97a5d7983d9c043fae802a0c11907707c7",
+    "r2_next_session_prompt_final_commit": "afcfcd963ab4e313dd9327b02fcef1ee5abd162d",
+    "r1_corrective_report_provenance_addendum_commit": "8bf5038a8e0ef30e4786e96d44315b870b21e2f7"
   },
   "r26_stage1i_r1": {
     "status": "REQUEST_CHANGES_NOT_ACCEPTED",

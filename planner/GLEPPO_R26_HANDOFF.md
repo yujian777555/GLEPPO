@@ -305,3 +305,39 @@ No production source or test code changes are authorized in Stage 1D.
 
 Current status: R26_STAGE1C_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
 
+---
+
+## 17. R26 Stage 1D Planner independent review — 2026-11-04
+
+**Decision:** REQUEST_CHANGES. Stage 1D is a meaningful correction over Stage 1C, but its 42-Finding ledger and test evidence are still incomplete.
+
+Review: research/R26_STAGE1D_PLANNER_REVIEW.md  
+Next Executor prompt: planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md
+
+Key defects:
+- R18 is a formal Finding but omitted; it must remain separate from R24.
+- Provenance lists nine IDs but reports seven.
+- 30/8/1/1 sums to 40, not 42.
+- R46 is counted as both partial and unverifiable.
+- Only five of 42 findings have a test mapping; several names are abbreviated/nonexistent.
+- _r26d_test_inspect.py checks function names/imports, not semantic assertions.
+- 450/450 has no raw log and no CI run on Stage 1D commit ca0c909; label EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
+- R45/R48/R52/R49/R53 still have direct mutation/hash tests missing or insufficient.
+- R43 has a real gate-level negative test; its rationale must be corrected, while unused expected_protocol_hash and absent approved-path integration remain limitations.
+
+Verified refs at review:
+- r25-handoff = ca0c9098b83a44229bbedaf5f478ae09d7c16db1;
+- Stage 1D source snapshot/parent = 8f77b361491cc2ab202bf7261425a03b08f903e5;
+- main = 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e;
+- main → Stage 1D: 124 ahead / 0 behind;
+- R25 base → Stage 1D: 43 ahead / 0 behind.
+
+Current state:
+R26_STAGE1D_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEDGER_AND_TEST_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+
+### Stage 1E task
+
+Read and execute planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md. Restore all 42 formal IDs R12–R53, reconcile categories and one disposition per Finding, provide exact test-function/assertion/source-call mappings, and attach an attributable 450-test log if it exists. Do not modify production source or test code.
+
+Hard boundaries remain: no registered PC1, no Family C, no training, no Formal G3 efficacy, no model/API calls, no production key access, no R1–R25 frozen evidence changes, and no update of main.
+

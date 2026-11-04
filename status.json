@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-04",
-  "phase": "GLEPPO_R26_STAGE1I_COMPLETE",
-  "state": "R26_STAGE1I_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+  "phase": "GLEPPO_R26_STAGE1I_REQUEST_CHANGES_STAGE1I_R1_CORRECTIVE",
+  "state": "R26_STAGE1I_AUDIT_INCOMPLETE_SEMANTIC_MAP_VALIDATOR_AND_HANDOFF_REQUIRED",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "R26 Stage 1I: complete the 42-Finding semantic evidence map, correct R53/R39/R18 evidence, validate the declaration map, re-evaluate dispositions, and preserve the R21-C1 attribution correction plus unresolved ECOS protocol drift in durable handoff.",
-  "next_gate": "R26_STAGE1I_EXECUTION -> PLANNER_INDEPENDENT_REVIEW -> R26_ECOS_PROTOCOL_RECONCILIATION -> SEPARATE_PC1_PROTOCOL_REVIEW_AND_APPROVAL -> REGISTERED_PC1_ONLY_IF_ALL_GATES_AND_USER_AUTHORIZATION_PASS",
+  "current_task": "R26 Stage 1I-R1: create the complete 42-Finding semantic evidence map, wire an AST declaration validator to the actual JSON map, run positive/adversarial self-tests, correct R39/R53/R18 row-level evidence, and update all durable handoff records.",
+  "next_gate": "STAGE1I_R1_EXECUTOR_COMPLETION -> PLANNER_INDEPENDENT_REVIEW -> (ONLY_IF_ACCEPTED) R26_ECOS_PROTOCOL_RECONCILIATION",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -44,7 +44,11 @@
     "R21-C1 is C0 LLM-vs-C4 DAC evidence, not an evolutionary-operator or controller-policy comparison.",
     "Fixed-vs-adaptive, PPO-vs-rule, and PPO-vs-identical-state contextual Bandit superiority remain untested.",
     "Do not silently reconcile or overwrite Phase 1, R24, PC1 R4, or shared-code reward specifications; a separate Planner-reviewed protocol reconciliation is required after Stage 1I acceptance.",
-    "No PC1 execution, Family C access, controller training, Formal G3 efficacy, model/API calls, or production runtime is authorized by the Stage 1I documentation task."
+    "No PC1 execution, Family C access, controller training, Formal G3 efficacy, model/API calls, or production runtime is authorized by the Stage 1I documentation task.",
+    "Stage 1I Planner decision is REQUEST_CHANGES; do not advance until Stage 1I-R1 is independently accepted.",
+    "The reported 26/14/1/1 dispositions are not independently verified because the 42-row map is absent.",
+    "No PC1, Family C, controller training, Formal G3 efficacy, production runtime, or model/API call is authorized by Stage 1I-R1.",
+    "Only documentation, machine-readable evidence map, and non-production audit helper may change; no production source or test-suite changes."
   ],
   "remediation_r2": {
     "date": "2026-10-27",
@@ -1534,25 +1538,53 @@
     }
   },
   "r26_stage1i": {
-    "findings_total": 42,
-    "dispositions": {
+    "status": "REQUEST_CHANGES_NOT_ACCEPTED",
+    "executor_commit": "a1e6e65e671c876d028492bfed164205c54df08b",
+    "planner_review": "research/R26_STAGE1I_PLANNER_REVIEW.md",
+    "planner_review_commit": "dfd7ef909ba4ee97e01c4bb57b0177ae8869d61c",
+    "reported_findings_total": 42,
+    "reported_dispositions": {
       "VERIFIED_FIXED": 26,
       "PARTIALLY_FIXED": 14,
       "OPEN": 1,
       "UNVERIFIABLE": 1
     },
-    "r53_corrected": "test_mutation_status_not_checked_by_consistency_INDIRECT",
-    "r39_cross_referenced": "R16_R20_instrumented_evaluator_tests",
-    "r18_complete_evidence": true,
-    "validator_created": "_r26i_validator.py",
-    "ecos_note": "R21_C1_is_DAC_not_operator_comparison",
-    "decision": "R26_STAGE1I_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW"
+    "reported_dispositions_status": "EXECUTOR_REPORTED_NOT_INDEPENDENTLY_VERIFIABLE_NO_42_ROW_MAP",
+    "blockers": [
+      "Required research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md is absent",
+      "No complete 42-row per-Finding semantic evidence matrix",
+      "scripts/_r26i_validator.py main path does not read a report map or call validate_report_map",
+      "Validator does not enforce file ownership, unknown IDs, exact cardinality, complete NONE rows or missing files",
+      "R39 R20 cross-reference and action/genotype evidence boundaries are incomplete",
+      "R18 row-level MANUAL evidence and COST_BASELINE line 44 are incomplete",
+      "latest_plan, handoff, next-session prompt and cumulative PC1 summary were not updated in Executor commit",
+      "status metadata and final commit provenance are incomplete",
+      "450/450 not independently reproduced"
+    ],
+    "accepted_corrections": [
+      "R53 mapping corrected to status-consistency test as indirect evidence only; no hash invariance proven",
+      "R21-C1 correctly described as DAC comparison, not operator comparison",
+      "PPO advantage over rule-based/LinUCB remains unproven",
+      "R18 manual cost caveats partially improved"
+    ],
+    "pc1": "BLOCKED",
+    "registered_pc1_executed": false,
+    "family_c_accessed": false,
+    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+    "formal_g3": "FAIL",
+    "model_api_calls": 0,
+    "model_api_calls_verification": "EXECUTOR_ATTESTED_NOT_INDEPENDENTLY_VERIFIED",
+    "production_runtime_calls": 0,
+    "production_runtime_verification": "EXECUTOR_ATTESTED_NOT_INDEPENDENTLY_VERIFIED",
+    "full_suite": "450/450_EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED",
+    "github_check_runs": 0,
+    "github_commit_status_entries": 0
   },
   "latest_planner_verified_refs": {
     "branch": "r25-handoff",
-    "branch_head_before_status_update": "003e7277ecc33c52d19388a18771d533f68898fe",
+    "branch_head_before_status_update": "0aeb3ecf0a3d7087fe6e6b286b038e6477cd06ae",
     "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
-    "ahead_by_before_status_update": 200,
+    "ahead_by_before_status_update": 208,
     "behind_by": 0,
     "main_modified": false
   },
@@ -1575,9 +1607,38 @@
     "model_api_calls": 0
   },
   "durable_docs_updated": {
-    "latest_plan_commit": "8866fd1dfe1d8f65a68859f89b7bdd2998d27795",
-    "handoff_commit": "7bdce9bef834f81357562a596db792e0589b0f3e",
-    "next_session_prompt_commit": "64a8483f499136f20458d86f0d45de2edc35fca8",
-    "pc1_audit_summary_commit": "003e7277ecc33c52d19388a18771d533f68898fe"
+    "planner_review_commit": "dfd7ef909ba4ee97e01c4bb57b0177ae8869d61c",
+    "corrective_prompt_commit": "824523ae00a21c0c91f31a3225cc4c3177d37003",
+    "latest_plan_commit": "1514780fb8df2fdfbf3982d540d3a2021ba1b59d",
+    "handoff_commit": "1c53356af7bf097def8887a590d75701e15f6ff4",
+    "next_session_prompt_commit": "66414caf2f78fcb861379c88f7cd84548ea7b42f",
+    "pc1_audit_summary_commit": "0aeb3ecf0a3d7087fe6e6b286b038e6477cd06ae"
+  },
+  "r26_stage1i_r1": {
+    "status": "PROMPT_ISSUED_NOT_STARTED",
+    "prompt": "planner/GLEPPO_R26_STAGE1I_CORRECTIVE_EXECUTOR_PROMPT.md",
+    "prompt_commit": "824523ae00a21c0c91f31a3225cc4c3177d37003",
+    "scope": "42_ROW_SEMANTIC_MAP_AST_DECLARATION_VALIDATOR_SELF_TESTS_AND_DURABLE_HANDOFF",
+    "required_artifacts": [
+      "research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.json",
+      "research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md",
+      "scripts/_r26i_validator.py",
+      "research/R26_STAGE1I_R1_CORRECTIVE_REPORT.md"
+    ],
+    "required_validation": [
+      "Exactly 42 unique IDs R12-R53",
+      "Row-level original criteria, exact assertions, source call paths, branch reachability and uncovered conditions",
+      "Disposition counts mechanically derived from JSON rows",
+      "AST map validation by exact file/class/function/line",
+      "Positive and adversarial negative validator self-tests"
+    ],
+    "production_source_changes_allowed": false,
+    "test_code_changes_allowed": false,
+    "model_api_calls": 0,
+    "registered_pc1_executed": false,
+    "family_c_accessed": false,
+    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+    "formal_g3": "FAIL",
+    "next_action": "Complete Stage 1I-R1, update all durable records, then stop for Planner independent review."
   }
 }

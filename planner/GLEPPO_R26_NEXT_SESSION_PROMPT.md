@@ -338,3 +338,36 @@ Next task: execute planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md. Restore all 42
 
 No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.
 
+## 14. Latest Planner decision — Stage 1E REQUEST_CHANGES (2026-11-04)
+
+Read first:
+- research/R26_STAGE1E_PLANNER_REVIEW.md
+- research/R26_STAGE1E_FINAL_FINDING_AUDIT.md
+- research/R26_STAGE1E_TEST_EVIDENCE.md
+- planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md
+- updated planner/latest_plan.md
+- updated planner/GLEPPO_R26_HANDOFF.md
+- status.json
+
+Stage 1E corrected the 42-row accounting, category counts, R18 omission and R46 duplicate disposition. These bookkeeping corrections are accepted. The 30/10/1/1 arithmetic is correct.
+
+However, the exact test map is invalid:
+- 42 map rows were supplied;
+- only 3 row class names match an actual class in the seven PC1-related suites;
+- only one function name exists, but under a different class;
+- zero exact class/function pairs match;
+- assertion descriptions are not actual assertion expressions;
+- per-Finding file paths, line ranges, source symbols and call-path evidence are missing.
+
+R24, R52 and R53 are marked VERIFIED_FIXED without complete acceptance evidence:
+- R24 test only checks a wall-clock substring and hard-coded counters, not units/labels;
+- R52 lacks direct tests for estimator unknown/missing keys and seed schema version/encoding;
+- R53 lacks a direct status-only hash invariance test.
+
+Current status:
+R26_STAGE1E_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_DISPOSITION_REVIEW_REQUIRED; PC1 BLOCKED.
+
+Next task: execute planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md. Rebuild all 42 mappings from real test declarations, use NONE when absent, inspect assertions and call paths, and re-evaluate all dispositions. Keep 450/450 not independently reproduced.
+
+No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.
+

@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-04",
-  "phase": "GLEPPO_R26_STAGE1I_READY",
-  "state": "R26_STAGE1H_REPORT_RECEIVED_REQUEST_CHANGES_FINDING_LEVEL_SEMANTIC_EVIDENCE_AND_DURABLE_HANDOFF_RECONCILIATION_REQUIRED",
+  "phase": "GLEPPO_R26_STAGE1I_READY_WITH_ECOS_SCIENTIFIC_INTEGRITY_ADDENDUM",
+  "state": "R26_STAGE1H_REQUEST_CHANGES_STAGE1I_ACTIVE_PPO_UNPROVEN_PROTOCOL_RECONCILIATION_REQUIRED",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,14 +33,18 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "R26 Stage 1I: complete the 42-Finding semantic evidence map with exact assertions, source call paths, intended-branch analysis and proven/uncovered acceptance criteria; correct R53; cross-reference R16/R20 for R39; complete R18 manual evidence; upgrade declaration-map validator; re-evaluate all VERIFIED_FIXED dispositions; update durable handoff.",
-  "next_gate": "R26_STAGE1I_FINDING_LEVEL_SEMANTIC_EVIDENCE_COMPLETION -> PLANNER_INDEPENDENT_REVIEW -> SEPARATE_AUTHORIZATION_FOR_ANY_TEST_REMEDIATION",
+  "current_task": "R26 Stage 1I: complete the 42-Finding semantic evidence map, correct R53/R39/R18 evidence, validate the declaration map, re-evaluate dispositions, and preserve the R21-C1 attribution correction plus unresolved ECOS protocol drift in durable handoff.",
+  "next_gate": "R26_STAGE1I_EXECUTION -> PLANNER_INDEPENDENT_REVIEW -> R26_ECOS_PROTOCOL_RECONCILIATION -> SEPARATE_PC1_PROTOCOL_REVIEW_AND_APPROVAL -> REGISTERED_PC1_ONLY_IF_ALL_GATES_AND_USER_AUTHORIZATION_PASS",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
     "No controller implementation or training before PC1 passes.",
     "No GLEET code reuse or cross-project artifacts.",
-    "No fabricated test, model-call, cost, token, signature, or approval evidence."
+    "No fabricated test, model-call, cost, token, signature, or approval evidence.",
+    "R21-C1 is C0 LLM-vs-C4 DAC evidence, not an evolutionary-operator or controller-policy comparison.",
+    "Fixed-vs-adaptive, PPO-vs-rule, and PPO-vs-identical-state contextual Bandit superiority remain untested.",
+    "Do not silently reconcile or overwrite Phase 1, R24, PC1 R4, or shared-code reward specifications; a separate Planner-reviewed protocol reconciliation is required after Stage 1I acceptance.",
+    "No PC1 execution, Family C access, controller training, Formal G3 efficacy, model/API calls, or production runtime is authorized by the Stage 1I documentation task."
   ],
   "remediation_r2": {
     "date": "2026-10-27",
@@ -1530,10 +1534,10 @@
     }
   },
   "r26_stage1i": {
-    "status": "PROMPT_PREPARED_NOT_STARTED",
+    "status": "PROMPT_UPDATED_READY_NOT_STARTED",
     "prompt": "planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md",
-    "prompt_commit": "f7eda55df02c4a248ae028b18ed63202e9199a01",
-    "scope": "FINDING_LEVEL_SEMANTIC_EVIDENCE_COMPLETION",
+    "prompt_commit": "fae138238a70119443d211dfa250dfc68ae8d43a",
+    "scope": "42_FINDING_SEMANTIC_EVIDENCE_COMPLETION_PLUS_SCIENTIFIC_INTEGRITY_HANDOFF",
     "production_source_changes_allowed": false,
     "test_code_changes_allowed": false,
     "required": [
@@ -1552,6 +1556,40 @@
     "family_c_accessed": false,
     "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
     "formal_g3": "FAIL",
-    "next_action": "Verify refs; complete documentation-only semantic evidence and handoff."
+    "next_action": "Execute Stage 1I documentation-only audit; then wait for Planner independent review. Do not execute PC1 or train.",
+    "planner_addendum": "R21_C1_NOT_OPERATOR_EVIDENCE_AND_ECOS_PROTOCOL_DRIFT",
+    "scientific_integrity_review": "research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md"
+  },
+  "latest_planner_verified_refs": {
+    "branch": "r25-handoff",
+    "branch_head_before_status_update": "003e7277ecc33c52d19388a18771d533f68898fe",
+    "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
+    "ahead_by_before_status_update": 200,
+    "behind_by": 0,
+    "main_modified": false
+  },
+  "r26_ecos_scientific_integrity_review": {
+    "status": "PLANNER_READ_ONLY_REVIEW_COMPLETE",
+    "report": "research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md",
+    "report_commit": "da888932ba0e2991db6cc7fd65e102a1600c893a",
+    "reviewed_branch_head": "571c34201dde4e63705319670e446cb0e058f086",
+    "conclusion": "IDEA_RETAINED_AS_FALSIFIABLE_HYPOTHESIS_PPO_ADVANTAGE_NOT_ESTABLISHED",
+    "r21_c1_operator_claim": "UNSUPPORTED_R21_C1_IS_DAC_NOT_OPERATOR_COMPARISON",
+    "fixed_vs_adaptive": "UNTESTED",
+    "ppo_vs_rule": "UNTESTED",
+    "ppo_vs_contextual_bandit": "UNTESTED",
+    "protocol_drift": "PHASE1_R24_PC1_R4_AND_SHARED_CODE_REQUIRE_RECONCILIATION",
+    "pc1_approved": false,
+    "pc1_executed": false,
+    "family_c_accessed": false,
+    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+    "formal_g3": "FAIL",
+    "model_api_calls": 0
+  },
+  "durable_docs_updated": {
+    "latest_plan_commit": "8866fd1dfe1d8f65a68859f89b7bdd2998d27795",
+    "handoff_commit": "7bdce9bef834f81357562a596db792e0589b0f3e",
+    "next_session_prompt_commit": "64a8483f499136f20458d86f0d45de2edc35fca8",
+    "pc1_audit_summary_commit": "003e7277ecc33c52d19388a18771d533f68898fe"
   }
 }

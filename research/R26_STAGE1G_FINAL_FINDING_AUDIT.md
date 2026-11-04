@@ -92,3 +92,16 @@ Stage 1F summary said 22/15/1/1 = 39 (WRONG). Corrected to 27/13/1/1 = 42.
 **R26_STAGE1G_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW**
 
 42 findings, 42 dispositions (27 FIXED, 13 PARTIAL, 1 OPEN, 1 UNVERIFIABLE). PC1 remains BLOCKED.
+
+
+---
+
+## Planner correction — 2026-11-04
+
+The submitted 27/13/1/1 arithmetic is correct as a recount of the Stage 1G table, but the dispositions are not all accepted.
+
+Planner's exact declaration check found 37/39 mapped file/class/function/line tuples. R31 must use test_all_booleans_true_still_denied_for_proposed_protocol (line 372); R49 must use test_mutation_status_not_checked_by_consistency (line 118).
+
+The test evidence lacks actual assertion expressions, source call paths, intended branch and uncovered conditions. R39 is mapped to a tautological same-call assertion. R53 is mapped to a seed-schema test, not a status/hash test. R19 is VERIFIED_FIXED despite the canonical protocol being PROPOSED / NOT APPROVED; absent formal approval, it must be PARTIALLY_FIXED.
+
+See research/R26_STAGE1G_PLANNER_REVIEW.md. Stage 1G decision: REQUEST_CHANGES; Stage 1H required; PC1 BLOCKED.

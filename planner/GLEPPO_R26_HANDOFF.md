@@ -479,3 +479,51 @@ R26_STAGE1G_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_SEMANTIC_EVIDENC
 Read planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md. Correct R31/R49; map all actual assertions and source call paths; include all relevant tests for multi-part Findings; correct R39/R49/R53 semantic mappings; re-evaluate all VERIFIED_FIXED items (R19 must be PARTIALLY_FIXED absent formal approval); add R18 manual evidence lines; replace provenance placeholders; update all durable handoff and cumulative audit files.
 
 Hard boundaries remain: no registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no update of main.
+
+---
+
+## 21. R26 Stage 1H Planner independent review — 2026-11-04
+
+**Decision:** REQUEST_CHANGES. Stage 1H corrects the 42-row arithmetic, all 39 declaration mappings, R31/R49 names and R19 disposition. It does not complete the required semantic evidence audit.
+
+Review: research/R26_STAGE1H_PLANNER_REVIEW.md  
+Next Executor prompt: planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md
+
+Verified:
+- 42 formal IDs R12–R53 exactly once;
+- 26/14/1/1 disposition arithmetic;
+- category counts sum to 42;
+- 39/39 exact file/class/function/line mappings;
+- 218 test functions;
+- R19 PARTIALLY_FIXED;
+- no production source/test changes;
+- 450/450 remains not independently reproduced.
+
+Outstanding:
+- semantic evidence table lacks actual assertions, source call paths, target-branch analysis, proven/uncovered acceptance conditions;
+- R53 remains incorrectly mapped to seed_schema mutation at line 130; status-consistency test at line 118 is only indirect and no direct hash-invariance test exists;
+- R39 must cross-reference R16/R20 instrumented cross-genotype tests for action/genotype exclusion;
+- R18 needs exact token/units/production-cost caveat references;
+- scripts/_r26h_extract.py is still an inventory printer, not a map validator;
+- latest_plan/handoff/next-session/cumulative records were not updated by Stage 1H;
+- Stage 1H report omits its own final commit SHA.
+
+Verified refs:
+- Stage 1H HEAD = 532ee8adf498e83967016723d28cb1e7dc30bf5f;
+- Stage 1H parent = 0b1d5cac084966040a2a1820675605cc428776fc;
+- source snapshot = 29325cfa16441154c833f381f208747b57627a79;
+- main = 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e;
+- main → Stage 1H: 182 ahead / 0 behind;
+- R25 base → Stage 1H: 101 ahead / 0 behind.
+
+For exact Stage 1H SHA 532ee8a, GitHub commit status has zero entries, check-runs are zero and no Actions run targets that SHA. Keep 450/450 as EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
+
+Current state:
+R26_STAGE1H_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_SEMANTIC_EVIDENCE_AND_DURABLE_HANDOFF_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+
+### Stage 1I task
+
+Read planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md. Complete the semantic evidence map for all 42 Findings, correct R53, cross-reference R16/R20 for R39, add complete R18 manual evidence, upgrade the declaration-map validator, re-evaluate all VERIFIED_FIXED items, and update all durable handoff/cumulative records.
+
+Hard boundaries remain: no registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no update of main.
+

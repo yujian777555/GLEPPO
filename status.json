@@ -1182,8 +1182,8 @@
       "report_commit": "d22cb502bb3746d3fd0c51a6af47de3b94ed7f51",
       "branch_head_at_review": "ca0c9098b83a44229bbedaf5f478ae09d7c16db1",
       "main_head_at_review": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
-      "main_ahead_behind": "branch_ahead_124_behind_0",
-      "r25_base_ahead_behind": "branch_ahead_43_behind_0",
+      "main_ahead_behind": "branch_ahead_136_behind_0",
+      "r25_base_ahead_behind": "branch_ahead_55_behind_0",
       "reasons": [
         "Formal R18 omitted from 42-row ledger; keep separate from R24",
         "Provenance lists 9 IDs but reports count 7",
@@ -1202,7 +1202,9 @@
         "unverifiable": 1,
         "unique_ids": 41
       },
-      "pc1": "BLOCKED"
+      "pc1": "BLOCKED",
+      "disposition": "REQUEST_CHANGES",
+      "current_branch_head_before_planner_docs": "a8570149aec984c904231ed4816513de33a68d18"
     }
   },
   "r26_stage1e": {
@@ -1227,6 +1229,20 @@
     "family_c_accessed": false,
     "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
     "formal_g3": "FAIL",
-    "next_action": "Verify refs; restore R18; reconcile 42 unique IDs and disposition counts; complete exact test mapping; preserve honest test-run provenance; update handoff/status; no source or test-code changes."
+    "next_action": "Verify refs; restore R18; reconcile 42 unique IDs and disposition counts; complete exact test mapping; preserve honest test-run provenance; update handoff/status; no source or test-code changes.",
+    "planner_review_docs_updated": true,
+    "updated_docs": [
+      "research/R26_STAGE1D_PLANNER_REVIEW.md",
+      "research/R26_STAGE1D_CORRECTED_FINDING_AUDIT.md",
+      "research/R26_STAGE1D_TEST_EVIDENCE.md",
+      "research/R26_PC1_FINDING_LEVEL_VERIFICATION.md",
+      "research/R26_PC1_TEST_EVIDENCE.md",
+      "research/R26_PC1_FINDING_REGISTER.md",
+      "research/R26_PC1_AUDIT_SUMMARY.md",
+      "planner/latest_plan.md",
+      "planner/GLEPPO_R26_HANDOFF.md",
+      "planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md",
+      "planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md"
+    ]
   }
 }

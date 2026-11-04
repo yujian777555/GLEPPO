@@ -112,3 +112,14 @@ Stage 1G corrects the submitted row arithmetic to 27/13/1/1 = 42. Planner indepe
 The exact evidence map is still incomplete: generic assertion labels replace actual expressions; source call paths and uncovered conditions are absent. R39 maps to a tautological same-call assertion; R53 maps to a seed-schema test unrelated to status/hash invariance; R49's related test does not prove the full approval lifecycle. R19 is over-classified while the canonical protocol is explicitly PROPOSED / NOT APPROVED.
 
 See research/R26_STAGE1G_PLANNER_REVIEW.md. Stage 1H is required. Do not treat 27 VERIFIED_FIXED as accepted until the semantic review is complete. PC1 remains BLOCKED.
+
+---
+
+## Stage 1H Planner correction — 2026-11-04
+
+Stage 1H corrects the formal register to 42 unique IDs, 26/14/1/1 dispositions and 39/39 exact test declaration mappings. R19 is correctly PARTIALLY_FIXED.
+
+The semantic evidence audit is not accepted: no actual assertion/call-path/acceptance-coverage evidence is supplied; R53 still points to the unrelated seed_schema test at line 130; R39 lacks the R16/R20 cross-genotype evidence link; and R18's manual references omit key token/units/production-cost caveats.
+
+See research/R26_STAGE1H_PLANNER_REVIEW.md. Stage 1I is required. PC1 remains BLOCKED.
+

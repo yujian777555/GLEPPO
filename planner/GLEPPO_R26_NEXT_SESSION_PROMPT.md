@@ -5,7 +5,7 @@
 **Continuation branch:** r25-handoff  
 **R25 base commit:** a8ff1827434a88b2fef02a89aaf3e120e0a017a7  
 **R25 decision:** R25_ACCEPTED_WITH_LIMITATIONS  
-**Prompt purpose:** Directly resume the project from the R25 independent-review boundary. Do not restart the project or repeat old planning.
+**Prompt purpose:** Resume the current R26 Stage 1I task from the exact r25-handoff branch state. R25 remains the historical scientific baseline; Stage 1H has a Planner REQUEST_CHANGES decision. Do not restart the project or repeat old planning.
 
 ---
 
@@ -460,4 +460,72 @@ R26_STAGE1H_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_SEMANTIC_EVIDENCE_AND
 Next task: execute planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md. Produce the full 42-Finding semantic evidence map, correct R53 and R39 cross-evidence, complete R18 manual evidence, validate the declaration map with the helper, re-evaluate all VERIFIED_FIXED dispositions, and update all handoff records.
 
 No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.
+
+---
+
+## 18. Latest Planner update — Stage 1H REQUEST_CHANGES + ECOS scientific-integrity correction (2026-11-04)
+
+### Exact refs at the start of the latest Planner update
+
+- Repository: `yujian777555/GLEPPO`
+- Continuation branch: `r25-handoff`
+- Branch HEAD: `571c34201dde4e63705319670e446cb0e058f086`
+- Main HEAD: `6bad0b77835a2d00c62287c0c7d9d91d1d186d5e`
+- Branch relation: 194 ahead / 0 behind
+- R25 base: `a8ff1827434a88b2fef02a89aaf3e120e0a017a7`
+
+Continue on `r25-handoff`. Do not merge/update main. Verify the branch ref again before making any changes.
+
+### Read these latest documents first
+
+1. `status.json`
+2. `research/R26_STAGE1H_PLANNER_REVIEW.md`
+3. `research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md`
+4. `planner/latest_plan.md`
+5. `planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md`
+6. `planner/GLEPPO_R26_HANDOFF.md`
+
+### Latest decision
+
+Stage 1H is **REQUEST_CHANGES**. It has 42 unique Findings and 39/39 exact declaration mappings, but the evidence is still not semantic: exact assertions, source call paths, target-branch execution, and proven/uncovered acceptance conditions are missing. R53 is mis-mapped; R39 needs R16/R20 cross-genotype evidence; R18 manual evidence is incomplete; the helper is not a map validator; handoff records are stale; and 450/450 has not been independently reproduced.
+
+### Current Executor task: Stage 1I
+
+Execute `planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md`. It has a Planner addendum. Complete the original 42-Finding semantic evidence task; do not treat this addendum as permission to expand into experiments or production code changes.
+
+The final report must:
+- map every R12–R53 Finding to original acceptance criteria, actual assertions, source symbols/call paths, intended branches, and uncovered conditions;
+- correct R53 as indirect status-consistency evidence only (no direct status-only hash-invariance test);
+- cross-reference R16/R20 instrumented tests for R39 action/genotype exclusion;
+- complete R18's manual evidence and distinguish planned slots from actual CTX, model tokens, cache bundles and production cost;
+- upgrade the helper to validate 42 IDs and declaration tuples, without claiming it proves assertion semantics;
+- re-evaluate all VERIFIED_FIXED dispositions;
+- update all durable PC1 and handoff records;
+- preserve 450/450 as EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED unless exact raw output/CI evidence is independently verified.
+
+### Scientific-integrity correction that must persist
+
+Read `research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md`.
+
+R21-C1 is a C0 LLM-vs-C4 DAC deterministic-computation comparison. It is **not** an operator or controller comparison. Do not use it to claim that operator choice matters or that fixed-operator evolution is insufficient. Fixed-vs-adaptive, PPO-vs-rule, and PPO-vs-LinUCB remain untested.
+
+### Protocol reconciliation is a later gate
+
+`PHASE1_DESIGN.md`, `R24_ECOS_CONTROLLER_PREREGISTRATION.md`, `PC1_PROTOCOL_R4_PROPOSED.md`, and the shared implementation differ on reward, gamma, state detail, split, baseline set, and budget units. Do not silently select or edit a canonical protocol during Stage 1I.
+
+After Stage 1I is independently accepted, a separate `R26_ECOS_PROTOCOL_RECONCILIATION` must resolve those discrepancies before any PC1 approval or controller-training request.
+
+### Hard gates remain unchanged
+
+- PC1 BLOCKED; R4 remains PROPOSED / NOT APPROVED.
+- Formal G3 FAIL.
+- Family C NOT ACCESSED and prohibited.
+- Registered PC1 NOT EXECUTED.
+- Controller training NOT AUTHORIZED / NOT STARTED.
+- No external model/API calls or production runtime.
+- No production source/test changes in Stage 1I.
+- No main merge/update or force-push.
+- No cross-project artifacts.
+
+**Next action:** finish Stage 1I, submit exact evidence and handoff, then wait for Planner independent review. Do not proceed to PC1 or training by inference.
 

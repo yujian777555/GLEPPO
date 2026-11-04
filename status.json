@@ -1341,14 +1341,14 @@
       "UNVERIFIABLE": 1
     },
     "disposition_arithmetic": "27+13+1+1=42",
-    "test_map": "42_rows_exact_declarations",
+    "test_map": "37_of_39_exact_file_class_function_line_tuples; R31_R49_mismatch; semantic_evidence_incomplete",
     "no_direct_test": [
       "R18",
       "R45",
       "R46"
     ],
     "test_evidence": "450_REPORTED_NOT_REPRODUCED",
-    "decision": "R26_STAGE1G_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+    "decision": "EXECUTOR_REPORTED_R26_STAGE1G_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
     "executor_reported_result": {
       "commit": "69781d1166f9e28e7535915aad00af859c1b2734",
       "source_snapshot": "29325cfa16441154c833f381f208747b57627a79",

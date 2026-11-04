@@ -271,3 +271,48 @@ R26_STAGE1G_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_SEMANTIC_EVIDENC
 7. 更新 status、latest_plan、handoff、接班提示词及累计审计文档。
 
 Stage 1H 仍然只允许文档和非生产审计脚本修改。不得修改生产源码或测试代码。PC1 仍 BLOCKED；Family C 不访问；控制器训练不启动；Formal G3 仍 FAIL；模型/API 调用保持 0。
+
+---
+
+## 十一、2026-11-04 Planner 独立复审：Stage 1H REQUEST_CHANGES
+
+**复审文档：** research/R26_STAGE1H_PLANNER_REVIEW.md  
+**下一阶段提示词：** planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md
+
+Stage 1H 的实质进展已经独立确认：
+- R12–R53 共 42 个 Finding ID，全部且仅出现一次；
+- Disposition：26 VERIFIED_FIXED、14 PARTIALLY_FIXED、1 OPEN、1 UNVERIFIABLE，合计 42；
+- 39 个测试映射全部匹配冻结源码快照中的实际文件、类、函数和声明行；
+- R31/R49 函数名修正；
+- R19 正确降级为 PARTIALLY_FIXED；
+- R39 已选择 delimiter 和字段隔离测试；
+- 218 个测试函数声明数确认。
+
+但 Stage 1H 尚未完成语义证据审计：
+1. 测试证据文件仍只有 ID/File/Class/Function/Line/Evidence Type，没有实际断言、源码符号、调用路径、目标分支和验收条件覆盖情况。
+2. R53 仍映射到 seed_schema 修改测试（line 130），而非状态修改测试（line 118）；且 line 118 也只能作为间接证据，不能证明状态从内容哈希中排除。
+3. R39 的 action/genotype 排除应引用 R16/R20 的 InstrumentedInterpreter 跨基因型测试；本轮证据表没有建立交叉引用。
+4. R18 缺少 production token UNMEASURED、planned slots NOT actual CTX 和生产成本未测量的精确行引用。
+5. _r26h_extract.py 仍然只是声明清单打印器，不校验 42 行报告映射。
+6. Stage 1H 没有更新 latest_plan/handoff/next-session prompt 和累计 PC1 记录。
+7. Stage 1H 报告没有记录自己的最终报告 commit/HEAD。
+8. 532ee8a 的 GitHub status/check-runs/Actions 均无记录，450/450 仍未独立复现。
+
+完整决定：research/R26_STAGE1H_PLANNER_REVIEW.md。当前状态：
+
+R26_STAGE1H_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_SEMANTIC_EVIDENCE_AND_DURABLE_HANDOFF_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+
+### 下一步：R26 Stage 1I
+
+执行 planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md：
+- 为 42 个 Finding 建立真正的语义证据表；
+- 每项记录原始验收标准、实际断言、源码调用链、目标分支、已证明和未覆盖条件；
+- 修正 R53 的间接证据映射；
+- 将 R16/R20 跨基因型测试交叉引用到 R39；
+- 补齐 R18 的全部手工证据与单位说明；
+- 将 extractor 升级为真实的 42-ID / 39-mapping 声明校验器；
+- 重新审查 26 个 VERIFIED_FIXED；
+- 更新 status、handoff 和累计审计文档。
+
+Stage 1I 仍然只允许文档和非生产审计工具修改。不得修改生产源码或测试代码。PC1 仍 BLOCKED；Family C 不访问；控制器训练不启动；Formal G3 仍 FAIL；模型/API 调用保持 0。
+

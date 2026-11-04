@@ -63,3 +63,13 @@ The 450/450 result has no raw log and no Actions/check-run result for commit ca0
 
 See research/R26_STAGE1D_PLANNER_REVIEW.md. Stage 1E must complete the evidence reconciliation before acceptance.
 
+---
+
+## Stage 1E Planner correction — 2026-11-04
+
+The 218 count is accepted as the number of declared test functions across seven PC1-related suites. It is not a Finding-level coverage proof.
+
+The Stage 1E 42-row map uses class/function names that do not match actual declarations: only 3 mapped class names exist, only 1 mapped function name exists under a different class, and 0 class/function pairs match. The assertion column contains descriptions rather than actual assertions. Exact test paths, line ranges, source symbols and call paths are missing.
+
+R24, R52 and R53 require disposition correction unless additional exact existing evidence is identified. See research/R26_STAGE1E_PLANNER_REVIEW.md and Stage 1F prompt planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md.
+

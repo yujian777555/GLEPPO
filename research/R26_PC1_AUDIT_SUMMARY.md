@@ -108,3 +108,24 @@ Stage 1D is read-only with respect to production source and test code. It must:
 | Formal G3 | FAIL |
 | Model/API calls in Stage 1C | 0 reported |
 | Production runtime | NOT EXECUTED |
+
+---
+
+## 8. Stage 1D Planner correction — 2026-11-04
+
+**Planner decision:** REQUEST_CHANGES. Stage 1D materially improves Stage 1C but is not accepted as a completed 42-Finding audit.
+
+- R18 is a formal Finding and is missing from the Stage 1D table; retain R18 separately from R24.
+- Provenance lists nine IDs but reports seven.
+- The stated 30/8/1/1 disposition counts sum to 40.
+- R46 appears in the partial list and as unverifiable in the detailed table.
+- Only five Findings have a test mapping, with abbreviated or nonexistent test names.
+- The 218 figure is a correct count of test functions across seven PC1-related suites, not proof of 218 distinct Finding-level tests.
+- _r26d_test_inspect.py only inventories function declarations/imports.
+- No raw 450/450 log or CI run on Stage 1D commit ca0c909 was found. Keep the result EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
+- R45/R48/R52/R49/R53 require more direct test evidence; R43's existing gate-level negative test must be acknowledged.
+
+Full review: research/R26_STAGE1D_PLANNER_REVIEW.md.
+
+Next: R26 Stage 1E, prompt planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md. PC1 remains BLOCKED.
+

@@ -132,3 +132,15 @@ Formal Finding R18 is missing; Provenance lists nine IDs but count seven; the 30
 
 Full review: research/R26_STAGE1D_PLANNER_REVIEW.md. Current state: REQUEST_CHANGES; Stage 1E evidence reconciliation required; PC1 BLOCKED.
 
+---
+
+## Stage 1E Planner correction — 2026-11-04
+
+Stage 1E fixes the 42-ID/category/disposition arithmetic. These bookkeeping corrections are accepted.
+
+The 42-row test map is not valid: only 3 class names match declarations, only 1 function name exists (under a different class), and no exact class/function pair matches across the seven PC1 suites. The map has no exact assertion expressions, file/line references or source call-path analysis.
+
+R24, R52 and R53 must be re-evaluated; absent exact evidence they are PARTIALLY_FIXED. R18 appears documentation-level reconciled against the current raw smoke artifact and may remain VERIFIED_FIXED with exact manual evidence.
+
+Full review: research/R26_STAGE1E_PLANNER_REVIEW.md. Current state: REQUEST_CHANGES; Stage 1F required; PC1 BLOCKED.
+

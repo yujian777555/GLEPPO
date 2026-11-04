@@ -73,3 +73,13 @@ The Stage 1E 42-row map uses class/function names that do not match actual decla
 
 R24, R52 and R53 require disposition correction unless additional exact existing evidence is identified. See research/R26_STAGE1E_PLANNER_REVIEW.md and Stage 1F prompt planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md.
 
+---
+
+## Stage 1F Planner correction — 2026-11-04
+
+The Stage 1F test map is not yet exact. Across the seven PC1 suites, 218 declared test methods is the correct inventory count. However, among 39 Finding rows claiming a test, only 5 class/function/file triplets match actual declarations; 34 function names are not declared in the stated class/file. The three NONE rows are R18, R45 and R46.
+
+The extractor helper only inventories class/function declarations and does not validate the 42-row map or inspect assertions/call paths. The Stage 1F test-evidence document contains no complete 42-row assertion/source-call map.
+
+See research/R26_STAGE1F_PLANNER_REVIEW.md. Stage 1G must correct the map and dispositions. 450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
+

@@ -708,3 +708,73 @@ Stage 1I-R1 corrective work complete. Key artifacts:
 R53 PARTIALLY_FIXED (INDIRECT). R39 evidence boundaries complete. R18 MANUAL 13 references.
 
 Status: awaiting Planner independent review. PC1 BLOCKED. No production changes.
+
+---
+
+## 24. Stage 1I-R1 Planner independent review — REQUEST_CHANGES (2026-11-04)
+
+**R1 final HEAD:** 4d2ff06ee01146533501589b264d33ddd30ffcbe  
+**R1 parent:** 539f74d5c898abc144992fff4a413a30744c1cc9  
+**R1 source snapshot:** 29325cfa16441154c833f381f208747b57627a79  
+**R1 Planner review commit:** dcdcef5b2e7e68a6590d95c90c4caf453399c127  
+**Main:** 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e  
+**Branch:** r25-handoff, 211 ahead / 0 behind at review  
+**Decision:** REQUEST_CHANGES — Stage 1I-R1 NOT ACCEPTED.
+
+### 24.1 Accepted structural work
+
+- JSON has 42 unique Finding IDs R12–R53.
+- Markdown has 42 unique headings.
+- JSON and Markdown dispositions match.
+- The 26/14/1/1 arithmetic is mechanically correct.
+- R53 remains PARTIALLY_FIXED.
+- R18 has 13 manual references and clear unit distinctions.
+- No production source or tests/ files were changed.
+- Main remains unchanged.
+
+### 24.2 Blocking semantic issues
+
+1. Multiple findings omit relevant direct tests. Examples: R12 cache-hit tests; R14 r_hat test; R17 record-field test; R20 override/task/replicate tests; R23 round-trip replay; R39 six additional direct CRN tests and the R20 cross-genotype test; R40 mutation tests; R41 tamper/defensive-copy/wrong-hash tests.
+2. Several call paths are factually wrong. R28's selected test checks constants and does not call reconcile. R30/R37 fail in run_pc1_analysis before validate_records. R44's selected test only calls load_plan_artifact. R47 fails at registered hash comparison before ID/version checks. R50 calls art.verify directly, not ApprovalGate.check. R51 compares protocol-content hash, not plan hash.
+3. Invalid or nonexistent source symbols: R17 build_evidence/save_evidence; R23 build_evidence/replay_evidence; R25 GatedPC1Runner; R48/R52 validate_reward_schema. R20 places crn_seed in the wrong file.
+4. Twelve source symbol entries have null line ranges; validator does not validate source_symbols.
+5. Validator wrong_file_path self-test points to a nonexistent file and duplicates missing_source_file. Null declaration line values can bypass checks. Schema and nested field types are not strict.
+6. Several VERIFIED_FIXED rows overstate coverage, including R12, R17, R26, R28, R40, R44 and R51.
+7. R45 rationale mentions _DuplicateKeyChecker but evidence_type is NONE and manual_evidence is empty.
+
+Full evidence and exact references: research/R26_STAGE1I_R1_PLANNER_REVIEW.md.
+
+### 24.3 Next task — Stage 1I-R2
+
+Executor prompt: planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md.
+
+R2 must:
+- preserve every independently testable original acceptance subcondition;
+- enumerate every relevant test for every multi-part Finding;
+- correct test-to-source call paths and branch reachability;
+- replace nonexistent/wrong source symbols and provide exact non-null line ranges;
+- re-evaluate all 42 dispositions, with no target count;
+- harden the AST validator for strict schema/types/positive line ranges/source-symbol references;
+- add targeted adversarial self-tests for existing-file/wrong-owner and null line/source range cases;
+- record exact R1 final SHA and source snapshot;
+- update all durable records and status.json.
+
+No production source or tests/ changes are allowed in R2.
+
+### 24.4 Scientific status and hard gates
+
+- R21-C1 is DAC, not operator/controller comparison.
+- PPO-vs-fixed/rule/LinUCB remains UNTESTED.
+- Phase 1/R24/PC1 R4 reward/state/gamma/split/budget conflicts remain unresolved.
+- PC1 BLOCKED; R4 PROPOSED / NOT APPROVED.
+- Formal G3 FAIL.
+- Family C NOT ACCESSED.
+- Registered PC1 NOT EXECUTED.
+- Controller training NOT AUTHORIZED / NOT STARTED.
+- No model/API or production runtime calls; current zero counters remain Executor attestations.
+- 450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
+- Main unchanged; no merge/update.
+- No cross-project artifacts.
+
+**Next action:** Stage 1I-R2 Executor completion → Planner independent review. Do not proceed to protocol reconciliation, PC1, Family C or training.
+

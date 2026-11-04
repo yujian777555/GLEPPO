@@ -3,8 +3,8 @@
 **Updated:** 2026-11-03  
 **Repository:** yujian777555/GLEPPO  
 **Branch:** r25-handoff  
-**Current stage:** R26 Stage 1D — corrected semantic audit and evidence reconciliation  
-**Planner decision on Stage 1C:** REQUEST_CHANGES  
+**Current stage:** R26 Stage 1G — disposition count and exact test-map reconciliation  
+**Latest Planner decision on Stage 1F:** REQUEST_CHANGES  
 **PC1:** BLOCKED
 
 ## 1. Historical inventory

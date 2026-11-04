@@ -156,3 +156,16 @@ The claimed 42-row test map still has 34 non-existent function names: only 5 of 
 
 Full review: research/R26_STAGE1F_PLANNER_REVIEW.md. Stage 1G required. PC1 remains BLOCKED.
 
+
+
+---
+
+## Stage 1G Planner correction — 2026-11-04
+
+**Decision:** REQUEST_CHANGES.
+
+Disposition arithmetic is corrected to 27/13/1/1 = 42. The 42-class / 218-function inventory is independently confirmed. Only 37/39 test mappings match actual file/class/function/line declarations; R31 and R49 remain wrong.
+
+The test-evidence table still lacks actual assertion expressions, source call paths, intended-branch analysis and uncovered acceptance conditions. R39 is mapped to a tautology; R53 to an unrelated seed-schema test; R19 remains marked verified despite the protocol being PROPOSED / NOT APPROVED.
+
+Full review: research/R26_STAGE1G_PLANNER_REVIEW.md. Stage 1H required. PC1 remains BLOCKED.

@@ -5,7 +5,7 @@
 **Continuation branch:** r25-handoff  
 **R25 base commit:** a8ff1827434a88b2fef02a89aaf3e120e0a017a7  
 **R25 decision:** R25_ACCEPTED_WITH_LIMITATIONS  
-**Prompt purpose:** Resume the current R26 Stage 1I task from the exact r25-handoff branch state. R25 remains the historical scientific baseline; Stage 1H has a Planner REQUEST_CHANGES decision. Do not restart the project or repeat old planning.
+**Prompt purpose:** Resume GLEPPO from the exact R26 Stage 1I Planner REQUEST_CHANGES boundary and execute Stage 1I-R1 corrective work. Do not restart the project or proceed to PC1/protocol reconciliation.
 
 ---
 
@@ -528,4 +528,79 @@ After Stage 1I is independently accepted, a separate `R26_ECOS_PROTOCOL_RECONCIL
 - No cross-project artifacts.
 
 **Next action:** finish Stage 1I, submit exact evidence and handoff, then wait for Planner independent review. Do not proceed to PC1 or training by inference.
+
+---
+
+## 19. Latest Planner decision — Stage 1I REQUEST_CHANGES; Stage 1I-R1 required (2026-11-04)
+
+### Exact reviewed repository state
+
+- Repository: yujian777555/GLEPPO
+- Branch: r25-handoff
+- Stage 1I Executor HEAD: a1e6e65e671c876d028492bfed164205c54df08b
+- Stage 1I parent: e2cb353037368a82b5dd9c7b53a1d40f21425750
+- Main: 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e
+- Branch relation at review: 202 ahead / 0 behind main
+- Planner review: research/R26_STAGE1I_PLANNER_REVIEW.md
+- Decision: REQUEST_CHANGES — Stage 1I is NOT accepted.
+
+### Read first
+
+1. status.json
+2. research/R26_STAGE1I_PLANNER_REVIEW.md
+3. planner/GLEPPO_R26_STAGE1I_CORRECTIVE_EXECUTOR_PROMPT.md
+4. research/R26_STAGE1I_FINAL_FINDING_AUDIT.md
+5. research/R26_STAGE1I_TEST_EVIDENCE.md
+6. planner/latest_plan.md
+7. planner/GLEPPO_R26_HANDOFF.md
+8. this next-session prompt
+9. research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md
+
+### Why Stage 1I was rejected
+
+The required 42-row semantic evidence map does not exist. The final audit has only 73 lines and the test-evidence file only 34 lines; neither contains 42 per-Finding rows with original criteria, exact assertions, source call paths, branch reachability, uncovered conditions and dispositions.
+
+The helper scripts/_r26i_validator.py is not wired to read or validate a map. Its main path only prints declaration counts. Its validator also does not verify file ownership, unknown IDs, exact row/mapping counts, full NONE semantics, or missing source files.
+
+The R39/R53/R18 corrections are useful but incomplete at row level. Durable handoff files were not updated in the Stage 1I Executor commit. 450/450 remains Executor-reported, with zero GitHub check runs/status entries for the exact SHA.
+
+### Current task: Stage 1I-R1
+
+Execute planner/GLEPPO_R26_STAGE1I_CORRECTIVE_EXECUTOR_PROMPT.md exactly.
+
+Deliver:
+- research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.json (canonical 42-row map);
+- research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md (human-readable 42-row map);
+- AST-based scripts/_r26i_validator.py that reads the actual JSON map;
+- deterministic self-tests for valid and adversarial-invalid maps;
+- research/R26_STAGE1I_R1_CORRECTIVE_REPORT.md;
+- updates to audit/test evidence, cumulative PC1 summary, latest_plan, handoff, this prompt and status.json.
+
+Do not force the previous 26/14/1/1 counts. Recompute from the 42 JSON rows. R53 remains PARTIALLY_FIXED without direct status-only hash invariance evidence. R39 must distinguish genotype invariance tests from structural action exclusion and the missing action-varying PC1 integration test. R18 is MANUAL and must distinguish planned slots, actual uncached replicas, cache bundles, actual CTX, and production tokens/latency.
+
+### Scientific-integrity facts that must remain
+
+- R21-C1 is C0 LLM arithmetic vs C4 DAC deterministic computation, not an operator/controller comparison.
+- Fixed-vs-adaptive selection remains untested.
+- PPO-vs-rule and PPO-vs-LinUCB remain untested.
+- Phase 1/R24/PC1 R4 reward/state/gamma/split/budget drift remains unresolved.
+- Do not rewrite frozen historical reports or silently select a canonical protocol.
+
+### Hard gates
+
+- PC1 BLOCKED; R4 PROPOSED / NOT APPROVED.
+- Formal G3 FAIL.
+- Family C NOT ACCESSED.
+- Registered PC1 NOT EXECUTED.
+- Controller training NOT AUTHORIZED / NOT STARTED.
+- No production source or tests/ changes.
+- No model/API calls or production runtime.
+- No production signing-key access.
+- No R1–R25 evidence/manifest changes.
+- No main merge/update/reset/rebase/force-push.
+- No cross-project code/data/report reuse.
+
+### Stop condition
+
+After Stage 1I-R1 is committed and all durable records are updated, stop and wait for Planner independent review. Do not enter R26_ECOS_PROTOCOL_RECONCILIATION, PC1, Family C, or controller training.
 

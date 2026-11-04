@@ -403,3 +403,16 @@ Stage 1I: REQUEST_CHANGES | Stage 1I-R1: REQUEST_CHANGES | Stage 1I-R2: executor
 Map corrected: 193 test entries, 0 null ranges, dispositions 28/12/1/1=42. Validator: 20 self-tests PASS.
 
 PC1 BLOCKED. Next gate: Planner independent review of R2.
+
+## Stage 1I-R2 Planner Review (2026-11-04)
+
+**Decision:** REQUEST_CHANGES; R2.1 narrow correction required.
+
+- R39 must be PARTIALLY_FIXED: evaluator.effective_seed_parts and pc1.crn_seed use separate serialized contracts; the evaluator payload lacks the explicit crn-v2 tag.
+- R41 must be PARTIALLY_FIXED: registered-analysis end-to-end artifact consumption remains uncovered in the row.
+- R48 must be PARTIALLY_FIXED: no direct seed version/encoding mutation tests; protocol schema is not derived from both runtime seed paths.
+- Validator misses source end_line > EOF; add a dedicated adversarial test.
+- latest_plan and next-session prompt contain mojibake in R2-added tails; restore UTF-8.
+
+Expected counts after corrections: 25 VERIFIED_FIXED / 15 PARTIALLY_FIXED / 1 OPEN / 1 UNVERIFIABLE. PC1 remains BLOCKED; Formal G3 FAIL; Family C NOT ACCESSED; registered PC1 NOT EXECUTED; controller training NOT AUTHORIZED/NOT STARTED.
+

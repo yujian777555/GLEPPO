@@ -105,3 +105,16 @@ Test confirms status is proposed.
 **R26_STAGE1H_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW**
 
 42 findings, 42 dispositions (26 FIXED, 14 PARTIAL, 1 OPEN, 1 UNVERIFIABLE). PC1 remains BLOCKED.
+
+---
+
+## Planner correction — 2026-11-04
+
+**Planner decision:** REQUEST_CHANGES. The Stage 1H row arithmetic is correct at 26/14/1/1 = 42, and all 39 direct declaration tuples match the frozen source snapshot. The source snapshot is 29325cfa16441154c833f381f208747b57627a79; Stage 1H parent is 0b1d5cac084966040a2a1820675605cc428776fc; Stage 1H report/final branch HEAD is 532ee8adf498e83967016723d28cb1e7dc30bf5f.
+
+The semantic map is incomplete. R53 still maps to test_mutation_seed_contract_fails at line 130, which mutates seed_schema rather than lifecycle status/hash. The related status test at line 118 is indirect only and does not prove compute_protocol_hash excludes status. R39 must cross-reference R16/R20 instrumented cross-genotype tests. R18 must include the exact token/units/production-cost references listed in research/R26_STAGE1H_PLANNER_REVIEW.md.
+
+The helper remains a declaration inventory, not a map validator. Handoff and cumulative records were not updated in the Stage 1H Executor commit.
+
+See research/R26_STAGE1H_PLANNER_REVIEW.md. Stage 1I required. PC1 remains BLOCKED.
+

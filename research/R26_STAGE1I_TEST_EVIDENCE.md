@@ -80,3 +80,24 @@ Result: VALIDATION PASSED (42 findings, 39 mapped, 3 NONE, 218 declarations)
 - JSON: research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.json (schema_version 1.0)
 - Markdown: research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md (1520 lines, 42 formal rows R12-R53)
 - Dispositions computed from JSON: 26 VERIFIED_FIXED + 14 PARTIALLY_FIXED + 1 OPEN + 1 UNVERIFIABLE = 42
+
+---
+
+## Planner Review of Stage 1I-R1 Evidence (2026-11-04)
+
+**Decision: REQUEST_CHANGES — R1 NOT ACCEPTED.**
+
+The Executor-reported validator output is not sufficient to accept the semantic map. Static review found:
+- missing relevant tests for multiple multi-part Findings;
+- false call paths for R28, R30, R37, R44, R47, R50 and R51;
+- nonexistent/wrong source symbols in R17, R20, R23, R25, R48 and R52;
+- 12 null source-symbol ranges that the validator does not inspect;
+- a wrong_file_path self-test that points to a nonexistent file and duplicates missing_source_file;
+- null declaration line values bypass exact-line checks.
+
+The map's 42 IDs and Markdown/JSON disposition consistency are verified. The 26/14/1/1 arithmetic is mechanically correct, but semantic dispositions are not accepted.
+
+Planner did not execute the helper or 450-test suite. The 15 self-tests and 450/450 remain EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
+
+See research/R26_STAGE1I_R1_PLANNER_REVIEW.md and execute Stage 1I-R2 from planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md.
+

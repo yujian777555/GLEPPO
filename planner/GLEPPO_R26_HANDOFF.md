@@ -387,3 +387,46 @@ Read and execute planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md. Rebuild the exac
 
 Hard boundaries remain: no registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no update of main.
 
+---
+
+## 19. R26 Stage 1F Planner independent review — 2026-11-04
+
+**Decision:** REQUEST_CHANGES. Stage 1F improves the ledger, but its count summary and exact test map remain incorrect.
+
+Review: research/R26_STAGE1F_PLANNER_REVIEW.md  
+Next Executor prompt: planner/GLEPPO_R26_STAGE1G_EXECUTOR_PROMPT.md
+
+Accepted:
+- 42 formal IDs R12–R53 appear exactly once;
+- category counts sum to 42;
+- R18 has no behavioral test and is supported by manual artifact comparison;
+- R24/R45/R52/R53 are PARTIALLY_FIXED;
+- R15 is OPEN; R46 is UNVERIFIABLE;
+- 218 declared test-function count is correct;
+- 450/450 remains not independently reproduced;
+- no production source/test code changed.
+
+Rejected:
+- detailed rows count 27 VERIFIED_FIXED / 13 PARTIALLY_FIXED / 1 OPEN / 1 UNVERIFIABLE, while summary/status/commit message say 22/15/1/1 (=39);
+- 39 rows claim a test; 39 class names exist but only 5 function names match declarations in their stated file/class; 34 function names do not exist;
+- only 5/42 file/class/function triplets are exact;
+- test-evidence document does not contain a complete 42-row map with assertion and source-call line evidence;
+- scripts/_r26f_extract_tests.py inventories declarations but does not validate the map;
+- Stage 1F report header uses parent 29325cf as HEAD rather than distinguishing parent and report commit.
+
+Verified refs:
+- r25-handoff = 1a29d1cc722d3cc20491310c896d204b8290c625;
+- Stage 1F parent = 29325cfa16441154c833f381f208747b57627a79;
+- main = 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e;
+- main → Stage 1F: 154 ahead / 0 behind;
+- R25 base → Stage 1F: 73 ahead / 0 behind.
+
+Current state:
+R26_STAGE1F_REPORT_RECEIVED_REQUEST_CHANGES; DISPOSITION_COUNT_AND_EXACT_TEST_MAP_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+
+### Stage 1G task
+
+Read planner/GLEPPO_R26_STAGE1G_EXECUTOR_PROMPT.md. Recount the detailed rows, reconcile every count and ID list, replace all 34 non-existent function names with exact test declarations or NONE, and add exact line/assertion/source-call evidence for all 42 Findings. Re-evaluate dispositions based on actual behavior. Do not modify production source or test code.
+
+Hard boundaries remain: no registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no update of main.
+

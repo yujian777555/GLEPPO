@@ -3,8 +3,8 @@
 **Updated:** 2026-11-04  
 **Repository:** yujian777555/GLEPPO  
 **Branch:** r25-handoff  
-**Current stage:** R26 Stage 1I — semantic evidence completion (Executor not yet started)  
-**Latest Planner decision on Stage 1H:** REQUEST_CHANGES  
+**Current stage:** R26 Stage 1I-R1 — corrective semantic evidence map and validator (Executor not yet started)  
+**Latest Planner decision on Stage 1I:** REQUEST_CHANGES  
 **PC1:** BLOCKED
 
 ## 1. Historical inventory
@@ -268,4 +268,52 @@ The current controller specifications also disagree:
 Do not silently select or amend a protocol in Stage 1I. After Stage 1I acceptance, conduct a separate `R26_ECOS_PROTOCOL_RECONCILIATION` before any PC1 approval or training request.
 
 Current gates remain: PC1 BLOCKED; Formal G3 FAIL; Family C NOT ACCESSED; registered PC1 NOT EXECUTED; controller training NOT AUTHORIZED / NOT STARTED; model/API calls 0.
+
+---
+
+## 15. Stage 1I Planner independent review — REQUEST_CHANGES (2026-11-04)
+
+**Reviewed Stage 1I Executor HEAD:** a1e6e65e671c876d028492bfed164205c54df08b  
+**Planner review:** research/R26_STAGE1I_PLANNER_REVIEW.md  
+**Next Executor prompt:** planner/GLEPPO_R26_STAGE1I_CORRECTIVE_EXECUTOR_PROMPT.md  
+**Decision:** Stage 1I NOT ACCEPTED; Stage 1I-R1 corrective work required.
+
+### Accepted improvements
+
+- R53 now points to test_mutation_status_not_checked_by_consistency and is labeled indirect; no direct status-only hash-invariance test exists.
+- R39 cites relevant cross-genotype evaluator evidence, but the R20 reference is missing from the test-evidence artifact and action-varying collector integration is not demonstrated.
+- R18 manual cost notes better distinguish stub wall-clock, planned slots, actual uncached replica executions and unmeasured production tokens.
+- R21-C1 correctly identified as DAC, not operator comparison.
+- PPO advantage over rule-based/LinUCB remains unproven.
+- 450/450 remains Executor-reported, not independently reproduced.
+
+### Blocking findings
+
+1. research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md is absent; the 73-line final audit and 34-line test-evidence note do not provide 42 row-level semantic records.
+2. The 26/14/1/1 counts cannot be independently verified without the 42 rows.
+3. scripts/_r26i_validator.py main path does not read a map or invoke validate_report_map(); the helper has file/class/function and cardinality validation gaps.
+4. R39 needs precise separation of genotype-invariance test evidence, structural action exclusion, and untested action-varying PC1 integration.
+5. R18 needs a row-level MANUAL entry and COST_BASELINE.md line 44 token reference.
+6. latest_plan, handoff, next-session prompt and cumulative records were not updated in the Executor commit; status.json lost important scope/gate/provenance fields.
+7. Final report does not record exact final Stage 1I SHA as the final report HEAD; it records the pre-work parent as CURRENT_BRANCH_HEAD.
+8. GitHub has zero check runs and zero commit status entries for the exact Stage 1I SHA.
+
+### Stage 1I-R1 required deliverables
+
+- Canonical JSON map plus Markdown rendering with exactly 42 rows R12–R53.
+- Full original acceptance criteria, exact assertions, source call paths, branch reachability, proven/indirect/uncovered conditions, evidence type and row-level disposition.
+- AST-based validator that reads the JSON map and checks exact IDs, row count, file/class/function ownership, line numbers, NONE semantics and mapping counts.
+- Positive and adversarial negative validator self-tests with raw output/exit codes.
+- R53 remains PARTIALLY_FIXED without direct hash-invariance evidence.
+- R39 scope clarified with R16 and R20 tests plus source path and limitations.
+- R18 MANUAL evidence completed with all exact unit/token references.
+- Corrected provenance and updated status/latest_plan/handoff/next-session records.
+
+The previous 26/14/1/1 disposition count is not a target. Recompute it from the canonical JSON rows.
+
+### Current gates
+
+PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; registered PC1 NOT EXECUTED; controller training NOT AUTHORIZED / NOT STARTED; no model/API calls or production runtime. No main update or cross-project reuse.
+
+**Next:** Stage 1I-R1 Executor submission → Planner independent review. Do not proceed to protocol reconciliation or PC1.
 

@@ -311,3 +311,30 @@ The immediate Executor task is planner/GLEPPO_R26_STAGE1D_EXECUTOR_PROMPT.md. In
 
 Current Planner status: R26_STAGE1C_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
 
+## 13. Latest Planner decision — Stage 1D REQUEST_CHANGES (2026-11-04)
+
+Read first:
+- research/R26_STAGE1D_PLANNER_REVIEW.md
+- research/R26_STAGE1D_CORRECTED_FINDING_AUDIT.md
+- research/R26_STAGE1D_TEST_EVIDENCE.md
+- planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md
+- updated planner/latest_plan.md
+- updated planner/GLEPPO_R26_HANDOFF.md
+- status.json
+
+Stage 1D correctly replaced the invalid Stage 1C test mapping with seven PC1-related suites. Planner independently counted 218 test functions across those suites. However, the 42-Finding report remains inconsistent:
+- R18 formal Finding missing;
+- Provenance lists 9 IDs but count 7;
+- 30/8/1/1 totals 40, not 42;
+- R46 appears in two dispositions;
+- exact test mapping covers only five findings and contains abbreviated/nonexistent test function names;
+- _r26d_test_inspect.py counts test declarations/imports but does not inspect assertions;
+- 450/450 has no raw log or Stage 1D CI run, so it is not independently reproduced.
+
+Current status:
+R26_STAGE1D_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEDGER_AND_TEST_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+
+Next task: execute planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md. Restore all 42 IDs R12–R53, retain R18 separately from R24, reconcile one category and one disposition per Finding, map exact test class/function/assertions/source calls for all 42, and record unsupported tests honestly. Do not modify production source or test code.
+
+No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.
+

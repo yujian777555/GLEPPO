@@ -266,3 +266,58 @@ End with one status:
 - R26_STAGE1I_REF_MISMATCH_STOPPED
 
 **Immediate action:** verify refs; correct R53 and R39 cross-evidence; complete all 42 semantic evidence rows; complete R18 manual evidence; upgrade the helper to validate the exact declaration map; update durable handoff and provenance. Do not modify production source or tests.
+
+---
+
+## 12. Planner addendum — ECOS scientific integrity and protocol drift (2026-11-04)
+
+Read and preserve the separate Planner review:
+
+`research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md`
+
+This addendum does **not** replace or weaken Work Packages A–F. Stage 1I remains primarily the 42-Finding PC1 semantic-evidence audit. Do not start a new experiment or change production code to address the science questions.
+
+### 12.1 Correct the R21-C1 evidence attribution
+
+R25's statement “Fixed strategy enough? UNLIKELY — R21-C1 shows operator matters” is not supported by R21-C1.
+
+R21-C1 compares C0 (LLM arithmetic execution) with C4 (DAC deterministic answer computation). It does not compare evolutionary operators or fixed/adaptive controllers. Do not cite R21-C1 as evidence that operator choice matters or that fixed-operator evolution is inadequate.
+
+In Stage 1I handoff/status additions, preserve the corrected interpretation:
+- R21-C1 supports the DAC/arithmetic-correctness result under its documented limitations.
+- Fixed-vs-adaptive operator selection remains UNTESTED.
+- PPO-vs-rule and PPO-vs-contextual-Bandit remain UNTESTED.
+- Historical operator pilots may motivate heterogeneity, but behavior change or a local operator win is not proof that adaptive selection beats the best fixed operator.
+
+Do not edit or rewrite the historical R25 report. Cite the Planner addendum instead.
+
+### 12.2 Record protocol drift without silently resolving it
+
+The following artifacts disagree materially and must not be treated as one already-frozen controller contract:
+- `research/PHASE1_DESIGN.md`: 32-D state, one operator per generation, generation reward, γ=0.95, multi-step episode return, broad baseline suite;
+- `research/R24_ECOS_CONTROLLER_PREREGISTRATION.md`: immediate child-parent effective_success reward, γ=0.99, a shorter state description, 4/4/4 task split, and a 1,000-episode training budget;
+- `research/PC1_PROTOCOL_R4_PROPOSED.md` and `gleppo/reward.py`: PC1 myopia diagnostic uses the shared generation_reward and γ=0.95; R4 remains PROPOSED / NOT APPROVED;
+- `gleppo/evolution.py`: actual generation reward calls the shared generation_reward implementation.
+
+Do not choose a winner, amend frozen documents, change reward code, or mark these protocols reconciled in Stage 1I. Record that a separate Planner-reviewed protocol reconciliation is required **after Stage 1I acceptance and before any PC1 approval or controller training**.
+
+### 12.3 Required durable-handoff update
+
+When updating status/latest_plan/handoff/next-session records:
+1. Link `research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md`.
+2. State that the Idea is retained as a falsifiable hypothesis, not a validated method.
+3. State that R21-C1 is DAC evidence, not operator-selection evidence.
+4. State that the reward/state/gamma/split/baseline/metric contract still needs reconciliation.
+5. Add `R26_ECOS_PROTOCOL_RECONCILIATION` as a later review gate after Stage 1I; do not bypass the current Stage 1I task.
+6. Keep PC1 BLOCKED, Formal G3 FAIL, Family C NOT ACCESSED, controller training NOT AUTHORIZED/NOT STARTED, registered PC1 NOT EXECUTED, and model/API calls at zero.
+
+### 12.4 Stage 1I final report addendum
+
+The final Executor report must include a short “Scientific integrity handoff” section confirming:
+- no R21-C1-to-operator-effect inference was used;
+- the protocol discrepancies above were preserved as unresolved rather than silently patched;
+- no experiment, model/API call, PC1 execution, Family-C access, training, source change, or test-code change occurred;
+- the next gate is Planner review of Stage 1I, then a separate protocol reconciliation.
+
+This is a documentation and handoff requirement only. It does not authorize the future protocol reconciliation or any experiment.
+

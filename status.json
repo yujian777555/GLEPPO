@@ -1204,7 +1204,9 @@
       },
       "pc1": "BLOCKED",
       "disposition": "REQUEST_CHANGES",
-      "current_branch_head_before_planner_docs": "a8570149aec984c904231ed4816513de33a68d18"
+      "current_branch_head_before_planner_docs": "a8570149aec984c904231ed4816513de33a68d18",
+      "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
+      "review_branch_head": "ca0c9098b83a44229bbedaf5f478ae09d7c16db1"
     }
   },
   "r26_stage1e": {
@@ -1243,6 +1245,10 @@
       "planner/GLEPPO_R26_HANDOFF.md",
       "planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md",
       "planner/GLEPPO_R26_STAGE1E_EXECUTOR_PROMPT.md"
-    ]
+    ],
+    "planner_update_base_head": "68abe4464ddf71339d0c14578be766383894e623",
+    "expected_branch_ahead_main_after_status_commit": 139,
+    "expected_branch_ahead_r25_base_after_status_commit": 58,
+    "final_current_task": "Execute Stage 1E only: restore all 42 formal findings, fix category/disposition arithmetic, provide exact test mapping and raw test evidence if available. No source/test code changes."
   }
 }

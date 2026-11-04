@@ -604,3 +604,15 @@ Do not force the previous 26/14/1/1 counts. Recompute from the 42 JSON rows. R53
 
 After Stage 1I-R1 is committed and all durable records are updated, stop and wait for Planner independent review. Do not enter R26_ECOS_PROTOCOL_RECONCILIATION, PC1, Family C, or controller training.
 
+
+---
+
+## Stage 1I-R1 后续 (2026-11-04)
+
+Stage 1I-R1 纠正工作已完成并提交。下一关口：Planner 独立复核 Stage 1I-R1。
+
+复核内容：42 行语义证据映射（JSON + MD）、validator 自测输出、R39/R53/R18 语义纠正。
+
+硬边界不变：PC1 BLOCKED、Formal G3 FAIL、Family C NOT ACCESSED、controller training NOT AUTHORIZED、model/API calls 0、production runtime 0。
+
+只有 Planner 接受 Stage 1I-R1 后，才能进入 R26_ECOS_PROTOCOL_RECONCILIATION。

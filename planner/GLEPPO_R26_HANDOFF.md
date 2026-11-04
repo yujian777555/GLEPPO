@@ -694,3 +694,17 @@ Only documentation, the machine-readable map and non-production audit helper may
 
 **Next action:** Stage 1I-R1 Executor completion → Planner independent review. Do not proceed to protocol reconciliation, PC1, Family C, or training.
 
+
+---
+
+## Stage 1I-R1 Handoff (2026-11-04)
+
+Stage 1I-R1 corrective work complete. Key artifacts:
+- research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.json (canonical 42-row map)
+- research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md (human-readable rendering)
+- research/R26_STAGE1I_R1_CORRECTIVE_REPORT.md (exact actions, counts, provenance)
+- scripts/_r26i_validator.py (AST-based, 15 self-tests PASS)
+
+R53 PARTIALLY_FIXED (INDIRECT). R39 evidence boundaries complete. R18 MANUAL 13 references.
+
+Status: awaiting Planner independent review. PC1 BLOCKED. No production changes.

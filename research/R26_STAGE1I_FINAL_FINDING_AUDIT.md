@@ -70,3 +70,22 @@ PPO advantage over rule-based/LinUCB NOT established. Reward/parameter definitio
 **R26_STAGE1I_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW**
 
 42 findings, 42 dispositions. Declaration validator created. PC1 remains BLOCKED.
+
+---
+
+## Addendum: Stage 1I-R1 Corrective Work (2026-11-04)
+
+Stage 1I Planner decision: **REQUEST_CHANGES**. Stage 1I-R1 corrective work has been completed.
+
+**R1 corrective report:** research/R26_STAGE1I_R1_CORRECTIVE_REPORT.md
+
+Key corrections:
+- Created complete 42-row semantic evidence map (JSON + Markdown rendering)
+- Test evidence entries now include declaration start/end lines, assertion expressions with line numbers, source symbol line ranges, branch reachability explanations, and harness type
+- R53 remains PARTIALLY_FIXED (INDIRECT evidence only via test_mutation_status_not_checked_by_consistency line 118)
+- R39 evidence boundaries documented: direct CRN tests vs R16/R20 cross-references vs structural evidence; tautological test_action_genotype_excluded NOT cited
+- R18 manual evidence completed with 13 exact source/line/value/note references including COST_BASELINE.md line 44
+- Validator rewritten using Python ast module with 15 adversarial self-tests (all PASS)
+
+**Status:** Stage 1I-R1 executor work complete. Awaiting Planner independent review.
+**Next gate:** Planner independent review of Stage 1I-R1 (not PC1, not protocol reconciliation).

@@ -317,3 +317,30 @@ PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; 
 
 **Next:** Stage 1I-R1 Executor submission → Planner independent review. Do not proceed to protocol reconciliation or PC1.
 
+
+---
+
+## Stage 1I-R1 Status Update (2026-11-04)
+
+**Stage 1I:** REQUEST_CHANGES (Planner decision)
+**Stage 1I-R1:** executor corrective work complete, awaiting Planner independent review
+
+### Deliverables completed
+- research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.json (42 rows, schema 1.0)
+- research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md (1520 lines)
+- research/R26_STAGE1I_R1_CORRECTIVE_REPORT.md
+- scripts/_r26i_validator.py (AST-based, 15 self-tests PASS)
+- Updated: R26_STAGE1I_FINAL_FINDING_AUDIT.md, R26_STAGE1I_TEST_EVIDENCE.md, status.json, latest_plan, handoff, next-session prompt
+
+### Disposition arithmetic (from JSON)
+26 VERIFIED_FIXED + 14 PARTIALLY_FIXED + 1 OPEN + 1 UNVERIFIABLE = 42
+
+### R39/R53/R18 corrections
+- R53: PARTIALLY_FIXED, INDIRECT evidence only (test_mutation_status_not_checked_by_consistency line 118)
+- R39: evidence boundaries documented (direct CRN + R16/R20 cross-refs + structural; tautological test excluded)
+- R18: MANUAL, 13 complete references including COST_BASELINE.md line 44
+
+### Current gates (unchanged)
+PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; registered PC1 NOT EXECUTED; controller training NOT AUTHORIZED / NOT STARTED; model/API calls 0 (Executor-reported); production runtime 0 (Executor-reported); 450/450 EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
+
+**Next gate:** Planner independent review of Stage 1I-R1. Do not proceed to protocol reconciliation or PC1.

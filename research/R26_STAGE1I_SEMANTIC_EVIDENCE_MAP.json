@@ -19,25 +19,61 @@
           "test_file": "tests/test_r12_r17.py",
           "test_class": "TestR12BudgetLedger",
           "test_function": "test_init_evaluation",
-          "declaration_line": 37,
-          "assertion": "self.assertEqual(ledger.actual_replicas_run, n_eval)",
-          "assertion_line": 42,
-          "source_symbols": ["BudgetLedger", "record_evaluation"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 37,
+          "declaration_end_line": 42,
+          "assertion_expressions": [
+            {
+              "line": 40,
+              "expression": "self.assertEqual(bl.planned_slots, 8)"
+            },
+            {
+              "line": 41,
+              "expression": "self.assertEqual(bl.actual_replicas_run, 8)"
+            },
+            {
+              "line": 42,
+              "expression": "self.assertEqual(bl.cache_hit_bundles, 0)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "BudgetLedger",
+              "file": "gleppo/pc1.py",
+              "start_line": 253,
+              "end_line": 381
+            },
+            {
+              "symbol": "record_evaluation",
+              "file": "gleppo/pc1.py",
+              "start_line": 276,
+              "end_line": 297
+            }
+          ],
           "call_path": "test -> BudgetLedger.record_evaluation -> counter update",
-          "intended_branch_reached": true,
-          "proven_conditions": ["replica counting separates from cache"],
-          "indirectly_supported": [],
-          "uncovered": ["full bundle/replica unit reconciliation"],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "replica counting separates from cache"
+          ],
+          "acceptance_conditions_indirect": [],
+          "acceptance_conditions_uncovered": [
+            "full bundle/replica unit reconciliation"
+          ],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Replica counting separates from cache"],
+      "proven_acceptance_conditions": [
+        "Replica counting separates from cache"
+      ],
       "indirectly_supported_conditions": [],
-      "uncovered_acceptance_conditions": ["Full bundle/replica unit reconciliation"],
+      "uncovered_acceptance_conditions": [
+        "Full bundle/replica unit reconciliation"
+      ],
       "disposition_rationale": "Direct test verifies replica counting. Remaining unit reconciliation is covered by R28."
     },
     {
@@ -55,24 +91,46 @@
           "test_file": "tests/test_r12_r17.py",
           "test_class": "TestR13FailClosed",
           "test_function": "test_missing_action_rejected",
-          "declaration_line": 111,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 113,
-          "source_symbols": ["validate_records"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 111,
+          "declaration_end_line": 114,
+          "assertion_expressions": [
+            {
+              "line": 113,
+              "expression": "self.assertRaises(ValueError)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "validate_records",
+              "file": "gleppo/pc1.py",
+              "start_line": 409,
+              "end_line": 515
+            }
+          ],
           "call_path": "test -> validate_records -> ValueError",
-          "intended_branch_reached": true,
-          "proven_conditions": ["missing action rejected"],
-          "indirectly_supported": ["malformed records rejected (other tests)"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "missing action rejected"
+          ],
+          "acceptance_conditions_indirect": [
+            "malformed records rejected (other tests)"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Missing actions rejected"],
-      "indirectly_supported_conditions": ["Malformed records rejected"],
+      "proven_acceptance_conditions": [
+        "Missing actions rejected"
+      ],
+      "indirectly_supported_conditions": [
+        "Malformed records rejected"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Direct fail-closed tests cover all rejection cases."
     },
@@ -91,24 +149,52 @@
           "test_file": "tests/test_r12_r17.py",
           "test_class": "TestR14SampleRoles",
           "test_function": "test_q_hat_excludes_extra_immediate",
-          "declaration_line": 185,
-          "assertion": "self.assertNotIn('extra', q_hat_inputs)",
-          "assertion_line": 189,
-          "source_symbols": ["compute_q_hat", "compute_r_hat"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 185,
+          "declaration_end_line": 189,
+          "assertion_expressions": [
+            {
+              "line": 189,
+              "expression": "self.assertAlmostEqual(q_hat[(\"s000\", 0)], 0.1 + 0.95 * 0.1 + 0.95**2 * 0.1)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "compute_q_hat",
+              "file": "gleppo/pc1.py",
+              "start_line": 541,
+              "end_line": 549
+            },
+            {
+              "symbol": "compute_r_hat",
+              "file": "gleppo/pc1.py",
+              "start_line": 523,
+              "end_line": 538
+            }
+          ],
           "call_path": "test -> compute_q_hat -> sample role filtering",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Q_hat excludes extra immediate"],
-          "indirectly_supported": ["r_hat includes extra immediate"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Q_hat excludes extra immediate"
+          ],
+          "acceptance_conditions_indirect": [
+            "r_hat includes extra immediate"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Q_hat excludes extra immediate"],
-      "indirectly_supported_conditions": ["r_hat includes extra immediate"],
+      "proven_acceptance_conditions": [
+        "Q_hat excludes extra immediate"
+      ],
+      "indirectly_supported_conditions": [
+        "r_hat includes extra immediate"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Sample role separation verified by direct tests."
     },
@@ -129,25 +215,53 @@
           "test_file": "tests/test_r12_r17.py",
           "test_class": "TestR15DryRunPlan",
           "test_function": "test_registered_execution_refused",
-          "declaration_line": 231,
-          "assertion": "self.assertRaises(PC1ExecutionRefused)",
-          "assertion_line": 233,
-          "source_symbols": ["execute_registered_pc1"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 231,
+          "declaration_end_line": 233,
+          "assertion_expressions": [
+            {
+              "line": 232,
+              "expression": "self.assertRaises(PC1ExecutionRefused)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "execute_registered_pc1",
+              "file": "gleppo/pc1.py",
+              "start_line": 1111,
+              "end_line": 1117
+            }
+          ],
           "call_path": "test -> execute_registered_pc1 -> PC1ExecutionRefused",
-          "intended_branch_reached": true,
-          "proven_conditions": ["registered execution refuses"],
-          "indirectly_supported": [],
-          "uncovered": ["actual collection/rollout runner", "A/B-only input", "Family-C guard", "paired CRN metadata"],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "registered execution refuses"
+          ],
+          "acceptance_conditions_indirect": [],
+          "acceptance_conditions_uncovered": [
+            "actual collection/rollout runner",
+            "A/B-only input",
+            "Family-C guard",
+            "paired CRN metadata"
+          ],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "OPEN",
-      "proven_acceptance_conditions": ["Registered execution refuses"],
+      "proven_acceptance_conditions": [
+        "Registered execution refuses"
+      ],
       "indirectly_supported_conditions": [],
-      "uncovered_acceptance_conditions": ["Actual collection/rollout runner", "A/B-only input", "Family-C guard", "Paired CRN metadata"],
+      "uncovered_acceptance_conditions": [
+        "Actual collection/rollout runner",
+        "A/B-only input",
+        "Family-C guard",
+        "Paired CRN metadata"
+      ],
       "disposition_rationale": "Runner not implemented. Only refusal path tested."
     },
     {
@@ -165,24 +279,56 @@
           "test_file": "tests/test_r8_r9_r11_pc1.py",
           "test_class": "TestR8CRNEndToEnd",
           "test_function": "test_same_crn_tuple_gives_identical_seeds_across_genotypes",
-          "declaration_line": 50,
-          "assertion": "self.assertEqual(seed_g1, seed_g2)",
-          "assertion_line": 55,
-          "source_symbols": ["Evaluator.effective_seed_parts", "Evaluator.evaluate"],
-          "source_file": "gleppo/evaluator.py",
+          "declaration_start_line": 50,
+          "declaration_end_line": 64,
+          "assertion_expressions": [
+            {
+              "line": 62,
+              "expression": "self.assertEqual(len(seeds_g1), 2)"
+            },
+            {
+              "line": 63,
+              "expression": "self.assertEqual(seeds_g1, seeds_g2,\n                         \"CRN seeds must be identical across genotypes for the same (state,rollout,replicate)\")"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "Evaluator.effective_seed_parts",
+              "file": "gleppo/evaluator.py",
+              "start_line": 57,
+              "end_line": 76
+            },
+            {
+              "symbol": "Evaluator.evaluate",
+              "file": "gleppo/evaluator.py",
+              "start_line": 105,
+              "end_line": 164
+            }
+          ],
           "call_path": "test -> Evaluator.evaluate -> effective_seed_parts -> Interpreter.run",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Cross-genotype CRN consistency"],
-          "indirectly_supported": ["Single authoritative seed path"],
-          "uncovered": [],
-          "uses_stub_or_mock": true
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Cross-genotype CRN consistency"
+          ],
+          "acceptance_conditions_indirect": [
+            "Single authoritative seed path"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "stub_or_mock"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Cross-genotype CRN consistency"],
-      "indirectly_supported_conditions": ["Single authoritative seed path"],
+      "proven_acceptance_conditions": [
+        "Cross-genotype CRN consistency"
+      ],
+      "indirectly_supported_conditions": [
+        "Single authoritative seed path"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Instrumented evaluator tests verify CRN across genotypes."
     },
@@ -202,25 +348,95 @@
           "test_file": "tests/test_r12_r17.py",
           "test_class": "TestR17Evidence",
           "test_function": "test_evidence_contains_provenance",
-          "declaration_line": 312,
-          "assertion": "self.assertIn('provenance', evidence)",
-          "assertion_line": 315,
-          "source_symbols": ["build_evidence", "save_evidence"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 312,
+          "declaration_end_line": 327,
+          "assertion_expressions": [
+            {
+              "line": 318,
+              "expression": "self.assertIn(\"protocol_version\", ev)"
+            },
+            {
+              "line": 319,
+              "expression": "self.assertIn(\"estimator_version\", ev)"
+            },
+            {
+              "line": 320,
+              "expression": "self.assertIn(\"manifest_hash\", ev)"
+            },
+            {
+              "line": 321,
+              "expression": "self.assertIn(\"runtime_revision\", ev)"
+            },
+            {
+              "line": 322,
+              "expression": "self.assertIn(\"evaluator_version\", ev)"
+            },
+            {
+              "line": 323,
+              "expression": "self.assertIn(\"records\", ev)"
+            },
+            {
+              "line": 324,
+              "expression": "self.assertIn(\"bootstrap\", ev)"
+            },
+            {
+              "line": 325,
+              "expression": "self.assertIn(\"D\", ev)"
+            },
+            {
+              "line": 326,
+              "expression": "self.assertIn(\"input_record_hash\", ev)"
+            },
+            {
+              "line": 327,
+              "expression": "self.assertEqual(ev[\"manifest_hash\"], \"abc123\")"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "build_evidence",
+              "file": "gleppo/pc1.py",
+              "start_line": null,
+              "end_line": null,
+              "note": "line range unresolved"
+            },
+            {
+              "symbol": "save_evidence",
+              "file": "gleppo/pc1.py",
+              "start_line": null,
+              "end_line": null,
+              "note": "line range unresolved"
+            }
+          ],
           "call_path": "test -> build_evidence -> provenance fields",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Evidence contains provenance"],
-          "indirectly_supported": ["Replayable records"],
-          "uncovered": ["Full counter breakdown"],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Evidence contains provenance"
+          ],
+          "acceptance_conditions_indirect": [
+            "Replayable records"
+          ],
+          "acceptance_conditions_uncovered": [
+            "Full counter breakdown"
+          ],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Evidence contains provenance"],
-      "indirectly_supported_conditions": ["Replayable records"],
-      "uncovered_acceptance_conditions": ["Full counter breakdown"],
+      "proven_acceptance_conditions": [
+        "Evidence contains provenance"
+      ],
+      "indirectly_supported_conditions": [
+        "Replayable records"
+      ],
+      "uncovered_acceptance_conditions": [
+        "Full counter breakdown"
+      ],
       "disposition_rationale": "Provenance fields verified. Counter breakdown covered by R28."
     },
     {
@@ -239,45 +455,93 @@
           "source": "research/SMOKE_RAW.json",
           "line": 276,
           "value": "wall_clock_s = 0.0261",
-          "note": "StubLLM only"
+          "note": "StubLLM only; not production latency"
         },
         {
           "source": "research/SMOKE_RAW.json",
           "line": "277-279",
-          "value": "planned init 32, offspring 96, total 128",
-          "note": "Not actual CTX"
+          "value": "planned initialization 32, offspring 96, total 128",
+          "note": "Planned replica-slot accounting, not actual CTX"
         },
         {
           "source": "research/SMOKE_RAW.json",
           "line": 284,
           "value": "actual_replicas_run = 112",
-          "note": "Uncached replicas"
+          "note": "Actual uncached replica executions"
         },
         {
           "source": "research/SMOKE_RAW.json",
           "line": 291,
           "value": "production tokens UNMEASURED",
-          "note": "No production measurement"
+          "note": "No production token measurement exists"
+        },
+        {
+          "source": "research/SMOKE_RAW.json",
+          "line": 293,
+          "value": "planned slots are conservative planned replica-slot accounting",
+          "note": "Not actual CTX; planned slots != model context"
+        },
+        {
+          "source": "research/COST_BASELINE.md",
+          "line": 4,
+          "value": "production LLM tokens/latency UNMEASURED",
+          "note": "Explicit UNMEASURED declaration"
         },
         {
           "source": "research/COST_BASELINE.md",
           "line": 22,
-          "value": "stub wall-clock 0.0261 s",
-          "note": "Not production"
+          "value": "0.0261 seconds is stub latency",
+          "note": "Not production latency"
+        },
+        {
+          "source": "research/COST_BASELINE.md",
+          "line": 30,
+          "value": "128 total smoke planned slots",
+          "note": "32 init + 96 offspring = 128"
+        },
+        {
+          "source": "research/COST_BASELINE.md",
+          "line": 44,
+          "value": "LLM tokens UNMEASURED",
+          "note": "No production token count available"
+        },
+        {
+          "source": "research/COST_BASELINE.md",
+          "line": 47,
+          "value": "actual replica executions and cache-hit-bundle units",
+          "note": "Units distinction: replicas vs bundles"
         },
         {
           "source": "research/COST_BASELINE.md",
           "line": 82,
-          "value": "PC1 planned slots 45,440",
-          "note": "Forecast proxy, not measured"
+          "value": "45,440 PC1 planned slots",
+          "note": "Forecast/planned-workload proxy, not measured production cost"
+        },
+        {
+          "source": "research/COST_BASELINE.md",
+          "line": 101,
+          "value": "stub latency is not production",
+          "note": "Explicit distinction"
+        },
+        {
+          "source": "research/COST_BASELINE.md",
+          "line": "110-111",
+          "value": "45,440 is a forecast/planned-workload proxy",
+          "note": "Not measured production cost"
         }
       ],
       "evidence_type": "MANUAL",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Cost figures reconciled", "Units labeled"],
+      "proven_acceptance_conditions": [
+        "Cost figures reconciled",
+        "Units labeled"
+      ],
       "indirectly_supported_conditions": [],
-      "uncovered_acceptance_conditions": ["Production tokens/latency UNMEASURED"],
-      "disposition_rationale": "Manual artifact reconciliation. No behavioral test. Production cost UNMEASURED."
+      "uncovered_acceptance_conditions": [
+        "Production tokens/latency UNMEASURED"
+      ],
+      "disposition_rationale": "Manual artifact reconciliation. No behavioral test. Production cost UNMEASURED.",
+      "manual_evidence_note": "Units: planned replica slots (planned workload), actual uncached replica executions, cached evaluation bundles (cache-hit units), actual model CTX (not measured), production tokens/latency (UNMEASURED). No behavioral test exists for R18."
     },
     {
       "id": "R19",
@@ -294,25 +558,53 @@
           "test_file": "tests/test_r19_r25.py",
           "test_class": "TestR19ProtocolFreeze",
           "test_function": "test_protocol_status_not_approved",
-          "declaration_line": 79,
-          "assertion": "self.assertEqual(status, 'PROPOSED_NOT_APPROVED')",
-          "assertion_line": 81,
-          "source_symbols": ["protocol_consistency_check"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 79,
+          "declaration_end_line": 80,
+          "assertion_expressions": [
+            {
+              "line": 80,
+              "expression": "self.assertIn(\"PROPOSED\", PROTOCOL_STATUS)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "protocol_consistency_check",
+              "file": "gleppo/pc1.py",
+              "start_line": 126,
+              "end_line": 223
+            }
+          ],
           "call_path": "test -> protocol_consistency_check -> status check",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Status is PROPOSED"],
-          "indirectly_supported": ["Canonical protocol exists"],
-          "uncovered": ["Planner approval", "Formal freeze"],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Status is PROPOSED"
+          ],
+          "acceptance_conditions_indirect": [
+            "Canonical protocol exists"
+          ],
+          "acceptance_conditions_uncovered": [
+            "Planner approval",
+            "Formal freeze"
+          ],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["Canonical protocol exists"],
-      "indirectly_supported_conditions": ["Consistency test exists"],
-      "uncovered_acceptance_conditions": ["Planner approval", "Formal freeze before PC1"],
+      "proven_acceptance_conditions": [
+        "Canonical protocol exists"
+      ],
+      "indirectly_supported_conditions": [
+        "Consistency test exists"
+      ],
+      "uncovered_acceptance_conditions": [
+        "Planner approval",
+        "Formal freeze before PC1"
+      ],
       "disposition_rationale": "Protocol is PROPOSED/NOT APPROVED. Planner approval required."
     },
     {
@@ -330,24 +622,55 @@
           "test_file": "tests/test_r19_r25.py",
           "test_class": "TestR20CRNContract",
           "test_function": "test_same_crn_identical_across_genotypes",
-          "declaration_line": 99,
-          "assertion": "self.assertEqual(seed1, seed2)",
-          "assertion_line": 104,
-          "source_symbols": ["Evaluator.effective_seed_parts", "pc1.crn_seed"],
-          "source_file": "gleppo/evaluator.py",
+          "declaration_start_line": 99,
+          "declaration_end_line": 106,
+          "assertion_expressions": [
+            {
+              "line": 106,
+              "expression": "self.assertEqual(s1, s2)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "Evaluator.effective_seed_parts",
+              "file": "gleppo/evaluator.py",
+              "start_line": 57,
+              "end_line": 76
+            },
+            {
+              "symbol": "pc1.crn_seed",
+              "file": "gleppo/evaluator.py",
+              "start_line": null,
+              "end_line": null,
+              "note": "line range unresolved"
+            }
+          ],
           "call_path": "test -> effective_seed_parts -> crn_seed",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Cross-genotype CRN", "Task/replicate isolation"],
-          "indirectly_supported": ["Override path isolation"],
-          "uncovered": [],
-          "uses_stub_or_mock": true
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Cross-genotype CRN",
+            "Task/replicate isolation"
+          ],
+          "acceptance_conditions_indirect": [
+            "Override path isolation"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "stub_or_mock"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Cross-genotype CRN", "Task/replicate isolation"],
-      "indirectly_supported_conditions": ["Override path isolation"],
+      "proven_acceptance_conditions": [
+        "Cross-genotype CRN",
+        "Task/replicate isolation"
+      ],
+      "indirectly_supported_conditions": [
+        "Override path isolation"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "CRN contract verified by instrumented evaluator tests."
     },
@@ -366,24 +689,46 @@
           "test_file": "tests/test_r19_r25.py",
           "test_class": "TestR21BudgetFailClosed",
           "test_function": "test_negative_total_rejected",
-          "declaration_line": 174,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 176,
-          "source_symbols": ["BudgetLedger"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 174,
+          "declaration_end_line": 177,
+          "assertion_expressions": [
+            {
+              "line": 176,
+              "expression": "self.assertRaises(ValueError)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "BudgetLedger",
+              "file": "gleppo/pc1.py",
+              "start_line": 253,
+              "end_line": 381
+            }
+          ],
           "call_path": "test -> BudgetLedger -> ValueError",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Negative totals rejected"],
-          "indirectly_supported": ["Over-cap rejected"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Negative totals rejected"
+          ],
+          "acceptance_conditions_indirect": [
+            "Over-cap rejected"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Negative totals rejected"],
-      "indirectly_supported_conditions": ["Over-cap rejected"],
+      "proven_acceptance_conditions": [
+        "Negative totals rejected"
+      ],
+      "indirectly_supported_conditions": [
+        "Over-cap rejected"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Budget fail-closed verified by direct tests."
     },
@@ -402,24 +747,46 @@
           "test_file": "tests/test_r19_r25.py",
           "test_class": "TestR22ClusterProvenance",
           "test_function": "test_missing_episode_id_rejected_in_registered",
-          "declaration_line": 246,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 248,
-          "source_symbols": ["validate_records"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 246,
+          "declaration_end_line": 250,
+          "assertion_expressions": [
+            {
+              "line": 249,
+              "expression": "self.assertRaises(ValueError)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "validate_records",
+              "file": "gleppo/pc1.py",
+              "start_line": 409,
+              "end_line": 515
+            }
+          ],
           "call_path": "test -> validate_records -> provenance check",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Episode ID required"],
-          "indirectly_supported": ["Cluster preservation"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Episode ID required"
+          ],
+          "acceptance_conditions_indirect": [
+            "Cluster preservation"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Episode ID required"],
-      "indirectly_supported_conditions": ["Cluster preservation"],
+      "proven_acceptance_conditions": [
+        "Episode ID required"
+      ],
+      "indirectly_supported_conditions": [
+        "Cluster preservation"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Provenance validation verified."
     },
@@ -438,24 +805,82 @@
           "test_file": "tests/test_r19_r25.py",
           "test_class": "TestR23EvidenceReplay",
           "test_function": "test_evidence_contains_D_adv_CIs",
-          "declaration_line": 295,
-          "assertion": "self.assertIn('D', evidence)",
-          "assertion_line": 298,
-          "source_symbols": ["build_evidence", "replay_evidence"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 295,
+          "declaration_end_line": 308,
+          "assertion_expressions": [
+            {
+              "line": 301,
+              "expression": "self.assertIn(\"D\", ev)"
+            },
+            {
+              "line": 302,
+              "expression": "self.assertIn(\"advantage\", ev)"
+            },
+            {
+              "line": 303,
+              "expression": "self.assertIn(\"D_ci\", ev)"
+            },
+            {
+              "line": 304,
+              "expression": "self.assertIn(\"adv_ci\", ev)"
+            },
+            {
+              "line": 305,
+              "expression": "self.assertIn(\"decision\", ev)"
+            },
+            {
+              "line": 306,
+              "expression": "self.assertIn(\"input_record_hash\", ev)"
+            },
+            {
+              "line": 307,
+              "expression": "self.assertIn(\"bootstrap\", ev)"
+            },
+            {
+              "line": 308,
+              "expression": "self.assertIn(\"budget_components\", ev)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "build_evidence",
+              "file": "gleppo/pc1.py",
+              "start_line": null,
+              "end_line": null,
+              "note": "line range unresolved"
+            },
+            {
+              "symbol": "replay_evidence",
+              "file": "gleppo/pc1.py",
+              "start_line": null,
+              "end_line": null,
+              "note": "line range unresolved"
+            }
+          ],
           "call_path": "test -> build_evidence -> D/adv/CI fields",
-          "intended_branch_reached": true,
-          "proven_conditions": ["D/adv/CIs present"],
-          "indirectly_supported": ["Round-trip replay"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "D/adv/CIs present"
+          ],
+          "acceptance_conditions_indirect": [
+            "Round-trip replay"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["D/adv/CIs present"],
-      "indirectly_supported_conditions": ["Round-trip replay"],
+      "proven_acceptance_conditions": [
+        "D/adv/CIs present"
+      ],
+      "indirectly_supported_conditions": [
+        "Round-trip replay"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Evidence replayability verified."
     },
@@ -474,25 +899,73 @@
           "test_file": "tests/test_r19_r25.py",
           "test_class": "TestR24CostConsistency",
           "test_function": "test_smoke_raw_matches_cost_baseline",
-          "declaration_line": 343,
-          "assertion": "self.assertIn(wall_clock_str, cost_baseline)",
-          "assertion_line": 348,
-          "source_symbols": ["SMOKE_RAW.json", "COST_BASELINE.md"],
-          "source_file": "research/",
+          "declaration_start_line": 343,
+          "declaration_end_line": 358,
+          "assertion_expressions": [
+            {
+              "line": 353,
+              "expression": "self.assertIn(wc[:5], cost, f\"smoke wall_clock {wc} not in COST_BASELINE\")"
+            },
+            {
+              "line": 355,
+              "expression": "self.assertEqual(t[\"planned_init_slots\"], 32)"
+            },
+            {
+              "line": 356,
+              "expression": "self.assertEqual(t[\"planned_offspring_slots\"], 96)"
+            },
+            {
+              "line": 357,
+              "expression": "self.assertEqual(t[\"planned_total_slots\"], 128)"
+            },
+            {
+              "line": 358,
+              "expression": "self.assertEqual(t[\"actual_replicas_run\"], 112)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "SMOKE_RAW.json",
+              "file": "research/",
+              "start_line": null,
+              "end_line": null,
+              "note": "line range unresolved"
+            },
+            {
+              "symbol": "COST_BASELINE.md",
+              "file": "research/",
+              "start_line": null,
+              "end_line": null,
+              "note": "line range unresolved"
+            }
+          ],
           "call_path": "test -> file comparison -> substring match",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Wall-clock matches"],
-          "indirectly_supported": [],
-          "uncovered": ["Unit labels", "Full figure reconciliation"],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Wall-clock matches"
+          ],
+          "acceptance_conditions_indirect": [],
+          "acceptance_conditions_uncovered": [
+            "Unit labels",
+            "Full figure reconciliation"
+          ],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["Wall-clock matches"],
+      "proven_acceptance_conditions": [
+        "Wall-clock matches"
+      ],
       "indirectly_supported_conditions": [],
-      "uncovered_acceptance_conditions": ["Unit labels", "Full figure reconciliation"],
+      "uncovered_acceptance_conditions": [
+        "Unit labels",
+        "Full figure reconciliation"
+      ],
       "disposition_rationale": "Test checks substring only, not full unit validation."
     },
     {
@@ -509,25 +982,48 @@
           "test_file": "tests/test_r19_r25.py",
           "test_class": "TestR25GatedRunner",
           "test_function": "test_default_deny",
-          "declaration_line": 364,
-          "assertion": "self.assertTrue(denied)",
-          "assertion_line": 367,
-          "source_symbols": ["GatedPC1Runner"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 364,
+          "declaration_end_line": 367,
+          "assertion_expressions": [
+            {
+              "line": 366,
+              "expression": "self.assertRaises(PC1ExecutionRefused)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "GatedPC1Runner",
+              "file": "gleppo/pc1.py",
+              "start_line": null,
+              "end_line": null,
+              "note": "line range unresolved"
+            }
+          ],
           "call_path": "test -> GatedPC1Runner -> default deny",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Default deny"],
-          "indirectly_supported": [],
-          "uncovered": ["Real collection/rollout runner"],
-          "uses_stub_or_mock": true
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Default deny"
+          ],
+          "acceptance_conditions_indirect": [],
+          "acceptance_conditions_uncovered": [
+            "Real collection/rollout runner"
+          ],
+          "harness_type": "stub_or_mock"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["Default deny"],
+      "proven_acceptance_conditions": [
+        "Default deny"
+      ],
       "indirectly_supported_conditions": [],
-      "uncovered_acceptance_conditions": ["Real collection/rollout runner"],
+      "uncovered_acceptance_conditions": [
+        "Real collection/rollout runner"
+      ],
       "disposition_rationale": "Downgrade wording exists but runner not implemented."
     },
     {
@@ -545,24 +1041,47 @@
           "test_file": "tests/test_r26_r32.py",
           "test_class": "TestR26ProtocolDocument",
           "test_function": "test_protocol_document_exists",
-          "declaration_line": 336,
-          "assertion": "self.assertTrue(os.path.exists(path))",
-          "assertion_line": 338,
-          "source_symbols": ["PC1_PROTOCOL_R4_PROPOSED.md"],
-          "source_file": "research/",
+          "declaration_start_line": 336,
+          "declaration_end_line": 338,
+          "assertion_expressions": [
+            {
+              "line": 338,
+              "expression": "self.assertTrue(os.path.exists(path), \"PC1_PROTOCOL_R4_PROPOSED.md must exist\")"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "PC1_PROTOCOL_R4_PROPOSED.md",
+              "file": "research/",
+              "start_line": null,
+              "end_line": null,
+              "note": "line range unresolved"
+            }
+          ],
           "call_path": "test -> file existence check",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Protocol document exists"],
-          "indirectly_supported": ["Document matches code"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Protocol document exists"
+          ],
+          "acceptance_conditions_indirect": [
+            "Document matches code"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Protocol document exists"],
-      "indirectly_supported_conditions": ["Document matches code"],
+      "proven_acceptance_conditions": [
+        "Protocol document exists"
+      ],
+      "indirectly_supported_conditions": [
+        "Document matches code"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Canonical protocol document verified."
     },
@@ -580,24 +1099,50 @@
           "test_file": "tests/test_r26_r32.py",
           "test_class": "TestR27NegativeBudget",
           "test_function": "test_negative_planned_slots_rejected",
-          "declaration_line": 64,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 66,
-          "source_symbols": ["BudgetLedger"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 64,
+          "declaration_end_line": 68,
+          "assertion_expressions": [
+            {
+              "line": 68,
+              "expression": "self.assertEqual(bl.planned_slots, 0, \"no mutation on rejection\")"
+            },
+            {
+              "line": 66,
+              "expression": "self.assertRaises(ValueError)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "BudgetLedger",
+              "file": "gleppo/pc1.py",
+              "start_line": 253,
+              "end_line": 381
+            }
+          ],
           "call_path": "test -> BudgetLedger -> ValueError",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Negative deltas rejected"],
-          "indirectly_supported": ["Atomic updates"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Negative deltas rejected"
+          ],
+          "acceptance_conditions_indirect": [
+            "Atomic updates"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Negative deltas rejected"],
-      "indirectly_supported_conditions": ["Atomic updates"],
+      "proven_acceptance_conditions": [
+        "Negative deltas rejected"
+      ],
+      "indirectly_supported_conditions": [
+        "Atomic updates"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Negative budget rejection verified."
     },
@@ -616,23 +1161,59 @@
           "test_file": "tests/test_r26_r32.py",
           "test_class": "TestR28FullReconciliation",
           "test_function": "test_registered_budget_exact",
-          "declaration_line": 116,
-          "assertion": "self.assertEqual(total, expected)",
-          "assertion_line": 120,
-          "source_symbols": ["BudgetLedger", "reconcile"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 116,
+          "declaration_end_line": 120,
+          "assertion_expressions": [
+            {
+              "line": 117,
+              "expression": "self.assertEqual(PLANNED_COLLECTION_SLOTS, 5440)"
+            },
+            {
+              "line": 118,
+              "expression": "self.assertEqual(PLANNED_Q_SLOTS, 36000)"
+            },
+            {
+              "line": 119,
+              "expression": "self.assertEqual(PLANNED_EXTRA_SLOTS, 4000)"
+            },
+            {
+              "line": 120,
+              "expression": "self.assertEqual(PLANNED_TOTAL_SLOTS, 45440)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "BudgetLedger",
+              "file": "gleppo/pc1.py",
+              "start_line": 253,
+              "end_line": 381
+            },
+            {
+              "symbol": "reconcile",
+              "file": "gleppo/pc1.py",
+              "start_line": 350,
+              "end_line": 368
+            }
+          ],
           "call_path": "test -> reconcile -> exact match",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Full reconciliation"],
-          "indirectly_supported": [],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Full reconciliation"
+          ],
+          "acceptance_conditions_indirect": [],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Full reconciliation"],
+      "proven_acceptance_conditions": [
+        "Full reconciliation"
+      ],
       "indirectly_supported_conditions": [],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Budget reconciliation verified."
@@ -652,24 +1233,50 @@
           "test_file": "tests/test_r26_r32.py",
           "test_class": "TestR29ProvenanceMapping",
           "test_function": "test_unknown_episode_rejected_specifically",
-          "declaration_line": 183,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 185,
-          "source_symbols": ["validate_records"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 183,
+          "declaration_end_line": 201,
+          "assertion_expressions": [
+            {
+              "line": 201,
+              "expression": "self.assertIn(\"unknown\", str(ctx.exception).lower() + \"episode\" + str(ctx.exception).lower())"
+            },
+            {
+              "line": 199,
+              "expression": "self.assertRaises(ValueError)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "validate_records",
+              "file": "gleppo/pc1.py",
+              "start_line": 409,
+              "end_line": 515
+            }
+          ],
           "call_path": "test -> validate_records -> provenance check",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Unknown episode rejected"],
-          "indirectly_supported": ["Plan mapping"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Unknown episode rejected"
+          ],
+          "acceptance_conditions_indirect": [
+            "Plan mapping"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Unknown episode rejected"],
-      "indirectly_supported_conditions": ["Plan mapping"],
+      "proven_acceptance_conditions": [
+        "Unknown episode rejected"
+      ],
+      "indirectly_supported_conditions": [
+        "Plan mapping"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Provenance cross-validation verified."
     },
@@ -689,24 +1296,52 @@
           "test_file": "tests/test_r26_r32.py",
           "test_class": "TestR30RegisteredProvenance",
           "test_function": "test_missing_manifest_hash_rejected",
-          "declaration_line": 249,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 251,
-          "source_symbols": ["validate_records"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 249,
+          "declaration_end_line": 255,
+          "assertion_expressions": [
+            {
+              "line": 255,
+              "expression": "self.assertIn(\"manifest_hash\", str(ctx.exception))"
+            },
+            {
+              "line": 251,
+              "expression": "self.assertRaises(ValueError)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "validate_records",
+              "file": "gleppo/pc1.py",
+              "start_line": 409,
+              "end_line": 515
+            }
+          ],
           "call_path": "test -> validate_records -> provenance requirement",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Manifest hash required"],
-          "indirectly_supported": ["Runtime required", "Evaluator required"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Manifest hash required"
+          ],
+          "acceptance_conditions_indirect": [
+            "Runtime required",
+            "Evaluator required"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Manifest hash required"],
-      "indirectly_supported_conditions": ["Runtime required", "Evaluator required"],
+      "proven_acceptance_conditions": [
+        "Manifest hash required"
+      ],
+      "indirectly_supported_conditions": [
+        "Runtime required",
+        "Evaluator required"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Registered provenance requirements verified."
     },
@@ -725,25 +1360,51 @@
           "test_file": "tests/test_r26_r32.py",
           "test_class": "TestR31GateSemantics",
           "test_function": "test_all_booleans_true_still_denied_for_proposed_protocol",
-          "declaration_line": 372,
-          "assertion": "self.assertTrue(denied)",
-          "assertion_line": 375,
-          "source_symbols": ["SyntheticGateHarness"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 372,
+          "declaration_end_line": 381,
+          "assertion_expressions": [
+            {
+              "line": 380,
+              "expression": "self.assertRaises(PC1ExecutionRefused)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "SyntheticGateHarness",
+              "file": "gleppo/pc1.py",
+              "start_line": 1400,
+              "end_line": 1456
+            }
+          ],
           "call_path": "test -> SyntheticGateHarness -> default deny",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Default deny for proposed"],
-          "indirectly_supported": ["Harness labeling"],
-          "uncovered": ["Real runner separation"],
-          "uses_stub_or_mock": true
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Default deny for proposed"
+          ],
+          "acceptance_conditions_indirect": [
+            "Harness labeling"
+          ],
+          "acceptance_conditions_uncovered": [
+            "Real runner separation"
+          ],
+          "harness_type": "stub_or_mock"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["Default deny for proposed"],
-      "indirectly_supported_conditions": ["Harness labeling"],
-      "uncovered_acceptance_conditions": ["Real runner separation"],
+      "proven_acceptance_conditions": [
+        "Default deny for proposed"
+      ],
+      "indirectly_supported_conditions": [
+        "Harness labeling"
+      ],
+      "uncovered_acceptance_conditions": [
+        "Real runner separation"
+      ],
       "disposition_rationale": "Harness labeling exists but separation from registered PC1 incomplete."
     },
     {
@@ -760,23 +1421,45 @@
           "test_file": "tests/test_r26_r32.py",
           "test_class": "TestR32SeedCacheNormalization",
           "test_function": "test_none_and_empty_seed_distinguished",
-          "declaration_line": 299,
-          "assertion": "self.assertNotEqual(key_none, key_empty)",
-          "assertion_line": 303,
-          "source_symbols": ["Evaluator._cache_key"],
-          "source_file": "gleppo/evaluator.py",
+          "declaration_start_line": 299,
+          "declaration_end_line": 306,
+          "assertion_expressions": [
+            {
+              "line": 303,
+              "expression": "self.assertFalse(r1.from_cache)"
+            },
+            {
+              "line": 306,
+              "expression": "self.assertFalse(r2.from_cache, \"empty seed must not hit None-seed cache\")"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "Evaluator._cache_key",
+              "file": "gleppo/evaluator.py",
+              "start_line": 78,
+              "end_line": 103
+            }
+          ],
           "call_path": "test -> _cache_key -> tagged encoding",
-          "intended_branch_reached": true,
-          "proven_conditions": ["None/empty distinguished"],
-          "indirectly_supported": [],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "None/empty distinguished"
+          ],
+          "acceptance_conditions_indirect": [],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["None/empty distinguished"],
+      "proven_acceptance_conditions": [
+        "None/empty distinguished"
+      ],
       "indirectly_supported_conditions": [],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Seed encoding collision fixed and tested."
@@ -795,24 +1478,58 @@
           "test_file": "tests/test_r33_r38.py",
           "test_class": "TestR33Atomicity",
           "test_function": "test_q_slot_negative_replicas_no_mutation",
-          "declaration_line": 68,
-          "assertion": "self.assertEqual(snapshot, original)",
-          "assertion_line": 73,
-          "source_symbols": ["BudgetLedger"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 68,
+          "declaration_end_line": 74,
+          "assertion_expressions": [
+            {
+              "line": 72,
+              "expression": "self.assertEqual(bl.planned_q_slots, 0)"
+            },
+            {
+              "line": 73,
+              "expression": "self.assertEqual(bl.planned_slots, 0)"
+            },
+            {
+              "line": 74,
+              "expression": "self.assertEqual(bl.actual_replicas_run, 0)"
+            },
+            {
+              "line": 70,
+              "expression": "self.assertRaises(ValueError)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "BudgetLedger",
+              "file": "gleppo/pc1.py",
+              "start_line": 253,
+              "end_line": 381
+            }
+          ],
           "call_path": "test -> BudgetLedger -> atomic rejection",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Atomic rejection"],
-          "indirectly_supported": ["Per-record validation"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Atomic rejection"
+          ],
+          "acceptance_conditions_indirect": [
+            "Per-record validation"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Atomic rejection"],
-      "indirectly_supported_conditions": ["Per-record validation"],
+      "proven_acceptance_conditions": [
+        "Atomic rejection"
+      ],
+      "indirectly_supported_conditions": [
+        "Per-record validation"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Atomicity verified by snapshot comparison."
     },
@@ -830,23 +1547,41 @@
           "test_file": "tests/test_r33_r38.py",
           "test_class": "TestR34SeedCollision",
           "test_function": "test_none_vs_literal_NONE_distinct",
-          "declaration_line": 127,
-          "assertion": "self.assertNotEqual(seed_none, seed_literal)",
-          "assertion_line": 131,
-          "source_symbols": ["Evaluator.effective_seed_parts"],
-          "source_file": "gleppo/evaluator.py",
+          "declaration_start_line": 127,
+          "declaration_end_line": 136,
+          "assertion_expressions": [
+            {
+              "line": 136,
+              "expression": "self.assertNotEqual(s1, s2, \"None and literal 'NONE' must differ\")"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "Evaluator.effective_seed_parts",
+              "file": "gleppo/evaluator.py",
+              "start_line": 57,
+              "end_line": 76
+            }
+          ],
           "call_path": "test -> effective_seed_parts -> typed encoding",
-          "intended_branch_reached": true,
-          "proven_conditions": ["None vs literal NONE distinct"],
-          "indirectly_supported": [],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "None vs literal NONE distinct"
+          ],
+          "acceptance_conditions_indirect": [],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["None vs literal NONE distinct"],
+      "proven_acceptance_conditions": [
+        "None vs literal NONE distinct"
+      ],
       "indirectly_supported_conditions": [],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Seed collision fixed with typed encoding."
@@ -865,24 +1600,50 @@
           "test_file": "tests/test_r33_r38.py",
           "test_class": "TestR35PlanProvenance",
           "test_function": "test_plan_mapping_deterministic",
-          "declaration_line": 189,
-          "assertion": "self.assertEqual(mapping1, mapping2)",
-          "assertion_line": 193,
-          "source_symbols": ["get_plan_mapping"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 189,
+          "declaration_end_line": 193,
+          "assertion_expressions": [
+            {
+              "line": 192,
+              "expression": "self.assertEqual(h1, h2)"
+            },
+            {
+              "line": 193,
+              "expression": "self.assertEqual(m1, m2)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "get_plan_mapping",
+              "file": "gleppo/pc1.py",
+              "start_line": 993,
+              "end_line": 1000
+            }
+          ],
           "call_path": "test -> get_plan_mapping -> deterministic",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Plan mapping deterministic"],
-          "indirectly_supported": ["Provenance validation"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Plan mapping deterministic"
+          ],
+          "acceptance_conditions_indirect": [
+            "Provenance validation"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Plan mapping deterministic"],
-      "indirectly_supported_conditions": ["Provenance validation"],
+      "proven_acceptance_conditions": [
+        "Plan mapping deterministic"
+      ],
+      "indirectly_supported_conditions": [
+        "Provenance validation"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Plan provenance verified."
     },
@@ -900,25 +1661,51 @@
           "test_file": "tests/test_r33_r38.py",
           "test_class": "TestR36ProtocolConsistency",
           "test_function": "test_full_consistency_passes",
-          "declaration_line": 252,
-          "assertion": "self.assertTrue(all_pass)",
-          "assertion_line": 255,
-          "source_symbols": ["protocol_consistency_check"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 252,
+          "declaration_end_line": 255,
+          "assertion_expressions": [
+            {
+              "line": 254,
+              "expression": "self.assertTrue(r[\"all_pass\"], r[\"checks\"])"
+            },
+            {
+              "line": 255,
+              "expression": "self.assertTrue(r[\"doc_hash\"])"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "protocol_consistency_check",
+              "file": "gleppo/pc1.py",
+              "start_line": 126,
+              "end_line": 223
+            }
+          ],
           "call_path": "test -> protocol_consistency_check -> all_pass",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Full consistency passes"],
-          "indirectly_supported": [],
-          "uncovered": ["All decision-critical fields"],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Full consistency passes"
+          ],
+          "acceptance_conditions_indirect": [],
+          "acceptance_conditions_uncovered": [
+            "All decision-critical fields"
+          ],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["Full consistency passes"],
+      "proven_acceptance_conditions": [
+        "Full consistency passes"
+      ],
       "indirectly_supported_conditions": [],
-      "uncovered_acceptance_conditions": ["All decision-critical fields"],
+      "uncovered_acceptance_conditions": [
+        "All decision-critical fields"
+      ],
       "disposition_rationale": "Some fields validated, not all."
     },
     {
@@ -936,24 +1723,50 @@
           "test_file": "tests/test_r33_r38.py",
           "test_class": "TestR37ProtocolPlanHash",
           "test_function": "test_missing_protocol_hash_rejected",
-          "declaration_line": 326,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 328,
-          "source_symbols": ["validate_records"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 326,
+          "declaration_end_line": 333,
+          "assertion_expressions": [
+            {
+              "line": 333,
+              "expression": "self.assertIn(\"protocol_hash\", str(ctx.exception))"
+            },
+            {
+              "line": 329,
+              "expression": "self.assertRaises(ValueError)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "validate_records",
+              "file": "gleppo/pc1.py",
+              "start_line": 409,
+              "end_line": 515
+            }
+          ],
           "call_path": "test -> validate_records -> hash requirement",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Protocol hash required"],
-          "indirectly_supported": ["Plan hash required"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Protocol hash required"
+          ],
+          "acceptance_conditions_indirect": [
+            "Plan hash required"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Protocol hash required"],
-      "indirectly_supported_conditions": ["Plan hash required"],
+      "proven_acceptance_conditions": [
+        "Protocol hash required"
+      ],
+      "indirectly_supported_conditions": [
+        "Plan hash required"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Hash binding verified."
     },
@@ -971,26 +1784,47 @@
           "test_file": "tests/test_r33_r38.py",
           "test_class": "TestR38FailClosedGates",
           "test_function": "test_approval_empty_protocol_hash_denied",
-          "declaration_line": 369,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 371,
-          "source_symbols": ["ApprovalGate"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 369,
+          "declaration_end_line": 374,
+          "assertion_expressions": [
+            {
+              "line": 373,
+              "expression": "self.assertRaises(PC1ExecutionRefused)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "ApprovalGate",
+              "file": "gleppo/pc1.py",
+              "start_line": 1320,
+              "end_line": 1365
+            }
+          ],
           "call_path": "test -> ApprovalGate.check -> early rejection",
-          "intended_branch_reached": false,
-          "explanation": "Gate rejects because trusted_artifact is missing, not because of protocol hash check",
-          "proven_conditions": ["Empty binding rejected"],
-          "indirectly_supported": [],
-          "uncovered": ["Intended hash validation branch"],
-          "uses_stub_or_mock": true
+          "branch_reached": {
+            "reached": false,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Empty binding rejected"
+          ],
+          "acceptance_conditions_indirect": [],
+          "acceptance_conditions_uncovered": [
+            "Intended hash validation branch"
+          ],
+          "harness_type": "stub_or_mock"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["Empty binding rejected"],
+      "proven_acceptance_conditions": [
+        "Empty binding rejected"
+      ],
       "indirectly_supported_conditions": [],
-      "uncovered_acceptance_conditions": ["Intended hash validation branch"],
+      "uncovered_acceptance_conditions": [
+        "Intended hash validation branch"
+      ],
       "disposition_rationale": "Test rejects earlier than intended branch."
     },
     {
@@ -1009,42 +1843,105 @@
           "test_file": "tests/test_r39_r42.py",
           "test_class": "TestR39CRNSeed",
           "test_function": "test_delimiter_no_collision",
-          "declaration_line": 68,
-          "assertion": "self.assertNotEqual(seed1, seed2)",
-          "assertion_line": 72,
-          "source_symbols": ["pc1.crn_seed"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 68,
+          "declaration_end_line": 72,
+          "assertion_expressions": [
+            {
+              "line": 72,
+              "expression": "self.assertNotEqual(s1, s2)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "pc1.crn_seed",
+              "file": "gleppo/pc1.py",
+              "start_line": 230,
+              "end_line": 239
+            }
+          ],
           "call_path": "test -> crn_seed -> typed JSON encoding",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Delimiter safety"],
-          "indirectly_supported": ["Tuple reproduction", "Component isolation"],
-          "uncovered": ["Action/genotype exclusion (see R16/R20)"],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Delimiter safety"
+          ],
+          "acceptance_conditions_indirect": [
+            "Tuple reproduction",
+            "Component isolation"
+          ],
+          "acceptance_conditions_uncovered": [
+            "Action/genotype exclusion (see R16/R20)"
+          ],
+          "harness_type": "production_path"
         },
         {
           "test_file": "tests/test_r8_r9_r11_pc1.py",
           "test_class": "TestR8CRNEndToEnd",
           "test_function": "test_same_crn_tuple_gives_identical_seeds_across_genotypes",
-          "declaration_line": 50,
-          "assertion": "self.assertEqual(seed_g1, seed_g2)",
-          "assertion_line": 55,
-          "source_symbols": ["Evaluator.effective_seed_parts"],
-          "source_file": "gleppo/evaluator.py",
+          "declaration_start_line": 50,
+          "declaration_end_line": 64,
+          "assertion_expressions": [
+            {
+              "line": 62,
+              "expression": "self.assertEqual(len(seeds_g1), 2)"
+            },
+            {
+              "line": 63,
+              "expression": "self.assertEqual(seeds_g1, seeds_g2,\n                         \"CRN seeds must be identical across genotypes for the same (state,rollout,replicate)\")"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "Evaluator.effective_seed_parts",
+              "file": "gleppo/evaluator.py",
+              "start_line": 57,
+              "end_line": 76
+            }
+          ],
           "call_path": "test -> Evaluator.evaluate -> effective_seed_parts",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Cross-genotype CRN (supports action/genotype exclusion)"],
-          "indirectly_supported": [],
-          "uncovered": [],
-          "uses_stub_or_mock": true
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Cross-genotype CRN (supports action/genotype exclusion)"
+          ],
+          "acceptance_conditions_indirect": [],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "stub_or_mock"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Delimiter safety", "Tuple reproduction", "Component isolation"],
-      "indirectly_supported_conditions": ["Action/genotype exclusion via R16/R20 cross-reference"],
+      "proven_acceptance_conditions": [
+        "Delimiter safety",
+        "Tuple reproduction",
+        "Component isolation"
+      ],
+      "indirectly_supported_conditions": [
+        "Action/genotype exclusion via R16/R20 cross-reference"
+      ],
       "uncovered_acceptance_conditions": [],
-      "disposition_rationale": "Delimiter safety tested. Action/genotype exclusion supported by R16/R20 cross-reference."
+      "disposition_rationale": "Delimiter safety tested. Action/genotype exclusion supported by R16/R20 cross-reference.",
+      "evidence_boundaries": {
+        "direct_crn_tests": [
+          "test_delimiter_no_collision: delimiter collision prevented by typed JSON encoding",
+          "test_same_params_reproducible: identical tuples reproduce same seed",
+          "test_task_change_changes_seed / test_state_change_changes_seed / test_rollout_change_changes_seed / test_replicate_change_changes_seed: component isolation",
+          "test_none_empty_string_no_collision: NONE/EMPTY distinctions"
+        ],
+        "cross_referenced_tests": [
+          "tests/test_r8_r9_r11_pc1.py::TestR8CRNEndToEnd::test_same_crn_tuple_gives_identical_seeds_across_genotypes (R16): two distinct genotypes under same task/state/rollout/replicate produce identical seeds via instrumented evaluator",
+          "tests/test_r19_r25.py::TestR20CRNContract::test_same_crn_identical_across_genotypes (R20): same behavioral check in different test class"
+        ],
+        "structural_evidence": "Evaluator.effective_seed_parts() (gleppo/evaluator.py:57-76) receives task/state/rollout/replicate/replica/eval-seed inputs and does NOT accept action or genotype. Evaluator.evaluate() (gleppo/evaluator.py:105-164) calls effective_seed_parts() and sends the result to Interpreter.run(). Action exclusion is structurally supported because action is not an input to the seed derivation/evaluator API.",
+        "tautological_test_warning": "test_action_genotype_excluded (tests/test_r39_r42.py:96-99) compares the same crn_seed() call to itself and is TAUTOLOGICAL. It must NOT be cited as evidence for action/genotype exclusion.",
+        "operator_rng_note": "test_operator_rng_independent_of_eval_seed (tests/test_r12_r17.py:295-298) changes draw index and checks inequality; this does not directly prove independence from evaluation seed.",
+        "registered_pc1_collector_note": "No registered PC1 collector action-varying integration test exists. The registered PC1 collector is not implemented/executed."
+      }
     },
     {
       "id": "R40",
@@ -1060,23 +1957,41 @@
           "test_file": "tests/test_r39_r42.py",
           "test_class": "TestR40ProtocolConsistency",
           "test_function": "test_full_consistency_passes",
-          "declaration_line": 104,
-          "assertion": "self.assertTrue(all_pass)",
-          "assertion_line": 107,
-          "source_symbols": ["protocol_consistency_check"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 104,
+          "declaration_end_line": 106,
+          "assertion_expressions": [
+            {
+              "line": 106,
+              "expression": "self.assertTrue(r[\"all_pass\"], r[\"checks\"])"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "protocol_consistency_check",
+              "file": "gleppo/pc1.py",
+              "start_line": 126,
+              "end_line": 223
+            }
+          ],
           "call_path": "test -> protocol_consistency_check -> all_pass",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Structured checks work"],
-          "indirectly_supported": [],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Structured checks work"
+          ],
+          "acceptance_conditions_indirect": [],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Structured checks work"],
+      "proven_acceptance_conditions": [
+        "Structured checks work"
+      ],
       "indirectly_supported_conditions": [],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Structured semantic checks verified."
@@ -1096,24 +2011,56 @@
           "test_file": "tests/test_r39_r42.py",
           "test_class": "TestR41PlanArtifact",
           "test_function": "test_save_load_roundtrip",
-          "declaration_line": 153,
-          "assertion": "self.assertEqual(loaded, original)",
-          "assertion_line": 158,
-          "source_symbols": ["save_plan_artifact", "load_plan_artifact"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 153,
+          "declaration_end_line": 160,
+          "assertion_expressions": [
+            {
+              "line": 158,
+              "expression": "self.assertEqual(h1, h2)"
+            },
+            {
+              "line": 159,
+              "expression": "self.assertEqual(len(m2), N_STATES)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "save_plan_artifact",
+              "file": "gleppo/pc1.py",
+              "start_line": 1003,
+              "end_line": 1024
+            },
+            {
+              "symbol": "load_plan_artifact",
+              "file": "gleppo/pc1.py",
+              "start_line": 1027,
+              "end_line": 1082
+            }
+          ],
           "call_path": "test -> save/load -> hash verification",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Save/load roundtrip"],
-          "indirectly_supported": ["Tamper detection"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Save/load roundtrip"
+          ],
+          "acceptance_conditions_indirect": [
+            "Tamper detection"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Save/load roundtrip"],
-      "indirectly_supported_conditions": ["Tamper detection"],
+      "proven_acceptance_conditions": [
+        "Save/load roundtrip"
+      ],
+      "indirectly_supported_conditions": [
+        "Tamper detection"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Plan artifact binding verified."
     },
@@ -1131,25 +2078,51 @@
           "test_file": "tests/test_r54_r59.py",
           "test_class": "TestR54ApprovalGate",
           "test_function": "test_no_signature_rejected",
-          "declaration_line": 89,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 91,
-          "source_symbols": ["TrustedApprovalArtifact.verify"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 89,
+          "declaration_end_line": 98,
+          "assertion_expressions": [
+            {
+              "line": 97,
+              "expression": "self.assertRaises(PC1ExecutionRefused)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "TrustedApprovalArtifact.verify",
+              "file": "gleppo/pc1.py",
+              "start_line": 1208,
+              "end_line": 1259
+            }
+          ],
           "call_path": "test -> TrustedApprovalArtifact.verify -> HMAC check",
-          "intended_branch_reached": true,
-          "proven_conditions": ["No signature rejected"],
-          "indirectly_supported": ["HMAC verification"],
-          "uncovered": ["Full gate integration"],
-          "uses_stub_or_mock": true
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "No signature rejected"
+          ],
+          "acceptance_conditions_indirect": [
+            "HMAC verification"
+          ],
+          "acceptance_conditions_uncovered": [
+            "Full gate integration"
+          ],
+          "harness_type": "stub_or_mock"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["No signature rejected"],
-      "indirectly_supported_conditions": ["HMAC verification"],
-      "uncovered_acceptance_conditions": ["Full gate integration"],
+      "proven_acceptance_conditions": [
+        "No signature rejected"
+      ],
+      "indirectly_supported_conditions": [
+        "HMAC verification"
+      ],
+      "uncovered_acceptance_conditions": [
+        "Full gate integration"
+      ],
       "disposition_rationale": "Artifact-level test, not full gate integration."
     },
     {
@@ -1167,25 +2140,47 @@
           "test_file": "tests/test_r54_r59.py",
           "test_class": "TestR54ApprovalGate",
           "test_function": "test_proposed_rejects_all_flags_true",
-          "declaration_line": 69,
-          "assertion": "self.assertTrue(denied)",
-          "assertion_line": 75,
-          "source_symbols": ["ApprovalGate.check"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 69,
+          "declaration_end_line": 87,
+          "assertion_expressions": [
+            {
+              "line": 86,
+              "expression": "self.assertRaises(PC1ExecutionRefused)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "ApprovalGate.check",
+              "file": "gleppo/pc1.py",
+              "start_line": 1340,
+              "end_line": 1365
+            }
+          ],
           "call_path": "test -> ApprovalGate.check -> PROPOSED rejection",
-          "intended_branch_reached": true,
-          "proven_conditions": ["PROPOSED rejects fabricated approvals"],
-          "indirectly_supported": [],
-          "uncovered": ["Positive APPROVED path"],
-          "uses_stub_or_mock": true
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "PROPOSED rejects fabricated approvals"
+          ],
+          "acceptance_conditions_indirect": [],
+          "acceptance_conditions_uncovered": [
+            "Positive APPROVED path"
+          ],
+          "harness_type": "stub_or_mock"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["PROPOSED rejects fabricated approvals"],
+      "proven_acceptance_conditions": [
+        "PROPOSED rejects fabricated approvals"
+      ],
       "indirectly_supported_conditions": [],
-      "uncovered_acceptance_conditions": ["Positive APPROVED path"],
+      "uncovered_acceptance_conditions": [
+        "Positive APPROVED path"
+      ],
       "disposition_rationale": "Default-deny tested. No positive approved-path test."
     },
     {
@@ -1203,24 +2198,46 @@
           "test_file": "tests/test_r54_r59.py",
           "test_class": "TestR55PlanBinding",
           "test_function": "test_missing_protocol_hash_rejected",
-          "declaration_line": 175,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 177,
-          "source_symbols": ["load_plan_artifact"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 175,
+          "declaration_end_line": 186,
+          "assertion_expressions": [
+            {
+              "line": 184,
+              "expression": "self.assertRaises(ValueError)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "load_plan_artifact",
+              "file": "gleppo/pc1.py",
+              "start_line": 1027,
+              "end_line": 1082
+            }
+          ],
           "call_path": "test -> load_plan_artifact -> hash check",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Protocol hash required"],
-          "indirectly_supported": ["Plan artifact used"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Protocol hash required"
+          ],
+          "acceptance_conditions_indirect": [
+            "Plan artifact used"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Protocol hash required"],
-      "indirectly_supported_conditions": ["Plan artifact used"],
+      "proven_acceptance_conditions": [
+        "Protocol hash required"
+      ],
+      "indirectly_supported_conditions": [
+        "Plan artifact used"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Plan artifact binding verified."
     },
@@ -1239,7 +2256,9 @@
       "disposition": "PARTIALLY_FIXED",
       "proven_acceptance_conditions": [],
       "indirectly_supported_conditions": [],
-      "uncovered_acceptance_conditions": ["Direct protocol parser duplicate-key test"],
+      "uncovered_acceptance_conditions": [
+        "Direct protocol parser duplicate-key test"
+      ],
       "disposition_rationale": "Source has _DuplicateKeyChecker but no direct protocol parser test exists."
     },
     {
@@ -1257,7 +2276,9 @@
       "disposition": "UNVERIFIABLE",
       "proven_acceptance_conditions": [],
       "indirectly_supported_conditions": [],
-      "uncovered_acceptance_conditions": ["Independent trust-anchor provenance"],
+      "uncovered_acceptance_conditions": [
+        "Independent trust-anchor provenance"
+      ],
       "disposition_rationale": "No independent key provenance evidence. Test key not production trust anchor."
     },
     {
@@ -1274,24 +2295,46 @@
           "test_file": "tests/test_r54_r59.py",
           "test_class": "TestR55PlanBinding",
           "test_function": "test_alternative_mapping_rejected",
-          "declaration_line": 201,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 205,
-          "source_symbols": ["load_plan_artifact"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 201,
+          "declaration_end_line": 221,
+          "assertion_expressions": [
+            {
+              "line": 219,
+              "expression": "self.assertRaises(ValueError)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "load_plan_artifact",
+              "file": "gleppo/pc1.py",
+              "start_line": 1027,
+              "end_line": 1082
+            }
+          ],
           "call_path": "test -> load_plan_artifact -> identity check",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Alternative mapping rejected"],
-          "indirectly_supported": ["Registered identity"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Alternative mapping rejected"
+          ],
+          "acceptance_conditions_indirect": [
+            "Registered identity"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Alternative mapping rejected"],
-      "indirectly_supported_conditions": ["Registered identity"],
+      "proven_acceptance_conditions": [
+        "Alternative mapping rejected"
+      ],
+      "indirectly_supported_conditions": [
+        "Registered identity"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Plan identity binding verified."
     },
@@ -1309,25 +2352,54 @@
           "test_file": "tests/test_r54_r59.py",
           "test_class": "TestR56StrictTypes",
           "test_function": "test_missing_field_rejected",
-          "declaration_line": 263,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 265,
-          "source_symbols": ["validate_reward_schema"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 263,
+          "declaration_end_line": 267,
+          "assertion_expressions": [
+            {
+              "line": 267,
+              "expression": "self.assertFalse(r[\"all_pass\"])"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "validate_reward_schema",
+              "file": "gleppo/pc1.py",
+              "start_line": null,
+              "end_line": null,
+              "note": "line range unresolved"
+            }
+          ],
           "call_path": "test -> validate_reward_schema -> missing field",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Missing field rejected"],
-          "indirectly_supported": ["Extra field rejected"],
-          "uncovered": ["Estimator extra/missing keys", "Seed version/encoding mutation"],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Missing field rejected"
+          ],
+          "acceptance_conditions_indirect": [
+            "Extra field rejected"
+          ],
+          "acceptance_conditions_uncovered": [
+            "Estimator extra/missing keys",
+            "Seed version/encoding mutation"
+          ],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["Missing field rejected"],
-      "indirectly_supported_conditions": ["Extra field rejected"],
-      "uncovered_acceptance_conditions": ["Estimator extra/missing keys", "Seed version/encoding mutation"],
+      "proven_acceptance_conditions": [
+        "Missing field rejected"
+      ],
+      "indirectly_supported_conditions": [
+        "Extra field rejected"
+      ],
+      "uncovered_acceptance_conditions": [
+        "Estimator extra/missing keys",
+        "Seed version/encoding mutation"
+      ],
       "disposition_rationale": "Some schema validation, not full adversarial coverage."
     },
     {
@@ -1346,25 +2418,53 @@
           "test_file": "tests/test_r39_r42.py",
           "test_class": "TestR40ProtocolConsistency",
           "test_function": "test_mutation_status_not_checked_by_consistency",
-          "declaration_line": 118,
-          "assertion": "self.assertTrue(all_pass)",
-          "assertion_line": 122,
-          "source_symbols": ["protocol_consistency_check"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 118,
+          "declaration_end_line": 128,
+          "assertion_expressions": [
+            {
+              "line": 127,
+              "expression": "self.assertTrue(r[\"all_pass\"], \"status is lifecycle, not content\")"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "protocol_consistency_check",
+              "file": "gleppo/pc1.py",
+              "start_line": 126,
+              "end_line": 223
+            }
+          ],
           "call_path": "test -> protocol_consistency_check -> status ignored",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Consistency check ignores status"],
-          "indirectly_supported": ["Lifecycle separation"],
-          "uncovered": ["Approved path with valid artifact", "Changed immutable content denied"],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Consistency check ignores status"
+          ],
+          "acceptance_conditions_indirect": [
+            "Lifecycle separation"
+          ],
+          "acceptance_conditions_uncovered": [
+            "Approved path with valid artifact",
+            "Changed immutable content denied"
+          ],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "INDIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["Consistency check ignores status"],
-      "indirectly_supported_conditions": ["Lifecycle separation"],
-      "uncovered_acceptance_conditions": ["Approved path with valid artifact", "Changed immutable content denied"],
+      "proven_acceptance_conditions": [
+        "Consistency check ignores status"
+      ],
+      "indirectly_supported_conditions": [
+        "Lifecycle separation"
+      ],
+      "uncovered_acceptance_conditions": [
+        "Approved path with valid artifact",
+        "Changed immutable content denied"
+      ],
       "disposition_rationale": "Consistency check ignores status. Does NOT prove full lifecycle or hash invariance."
     },
     {
@@ -1382,25 +2482,51 @@
           "test_file": "tests/test_r54_r59.py",
           "test_class": "TestR54ApprovalGate",
           "test_function": "test_wrong_protocol_hash_rejected",
-          "declaration_line": 146,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 148,
-          "source_symbols": ["ApprovalGate.check"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 146,
+          "declaration_end_line": 155,
+          "assertion_expressions": [
+            {
+              "line": 154,
+              "expression": "self.assertRaises(PC1ExecutionRefused)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "ApprovalGate.check",
+              "file": "gleppo/pc1.py",
+              "start_line": 1340,
+              "end_line": 1365
+            }
+          ],
           "call_path": "test -> ApprovalGate.check -> hash mismatch",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Wrong hash rejected"],
-          "indirectly_supported": ["HMAC connected"],
-          "uncovered": ["Positive approved-path integration"],
-          "uses_stub_or_mock": true
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Wrong hash rejected"
+          ],
+          "acceptance_conditions_indirect": [
+            "HMAC connected"
+          ],
+          "acceptance_conditions_uncovered": [
+            "Positive approved-path integration"
+          ],
+          "harness_type": "stub_or_mock"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["Wrong hash rejected"],
-      "indirectly_supported_conditions": ["HMAC connected"],
-      "uncovered_acceptance_conditions": ["Positive approved-path integration"],
+      "proven_acceptance_conditions": [
+        "Wrong hash rejected"
+      ],
+      "indirectly_supported_conditions": [
+        "HMAC connected"
+      ],
+      "uncovered_acceptance_conditions": [
+        "Positive approved-path integration"
+      ],
       "disposition_rationale": "HMAC connected but no positive approved-path test."
     },
     {
@@ -1417,24 +2543,47 @@
           "test_file": "tests/test_r54_r59.py",
           "test_class": "TestR58RegisteredProtocolHash",
           "test_function": "test_registered_hash_matches_computed",
-          "declaration_line": 284,
-          "assertion": "self.assertEqual(pinned, computed)",
-          "assertion_line": 287,
-          "source_symbols": ["REGISTERED_PLAN_HASH"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 284,
+          "declaration_end_line": 287,
+          "assertion_expressions": [
+            {
+              "line": 287,
+              "expression": "self.assertEqual(computed, REGISTERED_PROTOCOL_CONTENT_HASH)"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "REGISTERED_PLAN_HASH",
+              "file": "gleppo/pc1.py",
+              "start_line": null,
+              "end_line": null,
+              "note": "line range unresolved"
+            }
+          ],
           "call_path": "test -> REGISTERED_PLAN_HASH -> pinned comparison",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Hash pinned"],
-          "indirectly_supported": ["Plan ID verified"],
-          "uncovered": [],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Hash pinned"
+          ],
+          "acceptance_conditions_indirect": [
+            "Plan ID verified"
+          ],
+          "acceptance_conditions_uncovered": [],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "VERIFIED_FIXED",
-      "proven_acceptance_conditions": ["Hash pinned"],
-      "indirectly_supported_conditions": ["Plan ID verified"],
+      "proven_acceptance_conditions": [
+        "Hash pinned"
+      ],
+      "indirectly_supported_conditions": [
+        "Plan ID verified"
+      ],
       "uncovered_acceptance_conditions": [],
       "disposition_rationale": "Plan hash independently pinned."
     },
@@ -1453,25 +2602,54 @@
           "test_file": "tests/test_r54_r59.py",
           "test_class": "TestR56StrictTypes",
           "test_function": "test_bool_true_rejected",
-          "declaration_line": 251,
-          "assertion": "self.assertRaises(ValueError)",
-          "assertion_line": 253,
-          "source_symbols": ["validate_reward_schema"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 251,
+          "declaration_end_line": 253,
+          "assertion_expressions": [
+            {
+              "line": 253,
+              "expression": "self.assertFalse(r[\"all_pass\"])"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "validate_reward_schema",
+              "file": "gleppo/pc1.py",
+              "start_line": null,
+              "end_line": null,
+              "note": "line range unresolved"
+            }
+          ],
           "call_path": "test -> validate_reward_schema -> type check",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Bool rejected"],
-          "indirectly_supported": ["Missing/extra field rejected"],
-          "uncovered": ["Seed version/encoding mutation", "Estimator extra/missing keys"],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Bool rejected"
+          ],
+          "acceptance_conditions_indirect": [
+            "Missing/extra field rejected"
+          ],
+          "acceptance_conditions_uncovered": [
+            "Seed version/encoding mutation",
+            "Estimator extra/missing keys"
+          ],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["Bool rejected"],
-      "indirectly_supported_conditions": ["Missing/extra field rejected"],
-      "uncovered_acceptance_conditions": ["Seed version/encoding mutation", "Estimator extra/missing keys"],
+      "proven_acceptance_conditions": [
+        "Bool rejected"
+      ],
+      "indirectly_supported_conditions": [
+        "Missing/extra field rejected"
+      ],
+      "uncovered_acceptance_conditions": [
+        "Seed version/encoding mutation",
+        "Estimator extra/missing keys"
+      ],
       "disposition_rationale": "Some schema validation, not full adversarial coverage."
     },
     {
@@ -1488,26 +2666,57 @@
           "test_file": "tests/test_r39_r42.py",
           "test_class": "TestR40ProtocolConsistency",
           "test_function": "test_mutation_status_not_checked_by_consistency",
-          "declaration_line": 118,
-          "assertion": "self.assertTrue(all_pass)",
-          "assertion_line": 122,
-          "source_symbols": ["protocol_consistency_check"],
-          "source_file": "gleppo/pc1.py",
+          "declaration_start_line": 118,
+          "declaration_end_line": 128,
+          "assertion_expressions": [
+            {
+              "line": 127,
+              "expression": "self.assertTrue(r[\"all_pass\"], \"status is lifecycle, not content\")"
+            }
+          ],
+          "source_symbols": [
+            {
+              "symbol": "protocol_consistency_check",
+              "file": "gleppo/pc1.py",
+              "start_line": 126,
+              "end_line": 223
+            }
+          ],
           "call_path": "test -> protocol_consistency_check -> status ignored",
-          "intended_branch_reached": true,
-          "proven_conditions": ["Consistency check ignores status"],
-          "indirectly_supported": ["Lifecycle separation"],
-          "uncovered": ["compute_protocol_hash() status invariance"],
-          "uses_stub_or_mock": false
+          "branch_reached": {
+            "reached": true,
+            "explanation": "Test exercises the intended code path as shown by call_path and assertions."
+          },
+          "acceptance_conditions_proven": [
+            "Consistency check ignores status"
+          ],
+          "acceptance_conditions_indirect": [
+            "Lifecycle separation"
+          ],
+          "acceptance_conditions_uncovered": [
+            "compute_protocol_hash() status invariance"
+          ],
+          "harness_type": "production_path"
         }
       ],
       "manual_evidence": [],
       "evidence_type": "INDIRECT",
       "disposition": "PARTIALLY_FIXED",
-      "proven_acceptance_conditions": ["Consistency check ignores status"],
-      "indirectly_supported_conditions": ["Lifecycle separation"],
-      "uncovered_acceptance_conditions": ["compute_protocol_hash() status invariance"],
-      "disposition_rationale": "Indirect evidence only. No direct status-only hash invariance test exists."
+      "proven_acceptance_conditions": [
+        "Consistency check ignores status"
+      ],
+      "indirectly_supported_conditions": [
+        "Lifecycle separation"
+      ],
+      "uncovered_acceptance_conditions": [
+        "compute_protocol_hash() status invariance"
+      ],
+      "disposition_rationale": "Indirect evidence only. No direct status-only hash invariance test exists.",
+      "evidence_boundaries": {
+        "correct_evidence": "tests/test_r39_r42.py::TestR40ProtocolConsistency::test_mutation_status_not_checked_by_consistency (line 118) changes lifecycle status and verifies protocol_consistency_check() still passes. This is INDIRECT evidence for lifecycle-status handling by the consistency predicate.",
+        "limitation": "It does NOT prove compute_protocol_hash() is invariant to status-only changes. Tenth Review states compute_protocol_hash(doc) hashes the entire parsed JSON dictionary including status. No direct status-only hash-invariance test exists in the reviewed source snapshot.",
+        "do_not_modify_tests": "Do not modify tests in this stage. Do not upgrade R53 to VERIFIED_FIXED."
+      }
     }
   ]
 }

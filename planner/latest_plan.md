@@ -1,134 +1,126 @@
-# GLEPPO 最新执行计划 — R26 Stage 1I-R1
+# GLEPPO 最新执行计划 — R26 Stage 1I-R2
 
 **仓库：** yujian777555/GLEPPO  
-**项目边界：** 仅 GLEPPO；不得混入 openissue、agentfotagent、CausalEvo-DSH、EvoPareto-Agent 或其他项目  
-**工作分支：** r25-handoff  
+**分支：** r25-handoff  
 **更新时间：** 2026-11-04  
-**Stage 1I Executor commit：** a1e6e65e671c876d028492bfed164205c54df08b  
-**Stage 1I Planner review：** research/R26_STAGE1I_PLANNER_REVIEW.md  
-**Planner decision：** REQUEST_CHANGES  
-**当前任务：** Stage 1I-R1 corrective completion；尚未验收  
-**Executor prompt：** planner/GLEPPO_R26_STAGE1I_CORRECTIVE_EXECUTOR_PROMPT.md
+**Stage 1I Executor HEAD：** a1e6e65e671c876d028492bfed164205c54df08b  
+**Stage 1I Planner review：** dfd7ef909ba4ee97e01c4bb57b0177ae8869d61c  
+**Stage 1I-R1 Executor HEAD：** 4d2ff06ee01146533501589b264d33ddd30ffcbe  
+**Stage 1I-R1 Planner review：** dcdcef5b2e7e68a6590d95c90c4caf453399c127  
+**R1 source snapshot：** 29325cfa16441154c833f381f208747b57627a79  
+**Planner decision：** R1 REQUEST_CHANGES  
+**当前任务：** Stage 1I-R2 corrective completion  
+**Executor prompt：** planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md
 
 ---
 
-## 一、当前 Planner 决策
+## 一、当前决策
 
-**R26 Stage 1I 不接受。必须留在 Stage 1I，完成 Stage 1I-R1 后重新独立复审。**
+**Stage 1I-R1 不接受。继续留在 Stage 1I，完成 R2 后重新独立复审。**
 
-本轮核实了远端 r25-handoff HEAD 为 a1e6e65e671c876d028492bfed164205c54df08b，main 为 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e，分支相对 main ahead 202 / behind 0。Stage 1I commit 仅新增两份报告和一个 helper，并修改 status.json；未更新 latest_plan、handoff、next-session prompt 或累计 PC1 summary。
+R1 的结构性成果得到认可：
+- JSON map 有 42 个唯一 ID，R12–R53；
+- Markdown 有 42 个唯一标题；
+- JSON 与 Markdown 的处置一致；
+- 26/14/1/1 的机械统计正确；
+- R53 保持 PARTIALLY_FIXED；
+- R18 的 13 条手工证据和单位区分基本完整；
+- 生产源码和 tests/ 未修改；
+- durable handoff 文件已更新。
 
-独立审查报告：research/R26_STAGE1I_PLANNER_REVIEW.md。
+但语义证据仍不可靠。部分测试并未到达其声称证明的代码分支，部分调用链和源码符号错误，多个 Finding 漏掉已有的直接测试，且验证器允许空行号和未解析的 source symbol 通过。
 
-## 二、为什么 Stage 1I 未通过
+完整审查：research/R26_STAGE1I_R1_PLANNER_REVIEW.md。
 
-### F1：42 个 Finding 的语义证据矩阵缺失
+## 二、R1 的主要阻塞项
 
-要求的 research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md 不存在。最终审计报告 73 行、测试证据 34 行，均没有 R12–R53 的完整逐项矩阵。
+### F1：多项 Finding 没有枚举全部相关测试
 
-因此无法独立检查每个 Finding 的：
-- 原始 review、问题标题和完整验收条件；
-- 真实断言、测试行号和源码符号；
-- test → source 的调用路径及目标分支；
-- 直接证据、间接证据、手工证据和无证据项；
-- 已证明/未覆盖条件；
-- 每个 Finding 的 disposition 和理由。
+重点包括：
+- R12：只引用初始化计数测试，漏掉 cache hit 不增加 replica 的直接测试。
+- R14：漏掉 r_hat 包含 extra_immediate 的直接测试。
+- R17：漏掉 evidence record 字段测试，且 counter breakdown 未证明。
+- R20：漏掉 task/rollout/replicate 与 override-path 测试。
+- R23：漏掉 save/load/replay round-trip 测试。
+- R39：7 个直接 CRN 测试没有完整进入结构化证据数组，R20 cross-genotype test 也没有作为完整证据条目。
+- R40：只列 happy-path，遗漏版本、seed、reward mutation tests。
+- R41：遗漏 tamper、defensive-copy、wrong-hash tests。
+- R28：映射到常量检查测试，而不是实际调用 reconcile 的测试。
 
-26/14/1/1 加总为 42，但没有 42 行数据支撑，不能视为已验证的分类结果。
+### F2：存在错误的 test-to-source 调用链
 
-### F2：_r26i_validator.py 没有验证实际报告
+重点包括：
+- R20：Evaluator.effective_seed_parts 不调用 pc1.crn_seed；crn_seed 实际位于 gleppo/pc1.py。
+- R28：test_registered_budget_exact 只检查常量，不调用 BudgetLedger.reconcile。
+- R30/R37：测试实际调用 run_pc1_analysis，缺失字段在 validate_records 之前被拒绝。
+- R44：loader 单测不能替代注册分析端到端 artifact 绑定测试。
+- R47：alternative mapping 测试在注册哈希比较处失败，没有到达 plan ID/version 分支。
+- R50：test_wrong_protocol_hash_rejected 直接调用 art.verify，不是 ApprovalGate.check。
+- R51：测试比较 REGISTERED_PROTOCOL_CONTENT_HASH，不是 REGISTERED_PLAN_HASH。
+- R52：validate_reward_schema 在源码中不存在。
 
-- 主程序不读取语义证据表；
-- 主程序不调用 validate_report_map()；
-- 只输出 class/function 数量；
-- 没有比较报告 test_file 与真实声明所属文件；
-- 不拒绝未知额外 ID；
-- 不检查 42 行、39 mapped / 3 NONE；
-- 缺失测试文件会被静默跳过；
-- 没有 helper 自测输出或 CI 证据。
+### F3：source symbol 不完整
 
-下一轮必须用 AST 构建按文件/类/函数索引的声明清单，读取真实 JSON map，验证 ID/cardinality、文件归属、函数和行号，并提供负向自测。helper 只能验证结构与声明映射，不能证明语义。
+R17、R20、R23、R24、R25、R26、R48、R51、R52 有 null source line range；部分符号不存在或文件路径错误。
 
-### F3：长期接班记录没有更新
+### F4：验证器仍然有缺口
 
-Stage 1I commit 没有更新：
-- planner/latest_plan.md；
-- planner/GLEPPO_R26_HANDOFF.md；
-- planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md；
-- research/R26_PC1_AUDIT_SUMMARY.md。
+- wrong_file_path 自测使用不存在的文件，与 missing_source_file 重复。
+- null declaration_start_line/end_line 可绕过行号比较。
+- source_symbols 的文件和行号完全没有被校验。
+- schema_version 和多项字段类型没有严格校验。
+- branch_reached 的说明仍有与实际调用路径不符的通用模板。
 
-status.json 虽有变更，但 Stage 1I 对象过度简化，丢失 prompt、scope、硬门禁和下一动作等关键状态；durable-doc commit 引用和 top-level current_task/next_gate 仍陈旧。
+### F5：处置结论存在过度确认
 
-### 其他待修正
+R12、R17、R26、R28、R40、R44、R51 等 VERIFIED_FIXED 行的证据没有证明全部验收条件。机械计数正确不代表语义分类正确。R2 必须重新评估全部 42 行，不得强行保留 26/14/1/1。
 
-- R53 改为 status-consistency test 仅是间接证据，未证明 status-only hash invariance；必须保持 PARTIALLY_FIXED。
-- R39 的 R16/R20 cross-genotype evaluator 测试有价值，但证据文件未完整列出 R20；需要区分 genotype 行为测试、action 结构性排除和未测试的 action-varying collector integration。
-- test_operator_rng_independent_of_eval_seed 实际改变 draw index 并检查不相等，不等于直接证明与 eval seed 独立。
-- R18 手工证据已有明显改进，但缺少 COST_BASELINE.md line 44 的明确引用，且必须进入完整 Finding row。
-- Stage 1I 报告的 CURRENT_BRANCH_HEAD=e2cb353 是 Stage 1I parent/pre-work HEAD，不是最终 Stage 1I commit；下一轮要区分 parent、source snapshot、Executor commit 和 final HEAD。
-- GitHub 对 Stage 1I SHA 返回 0 check runs / 0 status entries。450/450 仍为 EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED。
+## 三、Stage 1I-R2 唯一任务
 
-## 三、Stage 1I-R1 唯一当前任务
+执行：planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md。
 
-执行：planner/GLEPPO_R26_STAGE1I_CORRECTIVE_EXECUTOR_PROMPT.md。
+必须完成：
 
-必须交付：
+1. 重新核对 8 份原始 review 文件，逐项保留全部验收子条件。
+2. 为每个 Finding 枚举所有相关测试，不能只列代表性测试。
+3. 修正错误调用链、错误源码符号、错误文件路径和未到达分支的声明。
+4. 所有 source symbol 必须有真实文件和非空精确行范围。
+5. 根据完整证据重新计算 disposition；不得把旧统计当目标。
+6. 强化 AST validator：schema、类型、非空正整数行号、source symbol 路径和范围、branch/harness/manual evidence 均须 fail-closed。
+7. 补齐 existing-file/wrong-owner、null line、null source range 等对抗性自测，并要求每项检查对应的具体错误原因。
+8. 修正 R1 final SHA 和 source snapshot 的 provenance。
+9. 更新所有长期文档和 status.json。
 
-1. research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.json：规范化机器可读 42 Finding map。
-2. research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md：人类可读的 42 行表。
-3. scripts/_r26i_validator.py：AST 声明映射验证器，必须读取实际 JSON map 并执行校验。
-4. validator self-test：有效样例通过；错误文件/类/函数/行号、缺失/重复/未知 ID、非法 NONE、缺失源文件、映射数量错误均 fail。
-5. research/R26_STAGE1I_R1_CORRECTIVE_REPORT.md：实际执行结果、行级证据、SHA 和边界声明。
-6. 更新 Stage 1I audit/test evidence、PC1 cumulative summary、latest_plan、handoff、next-session prompt、status.json。
+R1 关键纠正要求：
+- R28 必须引用 test_ledger_components_sum_to_total。
+- R50 必须区分直接调用 TrustedApprovalArtifact.verify 与 ApprovalGate.check。
+- R51 不得把协议哈希测试当成 plan hash 测试。
+- R52 必须使用真实的 protocol_consistency_check 及其内部校验逻辑。
+- R53 仍为 PARTIALLY_FIXED，除非已有直接 hash-invariance 测试；本阶段不得新增 tests。
+- R18 保持 MANUAL，生产 tokens/latency UNMEASURED。
 
-Disposition 必须从 42 行 JSON map 机械统计，不得预设 26/14/1/1。R53 必须保持 PARTIALLY_FIXED，除非未来获得新授权并完成直接 hash-invariance 证据。R39 需准确标出 action/genotype 证据边界。R18 为 MANUAL，无行为测试。
+## 四、科学完整性状态
 
-本轮仅允许文档、JSON map 和非生产审计 helper 修改；不允许修改 tests/ 或生产源码。
+GLEPPO 的 ECOS 研究假设仍然保留，但 PPO 优势尚未得到实验证明。
 
-## 四、ECOS 科学完整性边界
+- R21-C1 是 DAC 对照，不是演化算子或控制器对照。
+- 固定算子与自适应算子对比：UNTESTED。
+- PPO 与规则控制器对比：UNTESTED。
+- PPO 与 LinUCB/Neural Bandit 对比：UNTESTED。
+- Phase 1、R24、PC1 R4 的 reward/state/gamma/split/budget 定义冲突仍未解决。
+- 不得在 Stage 1I-R2 中提前统一协议或训练控制器。
 
-GLEPPO 的研究假设仍然保留，但 PPO 优势尚未证明。
+## 五、硬门禁
 
-- R21-C1 是 C0 LLM 算术执行 vs C4 DAC 确定性答案计算，不是演化算子/控制器对照。
-- 固定算子是否不足：UNTESTED。
-- 自适应选择是否优于最佳固定算子：UNTESTED。
-- PPO 是否优于规则控制器：UNTESTED。
-- PPO 是否优于相同状态输入的 LinUCB/Neural Bandit：UNTESTED。
-- Phase 1、R24、PC1 R4 与共享实现的 reward/state/gamma/split/budget 仍需统一审查；不能静默选择一个版本。
-
-独立科学性审查：research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md。
-
-## 五、Stage 1I-R1 之后的顺序
-
-1. Executor 完成 Stage 1I-R1 并推送。
-2. Planner 独立审查完整 42-row map、helper 和负向自测输出。
-3. 只有 Stage 1I 被正式接受后，才进入独立的 R26_ECOS_PROTOCOL_RECONCILIATION。
-4. 协议统一并通过独立科学审查后，才讨论 PC1 审批。
-5. PC1 批准与执行仍需所有门禁和用户授权；PC1 PASS 也不等于 PPO 优于 Bandit。
-6. 训练必须另行授权；正式 G3 efficacy 仍需独立评估。
-
-## 六、硬边界
-
-- PC1 BLOCKED；PC1 R4 PROPOSED / NOT APPROVED。
+- PC1 BLOCKED；R4 PROPOSED / NOT APPROVED。
 - Formal G3 FAIL。
-- Family C NOT ACCESSED，持续禁止访问。
+- Family C NOT ACCESSED。
 - Registered PC1 NOT EXECUTED。
 - Controller training NOT AUTHORIZED / NOT STARTED。
-- No production runtime / model API calls / signing-key access。
-- No production source or tests/ modifications in Stage 1I-R1.
-- No frozen R1–R25 evidence/manifest changes.
-- No main update/merge/reset/rebase/force-push.
-- No cross-project code/data/report reuse.
+- 不得修改生产源码或 tests/。
+- 不得调用模型/API、生产 runtime 或 signing key。
+- 不得修改冻结的 R1–R25 raw evidence/manifests。
+- 不得修改/合并 main，不得 reset/rebase/force-push。
+- 不得混用其他项目的代码、数据或报告。
 
-**当前唯一动作：完成 Stage 1I-R1，提交后等待 Planner 独立复审。不得提前进入 PC1、协议统一或训练。**
-
----
-
-## Stage 1I-R1 ��ɼ�¼ (2026-11-04)
-
-Stage 1I-R1 ������������ɡ�����֤��ӳ�䣨42 �� JSON + Markdown����AST validator��15 ���Բ�ȫ��ͨ������R39/R53/R18 ���������durable �ĵ����¾�����ɡ�
-
-����ͳ�ƣ��� JSON ��е���㣩��26 VERIFIED_FIXED + 14 PARTIALLY_FIXED + 1 OPEN + 1 UNVERIFIABLE = 42��
-
-**��ǰ״̬��** R26_STAGE1I_R1_READY_FOR_PLANNER_REVIEW
-**��һ�ؿڣ�** Planner �������� Stage 1I-R1�����ý���Э��ͳһ�� PC1��
+**下一步只有：Stage 1I-R2 Executor 完成 → Planner 独立复审。不得进入 R26_ECOS_PROTOCOL_RECONCILIATION、PC1、Family C 或训练。**

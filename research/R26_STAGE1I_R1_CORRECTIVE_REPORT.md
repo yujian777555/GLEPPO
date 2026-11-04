@@ -180,3 +180,17 @@ Updated:
 
 Independently verifiable (from repository): map content, validator behavior, test declarations, source structure.
 Executor-reported (not independently verifiable): model/API call count, production runtime call count, 450/450 test result.
+
+---
+
+## Planner provenance correction (2026-11-04)
+
+The Executor report above uses “(this commit)” for the Stage 1I-R1 final commit. The exact verified value is:
+
+- R1 source snapshot: 29325cfa16441154c833f381f208747b57627a79
+- R1 parent: 539f74d5c898abc144992fff4a413a30744c1cc9
+- R1 final commit: 4d2ff06ee01146533501589b264d33ddd30ffcbe
+- R1 Planner review commit: dcdcef5b2e7e68a6590d95c90c4caf453399c127
+
+This provenance correction does not imply Planner acceptance. Stage 1I-R1 remains REQUEST_CHANGES. See research/R26_STAGE1I_R1_PLANNER_REVIEW.md.
+

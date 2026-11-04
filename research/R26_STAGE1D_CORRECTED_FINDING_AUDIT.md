@@ -133,3 +133,24 @@
 **R26_STAGE1D_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW**
 
 30/42 VERIFIED_FIXED, 8 PARTIALLY_FIXED, 1 OPEN, 1 UNVERIFIABLE. PC1 remains BLOCKED.
+
+---
+
+## Planner correction — 2026-11-04
+
+**Decision:** REQUEST_CHANGES. The 42-Finding table is not accepted.
+
+- R18 is a formal Finding and is missing. R18 must remain separate from R24.
+- Provenance lists nine IDs but reports seven.
+- Category memberships list only 41 unique IDs.
+- Summary disposition counts 30/8/1/1 sum to 40.
+- The detailed rows as written contain 32 VERIFIED_FIXED, 7 PARTIALLY_FIXED, 1 OPEN, 1 UNVERIFIABLE across 41 unique IDs.
+- R46 is included in the commit summary's PARTIALLY_FIXED list and the detailed table's UNVERIFIABLE row. One Finding must have one disposition.
+- R43's gate-level negative test exists as TestR54ApprovalGate.test_proposed_rejects_all_flags_true; the stated reason that a gate-level test is missing is incorrect.
+- R45/R48/R52/R49/R53 need more direct test evidence.
+- Full review: research/R26_STAGE1D_PLANNER_REVIEW.md.
+
+The 30/8/1/1 result is an Executor claim, not an accepted Planner result. Stage 1E must restore all 42 IDs and reconcile counts before any Stage 2 remediation.
+
+Current state: R26_STAGE1D_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEDGER_AND_TEST_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+

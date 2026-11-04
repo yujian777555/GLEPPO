@@ -122,3 +122,13 @@ See research/R26_STAGE1C_PLANNER_REVIEW.md and planner/GLEPPO_R26_STAGE1D_EXECUT
 
 Current state: R26_STAGE1C_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
 
+---
+
+## Stage 1D Planner correction — 2026-11-04
+
+Stage 1D improved the invalid Stage 1C test mapping but is not accepted as a complete 42-Finding audit.
+
+Formal Finding R18 is missing; Provenance lists nine IDs but count seven; the 30/8/1/1 summary sums to 40; and R46 is counted in two dispositions. The detailed tables show only 41 unique IDs. The exact test mapping covers five Findings, not all 42. 450/450 has no raw log or CI run on the Stage 1D commit.
+
+Full review: research/R26_STAGE1D_PLANNER_REVIEW.md. Current state: REQUEST_CHANGES; Stage 1E evidence reconciliation required; PC1 BLOCKED.
+

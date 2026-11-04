@@ -65,3 +65,16 @@ All test class/function pairs verified against actual declarations.
 | R18 | Manual documentation evidence |
 | R45 | No direct protocol parser duplicate-key test |
 | R46 | No independent trust-anchor provenance |
+
+
+---
+
+## Planner correction — 2026-11-04
+
+Only 37/39 claimed file/class/function/line mappings are exact. R31 and R49 function names remain incorrect.
+
+The Assertion column contains labels, not actual assertion expressions. The document does not provide test start/end ranges, source symbols/call paths, intended-branch analysis, acceptance conditions proven or uncovered conditions.
+
+R39's mapped same-parameter assertion is tautological. R53's mapped seed-schema mutation test is unrelated to lifecycle-status hash invariance. R49's actual related test only checks protocol consistency and does not prove an approval transition. R19 remains over-classified while the protocol is PROPOSED / NOT APPROVED.
+
+See research/R26_STAGE1G_PLANNER_REVIEW.md. 450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED. Stage 1H required.

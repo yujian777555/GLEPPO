@@ -782,3 +782,10 @@ No production source or tests/ changes are allowed in R2.
 ## Stage 1I-R2 Handoff (2026-11-04)
 
 R2 complete. Map: 42 rows, 193 test entries, dispositions 28/12/1/1. Validator: 20 self-tests PASS. R53 PARTIALLY_FIXED (INDIRECT). Awaiting Planner review.
+
+## Stage 1I-R2 Planner Review (2026-11-04)
+
+Decision: REQUEST_CHANGES, limited corrective pass R2.1. Structural progress accepted; R39, R41 and R48 dispositions overclaim full resolution. The validator also misses source end_line > EOF. The R2 additions to latest_plan and next-session prompt contain mojibake and must be restored to valid UTF-8.
+
+Read `research/R26_STAGE1I_R2_PLANNER_REVIEW.md` and execute `planner/GLEPPO_R26_STAGE1I_R2_1_CORRECTIVE_EXECUTOR_PROMPT.md`. Expected corrected dispositions: 25/15/1/1. Do not redo the full audit or start PC1/Family C/training.
+

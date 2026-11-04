@@ -143,3 +143,46 @@ R26_STAGE1D_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEDGER_AND_TEST_EVIDENCE_RE
 
 **PC1 仍 BLOCKED；不得进入注册实验、Family C 或 PPO 训练。**
 
+---
+
+## 八、2026-11-04 Planner 独立复审：Stage 1E REQUEST_CHANGES
+
+**复审文档：** research/R26_STAGE1E_PLANNER_REVIEW.md  
+**下一阶段提示词：** planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md
+
+Stage 1E 的台账算术已经修正并获接受：
+- R12–R53 共 42 个 ID，逐项完整且唯一；
+- R18 已恢复，且与 R24 分开；
+- 类别数合计 42；
+- 30 + 10 + 1 + 1 = 42；
+- R46 仅为 UNVERIFIABLE；
+- 7 个 PC1 测试文件的函数声明计数 218 正确；
+- 450/450 正确标注为 EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED；
+- Stage 1E 仅改报告和 status，没有改源码或测试代码。
+
+但 42 行测试映射不成立。Planner 对照七个 PC1 测试文件发现：
+- 42 行映射中只有 3 个 class 名称能匹配真实类声明；
+- 只有 1 个 function 名称存在，但属于不同的真实类；
+- 0/42 个 class/function 组合完全匹配；
+- assertion 列只是概括性描述，不是实际断言；
+- 缺少每项测试路径、行号、源码符号、调用路径和原始 Finding 验收条件。
+
+至少 R24、R52、R53 的 VERIFIED_FIXED 判定缺少必要证据，应降为 PARTIALLY_FIXED，除非能找到并准确映射此前未识别的现有直接测试。R18 可以在记录当前 SMOKE_RAW 与 COST_BASELINE 的精确比对后保留 VERIFIED_FIXED。
+
+当前 Planner 状态：
+
+R26_STAGE1E_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_DISPOSITION_REVIEW_REQUIRED; PC1_BLOCKED
+
+### 下一步
+
+执行 planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md：
+1. 逐项核对 R12–R53 的原始失败模式与验收标准；
+2. 只使用真实存在的 test class/function；无直接测试写 NONE；
+3. 记录精确文件、行号、assertion、源码调用和是否进入目标分支；
+4. 重评全部 42 项 disposition，不为保持 30 VERIFIED_FIXED 而保留不充分判定；
+5. 至少重新评估 R24、R52、R53；
+6. 保持 450/450 未独立复现状态；
+7. 不修改生产源码和测试代码。
+
+PC1 仍 BLOCKED；Family C 不访问；控制器训练不启动；Formal G3 仍 FAIL。
+

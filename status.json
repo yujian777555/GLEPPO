@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-04",
-  "phase": "GLEPPO_R26_STAGE1H_COMPLETE",
-  "state": "R26_STAGE1H_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+  "phase": "GLEPPO_R26_STAGE1I_READY",
+  "state": "R26_STAGE1H_REPORT_RECEIVED_REQUEST_CHANGES_FINDING_LEVEL_SEMANTIC_EVIDENCE_AND_DURABLE_HANDOFF_RECONCILIATION_REQUIRED",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "R26 Stage 1H: correct R31/R49 mappings; supply exact assertions, source call paths, intended-branch analysis and uncovered acceptance conditions for all 42 findings; correct R39/R49/R53 semantics; re-evaluate VERIFIED_FIXED dispositions (R19 remains PARTIALLY_FIXED absent formal approval); add R18 line references; update durable handoff.",
-  "next_gate": "R26_STAGE1H_SEMANTIC_EVIDENCE_AND_DISPOSITION_RECONCILIATION -> PLANNER_INDEPENDENT_REVIEW -> SEPARATE_AUTHORIZATION_FOR_ANY_TEST_REMEDIATION",
+  "current_task": "R26 Stage 1I: complete the 42-Finding semantic evidence map with exact assertions, source call paths, intended-branch analysis and proven/uncovered acceptance criteria; correct R53; cross-reference R16/R20 for R39; complete R18 manual evidence; upgrade declaration-map validator; re-evaluate all VERIFIED_FIXED dispositions; update durable handoff.",
+  "next_gate": "R26_STAGE1I_FINDING_LEVEL_SEMANTIC_EVIDENCE_COMPLETION -> PLANNER_INDEPENDENT_REVIEW -> SEPARATE_AUTHORIZATION_FOR_ANY_TEST_REMEDIATION",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -1455,8 +1455,103 @@
     "r39_corrected": "non_tautological_tests",
     "r19_downgraded": "PARTIALLY_FIXED",
     "r18_manual_evidence": true,
-    "test_map": "42_rows_exact_declarations",
+    "test_map": "39_of_39_exact_file_class_function_line_tuples; NONE_R18_R45_R46",
     "test_evidence": "450_REPORTED_NOT_REPRODUCED",
-    "decision": "R26_STAGE1H_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW"
+    "decision": "R26_STAGE1H_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+    "executor_reported_decision": "R26_STAGE1H_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
+    "semantic_evidence": "INCOMPLETE_DECLARATION_INVENTORY_ONLY",
+    "class_inventory": {
+      "declared_class_statements": 48,
+      "unique_class_names": 42,
+      "unique_test_classes": 41,
+      "shared_helper_class": "InstrumentedInterpreter",
+      "declared_test_functions": 218
+    },
+    "planner_review": {
+      "decision": "REQUEST_CHANGES",
+      "report": "research/R26_STAGE1H_PLANNER_REVIEW.md",
+      "report_commit": "d2341dfa2718da2e7c9ff3b01b91c0372b0fa559",
+      "report_head_reviewed": "532ee8adf498e83967016723d28cb1e7dc30bf5f",
+      "stage1h_parent": "0b1d5cac084966040a2a1820675605cc428776fc",
+      "source_snapshot": "29325cfa16441154c833f381f208747b57627a79",
+      "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
+      "main_ahead_behind": "branch_ahead_182_behind_0",
+      "r25_base_ahead_behind": "branch_ahead_101_behind_0",
+      "disposition_counts": {
+        "VERIFIED_FIXED": 26,
+        "PARTIALLY_FIXED": 14,
+        "OPEN": 1,
+        "UNVERIFIABLE": 1,
+        "total": 42
+      },
+      "category_counts": {
+        "Budget": 5,
+        "Statistics": 2,
+        "Runner": 3,
+        "Seed/CRN": 5,
+        "Evidence": 2,
+        "Cost": 2,
+        "Protocol": 9,
+        "Provenance": 9,
+        "Approval": 5,
+        "total": 42
+      },
+      "exact_test_map": {
+        "claimed_rows": 39,
+        "exact_file_class_function_line_tuples": 39,
+        "none_rows": [
+          "R18",
+          "R45",
+          "R46"
+        ]
+      },
+      "semantic_findings": {
+        "R53": "Still mapped to test_mutation_seed_contract_fails line 130 (seed_schema mutation); must map status-consistency test line 118 as indirect only; no direct status-only hash invariance test.",
+        "R39": "Non-tautological delimiter/component tests listed, but action/genotype exclusion lacks cross-reference to R16/R20 instrumented cross-genotype tests.",
+        "R18": "Manual references omit token UNMEASURED, units note, actual CTX distinction, PC1 planned slots and production-cost caveats.",
+        "R19": "Correctly PARTIALLY_FIXED while protocol remains PROPOSED / NOT APPROVED."
+      },
+      "rejected": [
+        "Semantic map lacks exact assertions, test ranges, source symbols/call paths, intended branch and proven/uncovered acceptance conditions",
+        "R53 still points to unrelated seed_schema test",
+        "R39 lacks cross-Finding R16/R20 evidence for action/genotype exclusion",
+        "R18 manual evidence incomplete",
+        "scripts/_r26h_extract.py remains declaration inventory, not report map validator",
+        "latest_plan, handoff, next-session prompt and cumulative PC1 records were not updated by Stage 1H",
+        "Stage 1H report omits exact Stage 1H report/final HEAD"
+      ],
+      "ci_for_head": {
+        "commit_status_entries": 0,
+        "check_runs": 0,
+        "actions_runs": 0
+      },
+      "test_result": "450/450_EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED",
+      "pc1": "BLOCKED"
+    }
+  },
+  "r26_stage1i": {
+    "status": "PROMPT_PREPARED_NOT_STARTED",
+    "prompt": "planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md",
+    "prompt_commit": "f7eda55df02c4a248ae028b18ed63202e9199a01",
+    "scope": "FINDING_LEVEL_SEMANTIC_EVIDENCE_COMPLETION",
+    "production_source_changes_allowed": false,
+    "test_code_changes_allowed": false,
+    "required": [
+      "Create exact semantic evidence rows for all 42 Findings",
+      "Include original acceptance criteria, exact assertions/line ranges, source symbols/call paths, intended branches and uncovered conditions",
+      "Correct R53 to status-consistency test as indirect evidence only; no direct hash invariance test exists",
+      "Cross-reference R16/R20 instrumented tests for R39 action/genotype exclusion",
+      "Complete R18 manual evidence and unit/token/production-cost caveats",
+      "Upgrade helper to validate 42 IDs and 39 declaration mappings",
+      "Re-evaluate all VERIFIED_FIXED dispositions",
+      "Update status, latest_plan, handoff, next-session prompt and cumulative PC1 records",
+      "Preserve 450/450 not independently reproduced"
+    ],
+    "model_api_calls": 0,
+    "registered_pc1_executed": false,
+    "family_c_accessed": false,
+    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+    "formal_g3": "FAIL",
+    "next_action": "Verify refs; complete documentation-only semantic evidence and handoff."
   }
 }

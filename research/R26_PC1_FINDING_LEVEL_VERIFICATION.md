@@ -144,3 +144,15 @@ R24, R52 and R53 must be re-evaluated; absent exact evidence they are PARTIALLY_
 
 Full review: research/R26_STAGE1E_PLANNER_REVIEW.md. Current state: REQUEST_CHANGES; Stage 1F required; PC1 BLOCKED.
 
+---
+
+## Stage 1F Planner correction — 2026-11-04
+
+**Decision:** REQUEST_CHANGES.
+
+The detailed 42-row audit table contains 27 VERIFIED_FIXED, 13 PARTIALLY_FIXED, 1 OPEN and 1 UNVERIFIABLE. The report summary/status/commit message state 22/15/1/1 (=39), so the disposition arithmetic is not reconciled.
+
+The claimed 42-row test map still has 34 non-existent function names: only 5 of 39 claimed test mappings match the actual file/class/function declaration. The 218 declared-function inventory is correct but is not Finding-level coverage evidence. The test-evidence file lacks exact line/assertion/source-call references.
+
+Full review: research/R26_STAGE1F_PLANNER_REVIEW.md. Stage 1G required. PC1 remains BLOCKED.
+

@@ -399,3 +399,35 @@ Next task: execute planner/GLEPPO_R26_STAGE1G_EXECUTOR_PROMPT.md. Recount dispos
 
 No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.
 
+
+
+## 16. Latest Planner decision — Stage 1G REQUEST_CHANGES (2026-11-04)
+
+Read first:
+- research/R26_STAGE1G_PLANNER_REVIEW.md
+- research/R26_STAGE1G_FINAL_FINDING_AUDIT.md
+- research/R26_STAGE1G_TEST_EVIDENCE.md
+- planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md
+- updated planner/latest_plan.md
+- updated planner/GLEPPO_R26_HANDOFF.md
+- status.json
+
+Stage 1G correctly fixes the disposition arithmetic to 27/13/1/1 = 42. The 42 test classes and 218 declared test functions are independently confirmed. However, only 37/39 claimed file/class/function/line mappings are exact; R31 and R49 names remain wrong.
+
+The semantic evidence is still incomplete:
+- generic assertion labels are not exact assertions;
+- no per-Finding source call paths or uncovered acceptance conditions;
+- R39 is mapped to a tautological same-call assertion;
+- R53 is mapped to an unrelated seed-schema test;
+- R49's related status test does not prove lifecycle transitions;
+- R19 is marked VERIFIED_FIXED while protocol status is PROPOSED / NOT APPROVED;
+- R18 lacks exact manual-evidence line references;
+- report SHA placeholders remain unresolved;
+- durable handoff files were not updated in the Stage 1G commit.
+
+Current status:
+R26_STAGE1G_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_SEMANTIC_EVIDENCE_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+
+Next task: execute planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md. Correct all mappings, enumerate exact assertions and source call paths, map every relevant test for multi-part findings, correct R39/R49/R53, re-evaluate all VERIFIED_FIXED dispositions (at minimum downgrade R19 absent formal approval), add R18 line references, and update all durable handoff files.
+
+No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.

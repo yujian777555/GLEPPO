@@ -1731,7 +1731,8 @@
       "r1_final_commit": "4d2ff06ee01146533501589b264d33ddd30ffcbe",
       "r1_planner_review_commit": "dcdcef5b2e7e68a6590d95c90c4caf453399c127",
       "r2_parent": "3d97847adf6f68dafe1f54855d27fe00e99e16ae",
-      "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e"
+      "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
+      "r2_final_commit": "34ba848c4b8cf4fa07c9583e049b0bb7b0635aab"
     },
     "hard_boundaries": {
       "production_source_changes": false,

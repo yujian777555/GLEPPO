@@ -90,3 +90,14 @@
 **R26_STAGE1F_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW**
 
 42 findings, 42 dispositions (22 FIXED, 15 PARTIAL, 1 OPEN, 1 UNVERIFIABLE). PC1 remains BLOCKED.
+
+---
+
+## Planner correction — 2026-11-04
+
+The detailed 42-row table recounts to 27 VERIFIED_FIXED, 13 PARTIALLY_FIXED, 1 OPEN and 1 UNVERIFIABLE. The report's own numeric summary and ID-list counts say 22/15/1/1; those values sum to 39 and are inconsistent with the detailed table.
+
+The test map is not an actual-declaration map. Of 39 rows claiming a test, only 5 function names match the stated class/file declarations. The other 34 function names do not exist in those classes/files. Only 5/42 rows are exact file/class/function matches. The test-evidence file does not supply the required line/assertion/source-call mapping.
+
+See research/R26_STAGE1F_PLANNER_REVIEW.md. Current Planner decision: REQUEST_CHANGES; Stage 1G required; PC1 BLOCKED.
+

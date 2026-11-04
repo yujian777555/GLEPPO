@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-04",
-  "phase": "GLEPPO_R26_STAGE1I_READY_WITH_ECOS_SCIENTIFIC_INTEGRITY_ADDENDUM",
-  "state": "R26_STAGE1H_REQUEST_CHANGES_STAGE1I_ACTIVE_PPO_UNPROVEN_PROTOCOL_RECONCILIATION_REQUIRED",
+  "phase": "GLEPPO_R26_STAGE1I_COMPLETE",
+  "state": "R26_STAGE1I_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -1534,31 +1534,19 @@
     }
   },
   "r26_stage1i": {
-    "status": "PROMPT_UPDATED_READY_NOT_STARTED",
-    "prompt": "planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md",
-    "prompt_commit": "fae138238a70119443d211dfa250dfc68ae8d43a",
-    "scope": "42_FINDING_SEMANTIC_EVIDENCE_COMPLETION_PLUS_SCIENTIFIC_INTEGRITY_HANDOFF",
-    "production_source_changes_allowed": false,
-    "test_code_changes_allowed": false,
-    "required": [
-      "Create exact semantic evidence rows for all 42 Findings",
-      "Include original acceptance criteria, exact assertions/line ranges, source symbols/call paths, intended branches and uncovered conditions",
-      "Correct R53 to status-consistency test as indirect evidence only; no direct hash invariance test exists",
-      "Cross-reference R16/R20 instrumented tests for R39 action/genotype exclusion",
-      "Complete R18 manual evidence and unit/token/production-cost caveats",
-      "Upgrade helper to validate 42 IDs and 39 declaration mappings",
-      "Re-evaluate all VERIFIED_FIXED dispositions",
-      "Update status, latest_plan, handoff, next-session prompt and cumulative PC1 records",
-      "Preserve 450/450 not independently reproduced"
-    ],
-    "model_api_calls": 0,
-    "registered_pc1_executed": false,
-    "family_c_accessed": false,
-    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
-    "formal_g3": "FAIL",
-    "next_action": "Execute Stage 1I documentation-only audit; then wait for Planner independent review. Do not execute PC1 or train.",
-    "planner_addendum": "R21_C1_NOT_OPERATOR_EVIDENCE_AND_ECOS_PROTOCOL_DRIFT",
-    "scientific_integrity_review": "research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md"
+    "findings_total": 42,
+    "dispositions": {
+      "VERIFIED_FIXED": 26,
+      "PARTIALLY_FIXED": 14,
+      "OPEN": 1,
+      "UNVERIFIABLE": 1
+    },
+    "r53_corrected": "test_mutation_status_not_checked_by_consistency_INDIRECT",
+    "r39_cross_referenced": "R16_R20_instrumented_evaluator_tests",
+    "r18_complete_evidence": true,
+    "validator_created": "_r26i_validator.py",
+    "ecos_note": "R21_C1_is_DAC_not_operator_comparison",
+    "decision": "R26_STAGE1I_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW"
   },
   "latest_planner_verified_refs": {
     "branch": "r25-handoff",

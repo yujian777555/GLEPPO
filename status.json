@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-04",
-  "phase": "GLEPPO_R26_STAGE1F_READY",
-  "state": "R26_STAGE1E_REPORT_RECEIVED_REQUEST_CHANGES_EXACT_TEST_MAP_AND_DISPOSITION_REVIEW_REQUIRED",
+  "phase": "GLEPPO_R26_STAGE1F_COMPLETE",
+  "state": "R26_STAGE1F_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW",
   "reviewed_commit": "e6ae41bba5d3554a3bb7a200e965cff932a55512",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -1263,26 +1263,20 @@
     }
   },
   "r26_stage1f": {
-    "status": "PROMPT_PREPARED_NOT_STARTED",
-    "prompt": "planner/GLEPPO_R26_STAGE1F_EXECUTOR_PROMPT.md",
-    "prompt_commit": "bb3f227c9255f099885f10aeb6192b2666a1d604",
-    "scope": "EXACT_42_FINDING_TEST_MAP_AND_DISPOSITION_RECONCILIATION",
-    "production_source_changes_allowed": false,
-    "test_code_changes_allowed": false,
-    "required": [
-      "Exact real test file/class/function/line/assertion/source-call mapping for all 42 findings",
-      "NONE where no direct test exists",
-      "Correct per-file coverage labels",
-      "Re-evaluate every disposition",
-      "At minimum R24/R52/R53 PARTIALLY_FIXED absent exact existing evidence",
-      "R18 manual cost artifact comparison",
-      "Preserve 450/450 not independently reproduced"
-    ],
-    "model_api_calls": 0,
-    "registered_pc1_executed": false,
-    "family_c_accessed": false,
-    "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
-    "formal_g3": "FAIL",
-    "next_action": "Verify refs; inspect original findings and actual test bodies; rebuild exact test map; correct dispositions and handoff; no production source/test changes."
+    "findings_total": 42,
+    "dispositions": {
+      "VERIFIED_FIXED": 22,
+      "PARTIALLY_FIXED": 15,
+      "OPEN": 1,
+      "UNVERIFIABLE": 1
+    },
+    "r24_corrected": "PARTIALLY_FIXED",
+    "r52_corrected": "PARTIALLY_FIXED",
+    "r53_corrected": "PARTIALLY_FIXED",
+    "r45_corrected": "PARTIALLY_FIXED",
+    "r18_manual_evidence": true,
+    "test_map": "42_rows_from_actual_declarations",
+    "test_evidence": "450_REPORTED_NOT_REPRODUCED",
+    "decision": "R26_STAGE1F_AUDIT_COMPLETE_REQUIRES_PLANNER_REVIEW"
   }
 }

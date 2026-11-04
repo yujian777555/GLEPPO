@@ -72,3 +72,14 @@ All class/function/line tuples verified against actual declarations.
 ## 450/450 Provenance
 
 **EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED** — no raw log or CI run available.
+
+---
+
+## Planner correction — 2026-11-04
+
+All 39 declaration mappings match actual file/class/function/line declarations. However, this document is only a declaration inventory; it does not provide exact assertion expressions, test-body ranges, source symbols/call paths, intended branch or acceptance conditions proved/uncovered.
+
+R53 remains incorrectly mapped to test_mutation_seed_contract_fails at line 130 (seed_schema mutation). The related status-consistency test at line 118 is only indirect; there is no direct status-only protocol-hash invariance test. R39 should cite R16/R20 instrumented cross-genotype tests for action/genotype exclusion. R18 needs complete manual references for token UNMEASURED, units, actual CTX distinction and production cost limitations.
+
+See research/R26_STAGE1H_PLANNER_REVIEW.md. Stage 1I required; PC1 BLOCKED.
+

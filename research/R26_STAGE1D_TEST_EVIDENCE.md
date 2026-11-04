@@ -48,3 +48,23 @@ PC1-specific tests are in test_r8_r9_r11_pc1.py through test_r54_r59.py.
 ## 450/450 Result
 
 The 450/450 result is **reproducible** via `python -m unittest discover -s tests`. However, this counts ALL tests, not just PC1-specific tests. PC1-specific tests number ~218 across 7 files.
+
+---
+
+## Planner correction — 2026-11-04
+
+The 218 figure is independently confirmed as the count of declared test functions across the seven named PC1-related suites (25+35+38+34+37+26+23). It is not proof that all 218 tests individually cover formal Findings.
+
+The per-Finding map in this report contains only five rows and uses abbreviated or nonexistent names. Exact source names include:
+- R12: test_cache_bundle_hit_adds_zero_replicas, not test_cache_bundle_hit.
+- R13: no test_validate_records function exists; relevant test names include test_missing_action_rejected and test_wrong_horizon_rejected.
+- R16: test_same_crn_tuple_gives_identical_seeds_across_genotypes.
+- R19: test_consistency_check_passes.
+- R43: test_proposed_rejects_all_flags_true.
+
+The helper scripts/_r26d_test_inspect.py inventories declarations/imports only; it does not inspect assertions or historical failure modes.
+
+No raw stdout/stderr or saved log is present. GitHub has no check runs or Actions run targeting Stage 1D commit ca0c909. Therefore 450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED.
+
+See research/R26_STAGE1D_PLANNER_REVIEW.md and execute Stage 1E before accepting the test evidence.
+

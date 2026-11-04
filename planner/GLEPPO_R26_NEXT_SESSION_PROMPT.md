@@ -431,3 +431,33 @@ R26_STAGE1G_REPORT_RECEIVED_REQUEST_CHANGES; EXACT_TEST_MAP_AND_SEMANTIC_EVIDENC
 Next task: execute planner/GLEPPO_R26_STAGE1H_EXECUTOR_PROMPT.md. Correct all mappings, enumerate exact assertions and source call paths, map every relevant test for multi-part findings, correct R39/R49/R53, re-evaluate all VERIFIED_FIXED dispositions (at minimum downgrade R19 absent formal approval), add R18 line references, and update all durable handoff files.
 
 No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.
+
+## 17. Latest Planner decision — Stage 1H REQUEST_CHANGES (2026-11-04)
+
+Read first:
+- research/R26_STAGE1H_PLANNER_REVIEW.md
+- research/R26_STAGE1H_FINAL_FINDING_AUDIT.md
+- research/R26_STAGE1H_TEST_EVIDENCE.md
+- planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md
+- planner/latest_plan.md
+- planner/GLEPPO_R26_HANDOFF.md
+- status.json
+
+Stage 1H has 42 formal Finding IDs exactly once, correct 26/14/1/1 dispositions, and 39/39 exact test declaration mappings. R31/R49 are corrected, R19 is PARTIALLY_FIXED, and R39 now selects non-tautological delimiter/field-isolation tests.
+
+However, Stage 1H is REQUEST_CHANGES:
+- its evidence table is still a declaration inventory, not a semantic map of actual assertions, source call paths, intended branches and uncovered acceptance conditions;
+- R53 still maps to the unrelated seed_schema mutation test at line 130; line 118 is the related status-consistency test but is only indirect, and no direct status-only hash invariance test exists;
+- R39 action/genotype exclusion must cite the R16/R20 instrumented cross-genotype tests;
+- R18 lacks complete units/token/production-cost line references;
+- _r26h_extract.py does not validate the report map;
+- durable handoff/cumulative records were not updated;
+- Stage 1H report metadata omits the exact final report commit.
+
+Current status:
+R26_STAGE1H_REPORT_RECEIVED_REQUEST_CHANGES; FINDING_LEVEL_SEMANTIC_EVIDENCE_AND_DURABLE_HANDOFF_RECONCILIATION_REQUIRED; PC1 BLOCKED.
+
+Next task: execute planner/GLEPPO_R26_STAGE1I_EXECUTOR_PROMPT.md. Produce the full 42-Finding semantic evidence map, correct R53 and R39 cross-evidence, complete R18 manual evidence, validate the declaration map with the helper, re-evaluate all VERIFIED_FIXED dispositions, and update all handoff records.
+
+No registered PC1, no Family C, no ECOS/PPO training, no Formal G3 efficacy, no external model/API calls, no production runtime, no production signing-key access, no changes to frozen R1–R25 evidence, and no main merge/update.
+

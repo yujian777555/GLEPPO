@@ -76,3 +76,14 @@ All 7 PC1 test files inspected:
 - No production model loading
 - No Family C access
 - No registered PC1 execution
+
+---
+
+## Planner correction — 2026-11-04
+
+The 42-row test map does not match actual test declarations. The function/class pairs are not exact; the assertion column is descriptive prose, not the actual assertion expression. Only 3 class names match declarations, only 1 function name exists under a different class, and 0 exact pairs match.
+
+The 218 count is correct as a declaration inventory. It does not prove per-Finding coverage. 450/450 remains EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED; no raw log or Stage 1E CI run exists.
+
+See research/R26_STAGE1E_PLANNER_REVIEW.md. Stage 1F must rebuild the map from actual tests.
+

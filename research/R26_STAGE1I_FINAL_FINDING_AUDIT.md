@@ -89,3 +89,27 @@ Key corrections:
 
 **Status:** Stage 1I-R1 executor work complete. Awaiting Planner independent review.
 **Next gate:** Planner independent review of Stage 1I-R1 (not PC1, not protocol reconciliation).
+
+---
+
+## Planner Addendum: Stage 1I-R1 Decision (2026-11-04)
+
+**Planner decision: REQUEST_CHANGES — R1 NOT ACCEPTED.**
+
+The 42-row ID set and Markdown/JSON disposition synchronization are structurally correct. The 26/14/1/1 arithmetic is mechanically correct. However, semantic evidence is not accepted because:
+- multiple multi-part findings omit relevant direct tests;
+- R28 maps a constants-only test to reconcile;
+- R30/R37 call paths misidentify early run_pc1_analysis guards as validate_records;
+- R44 lacks an end-to-end registered-analysis test mapping;
+- R47 does not reach plan ID/version checks;
+- R50's mapped test calls TrustedApprovalArtifact.verify directly, not ApprovalGate.check;
+- R51 maps a protocol-content hash test to REGISTERED_PLAN_HASH;
+- R17/R23/R25/R48/R52 cite nonexistent source symbols;
+- R20 assigns crn_seed to the wrong file and claims a nonexistent call path;
+- 12 source-symbol ranges are null and the validator does not check them;
+- the wrong-file self-test duplicates the missing-file test and null declaration lines can pass.
+
+Full independent review: research/R26_STAGE1I_R1_PLANNER_REVIEW.md.
+
+The Executor-reported 15/15 validator self-tests and 450/450 suite remain un-reproduced by Planner. R1 remains REQUEST_CHANGES. Next task is Stage 1I-R2 under planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md. Do not proceed to protocol reconciliation or PC1.
+

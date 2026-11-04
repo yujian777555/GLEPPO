@@ -5,7 +5,7 @@
 **Continuation branch:** r25-handoff  
 **R25 base:** a8ff1827434a88b2fef02a89aaf3e120e0a017a7  
 **R26 prompt:** planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md  
-**Current handoff state:** R26_STAGE1H_REQUEST_CHANGES; R26_STAGE1I_ACTIVE; ECOS_SCIENTIFIC_PROTOCOL_RECONCILIATION_REQUIRED
+**Current handoff state:** R26_STAGE1I_REQUEST_CHANGES; R26_STAGE1I_R1_CORRECTIVE_REQUIRED; PC1_BLOCKED
 
 ---
 
@@ -621,4 +621,76 @@ Executor must continue the existing Stage 1I task; do not restart or jump to PC1
 6. This handoff and `planner/GLEPPO_R26_NEXT_SESSION_PROMPT.md`
 
 **Immediate next action:** Executor completes Stage 1I; Planner then performs an independent semantic-evidence review. Only after acceptance may a separate ECOS protocol-reconciliation stage begin.
+
+---
+
+## 23. Stage 1I Planner independent review — REQUEST_CHANGES (2026-11-04)
+
+**Reviewed Executor commit:** a1e6e65e671c876d028492bfed164205c54df08b  
+**Parent / pre-Stage-1I work HEAD:** e2cb353037368a82b5dd9c7b53a1d40f21425750  
+**Main at review:** 6bad0b77835a2d00c62287c0c7d9d91d1d186d5e  
+**Branch:** r25-handoff, 202 ahead / 0 behind main  
+**Planner review:** research/R26_STAGE1I_PLANNER_REVIEW.md  
+**Decision:** REQUEST_CHANGES — Stage 1I NOT ACCEPTED.
+
+### 23.1 What Stage 1I did improve
+
+- R53 was corrected to test_mutation_status_not_checked_by_consistency and labeled indirect; the report correctly says this does not prove status-only hash invariance.
+- R39 added cross-genotype evaluator evidence references, but the evidence file omits the R20 test and the action-varying integration limitation still needs explicit analysis.
+- R18 has improved manual cost evidence, including stub latency, 128 planned slots, 112 actual uncached replica executions, and UNMEASURED production tokens.
+- The report correctly says R21-C1 is a DAC comparison, not an operator comparison.
+- PPO superiority over rule-based/LinUCB remains unproven.
+- No production source or tests/ files changed in the Stage 1I commit.
+- GitHub has no check runs/status entries for the exact Stage 1I SHA; 450/450 remains Executor-reported.
+
+### 23.2 Blocking defects
+
+1. Required research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.md is absent. The 73-line final audit and 34-line test-evidence note do not contain 42 Finding-level semantic rows. The 26/14/1/1 disposition count cannot be independently verified.
+2. scripts/_r26i_validator.py does not read a report map or invoke validate_report_map() in its main path; it only prints declaration inventory counts. The function also fails to check file ownership, unknown IDs, exact cardinality, NONE-row completeness, and missing source files.
+3. R39 evidence must distinguish genotype invariance tested by R16/R20 from action exclusion structurally supported by Evaluator.effective_seed_parts() lacking action/genotype inputs; no action-varying PC1 collector integration test is established. test_operator_rng_independent_of_eval_seed changes draw index, not eval_seed.
+4. R18 needs the exact COST_BASELINE.md line 44 token caveat and a per-Finding MANUAL evidence row.
+5. Stage 1I did not update latest_plan, this handoff, next-session prompt, or cumulative PC1 audit summary.
+6. status.json lost important Stage 1I prompt/scope/hard-gate/next-action fields and retains stale top-level task/gate and durable-document references.
+7. Stage 1I final report records e2cb353 as CURRENT_BRANCH_HEAD; that is the parent/pre-work HEAD, not the final Stage 1I report commit. Exact provenance must distinguish source snapshot, parent, report commit, and final HEAD.
+
+Full review and exact evidence: research/R26_STAGE1I_PLANNER_REVIEW.md.
+
+### 23.3 Next Executor task — Stage 1I-R1
+
+Prompt: planner/GLEPPO_R26_STAGE1I_CORRECTIVE_EXECUTOR_PROMPT.md.
+
+Required:
+- create a canonical JSON map and Markdown rendering with exactly 42 R12–R53 rows;
+- include original criteria, exact assertions, source call paths, intended-branch analysis, proven/indirect/uncovered conditions and row-level dispositions;
+- recompute disposition counts from the JSON map, not from a target;
+- keep R53 PARTIALLY_FIXED without direct status-only hash invariance evidence;
+- complete R39 R16/R20 and action/genotype evidence scope;
+- complete R18 manual references and units;
+- replace the helper with AST-based, file/class/function/line-aware map validation;
+- run deterministic positive and adversarial negative self-tests and record outputs;
+- update all durable records and status.json with full provenance and gates.
+
+Only documentation, the machine-readable map and non-production audit helper may change. Do not change production source or tests/.
+
+### 23.4 Current research status
+
+- ECOS remains a falsifiable research hypothesis, not a demonstrated improvement.
+- R21-C1 is DAC evidence, not operator/controller evidence.
+- Fixed-vs-adaptive operator selection remains UNTESTED.
+- PPO-vs-rule and PPO-vs-LinUCB remain UNTESTED.
+- Phase 1/R24/PC1 R4 reward/state/gamma/split/budget discrepancies remain unresolved.
+- Separate R26_ECOS_PROTOCOL_RECONCILIATION is deferred until Stage 1I is accepted.
+
+### 23.5 Hard gates
+
+- PC1 BLOCKED; R4 PROPOSED / NOT APPROVED.
+- Formal G3 FAIL.
+- Family C NOT ACCESSED.
+- Registered PC1 NOT EXECUTED.
+- Controller training NOT AUTHORIZED / NOT STARTED.
+- No production runtime/model API calls/signing-key access.
+- Main unchanged; no merge/update.
+- No cross-project artifacts.
+
+**Next action:** Stage 1I-R1 Executor completion → Planner independent review. Do not proceed to protocol reconciliation, PC1, Family C, or training.
 

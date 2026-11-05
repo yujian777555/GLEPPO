@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-05",
-  "phase": "GLEPPO_R26_STAGE1I_R2_1_1_COMPLETE",
-  "state": "R26_STAGE1I_R2_1_1_READY_FOR_PLANNER_REVIEW",
+  "phase": "GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION",
+  "state": "PLANNER_PROMPT_ISSUED_DOCUMENTATION_ONLY_AWAITING_EXECUTOR",
   "reviewed_commit": "4d2ff06ee01146533501589b264d33ddd30ffcbe",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Stage 1I-R2.1 Planner review: capture actual 21-case validator stdout/exit code, remove unsupported R41 uncovered condition, and complete R2.1 provenance in a narrow R2.1.1 closeout.",
-  "next_gate": "STAGE1I_R2_1_1_EXECUTOR_COMPLETION -> PLANNER_INDEPENDENT_REVIEW -> (ONLY_IF_ACCEPTED) R26_ECOS_PROTOCOL_RECONCILIATION",
+  "current_task": "Execute the documentation-only R26 ECOS protocol reconciliation: reconcile Phase 1, R24, PC1 R4 and active source contracts; produce a proposed canonical protocol and discrepancy report; no experiments or code changes.",
+  "next_gate": "R26_ECOS_PROTOCOL_RECONCILIATION_EXECUTOR_COMPLETION -> PLANNER_INDEPENDENT_REVIEW -> SEPARATE_AUTHORIZATION_DECISION",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -59,7 +59,10 @@
     "No PC1, Family C, controller training, model/API calls or production runtime during R2.1.",
     "Stage 1I-R2.1 Planner review is REQUEST_CHANGES; only the three narrow R2.1.1 evidence/provenance corrections are permitted.",
     "Do not repeat the 42-row audit; no production source or tests/ changes during R2.1.1.",
-    "No protocol reconciliation, PC1, Family C, controller training, model/API calls, production runtime or signing-key access during R2.1.1."
+    "No protocol reconciliation, PC1, Family C, controller training, model/API calls, production runtime or signing-key access during R2.1.1.",
+    "Stage 1I-R2.1.1 is ACCEPTED by Planner; do not repeat the 42-row semantic audit.",
+    "R26_ECOS_PROTOCOL_RECONCILIATION is documentation-only. No production source/tests, historical protocol/raw evidence/manifests, model/API, production runtime, PC1, Family C, controller training, Formal G3 efficacy or baseline experiment.",
+    "The canonical ECOS protocol produced by reconciliation must remain PROPOSED / NOT APPROVED until separate Planner review."
   ],
   "remediation_r2": {
     "date": "2026-10-27",
@@ -1593,11 +1596,16 @@
   },
   "latest_planner_verified_refs": {
     "branch": "r25-handoff",
-    "branch_head_before_followup": "5cbd5f605ac6d1df2e6f46e25c76f939163371ab",
+    "branch_head_before_status_update": "4b97f012117ace0a272fa42db8b5b79f172e29b7",
     "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
-    "ahead_by_before_followup": 234,
+    "ahead_by_before_status_update": 242,
     "behind_by": 0,
-    "main_modified": false
+    "main_modified": false,
+    "last_reviewed_work_commit": "362f343f43befc7f43c00ba5edd1059b01d523d1",
+    "last_reviewed_work_relation": {
+      "ahead": 238,
+      "behind": 0
+    }
   },
   "r26_ecos_scientific_integrity_review": {
     "status": "PLANNER_READ_ONLY_REVIEW_COMPLETE",
@@ -1850,7 +1858,7 @@
     }
   },
   "r26_stage1i_r2_1_1": {
-    "status": "EXECUTOR_COMPLETE_AWAITING_PLANNER_REVIEW",
+    "status": "ACCEPTED_BY_PLANNER",
     "date": "2026-11-05",
     "self_test_stdout_persisted": true,
     "self_test_exit_code": 0,
@@ -1880,6 +1888,63 @@
       "formal_g3": "FAIL",
       "model_api_calls": 0,
       "production_runtime_calls": 0,
+      "main_modified": false
+    },
+    "planner_review": {
+      "verdict": "ACCEPT",
+      "report": "research/R26_STAGE1I_R2_1_1_PLANNER_REVIEW.md",
+      "review_commit": "c73016045616687de8011cf2115313106af083db",
+      "reviewed_work_commit": "362f343f43befc7f43c00ba5edd1059b01d523d1",
+      "parent": "3056c3bee1a322588df485464c922080cc0ba7e9",
+      "branch_relation_at_review": {
+        "ahead": 238,
+        "behind": 0
+      },
+      "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
+      "executor_stdout_persisted": true,
+      "stdout_execution_independently_reproduced": false,
+      "ci_status_entries": 0,
+      "workflow_runs": 0,
+      "map_counts": {
+        "VERIFIED_FIXED": 25,
+        "PARTIALLY_FIXED": 15,
+        "OPEN": 1,
+        "UNVERIFIABLE": 1
+      },
+      "production_source_changes": false,
+      "test_suite_changes": false
+    }
+  },
+  "r26_ecos_protocol_reconciliation": {
+    "status": "PLANNER_PROMPT_ISSUED_DOCUMENTATION_ONLY_AWAITING_EXECUTOR",
+    "date": "2026-11-05",
+    "prompt": "planner/GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION_EXECUTOR_PROMPT.md",
+    "accepted_stage1i_r2_1_1_work_commit": "362f343f43befc7f43c00ba5edd1059b01d523d1",
+    "source_documents": [
+      "research/PHASE1_DESIGN.md",
+      "research/R24_ECOS_CONTROLLER_PREREGISTRATION.md",
+      "research/PC1_PROTOCOL_R4_PROPOSED.md",
+      "research/R26_ECOS_SCIENTIFIC_INTEGRITY_REVIEW.md",
+      "research/R26_PC1_AUDIT_SUMMARY.md"
+    ],
+    "required_deliverables": [
+      "research/R26_ECOS_PROTOCOL_RECONCILIATION.md",
+      "research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.md",
+      "research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.json"
+    ],
+    "scope": "Documentation and read-only source/test inspection only; reconcile reward, state, gamma/GAE, units, split, seeds, baselines, endpoints, budgets and stop rules.",
+    "canonical_protocol_status": "PROPOSED_NOT_APPROVED",
+    "hard_boundaries": {
+      "production_source_changes": false,
+      "test_suite_changes": false,
+      "historical_protocol_changes": false,
+      "model_api_calls": 0,
+      "production_runtime_calls": 0,
+      "pc1_execution": false,
+      "family_c_access": false,
+      "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+      "formal_g3": "FAIL",
+      "baseline_experiment": false,
       "main_modified": false
     }
   }

@@ -2,9 +2,9 @@
   "project": "GLEPPO",
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
-  "updated_at": "2026-11-04",
-  "phase": "GLEPPO_R26_STAGE1I_R2_1_REQUEST_CHANGES_R2_1_1",
-  "state": "R26_STAGE1I_R2_1_STRUCTURAL_REVIEW_ACCEPTED_EVIDENCE_AND_PROVENANCE_CLOSEOUT_REQUIRED",
+  "updated_at": "2026-11-05",
+  "phase": "GLEPPO_R26_STAGE1I_R2_1_1_COMPLETE",
+  "state": "R26_STAGE1I_R2_1_1_READY_FOR_PLANNER_REVIEW",
   "reviewed_commit": "4d2ff06ee01146533501589b264d33ddd30ffcbe",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -1593,9 +1593,9 @@
   },
   "latest_planner_verified_refs": {
     "branch": "r25-handoff",
-    "branch_head_before_status_update": "9b0cb88a69da2322ac9b3575704f896ca0ff0817",
+    "branch_head_before_followup": "5cbd5f605ac6d1df2e6f46e25c76f939163371ab",
     "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
-    "ahead_by_before_status_update": 236,
+    "ahead_by_before_followup": 234,
     "behind_by": 0,
     "main_modified": false
   },
@@ -1796,7 +1796,7 @@
     "github_commit_status_entries": 0
   },
   "r26_stage1i_r2_1": {
-    "status": "EXECUTOR_COMPLETE_PLANNER_REQUEST_CHANGES_R2_1_1",
+    "status": "REQUEST_CHANGES_NARROW_R2_1_1_REQUIRED",
     "date": "2026-11-04",
     "disposition_corrections": [
       "R39->PARTIALLY_FIXED",
@@ -1850,14 +1850,37 @@
     }
   },
   "r26_stage1i_r2_1_1": {
-    "status": "PLANNER_REQUESTED_NARROW_CORRECTIVE_CLOSEOUT",
-    "executor_prompt": "planner/GLEPPO_R26_STAGE1I_R2_1_1_CORRECTIVE_EXECUTOR_PROMPT.md",
-    "scope": [
-      "Persist actual 21-case validator stdout and exit code",
-      "Remove unsupported raw-evidence identity item from R41 uncovered acceptance conditions",
-      "Record R2.1 work commit and refresh branch/main provenance"
-    ],
-    "no_production_source_or_tests_changes": true,
-    "no_pc1_family_c_or_training": true
+    "status": "EXECUTOR_COMPLETE_AWAITING_PLANNER_REVIEW",
+    "date": "2026-11-05",
+    "self_test_stdout_persisted": true,
+    "self_test_exit_code": 0,
+    "r41_uncovered_fixed": true,
+    "provenance_complete": true,
+    "dispositions": {
+      "VERIFIED_FIXED": 25,
+      "PARTIALLY_FIXED": 15,
+      "OPEN": 1,
+      "UNVERIFIABLE": 1
+    },
+    "disposition_arithmetic": "25+15+1+1=42",
+    "provenance": {
+      "r2_work_commit": "34ba848c4b8cf4fa07c9583e049b0bb7b0635aab",
+      "r2_provenance_followup": "da7a6c7bbd09f1ebca5bf6080dffc78e15615115",
+      "r2_1_parent": "f0569b1e0ab97372f5ae0bf86e564ae17bdca61f",
+      "r2_1_work_commit": "5cbd5f605ac6d1df2e6f46e25c76f939163371ab",
+      "r2_1_planner_review_parent": "3056c3bee1a322588df485464c922080cc0ba7e9",
+      "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e"
+    },
+    "hard_boundaries": {
+      "production_source_changes": false,
+      "test_suite_changes": false,
+      "registered_pc1_executed": false,
+      "family_c_accessed": false,
+      "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+      "formal_g3": "FAIL",
+      "model_api_calls": 0,
+      "production_runtime_calls": 0,
+      "main_modified": false
+    }
   }
 }

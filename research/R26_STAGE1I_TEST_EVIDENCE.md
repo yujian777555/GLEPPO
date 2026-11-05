@@ -119,3 +119,45 @@ Dispositions from JSON: 28/12/1/1 = 42
 Self-test: 21/21 PASS (exit code 0). New: end_line_beyond_eof_rejected with SRC_RANGE_END_OUT_OF_FILE diagnostic.
 Map validation: PASSED (42 findings, 39 mapped, 3 NONE).
 Dispositions: 25/15/1/1 = 42 (mechanically derived).
+
+---
+
+## R2.1.1 Validator Self-Test Evidence (2026-11-05)
+
+**Command:** `python scripts/_r26i_validator.py --self-test`
+**Captured by:** Executor (not independently reproduced by Planner; no CI run available)
+**Exit code:** 0
+
+**Actual stdout (verbatim):**
+
+`
+======================================================================
+R26 Stage 1I-R2 Validator Self-Test Results
+======================================================================
+  [PASS] valid_map_passes
+  [PASS] wrong_file_owner_rejected
+  [PASS] wrong_class_rejected
+  [PASS] wrong_function_rejected
+  [PASS] wrong_start_line_rejected
+  [PASS] null_start_line_rejected
+  [PASS] null_end_line_rejected
+  [PASS] null_src_start_rejected
+  [PASS] wrong_src_range_rejected
+  [PASS] missing_id_rejected
+  [PASS] duplicate_id_rejected
+  [PASS] unknown_id_rejected
+  [PASS] malformed_none_rejected
+  [PASS] missing_file_rejected
+  [PASS] wrong_cardinality_rejected
+  [PASS] invalid_schema_rejected
+  [PASS] invalid_branch_rejected
+  [PASS] invalid_harness_rejected
+  [PASS] empty_assertion_rejected
+  [PASS] invalid_evidence_type_rejected
+  [PASS] end_line_beyond_eof_rejected
+
+Total: 21 tests, 21 passed, 0 failed
+Overall: ALL PASS
+`
+
+Note: This is Executor-captured output. The Planner statically inspected the validator but did not independently execute the self-test.

@@ -2530,9 +2530,9 @@ Arithmetic: 1 OPEN + 15 PARTIALLY_FIXED + 1 UNVERIFIABLE + 25 VERIFIED_FIXED = 4
 
 **Proven acceptance conditions:** Roundtrip; Tamper detection; Defensive copy; Hash verification
 **Indirectly supported:** Deterministic artifact via save_plan_artifact
-**Uncovered acceptance conditions:** End-to-end registered analysis consumption of the verified artifact (behavioral test); Record artifact hash/path/identity in raw evidence
+**Uncovered acceptance conditions:** End-to-end registered analysis consumption of the verified artifact (behavioral test)
 
-**Disposition rationale:** 4 artifact lifecycle tests (roundtrip, tamper, defensive copy, wrong hash) are direct evidence. BUT registered analysis end-to-end consumption of the verified artifact is NOT behaviorally tested. This criterion is R41's own original requirement and is not erased by R44's source-level inspection. R44 partial limitation preserved: source shows run_pc1_analysis loads artifact, but no E2E test proves it.
+**Disposition rationale:** 4 artifact lifecycle tests (roundtrip, tamper, defensive copy, wrong hash) are direct evidence. BUT registered analysis end-to-end consumption of the verified artifact is NOT behaviorally tested. This criterion is R41's own original requirement and is not erased by R44's source-level inspection. R44 partial limitation preserved: source shows run_pc1_analysis loads artifact, but no E2E test proves it. Future recommendation (not an original acceptance criterion): record artifact hash/path/identity in raw evidence.
 
 ---
 

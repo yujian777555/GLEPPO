@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-05",
-  "phase": "R26_ECOS_PROTOCOL_R1_1_COMPLETE",
-  "state": "R26_ECOS_PROTOCOL_R1_1_READY_FOR_PLANNER_REVIEW",
+  "phase": "R26_ECOS_PROTOCOL_R1_2_FINAL_DOC_CORRECTIVE",
+  "state": "PLANNER_REQUEST_CHANGES_R1_2_DOCUMENTATION_ONLY",
   "reviewed_commit": "4d2ff06ee01146533501589b264d33ddd30ffcbe",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "R1.1 corrective pass complete. Awaiting Planner review.",
-  "next_gate": "PLANNER_REVIEW_OF_ECOS_PROTOCOL_R1_1",
+  "current_task": "R1.1 Planner review REQUEST_CHANGES. Execute one final narrow R1.2 documentation consistency pass; do not run code or experiments.",
+  "next_gate": "R1_2_EXECUTOR_COMPLETION -> PLANNER_INDEPENDENT_REVIEW -> SEPARATE_PROTOCOL_AMENDMENT_AND_EXPERIMENT_AUTHORIZATION",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -45,19 +45,19 @@
     "Fixed-vs-adaptive, PPO-vs-rule, and PPO-vs-identical-state contextual Bandit superiority remain untested.",
     "Do not silently reconcile or overwrite Phase 1, R24, PC1 R4, or shared-code reward specifications; a separate Planner-reviewed protocol reconciliation is required after Stage 1I acceptance.",
     "No PC1 execution, Family C access, controller training, Formal G3 efficacy, model/API calls, or production runtime is authorized by the Stage 1I documentation task.",
-    "Stage 1I Planner decision is REQUEST_CHANGES; do not advance until Stage 1I-R1 is independently accepted.",
+    "HISTORICAL/SUPERSEDED: Stage 1I Planner decision is REQUEST_CHANGES; do not advance until Stage 1I-R1 is independently accepted. Current Stage 1I R2.1.1 status is ACCEPTED; do not treat this historical gate as active.",
     "The reported 26/14/1/1 dispositions are not independently verified because the 42-row map is absent.",
     "No PC1, Family C, controller training, Formal G3 efficacy, production runtime, or model/API call is authorized by Stage 1I-R1.",
     "Only documentation, machine-readable evidence map, and non-production audit helper may change; no production source or test-suite changes.",
-    "Stage 1I-R1 is REQUEST_CHANGES and is not accepted; only Stage 1I-R2 can satisfy the current gate.",
+    "HISTORICAL/SUPERSEDED: Stage 1I-R1 is REQUEST_CHANGES and is not accepted; only Stage 1I-R2 can satisfy the current gate. Current Stage 1I R2.1.1 status is ACCEPTED; do not treat this historical gate as active.",
     "Do not treat the mechanically correct 26/14/1/1 arithmetic as accepted semantic dispositions.",
     "Stage 1I-R2 may modify documentation, JSON/Markdown evidence maps and the non-production audit helper only; no production source or tests/ changes.",
     "No protocol reconciliation, PC1, Family C, controller training, model/API calls or production runtime during Stage 1I-R2.",
-    "Stage 1I-R2 Planner decision is REQUEST_CHANGES; do not enter protocol reconciliation until R2.1 is independently accepted.",
+    "HISTORICAL/SUPERSEDED: Stage 1I-R2 Planner decision is REQUEST_CHANGES; do not enter protocol reconciliation until R2.1 is independently accepted. Current Stage 1I R2.1.1 status is ACCEPTED; do not treat this historical gate as active.",
     "R2 Executor-reported 28/12/1/1 dispositions are not accepted; expected corrected counts after R39/R41/R48 downgrades are 25/15/1/1.",
     "R39 must not claim a shared canonical helper: evaluator.effective_seed_parts and pc1.crn_seed currently use different serialized schemas.",
     "No PC1, Family C, controller training, model/API calls or production runtime during R2.1.",
-    "Stage 1I-R2.1 Planner review is REQUEST_CHANGES; only the three narrow R2.1.1 evidence/provenance corrections are permitted.",
+    "HISTORICAL/SUPERSEDED: Stage 1I-R2.1 Planner review is REQUEST_CHANGES; only the three narrow R2.1.1 evidence/provenance corrections are permitted. Current Stage 1I R2.1.1 status is ACCEPTED; do not treat this historical gate as active.",
     "Do not repeat the 42-row audit; no production source or tests/ changes during R2.1.1.",
     "No protocol reconciliation, PC1, Family C, controller training, model/API calls, production runtime or signing-key access during R2.1.1.",
     "Stage 1I-R2.1.1 is ACCEPTED by Planner; do not repeat the 42-row semantic audit.",
@@ -67,7 +67,11 @@
     "R1.1 is one focused documentation-only correction. Update existing reconciliation/canonical files in place; do not create duplicate protocol artifacts.",
     "Do not claim the 32-D state is used by a controller: state_vector is not wired into evolution.run_episode and PC1 StateActionRecord stores state_id, not the feature vector.",
     "Do not claim action-independent paired seeds at all call sites: evolution.py currently includes operator_name in replicate_id.",
-    "No PC1 execution, Family C payload/gold access, controller training, model/API calls, production runtime, baseline experiments or Formal G3 efficacy during R1.1."
+    "No PC1 execution, Family C payload/gold access, controller training, model/API calls, production runtime, baseline experiments or Formal G3 efficacy during R1.1.",
+    "R1.1 Planner review is REQUEST_CHANGES; R1.2 is a final documentation-only consistency pass.",
+    "Do not run or edit scripts/ helper artifacts during R1.2; record their provenance/non-execution only.",
+    "No PC1, Family C payload/gold, controller training, model/API, local model inference, production runtime, baseline experiments or Formal G3 efficacy during R1.2.",
+    "Canonical ECOS protocol remains PROPOSED_NOT_APPROVED; no experiment authorization is implied by documentation review."
   ],
   "remediation_r2": {
     "date": "2026-10-27",
@@ -1611,7 +1615,10 @@
     "last_reviewed_executor_relation_to_main": {
       "ahead": 244,
       "behind": 0
-    }
+    },
+    "reviewed_branch_head": "728bc356bbd4b776839d5f185eb6a2084f0f4de8",
+    "ahead_by": 251,
+    "r1_1_planner_review_commit": "afc22a00415604c7784dd3e9b071942db14790eb"
   },
   "r26_ecos_scientific_integrity_review": {
     "status": "PLANNER_READ_ONLY_REVIEW_COMPLETE",
@@ -1634,8 +1641,8 @@
   "durable_docs_updated": {
     "planner_review_commit": "dfd7ef909ba4ee97e01c4bb57b0177ae8869d61c",
     "corrective_prompt_commit": "824523ae00a21c0c91f31a3225cc4c3177d37003",
-    "latest_plan_commit": "7438131cc554814e9b5d00e835e2ff50e2f45819",
-    "handoff_commit": "cabb364e795dfb3edb1a6ef1d8ec249d4b5936f1",
+    "latest_plan_commit": "cbce8db3ebccd84a472e1d66a7d79720ec6c3830",
+    "handoff_commit": "def9a6d2610c102d69dbd2e86ff99e7f564d220e",
     "next_session_prompt_commit": "30473e32524e23a34adb8b0583419f8b7436f98f",
     "pc1_audit_summary_commit": "50018741338349dbaefc7318655ba68b711c83f6",
     "r1_corrective_report": "research/R26_STAGE1I_R1_CORRECTIVE_REPORT.md",
@@ -1656,7 +1663,11 @@
     "r2_planner_review_commit": "f67cdac2a8a81d1f2bb2be73e305679af1fe0852",
     "r2_1_executor_prompt": "planner/GLEPPO_R26_STAGE1I_R2_1_CORRECTIVE_EXECUTOR_PROMPT.md",
     "r2_1_executor_prompt_commit": "ec4c2972807c1d8b8ff8e230a46d99d37259e013",
-    "r2_corrective_report_review_addendum_commit": "7289786783ba9c03a511a3c1ba65f3bcd86aa6b9"
+    "r2_corrective_report_review_addendum_commit": "7289786783ba9c03a511a3c1ba65f3bcd86aa6b9",
+    "r1_1_planner_review": "research/R26_ECOS_PROTOCOL_R1_1_PLANNER_REVIEW.md",
+    "r1_1_planner_review_commit": "afc22a00415604c7784dd3e9b071942db14790eb",
+    "r1_2_corrective_prompt": "planner/GLEPPO_R26_ECOS_PROTOCOL_R1_2_FINAL_DOC_CORRECTIVE_PROMPT.md",
+    "r1_2_corrective_prompt_commit": "f5a329e7596729194cca7b50792dffa374b76cb7"
   },
   "r26_stage1i_r1": {
     "status": "REQUEST_CHANGES_NOT_ACCEPTED",
@@ -1922,7 +1933,7 @@
     }
   },
   "r26_ecos_protocol_reconciliation": {
-    "status": "REQUEST_CHANGES_BY_PLANNER",
+    "status": "R1_1_REQUEST_CHANGES_BY_PLANNER",
     "date": "2026-11-05",
     "base_commit": "362f343f43befc7f43c00ba5edd1059b01d523d1",
     "deliverables": {
@@ -1931,28 +1942,44 @@
       "canonical_protocol_json": "research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.json"
     },
     "key_decisions": {
-      "reward": "shared_generation_reward_clip_delta_best_valid_mean",
-      "gamma": 0.95,
-      "r24_gamma_error": "0.99_is_preregistration_error",
-      "state_dim": 32,
-      "action_count": 5,
-      "baselines": "tiered_mandatory_strong_optional"
+      "reward": "R24 effective_success(child)-effective_success(parent) is not shown equivalent to shared generation reward. Shared reward is a proposed future choice requiring formal amendment.",
+      "gamma": "gamma=0.95 is proposed; it supersedes R24 gamma=0.99 only after formal amendment and approval. R24 value is not labelled a proven error.",
+      "state": "32 exact feature names; state_vector not integrated into evolution/controller; budget_used_frac is a source defect; pop_size_norm normalization unresolved.",
+      "action": "Five operators; action/operator indirectly enters evaluation seed through replicate_id; CRN pairing not currently enforced across arms.",
+      "pc1": "R4 is materially redesigned versus Phase 1 sample design; sample-size/horizon justification unresolved; exact R4 decision rule retained; INCONCLUSIVE -> SR1 STOP.",
+      "baselines": "B6 Q-learning mandatory; B5 FM rewrite external reference; core comparison fairness contract still requires explicit definition.",
+      "split": "Actual tasks.py/manifest splits are disjoint; R24 Confirm is distinct, unmaterialized final-evaluation split, not Family C or validation.",
+      "budget": "Maximum full episode candidate evaluations=204 (24 initialization + 180 offspring); early stop is specified in Phase 1 but absent from current evolution.run_episode.",
+      "resource_scope": "R24 call/token scope unresolved; use separate resource ledgers."
     },
     "unresolved_blockers": [
-      "exact_32_feature_normalization_constants",
-      "r24_confirm_vs_family_c_task_identity",
-      "seed_schema_dual_path_unification_deferred",
-      "no_controller_implementation"
+      "Reconciliation A-K active matrix contains superseded R1 claims.",
+      "Feature missing-value semantics and source line references need correction.",
+      "PC1 exact PASS/FAIL/INCONCLUSIVE CI decision rule needs complete Markdown/JSON encoding.",
+      "All five split SHA256 values and manifest provenance need complete encoding; generator Git SHA is not recorded in manifest.",
+      "Core baseline fairness contract not fully specified or enforced.",
+      "Production operator LLM-call path/cost provenance needs verification.",
+      "Seed schema unification and action-independent evaluation seeds require future code change.",
+      "PC1 sample-size/horizon justification unresolved.",
+      "PC1 reward provenance cannot currently be verified from StateActionRecord.",
+      "R24 resource-limit call/token scope unresolved.",
+      "No controller implementation; PPO architecture/observation/rollout/advantage/optimizer semantics unresolved.",
+      "budget_used_frac source defect and pop_size_norm normalization unresolved.",
+      "R24 Confirm task identities unavailable."
     ],
     "hard_boundaries": {
       "production_source_changes": false,
       "test_suite_changes": false,
+      "scripts_changes": false,
+      "task_data_or_manifest_changes": false,
+      "family_c_payload_or_gold_access": false,
+      "model_api_calls": 0,
+      "local_model_inference": false,
+      "production_runtime_calls": 0,
       "registered_pc1_executed": false,
-      "family_c_accessed": false,
       "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
       "formal_g3": "FAIL",
-      "model_api_calls": 0,
-      "production_runtime_calls": 0,
+      "baseline_experiment": false,
       "main_modified": false
     },
     "provenance": {
@@ -1999,27 +2026,104 @@
       "F8_q_learning_mandatory_b5_external",
       "F9_inconclusive_sr1_stop",
       "F10_json_schema_1_1"
-    ]
+    ],
+    "executor_r1_commit": "7423d5f7c753430a2f361400e1b39cd5b125aaf6",
+    "executor_r1_1_commit": "728bc356bbd4b776839d5f185eb6a2084f0f4de8",
+    "planner_review_r1_1": {
+      "verdict": "REQUEST_CHANGES",
+      "report": "research/R26_ECOS_PROTOCOL_R1_1_PLANNER_REVIEW.md",
+      "commit": "afc22a00415604c7784dd3e9b071942db14790eb",
+      "findings": [
+        "Active A-K reconciliation matrix retains superseded R1 claims and conflicts with R1.1 correction summary.",
+        "Most feature details incorrectly claim missing values default to 0.0 although state_vector requires most inputs; source lines 48-152.",
+        "PC1 R4 exact three-way CI decision rule is not fully encoded in Markdown/JSON.",
+        "Four split SHA256 values are missing from JSON; Markdown abbreviates hashes; manifest/generator provenance needs clarification.",
+        "Core baseline fairness contract lacks explicit common initialization, seed, state visibility, budget, stop and cost parity.",
+        "Operator LLM call counts are not fully source-qualified; prompt_local_edit is current deterministic 0-call.",
+        "Nested status/latest-plan/handoff contain stale R1/R1.1 states and decisions.",
+        "15 unrelated scripts appear in R1-to-R1.1 compare range; no data/source/tests changes were seen, but provenance/non-execution needs recording."
+      ],
+      "accepted_r1_1_corrections": [
+        "Exact ordered 32 FEATURE_NAMES",
+        "budget_used_frac source defect identified",
+        "No controller consumes 32-D state; PC1 stores state_id only",
+        "R24 reward not equivalent to shared generation reward",
+        "Action-dependent replicate_id seed defect acknowledged",
+        "Phase 1 versus R4 sample design marked materially redesigned",
+        "Actual split template assignment and R24 Confirm distinction",
+        "204 maximum episode slots: 24 init + 180 offspring",
+        "R24 resource scope unresolved",
+        "B6 mandatory and B5 external",
+        "gamma supersession requires formal amendment",
+        "INCONCLUSIVE -> SR1 STOP"
+      ],
+      "no_family_c_payload_or_gold_access_by_planner": true,
+      "no_scripts_executed_by_planner": true,
+      "no_experiments_or_training_authorized": true
+    }
   },
   "r26_ecos_protocol_reconciliation_r1_1": {
+    "status": "REQUEST_CHANGES_BY_PLANNER",
+    "date": "2026-11-05",
+    "executor_commit": "728bc356bbd4b776839d5f185eb6a2084f0f4de8",
+    "planner_review_report": "research/R26_ECOS_PROTOCOL_R1_1_PLANNER_REVIEW.md",
+    "planner_review_commit": "afc22a00415604c7784dd3e9b071942db14790eb",
+    "verdict": "REQUEST_CHANGES",
+    "accepted_corrections": "F1-F10 substantive corrections retained; see planner review accepted section.",
+    "remaining_findings": [
+      "F1_stale_A_K_matrix",
+      "F2_missing_value_semantics",
+      "F3_PC1_CI_decision_rule",
+      "F4_split_hash_provenance",
+      "F5_baseline_fairness",
+      "F6_operator_LLM_call_accounting",
+      "F7_status_handoff_sync",
+      "F8_unrelated_scripts_provenance"
+    ],
+    "branch": "r25-handoff",
+    "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
+    "ahead_by": 251,
+    "behind_by": 0,
+    "main_modified": false,
+    "canonical_status": "PROPOSED_NOT_APPROVED"
+  },
+  "latest_protocol_review": {
+    "reviewed_executor_commit": "728bc356bbd4b776839d5f185eb6a2084f0f4de8",
+    "planner_verdict": "REQUEST_CHANGES",
+    "planner_report": "research/R26_ECOS_PROTOCOL_R1_1_PLANNER_REVIEW.md",
+    "planner_review_commit": "afc22a00415604c7784dd3e9b071942db14790eb",
+    "reviewed_branch": "r25-handoff",
+    "reviewed_main": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
+    "branch_ahead_by": 251,
+    "branch_behind_by": 0,
+    "main_modified": false,
+    "combined_ci_statuses": [],
+    "workflow_runs": []
+  },
+  "r26_ecos_protocol_reconciliation_r1_2": {
     "status": "CORRECTIVE_TASK_ISSUED",
     "date": "2026-11-05",
-    "prompt": "planner/GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION_R1_CORRECTIVE_PROMPT.md",
-    "planner_review_report": "research/R26_ECOS_PROTOCOL_RECONCILIATION_PLANNER_REVIEW.md",
+    "planner_review_report": "research/R26_ECOS_PROTOCOL_R1_1_PLANNER_REVIEW.md",
+    "planner_review_commit": "afc22a00415604c7784dd3e9b071942db14790eb",
+    "executor_prompt": "planner/GLEPPO_R26_ECOS_PROTOCOL_R1_2_FINAL_DOC_CORRECTIVE_PROMPT.md",
+    "executor_prompt_commit": "f5a329e7596729194cca7b50792dffa374b76cb7",
+    "scope": "Final narrow documentation consistency pass; six existing files only; no source/tests/scripts/data changes or code execution.",
     "required_deliverables": [
       "research/R26_ECOS_PROTOCOL_RECONCILIATION.md",
       "research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.md",
-      "research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.json"
+      "research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.json",
+      "status.json",
+      "planner/latest_plan.md",
+      "planner/GLEPPO_R26_HANDOFF.md"
     ],
-    "revision": "R1.1",
-    "scope": "Documentation-only corrective pass; update existing deliverables in place; no duplicate protocol files.",
     "hard_boundaries": {
       "production_source_changes": false,
       "test_suite_changes": false,
-      "historical_protocol_changes": false,
+      "scripts_changes": false,
       "task_data_or_manifest_changes": false,
       "family_c_payload_or_gold_access": false,
       "model_api_calls": 0,
+      "local_model_inference": false,
       "production_runtime_calls": 0,
       "registered_pc1_executed": false,
       "controller_training": "NOT_AUTHORIZED_NOT_STARTED",

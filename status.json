@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-05",
-  "phase": "R26_ECOS_PROTOCOL_R1_2_FINAL_DOC_CORRECTIVE",
-  "state": "PLANNER_REQUEST_CHANGES_R1_2_DOCUMENTATION_ONLY",
+  "phase": "R26_ALGORITHM_PILOT",
+  "state": "USER_PRIORITY_ALGORITHM_PILOT_ISSUED",
   "reviewed_commit": "4d2ff06ee01146533501589b264d33ddd30ffcbe",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "R1.1 Planner review REQUEST_CHANGES. Execute one final narrow R1.2 documentation consistency pass; do not run code or experiments.",
-  "next_gate": "R1_2_EXECUTOR_COMPLETION -> PLANNER_INDEPENDENT_REVIEW -> SEPARATE_PROTOCOL_AMENDMENT_AND_EXPERIMENT_AUTHORIZATION",
+  "current_task": "User prioritized algorithm experiments. R1.2 documentation pass is paused. Execute the bounded non-registered StubLLM adaptive-operator pilot on Family A/B train/validation only.",
+  "next_gate": "PAIRED_SEED_AND_RNG_FIX_ON_EXPERIMENT_BRANCH -> 324_EPISODE_STUB_PILOT -> PLANNER_REVIEW_OF_MEASURED_RESULTS",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -1667,7 +1667,9 @@
     "r1_1_planner_review": "research/R26_ECOS_PROTOCOL_R1_1_PLANNER_REVIEW.md",
     "r1_1_planner_review_commit": "afc22a00415604c7784dd3e9b071942db14790eb",
     "r1_2_corrective_prompt": "planner/GLEPPO_R26_ECOS_PROTOCOL_R1_2_FINAL_DOC_CORRECTIVE_PROMPT.md",
-    "r1_2_corrective_prompt_commit": "f5a329e7596729194cca7b50792dffa374b76cb7"
+    "r1_2_corrective_prompt_commit": "f5a329e7596729194cca7b50792dffa374b76cb7",
+    "algorithm_pilot_prompt": "planner/GLEPPO_R26_ALGORITHM_PILOT_PROMPT.md",
+    "algorithm_pilot_prompt_commit": "a2e6bda538389f418445b844eafcf5a0684cb845"
   },
   "r26_stage1i_r1": {
     "status": "REQUEST_CHANGES_NOT_ACCEPTED",
@@ -2101,7 +2103,7 @@
     "workflow_runs": []
   },
   "r26_ecos_protocol_reconciliation_r1_2": {
-    "status": "CORRECTIVE_TASK_ISSUED",
+    "status": "PAUSED_BY_USER_PRIORITY",
     "date": "2026-11-05",
     "planner_review_report": "research/R26_ECOS_PROTOCOL_R1_1_PLANNER_REVIEW.md",
     "planner_review_commit": "afc22a00415604c7784dd3e9b071942db14790eb",
@@ -2130,6 +2132,93 @@
       "formal_g3": "FAIL",
       "baseline_experiment": false,
       "main_modified": false
+    },
+    "pause_reason": "User explicitly prioritized algorithm experiments over the final documentation-only R1.2 pass.",
+    "paused_on": "2026-11-05",
+    "next_step": "Resume R1.2 only after the bounded algorithm pilot is reported or the user reprioritizes."
+  },
+  "r26_algorithm_pilot": {
+    "status": "EXECUTOR_TASK_ISSUED",
+    "date": "2026-11-05",
+    "branch": "r26-algorithm-pilot",
+    "base_commit": "aa16c23101c1b387e8617910601da9a5d96231c1",
+    "prompt": "planner/GLEPPO_R26_ALGORITHM_PILOT_PROMPT.md",
+    "prompt_commit": "46215bbdc7213e7850e83c2ae45b3a1df44609c5",
+    "experiment_type": "UNREGISTERED_DEVELOPMENT_PILOT_NOT_PC1_NOT_FORMAL_G3",
+    "research_question": "Does adaptive selection of the five Agent-evolution operators outperform fixed, random and rule-based selection on Family A/B train/validation tasks?",
+    "arms": [
+      "fixed_prompt_local_edit",
+      "fixed_prompt_critique_rewrite",
+      "fixed_tool_subset_edit",
+      "fixed_workflow_step_edit",
+      "fixed_crossover",
+      "uniform_random",
+      "B2_rule",
+      "LinUCB_pilot_context_v1",
+      "tabular_Q_learning_pilot_context_v1"
+    ],
+    "data_scope": {
+      "train": [
+        "data/train_A.jsonl",
+        "data/train_B.jsonl"
+      ],
+      "validation": [
+        "data/val_A.jsonl",
+        "data/val_B.jsonl"
+      ],
+      "family_c_payload_or_gold_access": false,
+      "test_C_loaded": false
+    },
+    "config": {
+      "mu": 8,
+      "lambda": 4,
+      "T": 15,
+      "n_eval": 2,
+      "seeds": [
+        11,
+        22
+      ],
+      "train_tasks": 12,
+      "validation_tasks": 6,
+      "arms": 9,
+      "train_episodes": 216,
+      "validation_episodes": 108,
+      "total_episodes": 324,
+      "planned_slots_per_episode": 136,
+      "total_planned_slots": 44064,
+      "train_seeds": [
+        11,
+        22
+      ],
+      "validation_seeds": [
+        1011,
+        1022
+      ]
+    },
+    "backend": "StubLLM only; no model/API/local production inference; surrogate-only",
+    "required_pre_experiment_correction": [
+      "Make offspring evaluation replicate_id independent of operator/action.",
+      "Separate parent-selection RNG from crossover mate RNG.",
+      "Add focused seed-pairing and RNG-stream tests.",
+      "Extend generation history with op_delta_mean, valid_rate, valid_count and invalid_count for controller-visible pilot observations."
+    ],
+    "outputs": [
+      "experiments/r26_operator_pilot/RUN_MANIFEST.json",
+      "experiments/r26_operator_pilot/RAW_EPISODES.jsonl",
+      "experiments/r26_operator_pilot/SUMMARY.md",
+      "experiments/r26_operator_pilot/SUMMARY.json"
+    ],
+    "hard_boundaries": {
+      "main_modified": false,
+      "registered_pc1_executed": false,
+      "family_c_accessed": false,
+      "formal_g3": "FAIL",
+      "controller_training": "PPO_NOT_AUTHORIZED_NOT_STARTED",
+      "production_runtime_calls": 0,
+      "model_api_calls": 0,
+      "local_model_inference": false,
+      "production_qwen_used": false,
+      "baseline_pilot": "AUTHORIZED_BY_USER_AS_UNREGISTERED_FAMILY_A_B_STUB_ONLY"
     }
   }
 }

@@ -1,81 +1,86 @@
-# GLEPPO 最新执行计划 — R26 ECOS Protocol R1.2 Final Documentation Consistency
+# GLEPPO 最新执行计划 — R26 Adaptive-Operator Algorithm Pilot
 
 **仓库：** `yujian777555/GLEPPO`  
-**分支：** `r25-handoff`  
-**更新时间：** 2026-11-05  
-**R2.1.1 Planner decision：** ACCEPT（已关闭）  
-**R26 R1 Planner decision：** REQUEST_CHANGES  
-**R26 R1.1 Planner decision：** REQUEST_CHANGES（实质纠正已完成，剩余文档一致性问题）  
-**Reviewed R1.1 commit：** `728bc356bbd4b776839d5f185eb6a2084f0f4de8`  
-**R1.1 Planner review：** `research/R26_ECOS_PROTOCOL_R1_1_PLANNER_REVIEW.md`  
-**R1.2 Executor prompt：** `planner/GLEPPO_R26_ECOS_PROTOCOL_R1_2_FINAL_DOC_CORRECTIVE_PROMPT.md`
+**当前分支：** `r26-algorithm-pilot`  
+**基础提交：** `aa16c23101c1b387e8617910601da9a5d96231c1`  
+**用户最新指令：** 抓紧做算法实验  
+**更新时间：** 2026-11-05
 
----
+## 一、优先级调整
 
-## 一、当前决策
+用户明确要求将精力从文档审查转向算法实验。因此：
 
-**R1.1 不接受为最终 canonical protocol。只执行一次范围严格受限的 R1.2 文档一致性修正。**
+- R1.2 最终文档一致性修正：**PAUSED_BY_USER_PRIORITY**，并未接受或关闭。
+- 当前主任务：执行 R26 自适应算子选择算法 pilot。
+- 实验分支与文档审查分支隔离；不得修改/合并 main。
 
-R1.1 已经正确修正了核心问题：32 个特征名称、Reward 冲突、Action-dependent seed、PC1 采样差异、204 预算、split 类型、B6/B5 基线定位和 γ 修正案要求。
+## 二、当前实验问题
 
-第二轮复审发现的剩余问题：
+**自适应选择 Agent 演化算子，是否比固定、随机和规则选择带来更好的任务成功率？**
 
-1. Reconciliation A–K 主矩阵仍保留 R1 的错误结论，与末尾 R1.1 修订记录冲突。
-2. 32 维 feature 表把大量必需输入误标为缺失值自动补 0；源码实际没有这种 imputation。
-3. PC1 R4 的 PASS/FAIL/INCONCLUSIVE 三分支 CI 规则未完整进入 JSON 和 Markdown。
-4. JSON 缺少 train_A/train_B/val_A/val_B 的完整 split SHA-256；manifest/source provenance 不完整。
-5. Baseline fairness 缺少共同初始化、配对 seed、state visibility、预算、停止规则和独立成本账本的明确合同。
-6. Operator LLM-call 账本与当前 source 描述不一致，尤其 prompt_local_edit 当前实现是确定性 0 call。
-7. status.json 的嵌套 R1/R1.1 记录仍含旧结论；latest_plan/handoff 尚未记录最终 R1.1 review 状态。
-8. R1→R1.1 compare range 携带 15 个 scripts helper 文件；必须记录来源与未执行事实，不得运行或修改。
+五个算子：
+`prompt_local_edit`, `prompt_critique_rewrite`, `tool_subset_edit`, `workflow_step_edit`, `crossover`.
 
-详细证据见 Planner review。
+九个实验臂：
+- 五个固定算子臂；
+- Uniform Random；
+- Phase 1 B2 Rule；
+- LinUCB（pilot_context_v1）；
+- Tabular Q-learning（pilot_context_v1）。
 
-## 二、R1.2 唯一任务
+暂不训练 PPO。先确认是否存在超越 Random 和 Rule 的自适应收益。
 
-执行：
+## 三、立即执行任务
 
-`planner/GLEPPO_R26_ECOS_PROTOCOL_R1_2_FINAL_DOC_CORRECTIVE_PROMPT.md`
+Executor 提示词：
 
-仅修改以下六个现有文件：
+`planner/GLEPPO_R26_ALGORITHM_PILOT_PROMPT.md`
 
-- `research/R26_ECOS_PROTOCOL_RECONCILIATION.md`
-- `research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.md`
-- `research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.json`
-- `status.json`
-- `planner/latest_plan.md`
-- `planner/GLEPPO_R26_HANDOFF.md`
+核心工作：
+1. 在实验分支修复 offspring evaluation replicate_id 的 action-dependence。
+2. 分离 parent-selection RNG 与 crossover mate RNG。
+3. 实现配对种子/RNG 回归测试。
+4. 使用 StubLLM 运行 324 个 episode 的初步 pilot。
+5. 只使用 Family A/B train 与 validation；禁止加载 Family C。
+6. 产出逐 episode 原始数据、运行 manifest、汇总统计和下一步决策。
 
-不得创建重复协议文件。不得修改 scripts、生产源码、tests、数据、manifest 或历史协议。不得执行项目代码或 helper scripts。
+## 四、冻结的 Pilot 配置
 
-## 三、科学状态与未解决门槛
+| 项目 | 配置 |
+|---|---:|
+| μ / λ | 8 / 4 |
+| T | 15 |
+| n_eval | 2 |
+| Evolution seeds | 11, 22 |
+| TRAIN | 7 train_A + 5 train_B |
+| VALIDATION | 3 val_A + 3 val_B |
+| Arms | 9 |
+| TRAIN episodes | 216 |
+| VALIDATION episodes | 108 |
+| Total episodes | 324 |
+| Planned slots / episode | 136 |
+| Total planned slots | 44,064 |
 
-- ECOS 仍是待证伪研究假设；固定 vs 自适应、PPO vs rule、PPO vs LinUCB 尚未证明优势。
-- R24 reward 与 shared generation reward 不等价；采用 shared reward 需正式 amendment。
-- γ=0.95 supersedes R24 γ=0.99 only after formal amendment.
-- 32-D state 未接入 controller；budget_used_frac 是 source defect；pop_size_norm normalization 未解决。
-- Evaluation seed 仍通过 replicate_id 间接受 operator 影响，CRN 跨算子配对未实现。
-- PC1 R4 的样本量/预测 horizon 相对 Phase 1 的统计充分性未解决。
-- PC1 reward provenance 尚不能由当前记录 schema 验证。
-- R24 call/token budget scope 未解决。
-- PPO architecture/observation/rollout/optimizer semantics 未实现。
-- Baseline fairness contract 需要明确；B5 是外部参考，不是相同动作集对照。
+LinUCB/Q-learning 只在 TRAIN 学习，VALIDATION 冻结评估。固定算子中最优臂只允许用 TRAIN 选择。
 
-## 四、硬门禁
+## 五、解释边界
 
-- PC1 BLOCKED；PC1 R4 PROPOSED / NOT APPROVED。
-- Formal G3 FAIL。
-- Family C NOT ACCESSED；不得读取 task payload/gold。
-- Registered PC1 NOT EXECUTED。
-- Controller training NOT AUTHORIZED / NOT STARTED。
-- 无模型/API 调用、local model inference、生产 runtime、signing-key 访问。
-- 不执行 PC1、baseline pilot、Formal G3 efficacy 或任何实验。
-- 不修改生产源码、tests、scripts、数据、manifest、raw evidence 或历史协议。
-- 不更新/合并 main，不 reset/rebase/force-push。
-- 不混用其他项目的代码、数据或报告。
+该 pilot 是**未注册开发性实验**，仅用于快速筛选机制，不是 PC1，不是 Formal G3，也不是论文确认性证据。StubLLM 是确定性策略门控替身，不代表真实 Qwen/LLM Agent 性能。
 
-## 五、下一关口
+如 adaptive 未能同时超过 Random 与 Rule，不进入 PPO；先检查算子效应、观测信号和任务机制。若有一致正向信号，再扩大种子/任务规模。
 
-**R1.2 文档一致性修正完成 → Planner 独立复审。**
+## 六、硬门禁
 
-这是最后一轮文档一致性修正，不再启动新的宽泛协议审计。R1.2 通过后，仍需单独评估正式协议 amendment、seed 修复和 PC1 授权；本阶段不授予实验权限。
+- Family C 未访问；不读取 `test_C.jsonl`。
+- 不执行 PC1 R4、Formal G3 或生产 Qwen。
+- 不调用模型 API，不进行本地真实模型推理。
+- 不训练 PPO，不因本 pilot 自动获得后续实验授权。
+- 不修改 main、不合并实验分支。
+- 不修改数据集、manifest、gold 或历史协议。
+- 不运行无关 audit/helper scripts。
+
+## 七、下一关口
+
+**配对种子/RNG 修复 → 324-episode StubLLM pilot → Planner 审查真实结果。**
+
+完成后立即报告正结果、负结果、失败与成本，不再延长文档循环。

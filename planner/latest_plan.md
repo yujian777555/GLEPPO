@@ -1,96 +1,73 @@
-# GLEPPO 最新执行计划 — R26 ECOS Protocol Reconciliation
+# GLEPPO 最新执行计划 — R26 ECOS Protocol Reconciliation R1.1 Corrective
 
 **仓库：** `yujian777555/GLEPPO`  
 **分支：** `r25-handoff`  
 **更新时间：** 2026-11-05  
-**最近接受的 Executor work commit：** `362f343f43befc7f43c00ba5edd1059b01d523d1`  
-**Stage 1I-R2.1.1 Planner review：** ACCEPT  
-**Planner review report：** `research/R26_STAGE1I_R2_1_1_PLANNER_REVIEW.md`  
-**下一阶段 Executor prompt：** `planner/GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION_EXECUTOR_PROMPT.md`
+**R2.1.1 Planner decision：** ACCEPT（已关闭）  
+**R26 Reconciliation R1 Planner decision：** REQUEST_CHANGES  
+**Reviewed Executor commit：** `7423d5f7c753430a2f361400e1b39cd5b125aaf6`  
+**Planner review：** `research/R26_ECOS_PROTOCOL_RECONCILIATION_PLANNER_REVIEW.md`  
+**R1.1 Executor prompt：** `planner/GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION_R1_CORRECTIVE_PROMPT.md`
 
 ---
 
 ## 一、当前决策
 
-**Stage 1I-R2.1.1 已接受。进入 R26_ECOS_PROTOCOL_RECONCILIATION，限文档与只读源码审查。**
+**R26 ECOS Protocol Reconciliation R1 不接受。执行一次聚焦的 R1.1 文档修正。**
 
-R2.1.1 完成并接受的内容：
+不是否定 ECOS 研究方向，也不需要重启 Stage 1I。当前问题是 R1 的拟议合同尚不能准确反映源代码和历史协议。
 
-- R39/R41/R48 保持 PARTIALLY_FIXED，42 项处置为 25/15/1/1。
-- 42 个唯一 ID R12–R53，JSON/Markdown 处置一致。
-- Validator 的 21 个自测名称和顺序与代码中的 21 个检查项一致；实际 stdout 和 exit code 0 已由 Executor 持久化。
-- R41 不再把 raw-evidence identity 作为原始验收条件；唯一未完成条件是 registered analysis 端到端消费验证 artifact 的行为测试。
-- R2.1、R2.1.1 SHA 链已记录。
-- R2.1.1 仅修改证据映射、测试证据与 status；没有生产源码或 `tests/` 变更。
+Planner 独立复核发现的主要问题：
 
-**证据限制：** 21/21 stdout 与 exit code 是 Executor-captured；Planner 未独立执行。该提交无 GitHub CI status/workflow run。450/450 仍为 EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED。
+1. JSON 只列出 25 个 feature label，却声明 32 维；`budget_used_frac` 源码当前重复使用 `gen_t/T`。
+2. R24 reward 与 Phase 1/shared generation reward 并未证明等价；PC1 estimator 消费预先提供的 `gen_rewards`，不在估计器中重新计算共享 reward。
+3. `evolution.py` 用含 `operator_name` 的哈希生成 `replicate_id`，导致 action 间接进入 effective evaluation seed。
+4. Phase 1 PC1（≥200 states、≥20 rollouts、h=5）与 PC1 R4（100 states、3 Q-rollouts、h=3）是实质设计变化；R1 未充分说明。
+5. Phase 1 模板分割与实际 `tasks.py` / manifest 冲突；R24 Confirm 无已提交任务身份，且不能擅自改称 validation。
+6. 每个 evolution episode 的 180 slots 漏掉初始化；当前最大计划量是 24 + 180 = 204，而不是 180，先前所称 32 个初始化 slots 也不正确。
+7. R24 resource scope、PC1 CI/stop rules、baseline tier 和 JSON provenance 仍有缺口。
 
-完整决定：`research/R26_STAGE1I_R2_1_1_PLANNER_REVIEW.md`。
+完整证据与行号见 Planner review。
 
-## 二、当前科学事实
+## 二、R1.1 唯一任务
 
-ECOS 保留为可证伪研究假设，但算法优势仍未得到证明：
+执行：
 
-- R21-C1 是 LLM arithmetic execution 与 DAC 的比较，不是固定/自适应算子或控制器比较。
-- Fixed-vs-adaptive operator selection：UNTESTED。
-- PPO-vs-rule：UNTESTED。
-- PPO-vs-LinUCB/contextual Bandit：UNTESTED。
-- Reward validity、32-D state utility、delayed effects 均不能仅凭设计文档认定成立。
+`planner/GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION_R1_CORRECTIVE_PROMPT.md`
 
-## 三、R26_ECOS_PROTOCOL_RECONCILIATION 的目标
-
-Phase 1、R24、PC1 R4 和 active shared code 尚未形成单一可执行协议。重点核对：
-
-1. decision / generation / episode / rollout / evaluation replica / CTX 的单位和嵌套关系；
-2. 32-D state 的精确字段、时序、缺失值、归一化和泄漏风险；
-3. 五个 operator 的 ID、语义和每代动作规则；
-4. Phase 1/shared-code/PC1 generation reward 与 R24 immediate effective-success reward 的冲突；
-5. gamma 0.95 vs 0.99、GAE lambda 与 PC1 return 的一致性；
-6. Train / Validation / Confirm / Family C 的任务身份、种子和隔离；
-7. 固定、随机、规则、LinUCB、PPO、Q-learning、FM rewrite 与 ablation 的基线层级；
-8. 主终点、PC1 myopia diagnostic、有效性和成本指标；
-9. 候选任务执行、PC1 slots、训练算力、model calls、tokens 的独立预算账本；
-10. evaluator 与 PC1 的 CRN seed serialization 是否真正统一；
-11. SR1、PC1 PASS/FAIL/INCONCLUSIVE 与 R24 stopping rules 的衔接。
-
-## 四、本阶段交付
-
-执行 `planner/GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION_EXECUTOR_PROMPT.md`，形成：
+必须修正已有三个文件，不创建重复文件：
 
 - `research/R26_ECOS_PROTOCOL_RECONCILIATION.md`
 - `research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.md`
 - `research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.json`
 
-并更新 `status.json`、本文件和 `planner/GLEPPO_R26_HANDOFF.md`。
+重点是逐维 32-feature 表、reward 冲突、PC1 reward provenance、action-dependent seed call site、PC1 sample design、task split、204-slot episode budget、R24 call/token scope、baseline fairness、CI margins 和 stop rules。
 
-所有历史协议保留原样。新协议必须标记 **PROPOSED / NOT APPROVED**，列出 unresolved items 和后续代码改造清单。不得用当前实现存在某个值作为唯一选择理由，也不得静默覆盖 R24/Phase 1 历史设计。
+R1.1 仍必须是 **PROPOSED / NOT APPROVED**。历史 Phase 1、R24、PC1 R4 文件不得修改。
 
-## 五、硬门禁
+## 三、科学结论保持不变
+
+- ECOS 是可证伪研究假设，不是已经证实有效的方法。
+- Fixed-vs-adaptive、PPO-vs-rule、PPO-vs-LinUCB 仍未验证。
+- R21-C1 是 DAC/arithmetic 比较，不是 operator/controller 比较。
+- Reward validity、32-D state utility 和 delayed effects 均未获得正式实验支持。
+- 不因本轮协议修订而提前训练 PPO。
+
+## 四、硬门禁
 
 - PC1 BLOCKED；PC1 R4 PROPOSED / NOT APPROVED。
 - Formal G3 FAIL。
-- Family C NOT ACCESSED；不得加载、检查 gold、执行或调参。
+- Family C NOT ACCESSED；不得读取 task payload/gold、执行或调参。
 - Registered PC1 NOT EXECUTED。
 - Controller training NOT AUTHORIZED / NOT STARTED。
-- 不调用模型/API，不运行生产 runtime，不访问 signing key。
-- 本阶段不执行 PC1、不训练、不做 baseline pilot。
-- 不修改生产源码、`tests/`、Phase 1/R24/PC1 R4 历史协议、数据、raw evidence 或 manifests。
+- 无模型/API 调用、生产 runtime、signing-key 访问。
+- 不执行 PC1、baseline pilot、Formal G3 efficacy 或任何实验。
+- 不修改生产源码、`tests/`、历史协议、数据、manifest、raw evidence。
 - 不更新/合并 main，不 reset/rebase/force-push。
 - 不混用其他项目的代码、数据或报告。
 
-**下一关口：** Protocol reconciliation Executor completion → Planner independent review。只有新协议经 Planner 独立审查后，才讨论后续授权门槛；本阶段本身不授予任何实验权限。
+## 五、下一关口
 
----
+**R1.1 Executor 文档修正完成 → Planner 独立复审。**
 
-## R26 ECOS Protocol Reconciliation (2026-11-05)
-
-文档专用阶段完成。交付物：
-- research/R26_ECOS_PROTOCOL_RECONCILIATION.md（差异矩阵，A-K 全维度）
-- research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.md（拟议合同）
-- research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.json（机器可读镜像）
-
-关键决策：共享 reward（Phase 1 + 实现一致）、γ=0.95（R24 γ=0.99 为错误）、32 维 state、5 算子、tiered baselines。
-
-未解决：特征归一化常数、R24 confirm ≠ Family C、种子 schema 双路径、无 controller 实现。
-
-**状态：** PROPOSED / NOT APPROVED。等待 Planner 独立复核。
+本轮只允许一次聚焦修正。通过之前，不进入 PC1 执行或控制器训练授权讨论。

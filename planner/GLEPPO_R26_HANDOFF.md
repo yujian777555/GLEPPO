@@ -793,3 +793,66 @@ Read `research/R26_STAGE1I_R2_PLANNER_REVIEW.md` and execute `planner/GLEPPO_R26
 ## Stage 1I-R2.1 (2026-11-04)
 
 R2.1 complete. R39/R41/R48 -> PARTIALLY_FIXED. 25/15/1/1=42. Validator 21/21 PASS. Awaiting Planner review.
+
+
+---
+
+## 25. Stage 1I-R2.1.1 Planner independent review — ACCEPT (2026-11-05)
+
+**Reviewed work commit:** `362f343f43befc7f43c00ba5edd1059b01d523d1`  
+**Parent:** `3056c3bee1a322588df485464c922080cc0ba7e9`  
+**Planner review:** `research/R26_STAGE1I_R2_1_1_PLANNER_REVIEW.md`  
+**Decision:** ACCEPT — Stage 1I-R2.1.1 complete.
+
+Independent remote checks:
+
+- Branch HEAD at review: `362f343f43befc7f43c00ba5edd1059b01d523d1`.
+- Exactly one work commit beyond the stated parent.
+- 238 ahead / 0 behind main; main remains `6bad0b77835a2d00c62287c0c7d9d91d1d186d5e`.
+- Exactly four changed files: semantic map JSON/Markdown, test evidence and status.
+- No production source or `tests/` changes.
+- No combined commit statuses or workflow runs for the exact work commit.
+
+The 21 persisted stdout names/order match the 21 `check(...)` cases in the committed validator. Executor-captured exit code is 0. The Planner did not independently execute the test; this remains Executor-attested, not CI-backed.
+
+R41 now retains the five original acceptance criteria and only one uncovered original condition: end-to-end registered-analysis consumption of the verified artifact. The raw-evidence identity item is labelled only as a future recommendation.
+
+Map verification: 42 unique IDs R12–R53; JSON/Markdown synchronized; 25 VERIFIED_FIXED / 15 PARTIALLY_FIXED / 1 OPEN / 1 UNVERIFIABLE.
+
+**R2.1.1 is closed. Do not repeat the Stage 1I audit.**
+
+## 26. R26_ECOS_PROTOCOL_RECONCILIATION — next Executor task (2026-11-05)
+
+Executor prompt: `planner/GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION_EXECUTOR_PROMPT.md`.
+
+This is a separate documentation-only phase to reconcile:
+
+- `research/PHASE1_DESIGN.md`;
+- `research/R24_ECOS_CONTROLLER_PREREGISTRATION.md`;
+- `research/PC1_PROTOCOL_R4_PROPOSED.md`;
+- current shared reward, evolution, PC1 and evaluator code;
+- state/action/episode/rollout/CTX definitions;
+- train/validation/confirm/Family C split and seed isolation;
+- baselines, primary outcomes, PC1 diagnostics and stopping rules;
+- evaluation, PC1, training, model-call, token and wall-clock budgets.
+
+Required deliverables:
+
+1. `research/R26_ECOS_PROTOCOL_RECONCILIATION.md`
+2. `research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.md`
+3. `research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.json`
+
+The new contract must remain **PROPOSED / NOT APPROVED**. Preserve historical documents and report exact source citations, unresolved decisions and deferred implementation work.
+
+### Scientific status
+
+- R21-C1 is DAC vs LLM arithmetic execution, not an operator/controller comparison.
+- Fixed-vs-adaptive, PPO-vs-rule and PPO-vs-LinUCB remain UNTESTED.
+- Reward validity, state utility and delayed effects remain hypotheses.
+- R39's separate evaluator/PC1 seed serialization paths must not be described as one implemented canonical helper without proof.
+
+### Hard gates
+
+PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; registered PC1 NOT EXECUTED; controller training NOT AUTHORIZED / NOT STARTED. No model/API calls, production runtime, signing-key access, PC1, Family C, training, Formal G3 efficacy or baseline experiment during reconciliation.
+
+**Next gate:** Reconciliation Executor completion → Planner independent review. No experiment authorization is implied.

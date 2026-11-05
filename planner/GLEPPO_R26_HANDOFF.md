@@ -861,6 +861,39 @@ PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; 
 
 三份交付物已创建：差异矩阵 + 拟议合同 + JSON 镜像。文档专用，无实验/训练授权。等待 Planner 复核。
 
-## R1.1 ECOS Protocol Correction (2026-11-05)
 
-Planner R1: REQUEST_CHANGES. R1.1 corrective pass complete (F1-F10). Three deliverables updated in place. Awaiting Planner independent review.
+---
+
+## 27. R26 ECOS Protocol Reconciliation R1 — Planner REQUEST_CHANGES (2026-11-05)
+
+**Reviewed Executor commit:** `7423d5f7c753430a2f361400e1b39cd5b125aaf6`  
+**Planner report:** `research/R26_ECOS_PROTOCOL_RECONCILIATION_PLANNER_REVIEW.md`  
+**Decision:** REQUEST_CHANGES. The proposed canonical contract is not approved.
+
+The three deliverables exist and the JSON parses, but source-to-contract review found material issues:
+
+1. The JSON feature lists contain 25 labels, not 32; the source has 32 exact names. `budget_used_frac` currently duplicates `gen_t/T`, and the feature utility is not wired into the evolution loop. PC1 records contain state IDs, not a 32-D state vector.
+2. R24's child-parent effective-success reward is not shown equivalent to the Phase 1/shared generation reward. PC1 `compute_r_hat`/`compute_q_hat` consume pre-supplied reward traces and do not recompute `generation_reward`.
+3. `evolution.py` derives `replicate_id` from `stable_seed(episode_id,t,j,operator_name)`; the operator therefore indirectly enters effective evaluation seed. The action-independent seed claim is false at this call site.
+4. Phase 1 PC1 design (≥200 states, ≥20 rollouts, horizon 5) differs materially from PC1 R4 (100 states, 3 Q-rollouts, horizon 3); R4 CI margins/bootstrap details and INCONCLUSIVE → SR1 STOP were not preserved.
+5. Phase 1 template ranges conflict with actual `tasks.py`/manifest disjoint train/validation sets. R24 Confirm is registered as final evaluation, has no task manifest, and cannot be reclassified as additional validation.
+6. Candidate-evaluation budget omits initialization: 8×3 + 15×4×3 = 204 maximum planned evaluations per full episode. The 32-init-slot statement is also incorrect. Current `run_episode` does not implement Phase 1's best_success ≥0.95 early stop.
+7. R24 resource limits are assigned to controller-training-only without source support; B6 is demoted despite Phase 1 saying include it; B5 is an external baseline outside the action set; CI/stop rules and JSON provenance are incomplete.
+
+The review report contains exact file/line evidence and the accepted items. Main remains unchanged; no production source or tests were changed. Only manifest metadata was inspected; Family C payload/gold was not accessed.
+
+### R1.1 corrective task
+
+Executor prompt: `planner/GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION_R1_CORRECTIVE_PROMPT.md`.
+
+Update the existing reconciliation Markdown, canonical Markdown and JSON in place; do not create duplicate protocol files. Correct all F1–F10 findings, update status/latest plan/handoff, and stop for Planner review.
+
+The corrected contract must remain **PROPOSED / NOT APPROVED**.
+
+### Hard gates retained
+
+PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; registered PC1 NOT EXECUTED; controller training NOT AUTHORIZED / NOT STARTED. No model/API calls, production runtime, signing-key access, PC1, Family C, training, baseline experiment or Formal G3 efficacy during R1.1.
+
+## R1.1 ECOS Protocol Correction Complete (2026-11-05)
+
+R1.1 corrective pass complete (F1-F10). Three deliverables updated in place. Awaiting Planner independent review.

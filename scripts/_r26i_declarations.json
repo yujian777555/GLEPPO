@@ -1,0 +1,3418 @@
+[
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestIntegrated",
+    "function": "test_dry_run_plan_and_analysis_agree",
+    "start_line": 351,
+    "end_line": 354,
+    "assertions": [
+      {
+        "line": 353,
+        "expr": "self.assertEqual(plan.planned_total_slots, PLANNED_TOTAL_SLOTS)"
+      },
+      {
+        "line": 354,
+        "expr": "self.assertTrue(plan.within_cap)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestIntegrated",
+    "function": "test_zero_cost_check_passes",
+    "start_line": 347,
+    "end_line": 349,
+    "assertions": [
+      {
+        "line": 349,
+        "expr": "self.assertTrue(r[\"all_pass\"], r[\"checks\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR12BudgetLedger",
+    "function": "test_cache_bundle_hit_adds_zero_replicas",
+    "start_line": 44,
+    "end_line": 48,
+    "assertions": [
+      {
+        "line": 47,
+        "expr": "self.assertEqual(bl.actual_replicas_run, 2, \"1 bundle hit must not add replicas\")"
+      },
+      {
+        "line": 48,
+        "expr": "self.assertEqual(bl.cache_hit_bundles, 1)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR12BudgetLedger",
+    "function": "test_init_evaluation",
+    "start_line": 37,
+    "end_line": 42,
+    "assertions": [
+      {
+        "line": 40,
+        "expr": "self.assertEqual(bl.planned_slots, 8)"
+      },
+      {
+        "line": 41,
+        "expr": "self.assertEqual(bl.actual_replicas_run, 8)"
+      },
+      {
+        "line": 42,
+        "expr": "self.assertEqual(bl.cache_hit_bundles, 0)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR12BudgetLedger",
+    "function": "test_invalid_offspring_zero_ctx",
+    "start_line": 50,
+    "end_line": 54,
+    "assertions": [
+      {
+        "line": 53,
+        "expr": "self.assertEqual(bl.actual_replicas_run, 0)"
+      },
+      {
+        "line": 54,
+        "expr": "self.assertEqual(bl.invalid_offspring, 2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR12BudgetLedger",
+    "function": "test_multiple_generations",
+    "start_line": 56,
+    "end_line": 64,
+    "assertions": [
+      {
+        "line": 61,
+        "expr": "self.assertEqual(bl.planned_slots, 8 + 8 + 8)"
+      },
+      {
+        "line": 62,
+        "expr": "self.assertEqual(bl.actual_replicas_run, 6 + 8 + 4)"
+      },
+      {
+        "line": 63,
+        "expr": "self.assertEqual(bl.cache_hit_bundles, 1 + 0 + 2)"
+      },
+      {
+        "line": 64,
+        "expr": "self.assertEqual(bl.invalid_offspring, 2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR12BudgetLedger",
+    "function": "test_planned_independent_of_cache",
+    "start_line": 89,
+    "end_line": 92,
+    "assertions": [
+      {
+        "line": 92,
+        "expr": "self.assertEqual(bl.planned_slots, 8, \"planned slots are conservative, not reduced by cache\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR12BudgetLedger",
+    "function": "test_shared_evaluator_deltas",
+    "start_line": 66,
+    "end_line": 87,
+    "assertions": [
+      {
+        "line": 85,
+        "expr": "self.assertEqual(bl.actual_replicas_run, 2, \"cache hit contributes 0\")"
+      },
+      {
+        "line": 86,
+        "expr": "self.assertEqual(bl.cache_hit_bundles, 1)"
+      },
+      {
+        "line": 87,
+        "expr": "self.assertEqual(bl.planned_slots, 8)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR13FailClosed",
+    "function": "test_cluster_conflict_rejected",
+    "start_line": 126,
+    "end_line": 130,
+    "assertions": [
+      {
+        "line": 129,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR13FailClosed",
+    "function": "test_duplicate_key_rejected",
+    "start_line": 132,
+    "end_line": 136,
+    "assertions": [
+      {
+        "line": 135,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR13FailClosed",
+    "function": "test_extra_immediate_wrong_length_rejected",
+    "start_line": 159,
+    "end_line": 162,
+    "assertions": [
+      {
+        "line": 161,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR13FailClosed",
+    "function": "test_invalid_action_rejected",
+    "start_line": 138,
+    "end_line": 141,
+    "assertions": [
+      {
+        "line": 140,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR13FailClosed",
+    "function": "test_invalid_role_rejected",
+    "start_line": 143,
+    "end_line": 146,
+    "assertions": [
+      {
+        "line": 145,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR13FailClosed",
+    "function": "test_missing_action_rejected",
+    "start_line": 111,
+    "end_line": 114,
+    "assertions": [
+      {
+        "line": 113,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR13FailClosed",
+    "function": "test_no_default_zeros_for_missing_actions",
+    "start_line": 164,
+    "end_line": 170,
+    "assertions": [
+      {
+        "line": 169,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR13FailClosed",
+    "function": "test_nonfinite_reward_rejected",
+    "start_line": 121,
+    "end_line": 124,
+    "assertions": [
+      {
+        "line": 123,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR13FailClosed",
+    "function": "test_registered_shape_requires_100_states",
+    "start_line": 148,
+    "end_line": 157,
+    "assertions": [
+      {
+        "line": 156,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR13FailClosed",
+    "function": "test_wrong_horizon_rejected",
+    "start_line": 116,
+    "end_line": 119,
+    "assertions": [
+      {
+        "line": 118,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR14SampleRoles",
+    "function": "test_extra_immediate_does_not_pollute_q_hat",
+    "start_line": 197,
+    "end_line": 203,
+    "assertions": [
+      {
+        "line": 202,
+        "expr": "self.assertAlmostEqual(q1[(\"s000\", 0)], q2[(\"s000\", 0)],\n                               \"extra_immediate must not change Q_hat\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR14SampleRoles",
+    "function": "test_q_hat_excludes_extra_immediate",
+    "start_line": 185,
+    "end_line": 189,
+    "assertions": [
+      {
+        "line": 189,
+        "expr": "self.assertAlmostEqual(q_hat[(\"s000\", 0)], 0.1 + 0.95 * 0.1 + 0.95**2 * 0.1)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR14SampleRoles",
+    "function": "test_r_hat_includes_extra_immediate",
+    "start_line": 191,
+    "end_line": 195,
+    "assertions": [
+      {
+        "line": 195,
+        "expr": "self.assertAlmostEqual(r_hat[(\"s000\", 0)], (0.1 + 0.1 + 0.1 + 0.9) / 4)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR15DryRunPlan",
+    "function": "test_plan_schedule_covers_all_units",
+    "start_line": 222,
+    "end_line": 229,
+    "assertions": [
+      {
+        "line": 227,
+        "expr": "self.assertEqual(len(q_units), 100 * 5 * 3)"
+      },
+      {
+        "line": 228,
+        "expr": "self.assertEqual(len(extra_units), 100 * 5 * 1)"
+      },
+      {
+        "line": 229,
+        "expr": "self.assertEqual(len(col_units), 40)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR15DryRunPlan",
+    "function": "test_plan_structure",
+    "start_line": 214,
+    "end_line": 220,
+    "assertions": [
+      {
+        "line": 216,
+        "expr": "self.assertEqual(plan.n_states, 100)"
+      },
+      {
+        "line": 217,
+        "expr": "self.assertEqual(plan.n_actions, 5)"
+      },
+      {
+        "line": 218,
+        "expr": "self.assertEqual(plan.q_rollouts, 3)"
+      },
+      {
+        "line": 219,
+        "expr": "self.assertEqual(plan.horizon, 3)"
+      },
+      {
+        "line": 220,
+        "expr": "self.assertEqual(plan.extra_immediate, 1)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR15DryRunPlan",
+    "function": "test_plan_within_hard_cap",
+    "start_line": 208,
+    "end_line": 212,
+    "assertions": [
+      {
+        "line": 210,
+        "expr": "self.assertTrue(plan.within_cap)"
+      },
+      {
+        "line": 211,
+        "expr": "self.assertEqual(plan.planned_total_slots, PLANNED_TOTAL_SLOTS)"
+      },
+      {
+        "line": 212,
+        "expr": "self.assertLessEqual(plan.planned_total_slots, HARD_CAP_SLOTS)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR15DryRunPlan",
+    "function": "test_registered_execution_refused",
+    "start_line": 231,
+    "end_line": 233,
+    "assertions": [
+      {
+        "line": 232,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR16SeedContract",
+    "function": "test_cache_hit_still_genotype_specific",
+    "start_line": 290,
+    "end_line": 293,
+    "assertions": [
+      {
+        "line": 293,
+        "expr": "self.assertFalse(r.from_cache)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR16SeedContract",
+    "function": "test_cache_no_collision_across_state_rollout",
+    "start_line": 285,
+    "end_line": 288,
+    "assertions": [
+      {
+        "line": 288,
+        "expr": "self.assertFalse(r.from_cache, \"same eval_seed but different rollout_id must not cache-collide\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR16SeedContract",
+    "function": "test_different_rollout_different_seed",
+    "start_line": 264,
+    "end_line": 271,
+    "assertions": [
+      {
+        "line": 271,
+        "expr": "self.assertNotEqual(s1, s2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR16SeedContract",
+    "function": "test_different_state_different_seed",
+    "start_line": 255,
+    "end_line": 262,
+    "assertions": [
+      {
+        "line": 262,
+        "expr": "self.assertNotEqual(s1, s2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR16SeedContract",
+    "function": "test_eval_seed_override_is_authoritative",
+    "start_line": 273,
+    "end_line": 283,
+    "assertions": [
+      {
+        "line": 283,
+        "expr": "self.assertNotEqual(s1, s2, \"different eval_seed must produce different RNG seeds\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR16SeedContract",
+    "function": "test_operator_rng_independent_of_eval_seed",
+    "start_line": 295,
+    "end_line": 298,
+    "assertions": [
+      {
+        "line": 298,
+        "expr": "self.assertNotEqual(s_op, s_op2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR16SeedContract",
+    "function": "test_same_crn_identical_across_genotypes",
+    "start_line": 246,
+    "end_line": 253,
+    "assertions": [
+      {
+        "line": 253,
+        "expr": "self.assertEqual(s1, s2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR17Evidence",
+    "function": "test_evidence_contains_provenance",
+    "start_line": 312,
+    "end_line": 327,
+    "assertions": [
+      {
+        "line": 318,
+        "expr": "self.assertIn(\"protocol_version\", ev)"
+      },
+      {
+        "line": 319,
+        "expr": "self.assertIn(\"estimator_version\", ev)"
+      },
+      {
+        "line": 320,
+        "expr": "self.assertIn(\"manifest_hash\", ev)"
+      },
+      {
+        "line": 321,
+        "expr": "self.assertIn(\"runtime_revision\", ev)"
+      },
+      {
+        "line": 322,
+        "expr": "self.assertIn(\"evaluator_version\", ev)"
+      },
+      {
+        "line": 323,
+        "expr": "self.assertIn(\"records\", ev)"
+      },
+      {
+        "line": 324,
+        "expr": "self.assertIn(\"bootstrap\", ev)"
+      },
+      {
+        "line": 325,
+        "expr": "self.assertIn(\"D\", ev)"
+      },
+      {
+        "line": 326,
+        "expr": "self.assertIn(\"input_record_hash\", ev)"
+      },
+      {
+        "line": 327,
+        "expr": "self.assertEqual(ev[\"manifest_hash\"], \"abc123\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR17Evidence",
+    "function": "test_evidence_records_have_required_fields",
+    "start_line": 329,
+    "end_line": 335,
+    "assertions": [
+      {
+        "line": 335,
+        "expr": "self.assertIn(key, rec_ev)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r12_r17.py",
+    "class": "TestR17Evidence",
+    "function": "test_no_gold_labels_in_evidence",
+    "start_line": 337,
+    "end_line": 342,
+    "assertions": [
+      {
+        "line": 341,
+        "expr": "self.assertNotIn(\"gold\", ev_str.lower().replace(\"gold_check\", \"\"))"
+      },
+      {
+        "line": 342,
+        "expr": "self.assertNotIn(\"gold_label\", ev_str.lower())"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR19ProtocolFreeze",
+    "function": "test_budget_arithmetic",
+    "start_line": 75,
+    "end_line": 77,
+    "assertions": [
+      {
+        "line": 76,
+        "expr": "self.assertEqual(PLANNED_TOTAL_SLOTS, 45440)"
+      },
+      {
+        "line": 77,
+        "expr": "self.assertEqual(HARD_CAP_SLOTS, 50000)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR19ProtocolFreeze",
+    "function": "test_canonical_matches_code",
+    "start_line": 67,
+    "end_line": 73,
+    "assertions": [
+      {
+        "line": 68,
+        "expr": "self.assertEqual(CANONICAL_PROTOCOL[\"protocol_version\"], PROTOCOL_VERSION)"
+      },
+      {
+        "line": 69,
+        "expr": "self.assertEqual(CANONICAL_PROTOCOL[\"n_states\"], 100)"
+      },
+      {
+        "line": 70,
+        "expr": "self.assertEqual(CANONICAL_PROTOCOL[\"n_actions\"], 5)"
+      },
+      {
+        "line": 71,
+        "expr": "self.assertEqual(CANONICAL_PROTOCOL[\"q_rollouts\"], 3)"
+      },
+      {
+        "line": 72,
+        "expr": "self.assertEqual(CANONICAL_PROTOCOL[\"horizon\"], 3)"
+      },
+      {
+        "line": 73,
+        "expr": "self.assertEqual(CANONICAL_PROTOCOL[\"extra_immediate\"], 1)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR19ProtocolFreeze",
+    "function": "test_consistency_check_passes",
+    "start_line": 63,
+    "end_line": 65,
+    "assertions": [
+      {
+        "line": 65,
+        "expr": "self.assertTrue(r[\"all_pass\"], r[\"checks\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR19ProtocolFreeze",
+    "function": "test_estimator_definition_present",
+    "start_line": 82,
+    "end_line": 86,
+    "assertions": [
+      {
+        "line": 84,
+        "expr": "self.assertIn(\"r_hat\", est)"
+      },
+      {
+        "line": 85,
+        "expr": "self.assertIn(\"q_hat\", est)"
+      },
+      {
+        "line": 86,
+        "expr": "self.assertIn(\"Q-rollout first rewards + extra_immediate\", est[\"r_hat\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR19ProtocolFreeze",
+    "function": "test_protocol_status_not_approved",
+    "start_line": 79,
+    "end_line": 80,
+    "assertions": [
+      {
+        "line": 80,
+        "expr": "self.assertIn(\"PROPOSED\", PROTOCOL_STATUS)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR20CRNContract",
+    "function": "test_cache_hit_for_identical_key",
+    "start_line": 148,
+    "end_line": 151,
+    "assertions": [
+      {
+        "line": 151,
+        "expr": "self.assertTrue(r.from_cache)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR20CRNContract",
+    "function": "test_cache_no_hit_for_different_genotype",
+    "start_line": 158,
+    "end_line": 161,
+    "assertions": [
+      {
+        "line": 161,
+        "expr": "self.assertFalse(r.from_cache)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR20CRNContract",
+    "function": "test_cache_no_hit_for_different_rollout",
+    "start_line": 153,
+    "end_line": 156,
+    "assertions": [
+      {
+        "line": 156,
+        "expr": "self.assertFalse(r.from_cache)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR20CRNContract",
+    "function": "test_different_replicate_isolated",
+    "start_line": 127,
+    "end_line": 134,
+    "assertions": [
+      {
+        "line": 134,
+        "expr": "self.assertNotEqual(s1, s2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR20CRNContract",
+    "function": "test_different_rollout_isolated",
+    "start_line": 118,
+    "end_line": 125,
+    "assertions": [
+      {
+        "line": 125,
+        "expr": "self.assertNotEqual(s1, s2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR20CRNContract",
+    "function": "test_different_task_isolated",
+    "start_line": 108,
+    "end_line": 116,
+    "assertions": [
+      {
+        "line": 116,
+        "expr": "self.assertNotEqual(s1, s2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR20CRNContract",
+    "function": "test_override_path_preserves_task_replicate_isolation",
+    "start_line": 136,
+    "end_line": 146,
+    "assertions": [
+      {
+        "line": 146,
+        "expr": "self.assertNotEqual(s1, s2, \"different replicate under same override must differ\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR20CRNContract",
+    "function": "test_same_crn_identical_across_genotypes",
+    "start_line": 99,
+    "end_line": 106,
+    "assertions": [
+      {
+        "line": 106,
+        "expr": "self.assertEqual(s1, s2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR21BudgetFailClosed",
+    "function": "test_cache_hit_not_new_sample",
+    "start_line": 224,
+    "end_line": 228,
+    "assertions": [
+      {
+        "line": 227,
+        "expr": "self.assertEqual(bl.actual_replicas_run, 0)"
+      },
+      {
+        "line": 228,
+        "expr": "self.assertEqual(bl.cache_hit_bundles, 1)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR21BudgetFailClosed",
+    "function": "test_collection_slots_tracked_separately",
+    "start_line": 207,
+    "end_line": 216,
+    "assertions": [
+      {
+        "line": 212,
+        "expr": "self.assertEqual(bl.planned_collection_slots, 5440)"
+      },
+      {
+        "line": 213,
+        "expr": "self.assertEqual(bl.planned_q_slots, 36000)"
+      },
+      {
+        "line": 214,
+        "expr": "self.assertEqual(bl.planned_extra_slots, 4000)"
+      },
+      {
+        "line": 215,
+        "expr": "self.assertEqual(bl.planned_slots, 45440)"
+      },
+      {
+        "line": 216,
+        "expr": "self.assertEqual(bl.reconcile(45440), [])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR21BudgetFailClosed",
+    "function": "test_negative_total_rejected",
+    "start_line": 174,
+    "end_line": 177,
+    "assertions": [
+      {
+        "line": 176,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR21BudgetFailClosed",
+    "function": "test_over_cap_total_rejected",
+    "start_line": 179,
+    "end_line": 182,
+    "assertions": [
+      {
+        "line": 181,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR21BudgetFailClosed",
+    "function": "test_reconcile_detects_inconsistency",
+    "start_line": 218,
+    "end_line": 222,
+    "assertions": [
+      {
+        "line": 222,
+        "expr": "self.assertTrue(any(\"!= expected\" in e for e in errors))"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR21BudgetFailClosed",
+    "function": "test_surplus_samples_rejected_in_registered_mode",
+    "start_line": 197,
+    "end_line": 205,
+    "assertions": [
+      {
+        "line": 204,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR21BudgetFailClosed",
+    "function": "test_understated_total_rejected",
+    "start_line": 184,
+    "end_line": 195,
+    "assertions": [
+      {
+        "line": 194,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR22ClusterProvenance",
+    "function": "test_cluster_bootstrap_preserves_clusters",
+    "start_line": 275,
+    "end_line": 278,
+    "assertions": [
+      {
+        "line": 278,
+        "expr": "self.assertGreaterEqual(res.n_clusters, 3)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR22ClusterProvenance",
+    "function": "test_dry_run_maps_states_to_episodes",
+    "start_line": 266,
+    "end_line": 273,
+    "assertions": [
+      {
+        "line": 269,
+        "expr": "self.assertEqual(len(ep_units), 40)"
+      },
+      {
+        "line": 272,
+        "expr": "self.assertIn(\"assigned_states\", eu)"
+      },
+      {
+        "line": 273,
+        "expr": "self.assertTrue(len(eu[\"assigned_states\"]) > 0)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR22ClusterProvenance",
+    "function": "test_missing_episode_id_rejected_in_registered",
+    "start_line": 246,
+    "end_line": 250,
+    "assertions": [
+      {
+        "line": 249,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR22ClusterProvenance",
+    "function": "test_missing_task_id_rejected_in_registered",
+    "start_line": 252,
+    "end_line": 256,
+    "assertions": [
+      {
+        "line": 255,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR22ClusterProvenance",
+    "function": "test_unknown_episode_in_registered",
+    "start_line": 258,
+    "end_line": 264,
+    "assertions": [
+      {
+        "line": 263,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR23EvidenceReplay",
+    "function": "test_evidence_contains_D_adv_CIs",
+    "start_line": 295,
+    "end_line": 308,
+    "assertions": [
+      {
+        "line": 301,
+        "expr": "self.assertIn(\"D\", ev)"
+      },
+      {
+        "line": 302,
+        "expr": "self.assertIn(\"advantage\", ev)"
+      },
+      {
+        "line": 303,
+        "expr": "self.assertIn(\"D_ci\", ev)"
+      },
+      {
+        "line": 304,
+        "expr": "self.assertIn(\"adv_ci\", ev)"
+      },
+      {
+        "line": 305,
+        "expr": "self.assertIn(\"decision\", ev)"
+      },
+      {
+        "line": 306,
+        "expr": "self.assertIn(\"input_record_hash\", ev)"
+      },
+      {
+        "line": 307,
+        "expr": "self.assertIn(\"bootstrap\", ev)"
+      },
+      {
+        "line": 308,
+        "expr": "self.assertIn(\"budget_components\", ev)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR23EvidenceReplay",
+    "function": "test_registered_requires_provenance",
+    "start_line": 334,
+    "end_line": 338,
+    "assertions": [
+      {
+        "line": 336,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR23EvidenceReplay",
+    "function": "test_round_trip_serialize_replay",
+    "start_line": 310,
+    "end_line": 327,
+    "assertions": [
+      {
+        "line": 320,
+        "expr": "self.assertAlmostEqual(res1.D, res2.D, places=10)"
+      },
+      {
+        "line": 321,
+        "expr": "self.assertAlmostEqual(res1.advantage, res2.advantage, places=10)"
+      },
+      {
+        "line": 322,
+        "expr": "self.assertEqual(res1.D_ci, res2.D_ci)"
+      },
+      {
+        "line": 323,
+        "expr": "self.assertEqual(res1.adv_ci, res2.adv_ci)"
+      },
+      {
+        "line": 324,
+        "expr": "self.assertEqual(res1.decision, res2.decision)"
+      },
+      {
+        "line": 325,
+        "expr": "self.assertEqual(res1.n_states, res2.n_states)"
+      },
+      {
+        "line": 326,
+        "expr": "self.assertEqual(res1.n_clusters, res2.n_clusters)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR23EvidenceReplay",
+    "function": "test_synthetic_marked",
+    "start_line": 329,
+    "end_line": 332,
+    "assertions": [
+      {
+        "line": 332,
+        "expr": "self.assertTrue(res.raw_evidence[\"is_synthetic\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR24CostConsistency",
+    "function": "test_smoke_raw_matches_cost_baseline",
+    "start_line": 343,
+    "end_line": 358,
+    "assertions": [
+      {
+        "line": 353,
+        "expr": "self.assertIn(wc[:5], cost, f\"smoke wall_clock {wc} not in COST_BASELINE\")"
+      },
+      {
+        "line": 355,
+        "expr": "self.assertEqual(t[\"planned_init_slots\"], 32)"
+      },
+      {
+        "line": 356,
+        "expr": "self.assertEqual(t[\"planned_offspring_slots\"], 96)"
+      },
+      {
+        "line": 357,
+        "expr": "self.assertEqual(t[\"planned_total_slots\"], 128)"
+      },
+      {
+        "line": 358,
+        "expr": "self.assertEqual(t[\"actual_replicas_run\"], 112)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR25GatedRunner",
+    "function": "test_collection_episode_budget_check",
+    "start_line": 408,
+    "end_line": 415,
+    "assertions": [
+      {
+        "line": 414,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR25GatedRunner",
+    "function": "test_default_deny",
+    "start_line": 364,
+    "end_line": 367,
+    "assertions": [
+      {
+        "line": 366,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR25GatedRunner",
+    "function": "test_missing_production_denied",
+    "start_line": 375,
+    "end_line": 379,
+    "assertions": [
+      {
+        "line": 378,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR25GatedRunner",
+    "function": "test_over_budget_denied",
+    "start_line": 388,
+    "end_line": 395,
+    "assertions": [
+      {
+        "line": 394,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR25GatedRunner",
+    "function": "test_registered_execution_still_refused",
+    "start_line": 417,
+    "end_line": 419,
+    "assertions": [
+      {
+        "line": 418,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR25GatedRunner",
+    "function": "test_synthetic_execution_with_all_gates",
+    "start_line": 397,
+    "end_line": 406,
+    "assertions": [
+      {
+        "line": 405,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR25GatedRunner",
+    "function": "test_unauthorized_approval_denied",
+    "start_line": 369,
+    "end_line": 373,
+    "assertions": [
+      {
+        "line": 372,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r19_r25.py",
+    "class": "TestR25GatedRunner",
+    "function": "test_wrong_protocol_version_denied",
+    "start_line": 381,
+    "end_line": 386,
+    "assertions": [
+      {
+        "line": 385,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR26ProtocolDocument",
+    "function": "test_code_version_not_frozen",
+    "start_line": 363,
+    "end_line": 364,
+    "assertions": [
+      {
+        "line": 364,
+        "expr": "self.assertIn(\"proposed\", PROTOCOL_VERSION.lower())"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR26ProtocolDocument",
+    "function": "test_document_fields_match_code",
+    "start_line": 346,
+    "end_line": 361,
+    "assertions": [
+      {
+        "line": 352,
+        "expr": "self.assertIsNotNone(match, \"canonical field block JSON not found\")"
+      },
+      {
+        "line": 354,
+        "expr": "self.assertEqual(doc[\"n_states\"], N_STATES)"
+      },
+      {
+        "line": 355,
+        "expr": "self.assertEqual(doc[\"n_actions\"], N_ACTIONS)"
+      },
+      {
+        "line": 356,
+        "expr": "self.assertEqual(doc[\"q_rollouts\"], Q_ROLLOUTS)"
+      },
+      {
+        "line": 357,
+        "expr": "self.assertEqual(doc[\"horizon\"], HORIZON)"
+      },
+      {
+        "line": 358,
+        "expr": "self.assertEqual(doc[\"extra_immediate\"], EXTRA_IMMEDIATE)"
+      },
+      {
+        "line": 359,
+        "expr": "self.assertEqual(doc[\"n_collection_episodes\"], N_STATE_COLLECTION_EPISODES)"
+      },
+      {
+        "line": 360,
+        "expr": "self.assertEqual(doc[\"budget\"][\"total\"], PLANNED_TOTAL_SLOTS)"
+      },
+      {
+        "line": 361,
+        "expr": "self.assertEqual(doc[\"budget\"][\"hard_cap\"], HARD_CAP_SLOTS)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR26ProtocolDocument",
+    "function": "test_document_says_proposed",
+    "start_line": 340,
+    "end_line": 344,
+    "assertions": [
+      {
+        "line": 343,
+        "expr": "self.assertIn(\"PROPOSED\", content)"
+      },
+      {
+        "line": 344,
+        "expr": "self.assertIn(\"NOT APPROVED\", content)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR26ProtocolDocument",
+    "function": "test_protocol_document_exists",
+    "start_line": 336,
+    "end_line": 338,
+    "assertions": [
+      {
+        "line": 338,
+        "expr": "self.assertTrue(os.path.exists(path), \"PC1_PROTOCOL_R4_PROPOSED.md must exist\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR26ProtocolDocument",
+    "function": "test_status_is_proposed",
+    "start_line": 366,
+    "end_line": 367,
+    "assertions": [
+      {
+        "line": 367,
+        "expr": "self.assertIn(\"PROPOSED\", PROTOCOL_STATUS)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR27NegativeBudget",
+    "function": "test_atomic_failure_on_over_budget",
+    "start_line": 88,
+    "end_line": 93,
+    "assertions": [
+      {
+        "line": 93,
+        "expr": "self.assertEqual(bl.planned_slots, 45000, \"no partial mutation\")"
+      },
+      {
+        "line": 91,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR27NegativeBudget",
+    "function": "test_bool_rejected_as_int",
+    "start_line": 102,
+    "end_line": 105,
+    "assertions": [
+      {
+        "line": 104,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR27NegativeBudget",
+    "function": "test_cannot_lower_ledger_with_negative",
+    "start_line": 95,
+    "end_line": 100,
+    "assertions": [
+      {
+        "line": 100,
+        "expr": "self.assertEqual(bl.planned_slots, 100)"
+      },
+      {
+        "line": 98,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR27NegativeBudget",
+    "function": "test_negative_cache_rejected",
+    "start_line": 76,
+    "end_line": 80,
+    "assertions": [
+      {
+        "line": 80,
+        "expr": "self.assertEqual(bl.cache_hit_bundles, 0)"
+      },
+      {
+        "line": 78,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR27NegativeBudget",
+    "function": "test_negative_collection_rejected",
+    "start_line": 82,
+    "end_line": 86,
+    "assertions": [
+      {
+        "line": 86,
+        "expr": "self.assertEqual(bl.planned_collection_slots, 0)"
+      },
+      {
+        "line": 84,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR27NegativeBudget",
+    "function": "test_negative_planned_slots_rejected",
+    "start_line": 64,
+    "end_line": 68,
+    "assertions": [
+      {
+        "line": 68,
+        "expr": "self.assertEqual(bl.planned_slots, 0, \"no mutation on rejection\")"
+      },
+      {
+        "line": 66,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR27NegativeBudget",
+    "function": "test_negative_replicas_rejected",
+    "start_line": 70,
+    "end_line": 74,
+    "assertions": [
+      {
+        "line": 74,
+        "expr": "self.assertEqual(bl.actual_replicas_run, 0)"
+      },
+      {
+        "line": 72,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR27NegativeBudget",
+    "function": "test_reconcile_detects_negative",
+    "start_line": 107,
+    "end_line": 111,
+    "assertions": [
+      {
+        "line": 111,
+        "expr": "self.assertTrue(any(\"negative\" in e for e in errors))"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR28FullReconciliation",
+    "function": "test_ledger_components_sum_to_total",
+    "start_line": 122,
+    "end_line": 133,
+    "assertions": [
+      {
+        "line": 129,
+        "expr": "self.assertEqual(bl.planned_collection_slots, 5440)"
+      },
+      {
+        "line": 130,
+        "expr": "self.assertEqual(bl.planned_q_slots, 36000)"
+      },
+      {
+        "line": 131,
+        "expr": "self.assertEqual(bl.planned_extra_slots, 4000)"
+      },
+      {
+        "line": 132,
+        "expr": "self.assertEqual(bl.planned_slots, 45440)"
+      },
+      {
+        "line": 133,
+        "expr": "self.assertEqual(bl.reconcile(45440), [])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR28FullReconciliation",
+    "function": "test_missing_collection_slots_rejected",
+    "start_line": 135,
+    "end_line": 159,
+    "assertions": [
+      {
+        "line": 155,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR28FullReconciliation",
+    "function": "test_registered_budget_exact",
+    "start_line": 116,
+    "end_line": 120,
+    "assertions": [
+      {
+        "line": 117,
+        "expr": "self.assertEqual(PLANNED_COLLECTION_SLOTS, 5440)"
+      },
+      {
+        "line": 118,
+        "expr": "self.assertEqual(PLANNED_Q_SLOTS, 36000)"
+      },
+      {
+        "line": 119,
+        "expr": "self.assertEqual(PLANNED_EXTRA_SLOTS, 4000)"
+      },
+      {
+        "line": 120,
+        "expr": "self.assertEqual(PLANNED_TOTAL_SLOTS, 45440)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR28FullReconciliation",
+    "function": "test_zero_record_slots_rejected_in_registered",
+    "start_line": 161,
+    "end_line": 178,
+    "assertions": [
+      {
+        "line": 175,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR29ProvenanceMapping",
+    "function": "test_dry_run_has_state_to_episode_mapping",
+    "start_line": 220,
+    "end_line": 226,
+    "assertions": [
+      {
+        "line": 223,
+        "expr": "self.assertEqual(len(ep_units), 40)"
+      },
+      {
+        "line": 225,
+        "expr": "self.assertIn(\"assigned_states\", eu)"
+      },
+      {
+        "line": 226,
+        "expr": "self.assertGreater(len(eu[\"assigned_states\"]), 0)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR29ProvenanceMapping",
+    "function": "test_unknown_episode_rejected_specifically",
+    "start_line": 183,
+    "end_line": 201,
+    "assertions": [
+      {
+        "line": 201,
+        "expr": "self.assertIn(\"unknown\", str(ctx.exception).lower() + \"episode\" + str(ctx.exception).lower())"
+      },
+      {
+        "line": 199,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR29ProvenanceMapping",
+    "function": "test_wrong_cluster_rejected",
+    "start_line": 203,
+    "end_line": 218,
+    "assertions": [
+      {
+        "line": 217,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR30RegisteredProvenance",
+    "function": "test_input_hash_mismatch_rejected_on_replay",
+    "start_line": 273,
+    "end_line": 288,
+    "assertions": [
+      {
+        "line": 286,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR30RegisteredProvenance",
+    "function": "test_missing_evaluator_version_rejected",
+    "start_line": 265,
+    "end_line": 271,
+    "assertions": [
+      {
+        "line": 271,
+        "expr": "self.assertIn(\"evaluator_version\", str(ctx.exception))"
+      },
+      {
+        "line": 267,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR30RegisteredProvenance",
+    "function": "test_missing_manifest_hash_rejected",
+    "start_line": 249,
+    "end_line": 255,
+    "assertions": [
+      {
+        "line": 255,
+        "expr": "self.assertIn(\"manifest_hash\", str(ctx.exception))"
+      },
+      {
+        "line": 251,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR30RegisteredProvenance",
+    "function": "test_missing_runtime_rejected",
+    "start_line": 257,
+    "end_line": 263,
+    "assertions": [
+      {
+        "line": 263,
+        "expr": "self.assertIn(\"runtime_revision\", str(ctx.exception))"
+      },
+      {
+        "line": 259,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR31GateSemantics",
+    "function": "test_all_booleans_true_still_denied_for_proposed_protocol",
+    "start_line": 372,
+    "end_line": 381,
+    "assertions": [
+      {
+        "line": 380,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR31GateSemantics",
+    "function": "test_missing_approval_metadata_denied",
+    "start_line": 383,
+    "end_line": 391,
+    "assertions": [
+      {
+        "line": 390,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR31GateSemantics",
+    "function": "test_protocol_hash_mismatch_denied",
+    "start_line": 404,
+    "end_line": 413,
+    "assertions": [
+      {
+        "line": 412,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR31GateSemantics",
+    "function": "test_registered_execution_still_refused",
+    "start_line": 415,
+    "end_line": 417,
+    "assertions": [
+      {
+        "line": 416,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR31GateSemantics",
+    "function": "test_runner_is_harness_not_collector",
+    "start_line": 419,
+    "end_line": 423,
+    "assertions": [
+      {
+        "line": 422,
+        "expr": "self.assertIsInstance(harness, SyntheticGateHarness)"
+      },
+      {
+        "line": 423,
+        "expr": "self.assertIn(\"harness\", SyntheticGateHarness.__doc__.lower())"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR31GateSemantics",
+    "function": "test_runtime_revision_mismatch_denied",
+    "start_line": 393,
+    "end_line": 402,
+    "assertions": [
+      {
+        "line": 401,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR32SeedCacheNormalization",
+    "function": "test_cache_hit_for_identical_full_key",
+    "start_line": 319,
+    "end_line": 324,
+    "assertions": [
+      {
+        "line": 324,
+        "expr": "self.assertTrue(r.from_cache)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR32SeedCacheNormalization",
+    "function": "test_cache_no_hit_for_different_eval_seed",
+    "start_line": 326,
+    "end_line": 331,
+    "assertions": [
+      {
+        "line": 331,
+        "expr": "self.assertFalse(r.from_cache)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR32SeedCacheNormalization",
+    "function": "test_none_and_empty_give_different_seeds",
+    "start_line": 308,
+    "end_line": 317,
+    "assertions": [
+      {
+        "line": 317,
+        "expr": "self.assertNotEqual(s1, s2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r26_r32.py",
+    "class": "TestR32SeedCacheNormalization",
+    "function": "test_none_and_empty_seed_distinguished",
+    "start_line": 299,
+    "end_line": 306,
+    "assertions": [
+      {
+        "line": 303,
+        "expr": "self.assertFalse(r1.from_cache)"
+      },
+      {
+        "line": 306,
+        "expr": "self.assertFalse(r2.from_cache, \"empty seed must not hit None-seed cache\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestExperimentBSyntheticAnalysis",
+    "function": "test_negative_missing_provenance",
+    "start_line": 468,
+    "end_line": 478,
+    "assertions": [
+      {
+        "line": 475,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestExperimentBSyntheticAnalysis",
+    "function": "test_positive_synthetic_known_result",
+    "start_line": 428,
+    "end_line": 466,
+    "assertions": [
+      {
+        "line": 464,
+        "expr": "self.assertGreater(res.D, 0.0)"
+      },
+      {
+        "line": 465,
+        "expr": "self.assertGreater(res.advantage, 0.0)"
+      },
+      {
+        "line": 466,
+        "expr": "self.assertIn(res.decision, (\"PASS\", \"FAIL\", \"INCONCLUSIVE\"))"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestExperimentBSyntheticAnalysis",
+    "function": "test_round_trip_consistency",
+    "start_line": 480,
+    "end_line": 497,
+    "assertions": [
+      {
+        "line": 494,
+        "expr": "self.assertAlmostEqual(res1.D, res2.D, places=10)"
+      },
+      {
+        "line": 495,
+        "expr": "self.assertAlmostEqual(res1.advantage, res2.advantage, places=10)"
+      },
+      {
+        "line": 496,
+        "expr": "self.assertEqual(res1.decision, res2.decision)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR33Atomicity",
+    "function": "test_compensating_slot_errors_rejected",
+    "start_line": 91,
+    "end_line": 105,
+    "assertions": [
+      {
+        "line": 105,
+        "expr": "self.assertIn(\"planned_slots\", str(ctx.exception))"
+      },
+      {
+        "line": 103,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR33Atomicity",
+    "function": "test_extra_slot_negative_cache_no_mutation",
+    "start_line": 76,
+    "end_line": 81,
+    "assertions": [
+      {
+        "line": 80,
+        "expr": "self.assertEqual(bl.planned_extra_slots, 0)"
+      },
+      {
+        "line": 81,
+        "expr": "self.assertEqual(bl.planned_slots, 0)"
+      },
+      {
+        "line": 78,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR33Atomicity",
+    "function": "test_q_slot_negative_replicas_no_mutation",
+    "start_line": 68,
+    "end_line": 74,
+    "assertions": [
+      {
+        "line": 72,
+        "expr": "self.assertEqual(bl.planned_q_slots, 0)"
+      },
+      {
+        "line": 73,
+        "expr": "self.assertEqual(bl.planned_slots, 0)"
+      },
+      {
+        "line": 74,
+        "expr": "self.assertEqual(bl.actual_replicas_run, 0)"
+      },
+      {
+        "line": 70,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR33Atomicity",
+    "function": "test_q_slot_over_budget_no_mutation",
+    "start_line": 83,
+    "end_line": 89,
+    "assertions": [
+      {
+        "line": 88,
+        "expr": "self.assertEqual(bl.planned_q_slots, 45000)"
+      },
+      {
+        "line": 89,
+        "expr": "self.assertEqual(bl.planned_slots, 45000)"
+      },
+      {
+        "line": 86,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR33Atomicity",
+    "function": "test_snapshot_unchanged_after_rejection",
+    "start_line": 107,
+    "end_line": 116,
+    "assertions": [
+      {
+        "line": 114,
+        "expr": "self.assertEqual(snap, (bl.planned_slots, bl.planned_q_slots,\n                                bl.actual_replicas_run, bl.cache_hit_bundles,\n                                bl.valid_offspring))"
+      },
+      {
+        "line": 112,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR34SeedCollision",
+    "function": "test_cache_hit_for_identical_full_key",
+    "start_line": 179,
+    "end_line": 184,
+    "assertions": [
+      {
+        "line": 184,
+        "expr": "self.assertTrue(r.from_cache)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR34SeedCollision",
+    "function": "test_cache_no_collision_for_none_vs_literal_NONE",
+    "start_line": 160,
+    "end_line": 165,
+    "assertions": [
+      {
+        "line": 165,
+        "expr": "self.assertFalse(r.from_cache)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR34SeedCollision",
+    "function": "test_delimiter_ids_no_collision",
+    "start_line": 167,
+    "end_line": 177,
+    "assertions": [
+      {
+        "line": 177,
+        "expr": "self.assertNotEqual(s1, s2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR34SeedCollision",
+    "function": "test_empty_vs_literal_EMPTY_distinct",
+    "start_line": 138,
+    "end_line": 147,
+    "assertions": [
+      {
+        "line": 147,
+        "expr": "self.assertNotEqual(s1, s2, \"'' and literal 'EMPTY' must differ\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR34SeedCollision",
+    "function": "test_none_vs_empty_distinct",
+    "start_line": 149,
+    "end_line": 158,
+    "assertions": [
+      {
+        "line": 158,
+        "expr": "self.assertNotEqual(s1, s2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR34SeedCollision",
+    "function": "test_none_vs_literal_NONE_distinct",
+    "start_line": 127,
+    "end_line": 136,
+    "assertions": [
+      {
+        "line": 136,
+        "expr": "self.assertNotEqual(s1, s2, \"None and literal 'NONE' must differ\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR35PlanProvenance",
+    "function": "test_plan_mapping_deterministic",
+    "start_line": 189,
+    "end_line": 193,
+    "assertions": [
+      {
+        "line": 192,
+        "expr": "self.assertEqual(h1, h2)"
+      },
+      {
+        "line": 193,
+        "expr": "self.assertEqual(m1, m2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR35PlanProvenance",
+    "function": "test_unknown_episode_rejected",
+    "start_line": 195,
+    "end_line": 211,
+    "assertions": [
+      {
+        "line": 211,
+        "expr": "self.assertIn(\"episode_id\", str(ctx.exception))"
+      },
+      {
+        "line": 209,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR35PlanProvenance",
+    "function": "test_wrong_cluster_rejected",
+    "start_line": 213,
+    "end_line": 223,
+    "assertions": [
+      {
+        "line": 223,
+        "expr": "self.assertIn(\"cluster_id\", str(ctx.exception))"
+      },
+      {
+        "line": 221,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR35PlanProvenance",
+    "function": "test_wrong_family_rejected",
+    "start_line": 237,
+    "end_line": 247,
+    "assertions": [
+      {
+        "line": 247,
+        "expr": "self.assertIn(\"family\", str(ctx.exception))"
+      },
+      {
+        "line": 245,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR35PlanProvenance",
+    "function": "test_wrong_task_rejected",
+    "start_line": 225,
+    "end_line": 235,
+    "assertions": [
+      {
+        "line": 235,
+        "expr": "self.assertIn(\"task_id\", str(ctx.exception))"
+      },
+      {
+        "line": 233,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR36ProtocolConsistency",
+    "function": "test_full_consistency_passes",
+    "start_line": 252,
+    "end_line": 255,
+    "assertions": [
+      {
+        "line": 254,
+        "expr": "self.assertTrue(r[\"all_pass\"], r[\"checks\"])"
+      },
+      {
+        "line": 255,
+        "expr": "self.assertTrue(r[\"doc_hash\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR36ProtocolConsistency",
+    "function": "test_mutation_budget_total_fails",
+    "start_line": 281,
+    "end_line": 290,
+    "assertions": [
+      {
+        "line": 288,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      },
+      {
+        "line": 289,
+        "expr": "self.assertFalse(r[\"checks\"][\"doc_budget_total\"][\"ok\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR36ProtocolConsistency",
+    "function": "test_mutation_estimator_fails",
+    "start_line": 303,
+    "end_line": 312,
+    "assertions": [
+      {
+        "line": 310,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      },
+      {
+        "line": 311,
+        "expr": "self.assertFalse(r[\"checks\"][\"doc_est_horizon\"][\"ok\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR36ProtocolConsistency",
+    "function": "test_mutation_gamma_fails",
+    "start_line": 270,
+    "end_line": 279,
+    "assertions": [
+      {
+        "line": 277,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      },
+      {
+        "line": 278,
+        "expr": "self.assertFalse(r[\"checks\"][\"doc_gamma\"][\"ok\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR36ProtocolConsistency",
+    "function": "test_mutation_n_states_fails",
+    "start_line": 257,
+    "end_line": 268,
+    "assertions": [
+      {
+        "line": 266,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      },
+      {
+        "line": 267,
+        "expr": "self.assertFalse(r[\"checks\"][\"doc_n_states\"][\"ok\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR36ProtocolConsistency",
+    "function": "test_mutation_threshold_fails",
+    "start_line": 292,
+    "end_line": 301,
+    "assertions": [
+      {
+        "line": 299,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      },
+      {
+        "line": 300,
+        "expr": "self.assertFalse(r[\"checks\"][\"doc_thresh_D\"][\"ok\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR37ProtocolPlanHash",
+    "function": "test_missing_plan_hash_rejected",
+    "start_line": 335,
+    "end_line": 343,
+    "assertions": [
+      {
+        "line": 343,
+        "expr": "self.assertIn(\"plan_hash\", str(ctx.exception))"
+      },
+      {
+        "line": 339,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR37ProtocolPlanHash",
+    "function": "test_missing_protocol_hash_rejected",
+    "start_line": 326,
+    "end_line": 333,
+    "assertions": [
+      {
+        "line": 333,
+        "expr": "self.assertIn(\"protocol_hash\", str(ctx.exception))"
+      },
+      {
+        "line": 329,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR37ProtocolPlanHash",
+    "function": "test_wrong_plan_hash_rejected",
+    "start_line": 355,
+    "end_line": 364,
+    "assertions": [
+      {
+        "line": 364,
+        "expr": "self.assertIn(\"plan_artifact_path\", str(ctx.exception))"
+      },
+      {
+        "line": 359,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR37ProtocolPlanHash",
+    "function": "test_wrong_protocol_hash_rejected",
+    "start_line": 345,
+    "end_line": 353,
+    "assertions": [
+      {
+        "line": 353,
+        "expr": "self.assertIn(\"protocol_hash\", str(ctx.exception))"
+      },
+      {
+        "line": 348,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR38FailClosedGates",
+    "function": "test_all_booleans_true_proposed_protocol_denied",
+    "start_line": 409,
+    "end_line": 419,
+    "assertions": [
+      {
+        "line": 418,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR38FailClosedGates",
+    "function": "test_approval_empty_approver_denied",
+    "start_line": 383,
+    "end_line": 388,
+    "assertions": [
+      {
+        "line": 387,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR38FailClosedGates",
+    "function": "test_approval_empty_date_denied",
+    "start_line": 390,
+    "end_line": 395,
+    "assertions": [
+      {
+        "line": 394,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR38FailClosedGates",
+    "function": "test_approval_empty_expected_hash_denied",
+    "start_line": 376,
+    "end_line": 381,
+    "assertions": [
+      {
+        "line": 380,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR38FailClosedGates",
+    "function": "test_approval_empty_protocol_hash_denied",
+    "start_line": 369,
+    "end_line": 374,
+    "assertions": [
+      {
+        "line": 373,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR38FailClosedGates",
+    "function": "test_production_empty_required_denied",
+    "start_line": 403,
+    "end_line": 407,
+    "assertions": [
+      {
+        "line": 406,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR38FailClosedGates",
+    "function": "test_production_empty_revision_denied",
+    "start_line": 397,
+    "end_line": 401,
+    "assertions": [
+      {
+        "line": 400,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r33_r38.py",
+    "class": "TestR38FailClosedGates",
+    "function": "test_registered_execution_refused",
+    "start_line": 421,
+    "end_line": 423,
+    "assertions": [
+      {
+        "line": 422,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR39CRNSeed",
+    "function": "test_action_genotype_excluded",
+    "start_line": 96,
+    "end_line": 99,
+    "assertions": [
+      {
+        "line": 99,
+        "expr": "self.assertEqual(crn_seed(\"T1\", \"s1\", 0, 0), crn_seed(\"T1\", \"s1\", 0, 0))"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR39CRNSeed",
+    "function": "test_delimiter_no_collision",
+    "start_line": 68,
+    "end_line": 72,
+    "assertions": [
+      {
+        "line": 72,
+        "expr": "self.assertNotEqual(s1, s2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR39CRNSeed",
+    "function": "test_none_empty_string_no_collision",
+    "start_line": 86,
+    "end_line": 94,
+    "assertions": [
+      {
+        "line": 92,
+        "expr": "self.assertNotEqual(s1, s2)"
+      },
+      {
+        "line": 93,
+        "expr": "self.assertNotEqual(s1, s3)"
+      },
+      {
+        "line": 94,
+        "expr": "self.assertNotEqual(s2, s3)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR39CRNSeed",
+    "function": "test_replicate_change_changes_seed",
+    "start_line": 83,
+    "end_line": 84,
+    "assertions": [
+      {
+        "line": 84,
+        "expr": "self.assertNotEqual(crn_seed(\"T1\", \"s1\", 0, 0), crn_seed(\"T1\", \"s1\", 0, 1))"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR39CRNSeed",
+    "function": "test_rollout_change_changes_seed",
+    "start_line": 80,
+    "end_line": 81,
+    "assertions": [
+      {
+        "line": 81,
+        "expr": "self.assertNotEqual(crn_seed(\"T1\", \"s1\", 0, 0), crn_seed(\"T1\", \"s1\", 1, 0))"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR39CRNSeed",
+    "function": "test_same_params_reproducible",
+    "start_line": 65,
+    "end_line": 66,
+    "assertions": [
+      {
+        "line": 66,
+        "expr": "self.assertEqual(crn_seed(\"T1\", \"s1\", 0, 0), crn_seed(\"T1\", \"s1\", 0, 0))"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR39CRNSeed",
+    "function": "test_state_change_changes_seed",
+    "start_line": 77,
+    "end_line": 78,
+    "assertions": [
+      {
+        "line": 78,
+        "expr": "self.assertNotEqual(crn_seed(\"T1\", \"s1\", 0, 0), crn_seed(\"T1\", \"s2\", 0, 0))"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR39CRNSeed",
+    "function": "test_task_change_changes_seed",
+    "start_line": 74,
+    "end_line": 75,
+    "assertions": [
+      {
+        "line": 75,
+        "expr": "self.assertNotEqual(crn_seed(\"T1\", \"s1\", 0, 0), crn_seed(\"T2\", \"s1\", 0, 0))"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR40ProtocolConsistency",
+    "function": "test_full_consistency_passes",
+    "start_line": 104,
+    "end_line": 106,
+    "assertions": [
+      {
+        "line": 106,
+        "expr": "self.assertTrue(r[\"all_pass\"], r[\"checks\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR40ProtocolConsistency",
+    "function": "test_mutation_reward_fails",
+    "start_line": 140,
+    "end_line": 148,
+    "assertions": [
+      {
+        "line": 147,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR40ProtocolConsistency",
+    "function": "test_mutation_seed_contract_fails",
+    "start_line": 130,
+    "end_line": 138,
+    "assertions": [
+      {
+        "line": 137,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR40ProtocolConsistency",
+    "function": "test_mutation_status_not_checked_by_consistency",
+    "start_line": 118,
+    "end_line": 128,
+    "assertions": [
+      {
+        "line": 127,
+        "expr": "self.assertTrue(r[\"all_pass\"], \"status is lifecycle, not content\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR40ProtocolConsistency",
+    "function": "test_mutation_version_fails",
+    "start_line": 108,
+    "end_line": 116,
+    "assertions": [
+      {
+        "line": 115,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR41PlanArtifact",
+    "function": "test_defensive_copy_prevents_mutation",
+    "start_line": 176,
+    "end_line": 181,
+    "assertions": [
+      {
+        "line": 180,
+        "expr": "self.assertNotEqual(m2[\"s000\"][\"episode_id\"], \"MUTATED\")"
+      },
+      {
+        "line": 181,
+        "expr": "self.assertEqual(h1, h2)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR41PlanArtifact",
+    "function": "test_save_load_roundtrip",
+    "start_line": 153,
+    "end_line": 160,
+    "assertions": [
+      {
+        "line": 158,
+        "expr": "self.assertEqual(h1, h2)"
+      },
+      {
+        "line": 159,
+        "expr": "self.assertEqual(len(m2), N_STATES)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR41PlanArtifact",
+    "function": "test_tampered_artifact_rejected",
+    "start_line": 162,
+    "end_line": 174,
+    "assertions": [
+      {
+        "line": 172,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR41PlanArtifact",
+    "function": "test_wrong_hash_rejected",
+    "start_line": 183,
+    "end_line": 194,
+    "assertions": [
+      {
+        "line": 192,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR42ApprovalRecord",
+    "function": "test_bad_date_rejected",
+    "start_line": 218,
+    "end_line": 224,
+    "assertions": [
+      {
+        "line": 223,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR42ApprovalRecord",
+    "function": "test_empty_approval_id_rejected",
+    "start_line": 210,
+    "end_line": 216,
+    "assertions": [
+      {
+        "line": 215,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR42ApprovalRecord",
+    "function": "test_gate_with_forged_record_rejected",
+    "start_line": 250,
+    "end_line": 260,
+    "assertions": [
+      {
+        "line": 259,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR42ApprovalRecord",
+    "function": "test_gate_without_record_rejected",
+    "start_line": 262,
+    "end_line": 265,
+    "assertions": [
+      {
+        "line": 264,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR42ApprovalRecord",
+    "function": "test_proposed_status_rejected",
+    "start_line": 242,
+    "end_line": 248,
+    "assertions": [
+      {
+        "line": 247,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR42ApprovalRecord",
+    "function": "test_registered_execution_refused",
+    "start_line": 267,
+    "end_line": 269,
+    "assertions": [
+      {
+        "line": 268,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR42ApprovalRecord",
+    "function": "test_valid_record_passes",
+    "start_line": 202,
+    "end_line": 208,
+    "assertions": []
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR42ApprovalRecord",
+    "function": "test_wrong_hash_rejected",
+    "start_line": 226,
+    "end_line": 232,
+    "assertions": [
+      {
+        "line": 231,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r39_r42.py",
+    "class": "TestR42ApprovalRecord",
+    "function": "test_wrong_version_rejected",
+    "start_line": 234,
+    "end_line": 240,
+    "assertions": [
+      {
+        "line": 239,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR54ApprovalGate",
+    "function": "test_bad_date_rejected",
+    "start_line": 157,
+    "end_line": 166,
+    "assertions": [
+      {
+        "line": 165,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR54ApprovalGate",
+    "function": "test_no_signature_rejected",
+    "start_line": 89,
+    "end_line": 98,
+    "assertions": [
+      {
+        "line": 97,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR54ApprovalGate",
+    "function": "test_proposed_rejects_all_flags_true",
+    "start_line": 69,
+    "end_line": 87,
+    "assertions": [
+      {
+        "line": 86,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR54ApprovalGate",
+    "function": "test_registered_execution_refused",
+    "start_line": 168,
+    "end_line": 170,
+    "assertions": [
+      {
+        "line": 169,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR54ApprovalGate",
+    "function": "test_wrong_action_rejected",
+    "start_line": 111,
+    "end_line": 121,
+    "assertions": [
+      {
+        "line": 120,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR54ApprovalGate",
+    "function": "test_wrong_document_id_rejected",
+    "start_line": 135,
+    "end_line": 144,
+    "assertions": [
+      {
+        "line": 143,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR54ApprovalGate",
+    "function": "test_wrong_protocol_hash_rejected",
+    "start_line": 146,
+    "end_line": 155,
+    "assertions": [
+      {
+        "line": 154,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR54ApprovalGate",
+    "function": "test_wrong_signature_rejected",
+    "start_line": 100,
+    "end_line": 109,
+    "assertions": [
+      {
+        "line": 108,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR54ApprovalGate",
+    "function": "test_wrong_status_rejected",
+    "start_line": 123,
+    "end_line": 133,
+    "assertions": [
+      {
+        "line": 132,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR55PlanBinding",
+    "function": "test_alternative_mapping_rejected",
+    "start_line": 201,
+    "end_line": 221,
+    "assertions": [
+      {
+        "line": 219,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR55PlanBinding",
+    "function": "test_canonical_roundtrip",
+    "start_line": 223,
+    "end_line": 230,
+    "assertions": [
+      {
+        "line": 228,
+        "expr": "self.assertEqual(h1, h2)"
+      },
+      {
+        "line": 229,
+        "expr": "self.assertEqual(len(m2), N_STATES)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR55PlanBinding",
+    "function": "test_missing_protocol_hash_rejected",
+    "start_line": 175,
+    "end_line": 186,
+    "assertions": [
+      {
+        "line": 184,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR55PlanBinding",
+    "function": "test_wrong_protocol_hash_rejected",
+    "start_line": 188,
+    "end_line": 199,
+    "assertions": [
+      {
+        "line": 197,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR56StrictTypes",
+    "function": "test_bool_false_rejected",
+    "start_line": 255,
+    "end_line": 257,
+    "assertions": [
+      {
+        "line": 257,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR56StrictTypes",
+    "function": "test_bool_true_rejected",
+    "start_line": 251,
+    "end_line": 253,
+    "assertions": [
+      {
+        "line": 253,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR56StrictTypes",
+    "function": "test_extra_field_rejected",
+    "start_line": 269,
+    "end_line": 275,
+    "assertions": [
+      {
+        "line": 275,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR56StrictTypes",
+    "function": "test_missing_field_rejected",
+    "start_line": 263,
+    "end_line": 267,
+    "assertions": [
+      {
+        "line": 267,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR56StrictTypes",
+    "function": "test_string_rejected",
+    "start_line": 259,
+    "end_line": 261,
+    "assertions": [
+      {
+        "line": 261,
+        "expr": "self.assertFalse(r[\"all_pass\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR56StrictTypes",
+    "function": "test_valid_numbers_pass",
+    "start_line": 277,
+    "end_line": 279,
+    "assertions": [
+      {
+        "line": 279,
+        "expr": "self.assertTrue(r[\"all_pass\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR58RegisteredProtocolHash",
+    "function": "test_registered_hash_matches_computed",
+    "start_line": 284,
+    "end_line": 287,
+    "assertions": [
+      {
+        "line": 287,
+        "expr": "self.assertEqual(computed, REGISTERED_PROTOCOL_CONTENT_HASH)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR58RegisteredProtocolHash",
+    "function": "test_save_fails_on_hash_mismatch",
+    "start_line": 289,
+    "end_line": 314,
+    "assertions": [
+      {
+        "line": 304,
+        "expr": "self.assertRaises(ValueError)"
+      },
+      {
+        "line": 310,
+        "expr": "self.assertNotIn(\"plan_hash\", content, \"no valid artifact should be written\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR58RegisteredProtocolHash",
+    "function": "test_save_load_roundtrip_normal",
+    "start_line": 316,
+    "end_line": 324,
+    "assertions": [
+      {
+        "line": 322,
+        "expr": "self.assertEqual(h1, h2)"
+      },
+      {
+        "line": 323,
+        "expr": "self.assertEqual(len(m2), N_STATES)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r54_r59.py",
+    "class": "TestR59DocumentID",
+    "function": "test_wrong_doc_id_rejected",
+    "start_line": 329,
+    "end_line": 340,
+    "assertions": [
+      {
+        "line": 339,
+        "expr": "self.assertRaises(PC1ExecutionRefused)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestPC1RunnerSynthetic",
+    "function": "test_cluster_bootstrap_keeps_clusters_together",
+    "start_line": 255,
+    "end_line": 261,
+    "assertions": [
+      {
+        "line": 258,
+        "expr": "self.assertEqual(res.n_clusters, 3)"
+      },
+      {
+        "line": 259,
+        "expr": "self.assertEqual(res.n_states, 6)"
+      },
+      {
+        "line": 260,
+        "expr": "self.assertEqual(len(res.D_ci), 2)"
+      },
+      {
+        "line": 261,
+        "expr": "self.assertLessEqual(res.D_ci[0], res.D_ci[1])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestPC1RunnerSynthetic",
+    "function": "test_decision_inconclusive_when_mixed",
+    "start_line": 291,
+    "end_line": 306,
+    "assertions": [
+      {
+        "line": 304,
+        "expr": "self.assertEqual(res.D, 0.0)"
+      },
+      {
+        "line": 305,
+        "expr": "self.assertEqual(res.advantage, 0.0)"
+      },
+      {
+        "line": 306,
+        "expr": "self.assertIn(res.decision, (\"FAIL\", \"INCONCLUSIVE\"))"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestPC1RunnerSynthetic",
+    "function": "test_decision_pass_when_clear",
+    "start_line": 268,
+    "end_line": 289,
+    "assertions": [
+      {
+        "line": 287,
+        "expr": "self.assertGreaterEqual(res.D, 0.15)"
+      },
+      {
+        "line": 288,
+        "expr": "self.assertGreaterEqual(res.advantage, 0.02)"
+      },
+      {
+        "line": 289,
+        "expr": "self.assertEqual(res.decision, \"PASS\", f\"D={res.D} adv={res.advantage} ci={res.D_ci},{res.adv_ci}\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestPC1RunnerSynthetic",
+    "function": "test_disagreement_detected",
+    "start_line": 248,
+    "end_line": 253,
+    "assertions": [
+      {
+        "line": 252,
+        "expr": "self.assertGreater(res.D, 0.0)"
+      },
+      {
+        "line": 253,
+        "expr": "self.assertGreater(res.advantage, 0.0)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestPC1RunnerSynthetic",
+    "function": "test_hard_cap_enforced",
+    "start_line": 263,
+    "end_line": 266,
+    "assertions": [
+      {
+        "line": 265,
+        "expr": "self.assertRaises(ValueError)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestPC1RunnerSynthetic",
+    "function": "test_r_hat_uses_first_reward_same_as_q_first_term",
+    "start_line": 237,
+    "end_line": 246,
+    "assertions": [
+      {
+        "line": 242,
+        "expr": "self.assertAlmostEqual(r_hat[(\"s0\", 0)], 0.10)"
+      },
+      {
+        "line": 244,
+        "expr": "self.assertAlmostEqual(q_hat[(\"s0\", 0)], 0.10)"
+      },
+      {
+        "line": 246,
+        "expr": "self.assertGreater(q_hat[(\"s0\", 1)], r_hat[(\"s0\", 1)])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestPC1RunnerSynthetic",
+    "function": "test_raw_evidence_replayable_fields",
+    "start_line": 308,
+    "end_line": 317,
+    "assertions": [
+      {
+        "line": 312,
+        "expr": "self.assertIn(\"protocol_version\", ev)"
+      },
+      {
+        "line": 313,
+        "expr": "self.assertIn(\"r_hat\", ev)"
+      },
+      {
+        "line": 314,
+        "expr": "self.assertIn(\"q_hat\", ev)"
+      },
+      {
+        "line": 315,
+        "expr": "self.assertIn(\"rows\", ev)"
+      },
+      {
+        "line": 316,
+        "expr": "self.assertIn(\"thresholds\", ev)"
+      },
+      {
+        "line": 317,
+        "expr": "self.assertIn(\"decision_rule\", ev)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestPC1RunnerSynthetic",
+    "function": "test_zero_cost_check_still_passes",
+    "start_line": 319,
+    "end_line": 320,
+    "assertions": [
+      {
+        "line": 320,
+        "expr": "self.assertTrue(zero_cost_protocol_check()[\"all_pass\"])"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR11StubTemplates",
+    "function": "test_all_train_a_templates",
+    "start_line": 184,
+    "end_line": 185,
+    "assertions": []
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR11StubTemplates",
+    "function": "test_all_train_b_templates",
+    "start_line": 190,
+    "end_line": 191,
+    "assertions": []
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR11StubTemplates",
+    "function": "test_all_val_a_templates",
+    "start_line": 187,
+    "end_line": 188,
+    "assertions": []
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR11StubTemplates",
+    "function": "test_all_val_b_templates",
+    "start_line": 193,
+    "end_line": 194,
+    "assertions": []
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR11StubTemplates",
+    "function": "test_multiple_seeds_all_templates",
+    "start_line": 205,
+    "end_line": 208,
+    "assertions": []
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR11StubTemplates",
+    "function": "test_solve_input_matches_gold",
+    "start_line": 196,
+    "end_line": 203,
+    "assertions": [
+      {
+        "line": 200,
+        "expr": "self.assertEqual(solve_input(\"A\", t[\"input\"]), t[\"gold\"], tid)"
+      },
+      {
+        "line": 203,
+        "expr": "self.assertEqual(solve_input(\"B\", t[\"input\"]), t[\"gold\"], tid)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR8CRNEndToEnd",
+    "function": "test_cache_hits_do_not_increment_independent_samples",
+    "start_line": 90,
+    "end_line": 95,
+    "assertions": [
+      {
+        "line": 94,
+        "expr": "self.assertEqual(self.ev.independent_samples, n)"
+      },
+      {
+        "line": 95,
+        "expr": "self.assertGreaterEqual(self.ev.cache_hits, 1)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR8CRNEndToEnd",
+    "function": "test_cache_identity_is_genotype_specific",
+    "start_line": 84,
+    "end_line": 88,
+    "assertions": [
+      {
+        "line": 87,
+        "expr": "self.assertFalse(r1.from_cache)"
+      },
+      {
+        "line": 88,
+        "expr": "self.assertFalse(r2.from_cache, \"different genotype must not hit the same cache entry\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR8CRNEndToEnd",
+    "function": "test_different_replicate_id_gives_different_seeds",
+    "start_line": 66,
+    "end_line": 73,
+    "assertions": [
+      {
+        "line": 73,
+        "expr": "self.assertNotEqual(s0, s1)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR8CRNEndToEnd",
+    "function": "test_different_rollout_id_gives_different_seeds",
+    "start_line": 75,
+    "end_line": 82,
+    "assertions": [
+      {
+        "line": 82,
+        "expr": "self.assertNotEqual(s0, s1)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR8CRNEndToEnd",
+    "function": "test_same_crn_tuple_gives_identical_seeds_across_genotypes",
+    "start_line": 50,
+    "end_line": 64,
+    "assertions": [
+      {
+        "line": 62,
+        "expr": "self.assertEqual(len(seeds_g1), 2)"
+      },
+      {
+        "line": 63,
+        "expr": "self.assertEqual(seeds_g1, seeds_g2,\n                         \"CRN seeds must be identical across genotypes for the same (state,rollout,replicate)\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR9Accounting",
+    "function": "test_cache_hit_adds_zero_actual_ctx_and_one_bundle",
+    "start_line": 112,
+    "end_line": 120,
+    "assertions": [
+      {
+        "line": 117,
+        "expr": "self.assertTrue(r.from_cache)"
+      },
+      {
+        "line": 118,
+        "expr": "self.assertEqual(r.replicas_run, 0)"
+      },
+      {
+        "line": 119,
+        "expr": "self.assertEqual(self.ev.replicas_executed - reps0, 0, \"cache hit must add 0 actual CTX\")"
+      },
+      {
+        "line": 120,
+        "expr": "self.assertEqual(self.ev.cache_hits - hits0, 1, \"cache hit bundles +1\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR9Accounting",
+    "function": "test_different_replicate_no_cache_reuse",
+    "start_line": 122,
+    "end_line": 125,
+    "assertions": [
+      {
+        "line": 125,
+        "expr": "self.assertFalse(r.from_cache)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR9Accounting",
+    "function": "test_episode_result_reports_own_deltas",
+    "start_line": 127,
+    "end_line": 143,
+    "assertions": [
+      {
+        "line": 140,
+        "expr": "self.assertGreaterEqual(e1.cache_hits, 0)"
+      },
+      {
+        "line": 141,
+        "expr": "self.assertGreaterEqual(e2.cache_hits, 0)"
+      },
+      {
+        "line": 142,
+        "expr": "self.assertEqual(ev.cache_hits, cache_after_e1 + e2.cache_hits,\n                         \"episode cache_hits must be per-episode deltas summing to cumulative\")"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR9Accounting",
+    "function": "test_initialization_slots_included_in_planned",
+    "start_line": 145,
+    "end_line": 155,
+    "assertions": [
+      {
+        "line": 153,
+        "expr": "self.assertEqual(e.planned_init_slots, 3 * 2, \"init slots = mu * n_eval\")"
+      },
+      {
+        "line": 155,
+        "expr": "self.assertEqual(e.planned_slots, expected_total)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR9Accounting",
+    "function": "test_invalid_offspring_not_counted_as_evaluated",
+    "start_line": 157,
+    "end_line": 170,
+    "assertions": [
+      {
+        "line": 168,
+        "expr": "self.assertEqual(e.actual_ctx, ev.replicas_executed - reps0)"
+      },
+      {
+        "line": 170,
+        "expr": "self.assertGreaterEqual(e.invalid_offspring, 0)"
+      }
+    ]
+  },
+  {
+    "file": "tests/test_r8_r9_r11_pc1.py",
+    "class": "TestR9Accounting",
+    "function": "test_uncached_evaluation_runs_n_eval_replicas",
+    "start_line": 105,
+    "end_line": 110,
+    "assertions": [
+      {
+        "line": 108,
+        "expr": "self.assertEqual(self.ev.replicas_executed - reps0, 2)"
+      },
+      {
+        "line": 109,
+        "expr": "self.assertEqual(r.replicas_run, 2)"
+      },
+      {
+        "line": 110,
+        "expr": "self.assertFalse(r.from_cache)"
+      }
+    ]
+  }
+]

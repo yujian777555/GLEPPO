@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-05",
-  "phase": "R26_ECOS_PROTOCOL_RECONCILIATION_COMPLETE",
-  "state": "R26_ECOS_PROTOCOL_RECONCILIATION_READY_FOR_PLANNER_REVIEW",
+  "phase": "R26_ECOS_PROTOCOL_RECONCILIATION_R1_1_CORRECTIVE",
+  "state": "PLANNER_REQUEST_CHANGES_R1_1_DOCUMENTATION_ONLY",
   "reviewed_commit": "4d2ff06ee01146533501589b264d33ddd30ffcbe",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "ECOS Protocol Reconciliation complete. Awaiting Planner independent review.",
-  "next_gate": "PLANNER_REVIEW_OF_ECOS_PROTOCOL -> (ONLY_IF_ACCEPTED) next authorization gate",
+  "current_task": "Correct R26 ECOS protocol reconciliation R1 in one focused documentation-only pass; do not execute experiments or change source/tests.",
+  "next_gate": "R1_1_EXECUTOR_COMPLETION -> PLANNER_INDEPENDENT_REVIEW -> SEPARATE_AUTHORIZATION_DECISION",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -62,7 +62,12 @@
     "No protocol reconciliation, PC1, Family C, controller training, model/API calls, production runtime or signing-key access during R2.1.1.",
     "Stage 1I-R2.1.1 is ACCEPTED by Planner; do not repeat the 42-row semantic audit.",
     "R26_ECOS_PROTOCOL_RECONCILIATION is documentation-only. No production source/tests, historical protocol/raw evidence/manifests, model/API, production runtime, PC1, Family C, controller training, Formal G3 efficacy or baseline experiment.",
-    "The canonical ECOS protocol produced by reconciliation must remain PROPOSED / NOT APPROVED until separate Planner review."
+    "The canonical ECOS protocol produced by reconciliation must remain PROPOSED / NOT APPROVED until separate Planner review.",
+    "R26 ECOS Protocol Reconciliation R1 was REQUEST_CHANGES by Planner; canonical protocol remains PROPOSED_NOT_APPROVED.",
+    "R1.1 is one focused documentation-only correction. Update existing reconciliation/canonical files in place; do not create duplicate protocol artifacts.",
+    "Do not claim the 32-D state is used by a controller: state_vector is not wired into evolution.run_episode and PC1 StateActionRecord stores state_id, not the feature vector.",
+    "Do not claim action-independent paired seeds at all call sites: evolution.py currently includes operator_name in replicate_id.",
+    "No PC1 execution, Family C payload/gold access, controller training, model/API calls, production runtime, baseline experiments or Formal G3 efficacy during R1.1."
   ],
   "remediation_r2": {
     "date": "2026-10-27",
@@ -1596,14 +1601,15 @@
   },
   "latest_planner_verified_refs": {
     "branch": "r25-handoff",
-    "branch_head_before_status_update": "4b97f012117ace0a272fa42db8b5b79f172e29b7",
+    "branch_head_before_status_update": "cff57885c7d188fe9473f678370061df2c5de918",
     "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
-    "ahead_by_before_status_update": 242,
+    "ahead_by_before_status_update": 248,
     "behind_by": 0,
     "main_modified": false,
-    "last_reviewed_work_commit": "362f343f43befc7f43c00ba5edd1059b01d523d1",
-    "last_reviewed_work_relation": {
-      "ahead": 238,
+    "last_reviewed_executor_commit": "7423d5f7c753430a2f361400e1b39cd5b125aaf6",
+    "planner_review_commit": "d45bcd6fad598af06b53c11003da01b47c31e4ac",
+    "last_reviewed_executor_relation_to_main": {
+      "ahead": 244,
       "behind": 0
     }
   },
@@ -1916,7 +1922,7 @@
     }
   },
   "r26_ecos_protocol_reconciliation": {
-    "status": "DOCUMENTATION_COMPLETE_AWAITING_PLANNER_REVIEW",
+    "status": "REQUEST_CHANGES_BY_PLANNER",
     "date": "2026-11-05",
     "base_commit": "362f343f43befc7f43c00ba5edd1059b01d523d1",
     "deliverables": {
@@ -1952,6 +1958,60 @@
     "provenance": {
       "r2_1_1_work_commit": "362f343f43befc7f43c00ba5edd1059b01d523d1",
       "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e"
+    },
+    "executor_commit": "7423d5f7c753430a2f361400e1b39cd5b125aaf6",
+    "planner_review": {
+      "verdict": "REQUEST_CHANGES",
+      "report": "research/R26_ECOS_PROTOCOL_RECONCILIATION_PLANNER_REVIEW.md",
+      "review_commit": "d45bcd6fad598af06b53c11003da01b47c31e4ac",
+      "corrective_prompt": "planner/GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION_R1_CORRECTIVE_PROMPT.md",
+      "corrective_prompt_commit": "cee5ac2249db5371b823091cb0d961c8f4260a34",
+      "findings": [
+        "State JSON contains 25 feature labels for 32 dimensions; budget_used_frac duplicates gen_t/T; state vector not wired into evolution; PC1 records contain state_id only.",
+        "R24 reward is not shown equivalent to shared generation reward; PC1 estimators consume supplied gen_rewards and do not recompute generation_reward.",
+        "evolution.py derives replicate_id using operator_name, so action indirectly enters effective evaluation seed.",
+        "Phase 1 PC1 diagnostic (>=200 states, >=20 rollouts, h=5) differs from R4 (100, 3, h=3); CI margins/bootstrap/stop logic incomplete.",
+        "Phase 1 template split conflicts with tasks.py/manifest; R24 Confirm is unmaterialized and cannot be relabelled validation.",
+        "Candidate budget omits initialization: 24 init + 180 offspring = 204 maximum; prior 32 init count incorrect; early stop absent from source.",
+        "R24 model-call/token scope is unresolved, not proven controller-training-only.",
+        "B6 mandatory status, B5 external action-space status, PC1 CI and stop rules, and JSON provenance require correction."
+      ],
+      "accepted_items": [
+        "Three deliverables exist and JSON parses.",
+        "PC1 R4 slot arithmetic 45440 is internally consistent.",
+        "R21-C1 is correctly identified as DAC/arithmetic comparison, not operator/controller comparison.",
+        "Main unchanged; no production source/tests changes in reconciliation phase.",
+        "Canonical status remains PROPOSED_NOT_APPROVED."
+      ],
+      "no_family_c_payload_or_gold_access": true,
+      "no_experiments_or_training_authorized": true
+    }
+  },
+  "r26_ecos_protocol_reconciliation_r1_1": {
+    "status": "CORRECTIVE_TASK_ISSUED",
+    "date": "2026-11-05",
+    "prompt": "planner/GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION_R1_CORRECTIVE_PROMPT.md",
+    "planner_review_report": "research/R26_ECOS_PROTOCOL_RECONCILIATION_PLANNER_REVIEW.md",
+    "required_deliverables": [
+      "research/R26_ECOS_PROTOCOL_RECONCILIATION.md",
+      "research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.md",
+      "research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.json"
+    ],
+    "revision": "R1.1",
+    "scope": "Documentation-only corrective pass; update existing deliverables in place; no duplicate protocol files.",
+    "hard_boundaries": {
+      "production_source_changes": false,
+      "test_suite_changes": false,
+      "historical_protocol_changes": false,
+      "task_data_or_manifest_changes": false,
+      "family_c_payload_or_gold_access": false,
+      "model_api_calls": 0,
+      "production_runtime_calls": 0,
+      "registered_pc1_executed": false,
+      "controller_training": "NOT_AUTHORIZED_NOT_STARTED",
+      "formal_g3": "FAIL",
+      "baseline_experiment": false,
+      "main_modified": false
     }
   }
 }

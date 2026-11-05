@@ -5860,7 +5860,7 @@
         }
       ],
       "evidence_type": "DIRECT",
-      "disposition": "VERIFIED_FIXED",
+      "disposition": "PARTIALLY_FIXED",
       "proven_acceptance_conditions": [
         "Tuple reproducibility",
         "Delimiter safety",
@@ -5874,16 +5874,18 @@
         "Action/genotype exclusion (structural: API does not accept action/genotype; behavioral: R16/R20 cross-genotype tests)"
       ],
       "uncovered_acceptance_conditions": [
-        "Registered PC1 collector action-varying integration test (not implemented)"
+        "One shared canonical CRN contract/version across evaluator and PC1 call sites",
+        "Registered collector action-varying integration test (not implemented)"
       ],
-      "disposition_rationale": "7 direct CRN tests + 2 cross-genotype tests (R16/R20). Tautological test_action_genotype_excluded NOT cited. Action exclusion structurally proven (API signature). Schema/version tag in typed JSON serialization. All call sites use crn_seed() canonical contract.",
+      "disposition_rationale": "7 direct crn_seed tests prove standalone helper collision/reproducibility. R16/R20 cross-genotype tests prove evaluator-path genotype invariance. BUT two separate executable seed paths exist: pc1.py::crn_seed serializes ['crn-v2', task_id, state_id, rollout_id, replicate_id]; evaluator.py::effective_seed_parts serializes [base_tag, task_id, state_id, rollout_id, replicate_id, replica_index] without crn-v2 version tag and does NOT call crn_seed. Tests do not prove one canonical helper contract across call sites. Tautological test_action_genotype_excluded NOT cited.",
       "evidence_boundaries": {
         "direct_crn_tests": "7 tests in TestR39CRNSeed covering reproducibility, delimiter, task/state/rollout/replicate isolation, NONE/EMPTY",
         "cross_referenced_tests": "R16 test_same_crn_tuple_gives_identical_seeds_across_genotypes (tests/test_r8_r9_r11_pc1.py) and R20 test_same_crn_identical_across_genotypes (tests/test_r19_r25.py)",
         "structural_evidence": "effective_seed_parts (evaluator.py:57-76) does not accept action or genotype; Evaluator.evaluate (105-164) calls it",
         "tautological_test_warning": "test_action_genotype_excluded (line 96-99) compares same crn_seed() call to itself - NOT cited",
         "operator_rng_note": "test_operator_rng_independent_of_eval_seed changes draw index; does not prove eval-seed independence",
-        "registered_pc1_collector_note": "No action-varying integration test exists; registered PC1 not implemented/executed"
+        "registered_pc1_collector_note": "No action-varying integration test exists; registered PC1 not implemented/executed",
+        "two_seed_paths": "pc1.py::crn_seed (lines 230-239): versioned JSON ['crn-v2', task_id, state_id, rollout_id, replicate_id]. evaluator.py::effective_seed_parts (lines 57-76): separate JSON [base_tag, task_id, state_id, rollout_id, replicate_id, replica_index] with 'SEED' prefix; no crn-v2 tag; does not call crn_seed."
       }
     },
     {
@@ -6235,7 +6237,7 @@
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
-      "disposition": "VERIFIED_FIXED",
+      "disposition": "PARTIALLY_FIXED",
       "proven_acceptance_conditions": [
         "Roundtrip",
         "Tamper detection",
@@ -6246,9 +6248,10 @@
         "Deterministic artifact via save_plan_artifact"
       ],
       "uncovered_acceptance_conditions": [
-        "End-to-end registered analysis consuming artifact (see R44)"
+        "End-to-end registered analysis consumption of the verified artifact (behavioral test)",
+        "Record artifact hash/path/identity in raw evidence"
       ],
-      "disposition_rationale": "4 tests cover artifact lifecycle. End-to-end binding is R44's concern."
+      "disposition_rationale": "4 artifact lifecycle tests (roundtrip, tamper, defensive copy, wrong hash) are direct evidence. BUT registered analysis end-to-end consumption of the verified artifact is NOT behaviorally tested. This criterion is R41's own original requirement and is not erased by R44's source-level inspection. R44 partial limitation preserved: source shows run_pc1_analysis loads artifact, but no E2E test proves it."
     },
     {
       "id": "R42",
@@ -7255,18 +7258,22 @@
       ],
       "manual_evidence": [],
       "evidence_type": "DIRECT",
-      "disposition": "VERIFIED_FIXED",
+      "disposition": "PARTIALLY_FIXED",
       "proven_acceptance_conditions": [
         "Type checking",
         "Missing keys rejected",
         "Extra keys rejected",
         "Valid types pass"
       ],
-      "indirectly_supported_conditions": [],
-      "uncovered_acceptance_conditions": [
-        "Seed version/encoding mutation tests"
+      "indirectly_supported_conditions": [
+        "R40 test_mutation_seed_contract_fails (seed-field mutation, NOT version/encoding)"
       ],
-      "disposition_rationale": "6 strict-type tests cover type checking and key validation. Seed version/encoding mutations remain uncovered but exact key sets are enforced."
+      "uncovered_acceptance_conditions": [
+        "Adversarial seed version mutation test",
+        "Adversarial seed encoding mutation test",
+        "Implementation-to-document comparison for both executable seed derivation paths"
+      ],
+      "disposition_rationale": "6 strict-type tests cover reward contract type/key validation. R40 test_mutation_seed_contract_fails covers action/genotype field mutation only (NOT seed version or encoding). protocol_consistency_check compares document seed_schema to hard-coded expected values; it does NOT derive them from runtime implementation. Version/encoding mutation tests and implementation-to-document cross-check are uncovered."
     },
     {
       "id": "R49",

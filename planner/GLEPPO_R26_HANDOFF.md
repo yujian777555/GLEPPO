@@ -789,3 +789,7 @@ Decision: REQUEST_CHANGES, limited corrective pass R2.1. Structural progress acc
 
 Read `research/R26_STAGE1I_R2_PLANNER_REVIEW.md` and execute `planner/GLEPPO_R26_STAGE1I_R2_1_CORRECTIVE_EXECUTOR_PROMPT.md`. Expected corrected dispositions: 25/15/1/1. Do not redo the full audit or start PC1/Family C/training.
 
+
+## Stage 1I-R2.1 (2026-11-04)
+
+R2.1 complete. R39/R41/R48 -> PARTIALLY_FIXED. 25/15/1/1=42. Validator 21/21 PASS. Awaiting Planner review.

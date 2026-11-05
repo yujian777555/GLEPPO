@@ -146,3 +146,23 @@ Planner decision: **REQUEST_CHANGES**. The R2 structural improvements are accept
 
 The 28/12/1/1 counts remain Executor-reported and are not accepted. Expected corrected counts are 25/15/1/1 after downgrading R39, R41 and R48. The 450/450 suite and 20/20 helper tests remain Executor-reported, not independently reproduced.
 
+
+---
+
+## R2.1 Corrections (2026-11-04)
+
+Planner R2 review: REQUEST_CHANGES. R2.1 narrow corrections applied.
+
+### Disposition downgrades
+- R39 -> PARTIALLY_FIXED: Two separate seed paths (crn_seed vs effective_seed_parts); no shared canonical contract
+- R41 -> PARTIALLY_FIXED: E2E registered analysis artifact consumption not behaviorally tested
+- R48 -> PARTIALLY_FIXED: Seed version/encoding mutation tests missing
+
+### Corrected dispositions
+25 VERIFIED_FIXED + 15 PARTIALLY_FIXED + 1 OPEN + 1 UNVERIFIABLE = 42
+
+### Validator fix
+SRC_RANGE_END_OUT_OF_FILE check added. 21/21 self-tests PASS.
+
+### UTF-8 repair
+latest_plan.md and NEXT_SESSION_PROMPT.md restored from parent 3d97847 + R2.1 appended in valid UTF-8.

@@ -95,6 +95,8 @@ def validate_source_symbols(src_syms, base_dir):
                             total = sum(1 for _ in fpath.open(encoding="utf-8"))
                             if sl > total:
                                 issues.append(f"SRC_RANGE_OUT_OF_FILE:{sym}:{sl}>{total}")
+                            if isinstance(el, int) and not isinstance(el, bool) and el > total:
+                                issues.append(f"SRC_RANGE_END_OUT_OF_FILE:{sym}:{el}>{total}")
                         except Exception:
                             pass
                 if el is None or not isinstance(el, int) or isinstance(el, bool) or el < 1:
@@ -358,6 +360,14 @@ def run_self_test():
         # 20. Invalid evidence type
         bad = build_full(); bad["findings"][0]["evidence_type"] = "INVALID"
         iss, _ = run(bad); check("invalid_evidence_type_rejected", len(iss) > 0, "EVIDENCE_TYPE_INVALID", iss)
+
+        # 21. End-of-file bound: valid start, end beyond EOF
+        bad = build_full()
+        bad["findings"][0]["test_evidence"][0]["source_symbols"][0] = {
+            "symbol": "f", "file": "tests/test_fixture.py", "start_line": 1, "end_line": 999
+        }
+        iss, _ = run(bad)
+        check("end_line_beyond_eof_rejected", len(iss) > 0, "SRC_RANGE_END_OUT_OF_FILE", iss)
 
     print("=" * 70)
     print("R26 Stage 1I-R2 Validator Self-Test Results")

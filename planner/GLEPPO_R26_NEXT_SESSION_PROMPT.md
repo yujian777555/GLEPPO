@@ -145,23 +145,13 @@ After Stage 1I-R2 is committed and all durable records/status are updated, stop 
 
 **Next gate:** Stage 1I-R2 Executor completion → Planner independent review.
 
+
 ---
 
-## CURRENT SESSION OVERRIDE — R2.1 (2026-11-04)
+## Stage 1I-R2.1 后续 (2026-11-04)
 
-The R2 Executor submission was independently reviewed. Decision: REQUEST_CHANGES, limited to three overclaimed dispositions and one validator boundary defect.
+R2.1 纠正完成。R39/R41/R48 降级为 PARTIALLY_FIXED，处置 25/15/1/1=42。
+Validator 21 项自测通过。UTF-8 修复完成。
 
-Read first:
-1. `research/R26_STAGE1I_R2_PLANNER_REVIEW.md`
-2. `planner/GLEPPO_R26_STAGE1I_R2_1_CORRECTIVE_EXECUTOR_PROMPT.md`
-3. `status.json`
-4. `research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.json`
-
-Do not restart R1/R2 or repeat the full 42-row audit. Correct only R39/R41/R48 dispositions, validator source end-line EOF bound, and UTF-8/provenance records. Expected corrected counts: 25/15/1/1.
-
-The R2 work commit is `34ba848c4b8cf4fa07c9583e049b0bb7b0635aab`; its provenance follow-up is `da7a6c7bbd09f1ebca5bf6080dffc78e15615115`. The current branch must be re-fetched before work; never assume these are still HEAD.
-
-Hard gates unchanged: PC1 BLOCKED, Formal G3 FAIL, Family C NOT ACCESSED, registered PC1 NOT EXECUTED, controller training NOT AUTHORIZED/NOT STARTED. No production source/tests changes, no model/API calls or production runtime.
-
-After R2.1, stop for Planner review. If accepted, proceed directly to R26_ECOS_PROTOCOL_RECONCILIATION to resolve protocol drift and prepare the fastest safe baseline experiment. Do not run PC1 or train during R2.1.
-
+下一关口：Planner 独立复核 R2.1。若通过，进入 R26_ECOS_PROTOCOL_RECONCILIATION。
+PC1 BLOCKED。不得执行 PC1 或训练。

@@ -11,13 +11,13 @@ Canonical machine-readable source: `research/R26_STAGE1I_SEMANTIC_EVIDENCE_MAP.j
 
 | Disposition | Count |
 |---|---|
-| VERIFIED_FIXED | 28 |
-| PARTIALLY_FIXED | 12 |
+| VERIFIED_FIXED | 25 |
+| PARTIALLY_FIXED | 15 |
 | OPEN | 1 |
 | UNVERIFIABLE | 1 |
 | **Total** | **42** |
 
-Arithmetic: 1 OPEN + 12 PARTIALLY_FIXED + 1 UNVERIFIABLE + 28 VERIFIED_FIXED = 42
+Arithmetic: 1 OPEN + 15 PARTIALLY_FIXED + 1 UNVERIFIABLE + 25 VERIFIED_FIXED = 42
 
 | Evidence Type | Count |
 |---|---|
@@ -2247,7 +2247,7 @@ Arithmetic: 1 OPEN + 12 PARTIALLY_FIXED + 1 UNVERIFIABLE + 28 VERIFIED_FIXED = 4
 - **Original review:** SEVENTH_REVIEW_FINDINGS.md
 - **Failure mode:** Delimiter collision in CRN seed derivation
 - **Evidence type:** DIRECT
-- **Disposition:** VERIFIED_FIXED
+- **Disposition:** PARTIALLY_FIXED
 
 **Complete original acceptance criteria:**
 - Canonically JSON-serialize typed tuple/list of all CRN fields before hashing
@@ -2374,12 +2374,13 @@ Arithmetic: 1 OPEN + 12 PARTIALLY_FIXED + 1 UNVERIFIABLE + 28 VERIFIED_FIXED = 4
 - **Tautological Test Warning:** test_action_genotype_excluded (line 96-99) compares same crn_seed() call to itself - NOT cited
 - **Operator Rng Note:** test_operator_rng_independent_of_eval_seed changes draw index; does not prove eval-seed independence
 - **Registered Pc1 Collector Note:** No action-varying integration test exists; registered PC1 not implemented/executed
+- **Two Seed Paths:** pc1.py::crn_seed (lines 230-239): versioned JSON ['crn-v2', task_id, state_id, rollout_id, replicate_id]. evaluator.py::effective_seed_parts (lines 57-76): separate JSON [base_tag, task_id, state_id, rollout_id, replicate_id, replica_index] with 'SEED' prefix; no crn-v2 tag; does not call crn_seed.
 
 **Proven acceptance conditions:** Tuple reproducibility; Delimiter safety; Task isolation; State isolation; Rollout isolation; Replicate isolation; NONE/EMPTY distinct
 **Indirectly supported:** Action/genotype exclusion (structural: API does not accept action/genotype; behavioral: R16/R20 cross-genotype tests)
-**Uncovered acceptance conditions:** Registered PC1 collector action-varying integration test (not implemented)
+**Uncovered acceptance conditions:** One shared canonical CRN contract/version across evaluator and PC1 call sites; Registered collector action-varying integration test (not implemented)
 
-**Disposition rationale:** 7 direct CRN tests + 2 cross-genotype tests (R16/R20). Tautological test_action_genotype_excluded NOT cited. Action exclusion structurally proven (API signature). Schema/version tag in typed JSON serialization. All call sites use crn_seed() canonical contract.
+**Disposition rationale:** 7 direct crn_seed tests prove standalone helper collision/reproducibility. R16/R20 cross-genotype tests prove evaluator-path genotype invariance. BUT two separate executable seed paths exist: pc1.py::crn_seed serializes ['crn-v2', task_id, state_id, rollout_id, replicate_id]; evaluator.py::effective_seed_parts serializes [base_tag, task_id, state_id, rollout_id, replicate_id, replica_index] without crn-v2 version tag and does NOT call crn_seed. Tests do not prove one canonical helper contract across call sites. Tautological test_action_genotype_excluded NOT cited.
 
 ---
 
@@ -2469,7 +2470,7 @@ Arithmetic: 1 OPEN + 12 PARTIALLY_FIXED + 1 UNVERIFIABLE + 28 VERIFIED_FIXED = 4
 - **Original review:** SEVENTH_REVIEW_FINDINGS.md
 - **Failure mode:** Mutable mapping; no persisted artifact binding
 - **Evidence type:** DIRECT
-- **Disposition:** VERIFIED_FIXED
+- **Disposition:** PARTIALLY_FIXED
 
 **Complete original acceptance criteria:**
 - Immutable mapping or defensive copies
@@ -2529,9 +2530,9 @@ Arithmetic: 1 OPEN + 12 PARTIALLY_FIXED + 1 UNVERIFIABLE + 28 VERIFIED_FIXED = 4
 
 **Proven acceptance conditions:** Roundtrip; Tamper detection; Defensive copy; Hash verification
 **Indirectly supported:** Deterministic artifact via save_plan_artifact
-**Uncovered acceptance conditions:** End-to-end registered analysis consuming artifact (see R44)
+**Uncovered acceptance conditions:** End-to-end registered analysis consumption of the verified artifact (behavioral test); Record artifact hash/path/identity in raw evidence
 
-**Disposition rationale:** 4 tests cover artifact lifecycle. End-to-end binding is R44's concern.
+**Disposition rationale:** 4 artifact lifecycle tests (roundtrip, tamper, defensive copy, wrong hash) are direct evidence. BUT registered analysis end-to-end consumption of the verified artifact is NOT behaviorally tested. This criterion is R41's own original requirement and is not erased by R44's source-level inspection. R44 partial limitation preserved: source shows run_pc1_analysis loads artifact, but no E2E test proves it.
 
 ---
 
@@ -2896,7 +2897,7 @@ Arithmetic: 1 OPEN + 12 PARTIALLY_FIXED + 1 UNVERIFIABLE + 28 VERIFIED_FIXED = 4
 - **Original review:** NINTH_REVIEW_FINDINGS.md
 - **Failure mode:** Unknown keys accepted; seed version/encoding not checked
 - **Evidence type:** DIRECT
-- **Disposition:** VERIFIED_FIXED
+- **Disposition:** PARTIALLY_FIXED
 
 **Complete original acceptance criteria:**
 - Exact typed contract objects with allow-listed schemas
@@ -2973,9 +2974,10 @@ Arithmetic: 1 OPEN + 12 PARTIALLY_FIXED + 1 UNVERIFIABLE + 28 VERIFIED_FIXED = 4
 - **Harness type:** production_path
 
 **Proven acceptance conditions:** Type checking; Missing keys rejected; Extra keys rejected; Valid types pass
-**Uncovered acceptance conditions:** Seed version/encoding mutation tests
+**Indirectly supported:** R40 test_mutation_seed_contract_fails (seed-field mutation, NOT version/encoding)
+**Uncovered acceptance conditions:** Adversarial seed version mutation test; Adversarial seed encoding mutation test; Implementation-to-document comparison for both executable seed derivation paths
 
-**Disposition rationale:** 6 strict-type tests cover type checking and key validation. Seed version/encoding mutations remain uncovered but exact key sets are enforced.
+**Disposition rationale:** 6 strict-type tests cover reward contract type/key validation. R40 test_mutation_seed_contract_fails covers action/genotype field mutation only (NOT seed version or encoding). protocol_consistency_check compares document seed_schema to hard-coded expected values; it does NOT derive them from runtime implementation. Version/encoding mutation tests and implementation-to-document cross-check are uncovered.
 
 ---
 

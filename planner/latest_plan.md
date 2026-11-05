@@ -125,21 +125,16 @@ GLEPPO 的 ECOS 研究假设仍然保留，但 PPO 优势尚未得到实验证�
 
 **下一步只有：Stage 1I-R2 Executor 完成 → Planner 独立复审。不得进入 R26_ECOS_PROTOCOL_RECONCILIATION、PC1、Family C 或训练。**
 
+
 ---
 
-## Current Planner override — Stage 1I-R2.1 (2026-11-04)
+## Stage 1I-R2.1 纠正完成 (2026-11-04)
 
-**R2 decision: REQUEST_CHANGES.** The structural map work is accepted, but R39, R41 and R48 overstate VERIFIED_FIXED. Corrected expected disposition counts are 25 VERIFIED_FIXED / 15 PARTIALLY_FIXED / 1 OPEN / 1 UNVERIFIABLE.
+R2 Planner 复审：REQUEST_CHANGES。R39/R41/R48 已降级为 PARTIALLY_FIXED。
 
-**Current task:** execute `planner/GLEPPO_R26_STAGE1I_R2_1_CORRECTIVE_EXECUTOR_PROMPT.md`.
+处置重算：25 VERIFIED_FIXED + 15 PARTIALLY_FIXED + 1 OPEN + 1 UNVERIFIABLE = 42。
 
-Scope is intentionally narrow:
-- downgrade R39, R41 and R48 to PARTIALLY_FIXED and document the exact uncovered seed/artifact conditions;
-- fix the validator's missing source end_line > EOF check and add a specific adversarial test (21 total);
-- restore valid UTF-8 in latest_plan and NEXT_SESSION_PROMPT;
-- update provenance and durable records.
+Validator：新增 SRC_RANGE_END_OUT_OF_FILE 检查，21 项自测全部通过。
 
-Do not repeat the 42-row audit. No production source/tests changes, model/API calls, production runtime, PC1, Family C or controller training.
-
-**Next gate:** R2.1 Executor completion -> Planner independent review. If accepted, proceed directly to R26_ECOS_PROTOCOL_RECONCILIATION, not directly to PC1 or training.
-
+**当前状态：** R26_STAGE1I_R2.1_COMPLETE — 等待 Planner 独立复核。
+**下一关口：** Planner 复核 R2.1。若通过，进入 R26_ECOS_PROTOCOL_RECONCILIATION。

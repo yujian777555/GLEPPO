@@ -111,3 +111,11 @@ Self-test: 20 adversarial cases, ALL PASS, exit code 0
 Map validation: PASSED (42 findings, 39 mapped, 3 NONE, 218 declarations)
 Semantic map: 193 test_evidence entries, 0 null source ranges
 Dispositions from JSON: 28/12/1/1 = 42
+
+---
+
+## R2.1 Validator Evidence (2026-11-04)
+
+Self-test: 21/21 PASS (exit code 0). New: end_line_beyond_eof_rejected with SRC_RANGE_END_OUT_OF_FILE diagnostic.
+Map validation: PASSED (42 findings, 39 mapped, 3 NONE).
+Dispositions: 25/15/1/1 = 42 (mechanically derived).

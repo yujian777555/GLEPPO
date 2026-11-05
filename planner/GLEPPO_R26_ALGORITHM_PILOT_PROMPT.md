@@ -82,14 +82,14 @@ Normalize/clip each component with explicitly documented formulas. No gold, task
 
 - One linear model per action; ridge initialization A_a=I, b_a=0.
 - Select argmax xᵀθ_a + α√(xᵀA_a⁻¹x), α=1.
-- Update only after the generation reward is observed.
+- Update only after the generation reward is observed; at episode end, apply the final generation's reward to the final action.
 - Train online across TRAIN episodes; freeze all A/b matrices for validation.
 
 ### QLEARN
 
 - Tabular Q-learning over a documented discretization of `pilot_context_v1`.
 - Five actions; γ=0.95, α=0.1, ε starts 0.20 and decays to 0.05 over TRAIN decisions.
-- Update with r_t + γ max_a Q(s_{t+1},a); terminal transition has no bootstrap term.
+- Update with r_t + γ max_a Q(s_{t+1},a); terminal transition has no bootstrap term. Call an explicit episode-finalization method so the last generation reward is not dropped.
 - Train only on TRAIN episodes; freeze Q table and use greedy action on validation.
 - Persist the controller across the ordered TRAIN tasks for each seed; use a separate controller instance per training seed.
 
@@ -104,7 +104,8 @@ In this experimental branch only, correct the call path in `gleppo/evolution.py`
 2. Keep `task_id`, `state_id`, `rollout_id` and `replica_index` consistent across methods for the same task/seed/generation/offspring slot. Genotype remains part of cache identity, not the random seed.
 3. Separate the parent-selection RNG stream from crossover's additional mate draw. Derive the mate RNG deterministically from (config seed, task, episode, generation, "mate") so crossover cannot consume draws from the parent-selection RNG stream.
 4. Preserve deterministic reproducibility across processes.
-5. Add focused tests proving:
+5. Extend the in-memory generation history passed to the schedule with `op_delta_mean`, `valid_rate`, `valid_count` and `invalid_count`; retain the existing fields. These are controller-visible, post-generation observations only.
+6. Add focused tests proving:
    - same task/episode/generation/offspring slot has identical effective evaluation seed parts across different operator arms;
    - initial population hashes match across methods for the same task/seed;
    - crossover mate selection does not shift the parent-selection RNG stream;

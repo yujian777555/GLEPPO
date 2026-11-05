@@ -1,140 +1,81 @@
-# GLEPPO 最新执行计划 — R26 Stage 1I-R2
+# GLEPPO 最新执行计划 — R26 ECOS Protocol Reconciliation
 
-**仓库：** yujian777555/GLEPPO  
-**分支：** r25-handoff  
-**更新时间：** 2026-11-04  
-**Stage 1I Executor HEAD：** a1e6e65e671c876d028492bfed164205c54df08b  
-**Stage 1I Planner review：** dfd7ef909ba4ee97e01c4bb57b0177ae8869d61c  
-**Stage 1I-R1 Executor HEAD：** 4d2ff06ee01146533501589b264d33ddd30ffcbe  
-**Stage 1I-R1 Planner review：** dcdcef5b2e7e68a6590d95c90c4caf453399c127  
-**R1 source snapshot：** 29325cfa16441154c833f381f208747b57627a79  
-**Planner decision：** R1 REQUEST_CHANGES  
-**当前任务：** Stage 1I-R2 corrective completion  
-**Executor prompt：** planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md
+**仓库：** `yujian777555/GLEPPO`  
+**分支：** `r25-handoff`  
+**更新时间：** 2026-11-05  
+**最近接受的 Executor work commit：** `362f343f43befc7f43c00ba5edd1059b01d523d1`  
+**Stage 1I-R2.1.1 Planner review：** ACCEPT  
+**Planner review report：** `research/R26_STAGE1I_R2_1_1_PLANNER_REVIEW.md`  
+**下一阶段 Executor prompt：** `planner/GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION_EXECUTOR_PROMPT.md`
 
 ---
 
 ## 一、当前决策
 
-**Stage 1I-R1 不接受。继续留在 Stage 1I，完成 R2 后重新独立复审。**
+**Stage 1I-R2.1.1 已接受。进入 R26_ECOS_PROTOCOL_RECONCILIATION，限文档与只读源码审查。**
 
-R1 的结构性成果得到认可：
-- JSON map 有 42 个唯一 ID，R12–R53；
-- Markdown 有 42 个唯一标题；
-- JSON 与 Markdown 的处置一致；
-- 26/14/1/1 的机械统计正确；
-- R53 保持 PARTIALLY_FIXED；
-- R18 的 13 条手工证据和单位区分基本完整；
-- 生产源码和 tests/ 未修改；
-- durable handoff 文件已更新。
+R2.1.1 完成并接受的内容：
 
-但语义证据仍不可靠。部分测试并未到达其声称证明的代码分支，部分调用链和源码符号错误，多个 Finding 漏掉已有的直接测试，且验证器允许空行号和未解析的 source symbol 通过。
+- R39/R41/R48 保持 PARTIALLY_FIXED，42 项处置为 25/15/1/1。
+- 42 个唯一 ID R12–R53，JSON/Markdown 处置一致。
+- Validator 的 21 个自测名称和顺序与代码中的 21 个检查项一致；实际 stdout 和 exit code 0 已由 Executor 持久化。
+- R41 不再把 raw-evidence identity 作为原始验收条件；唯一未完成条件是 registered analysis 端到端消费验证 artifact 的行为测试。
+- R2.1、R2.1.1 SHA 链已记录。
+- R2.1.1 仅修改证据映射、测试证据与 status；没有生产源码或 `tests/` 变更。
 
-完整审查：research/R26_STAGE1I_R1_PLANNER_REVIEW.md。
+**证据限制：** 21/21 stdout 与 exit code 是 Executor-captured；Planner 未独立执行。该提交无 GitHub CI status/workflow run。450/450 仍为 EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED。
 
-## 二、R1 的主要阻塞项
+完整决定：`research/R26_STAGE1I_R2_1_1_PLANNER_REVIEW.md`。
 
-### F1：多项 Finding 没有枚举全部相关测试
+## 二、当前科学事实
 
-重点包括：
-- R12：只引用初始化计数测试，漏掉 cache hit 不增加 replica 的直接测试。
-- R14：漏掉 r_hat 包含 extra_immediate 的直接测试。
-- R17：漏掉 evidence record 字段测试，且 counter breakdown 未证明。
-- R20：漏掉 task/rollout/replicate 与 override-path 测试。
-- R23：漏掉 save/load/replay round-trip 测试。
-- R39：7 个直接 CRN 测试没有完整进入结构化证据数组，R20 cross-genotype test 也没有作为完整证据条目。
-- R40：只列 happy-path，遗漏版本、seed、reward mutation tests。
-- R41：遗漏 tamper、defensive-copy、wrong-hash tests。
-- R28：映射到常量检查测试，而不是实际调用 reconcile 的测试。
+ECOS 保留为可证伪研究假设，但算法优势仍未得到证明：
 
-### F2：存在错误的 test-to-source 调用链
+- R21-C1 是 LLM arithmetic execution 与 DAC 的比较，不是固定/自适应算子或控制器比较。
+- Fixed-vs-adaptive operator selection：UNTESTED。
+- PPO-vs-rule：UNTESTED。
+- PPO-vs-LinUCB/contextual Bandit：UNTESTED。
+- Reward validity、32-D state utility、delayed effects 均不能仅凭设计文档认定成立。
 
-重点包括：
-- R20：Evaluator.effective_seed_parts 不调用 pc1.crn_seed；crn_seed 实际位于 gleppo/pc1.py。
-- R28：test_registered_budget_exact 只检查常量，不调用 BudgetLedger.reconcile。
-- R30/R37：测试实际调用 run_pc1_analysis，缺失字段在 validate_records 之前被拒绝。
-- R44：loader 单测不能替代注册分析端到端 artifact 绑定测试。
-- R47：alternative mapping 测试在注册哈希比较处失败，没有到达 plan ID/version 分支。
-- R50：test_wrong_protocol_hash_rejected 直接调用 art.verify，不是 ApprovalGate.check。
-- R51：测试比较 REGISTERED_PROTOCOL_CONTENT_HASH，不是 REGISTERED_PLAN_HASH。
-- R52：validate_reward_schema 在源码中不存在。
+## 三、R26_ECOS_PROTOCOL_RECONCILIATION 的目标
 
-### F3：source symbol 不完整
+Phase 1、R24、PC1 R4 和 active shared code 尚未形成单一可执行协议。重点核对：
 
-R17、R20、R23、R24、R25、R26、R48、R51、R52 有 null source line range；部分符号不存在或文件路径错误。
+1. decision / generation / episode / rollout / evaluation replica / CTX 的单位和嵌套关系；
+2. 32-D state 的精确字段、时序、缺失值、归一化和泄漏风险；
+3. 五个 operator 的 ID、语义和每代动作规则；
+4. Phase 1/shared-code/PC1 generation reward 与 R24 immediate effective-success reward 的冲突；
+5. gamma 0.95 vs 0.99、GAE lambda 与 PC1 return 的一致性；
+6. Train / Validation / Confirm / Family C 的任务身份、种子和隔离；
+7. 固定、随机、规则、LinUCB、PPO、Q-learning、FM rewrite 与 ablation 的基线层级；
+8. 主终点、PC1 myopia diagnostic、有效性和成本指标；
+9. 候选任务执行、PC1 slots、训练算力、model calls、tokens 的独立预算账本；
+10. evaluator 与 PC1 的 CRN seed serialization 是否真正统一；
+11. SR1、PC1 PASS/FAIL/INCONCLUSIVE 与 R24 stopping rules 的衔接。
 
-### F4：验证器仍然有缺口
+## 四、本阶段交付
 
-- wrong_file_path 自测使用不存在的文件，与 missing_source_file 重复。
-- null declaration_start_line/end_line 可绕过行号比较。
-- source_symbols 的文件和行号完全没有被校验。
-- schema_version 和多项字段类型没有严格校验。
-- branch_reached 的说明仍有与实际调用路径不符的通用模板。
+执行 `planner/GLEPPO_R26_ECOS_PROTOCOL_RECONCILIATION_EXECUTOR_PROMPT.md`，形成：
 
-### F5：处置结论存在过度确认
+- `research/R26_ECOS_PROTOCOL_RECONCILIATION.md`
+- `research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.md`
+- `research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.json`
 
-R12、R17、R26、R28、R40、R44、R51 等 VERIFIED_FIXED 行的证据没有证明全部验收条件。机械计数正确不代表语义分类正确。R2 必须重新评估全部 42 行，不得强行保留 26/14/1/1。
+并更新 `status.json`、本文件和 `planner/GLEPPO_R26_HANDOFF.md`。
 
-## 三、Stage 1I-R2 唯一任务
-
-执行：planner/GLEPPO_R26_STAGE1I_R2_CORRECTIVE_EXECUTOR_PROMPT.md。
-
-必须完成：
-
-1. 重新核对 8 份原始 review 文件，逐项保留全部验收子条件。
-2. 为每个 Finding 枚举所有相关测试，不能只列代表性测试。
-3. 修正错误调用链、错误源码符号、错误文件路径和未到达分支的声明。
-4. 所有 source symbol 必须有真实文件和非空精确行范围。
-5. 根据完整证据重新计算 disposition；不得把旧统计当目标。
-6. 强化 AST validator：schema、类型、非空正整数行号、source symbol 路径和范围、branch/harness/manual evidence 均须 fail-closed。
-7. 补齐 existing-file/wrong-owner、null line、null source range 等对抗性自测，并要求每项检查对应的具体错误原因。
-8. 修正 R1 final SHA 和 source snapshot 的 provenance。
-9. 更新所有长期文档和 status.json。
-
-R1 关键纠正要求：
-- R28 必须引用 test_ledger_components_sum_to_total。
-- R50 必须区分直接调用 TrustedApprovalArtifact.verify 与 ApprovalGate.check。
-- R51 不得把协议哈希测试当成 plan hash 测试。
-- R52 必须使用真实的 protocol_consistency_check 及其内部校验逻辑。
-- R53 仍为 PARTIALLY_FIXED，除非已有直接 hash-invariance 测试；本阶段不得新增 tests。
-- R18 保持 MANUAL，生产 tokens/latency UNMEASURED。
-
-## 四、科学完整性状态
-
-GLEPPO 的 ECOS 研究假设仍然保留，但 PPO 优势尚未得到实验证明。
-
-- R21-C1 是 DAC 对照，不是演化算子或控制器对照。
-- 固定算子与自适应算子对比：UNTESTED。
-- PPO 与规则控制器对比：UNTESTED。
-- PPO 与 LinUCB/Neural Bandit 对比：UNTESTED。
-- Phase 1、R24、PC1 R4 的 reward/state/gamma/split/budget 定义冲突仍未解决。
-- 不得在 Stage 1I-R2 中提前统一协议或训练控制器。
+所有历史协议保留原样。新协议必须标记 **PROPOSED / NOT APPROVED**，列出 unresolved items 和后续代码改造清单。不得用当前实现存在某个值作为唯一选择理由，也不得静默覆盖 R24/Phase 1 历史设计。
 
 ## 五、硬门禁
 
-- PC1 BLOCKED；R4 PROPOSED / NOT APPROVED。
+- PC1 BLOCKED；PC1 R4 PROPOSED / NOT APPROVED。
 - Formal G3 FAIL。
-- Family C NOT ACCESSED。
+- Family C NOT ACCESSED；不得加载、检查 gold、执行或调参。
 - Registered PC1 NOT EXECUTED。
 - Controller training NOT AUTHORIZED / NOT STARTED。
-- 不得修改生产源码或 tests/。
-- 不得调用模型/API、生产 runtime 或 signing key。
-- 不得修改冻结的 R1–R25 raw evidence/manifests。
-- 不得修改/合并 main，不得 reset/rebase/force-push。
-- 不得混用其他项目的代码、数据或报告。
+- 不调用模型/API，不运行生产 runtime，不访问 signing key。
+- 本阶段不执行 PC1、不训练、不做 baseline pilot。
+- 不修改生产源码、`tests/`、Phase 1/R24/PC1 R4 历史协议、数据、raw evidence 或 manifests。
+- 不更新/合并 main，不 reset/rebase/force-push。
+- 不混用其他项目的代码、数据或报告。
 
-**下一步只有：Stage 1I-R2 Executor 完成 → Planner 独立复审。不得进入 R26_ECOS_PROTOCOL_RECONCILIATION、PC1、Family C 或训练。**
-
-
----
-
-## Stage 1I-R2.1 纠正完成 (2026-11-04)
-
-R2 Planner 复审：REQUEST_CHANGES。R39/R41/R48 已降级为 PARTIALLY_FIXED。
-
-处置重算：25 VERIFIED_FIXED + 15 PARTIALLY_FIXED + 1 OPEN + 1 UNVERIFIABLE = 42。
-
-Validator：新增 SRC_RANGE_END_OUT_OF_FILE 检查，21 项自测全部通过。
-
-**当前状态：** R26_STAGE1I_R2.1_COMPLETE — 等待 Planner 独立复核。
-**下一关口：** Planner 复核 R2.1。若通过，进入 R26_ECOS_PROTOCOL_RECONCILIATION。
+**下一关口：** Protocol reconciliation Executor completion → Planner independent review。只有新协议经 Planner 独立审查后，才讨论后续授权门槛；本阶段本身不授予任何实验权限。

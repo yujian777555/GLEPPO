@@ -123,7 +123,12 @@ def evolve_generation(
     reps0 = evaluator.replicas_executed
 
     for j, p in enumerate(parents):
-        mate = tournament_select(pop, cfg.tournament_k, rng) if operator_name == "crossover" else None
+        # R26 pilot: separate mate RNG from parent-selection RNG stream
+        if operator_name == "crossover":
+            mate_rng = random.Random(stable_seed(cfg.seed, task["task_id"], episode_id, t, "mate", j))
+            mate = tournament_select(pop, cfg.tournament_k, mate_rng)
+        else:
+            mate = None
         ctx = dict(failure_hint)
         ctx["mate"] = mate.geno if mate else None
         ctx["gen"] = t
@@ -133,7 +138,8 @@ def evolve_generation(
             continue
         ev = evaluator.evaluate(
             child, task, allow_family=("A", "B"),
-            replicate_id=stable_seed(episode_id, t, j, operator_name) % 100000,
+            # R26 pilot: action-independent replicate_id for CRN pairing
+            replicate_id=stable_seed(episode_id, t, j) % 100000,
             state_id=f"{episode_id}", rollout_id=f"g{t}",
         )
         valid_count += 1
@@ -209,7 +215,11 @@ def evolve(
         pop, log, gen_reps, gen_hits = evolve_generation(
             pop, op, cfg, evaluator, task, rng, t, failure_hint, eid)
         res.logs.append(log)
-        history.append({"t": t, "op": op, "best": log.best_success, "reward": log.reward})
+        vr = log.valid_count / max(1, log.valid_count + log.invalid_count)
+        history.append({"t": t, "op": op, "best": log.best_success, "reward": log.reward,
+                         "op_delta_mean": log.op_delta_mean, "valid_rate": vr,
+                         "valid_count": log.valid_count, "invalid_count": log.invalid_count,
+                         "mean_success": log.mean_success})
         res.planned_slots += log.planned_slots
         res.actual_ctx += gen_reps   # R9: actual replica executions from counter delta
         res.cache_hits += gen_hits   # R9: per-episode bundle-hit delta

@@ -1,0 +1,46 @@
+{
+  "experiment": "R26 Operator Selection Algorithm Pilot",
+  "date": "2026-11-05",
+  "base_commit": "aa16c23101c1b387e8617910601da9a5d96231c1",
+  "branch": "r26-algorithm-pilot",
+  "main_untouched": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
+  "surrogate": "StubLLM (deterministic, NOT real Qwen/LLM)",
+  "confirmatory": false,
+  "pc1": false,
+  "formal_g3": false,
+  "family_c_accessed": false,
+  "ppo_training": false,
+
+  "config": {"mu": 8, "lam": 4, "T": 15, "n_eval": 2},
+  "planned_slots_per_episode": {"init": 16, "offspring": 120, "total": 136},
+
+  "arms": ["F1_prompt_local_edit", "F2_prompt_critique_rewrite", "F3_tool_subset_edit", "F4_workflow_step_edit", "F5_crossover", "RND", "RULE", "LINUCB", "QLEARN"],
+
+  "train_tasks": 12,
+  "val_tasks": 6,
+  "train_seeds": [11, 22],
+  "val_seeds": [1011, 1022],
+  "total_episodes": 324,
+  "total_planned_slots": 44064,
+
+  "seed_correction": {
+    "replicate_id": "stable_seed(episode_id, t, j) — action-independent",
+    "mate_rng": "separate stream from parent-selection RNG",
+    "tests_passed": 5
+  },
+
+  "results": {
+    "all_arms_identical": true,
+    "val_best_success": 1.0,
+    "val_discounted_return": 1.073,
+    "conclusion": "StubLLM ceiling effect — all operators produce identical outcomes. No adaptive-selection signal detectable in surrogate."
+  },
+
+  "data_isolation": {
+    "train_A": "data/train_A.jsonl (first 7 tasks)",
+    "train_B": "data/train_B.jsonl (first 5 tasks)",
+    "val_A": "data/val_A.jsonl (first 3 tasks)",
+    "val_B": "data/val_B.jsonl (first 3 tasks)",
+    "test_C": "NEVER LOADED"
+  }
+}

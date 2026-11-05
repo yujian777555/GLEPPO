@@ -949,7 +949,7 @@ PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; 
 - Prompt commit: `a2e6bda538389f418445b844eafcf5a0684cb845`
 - Current scope: unregistered development pilot; Family A/B train/validation only; StubLLM only.
 - Arms: five fixed operators, uniform random, B2 rule, LinUCB, tabular Q-learning.
-- Config: μ=8, λ=4, T=15, n_eval=2, seeds 11/22; 12 train tasks + 6 validation tasks; 9 arms; 324 episodes; 44,064 planned candidate-replica slots.
+- Config: μ=8, λ=4, T=15, n_eval=2; TRAIN seeds 11/22, VALIDATION seeds 1011/1022; 12 train tasks + 6 validation tasks; 9 arms; 324 episodes; 44,064 planned candidate-replica slots.
 - Before running comparisons, fix action-dependent offspring replicate_id and separate crossover mate RNG from parent-selection RNG on this isolated branch.
 - LinUCB/Q-learning train on TRAIN only and freeze on validation. Best fixed operator selected on TRAIN only.
 - PPO is deliberately deferred until an adaptive policy shows signal beyond Random and Rule.

@@ -99,7 +99,7 @@ Add the exact SHA-256 of all five split files to both Markdown and JSON:
 - val_B: `6300f14a85acb04c949c706fe80f7c9924184536f0b280fea6d0b4558b40c5ee` **Do not copy this value**; read and use the actual exact val_B hash from `data/manifest.json`.
 - test_C: `67109af7d01e262f6c03ea75e27959e5136e2ce1700c56957f27853320a6bcb9`
 
-Important: the actual val_B SHA in the manifest is `6300f14a85acb04c9496a2d3796d69c19f4889813b785855165ca1ca5dadbe79`. Use that exact value.
+
 
 Record:
 - manifest path/version/created_at/generator name;

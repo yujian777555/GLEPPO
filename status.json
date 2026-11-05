@@ -2143,7 +2143,7 @@
     "branch": "r26-algorithm-pilot",
     "base_commit": "aa16c23101c1b387e8617910601da9a5d96231c1",
     "prompt": "planner/GLEPPO_R26_ALGORITHM_PILOT_PROMPT.md",
-    "prompt_commit": "a2e6bda538389f418445b844eafcf5a0684cb845",
+    "prompt_commit": "46215bbdc7213e7850e83c2ae45b3a1df44609c5",
     "experiment_type": "UNREGISTERED_DEVELOPMENT_PILOT_NOT_PC1_NOT_FORMAL_G3",
     "research_question": "Does adaptive selection of the five Agent-evolution operators outperform fixed, random and rule-based selection on Family A/B train/validation tasks?",
     "arms": [
@@ -2185,13 +2185,22 @@
       "validation_episodes": 108,
       "total_episodes": 324,
       "planned_slots_per_episode": 136,
-      "total_planned_slots": 44064
+      "total_planned_slots": 44064,
+      "train_seeds": [
+        11,
+        22
+      ],
+      "validation_seeds": [
+        1011,
+        1022
+      ]
     },
     "backend": "StubLLM only; no model/API/local production inference; surrogate-only",
     "required_pre_experiment_correction": [
       "Make offspring evaluation replicate_id independent of operator/action.",
       "Separate parent-selection RNG from crossover mate RNG.",
-      "Add focused seed-pairing and RNG-stream tests."
+      "Add focused seed-pairing and RNG-stream tests.",
+      "Extend generation history with op_delta_mean, valid_rate, valid_count and invalid_count for controller-visible pilot observations."
     ],
     "outputs": [
       "experiments/r26_operator_pilot/RUN_MANIFEST.json",

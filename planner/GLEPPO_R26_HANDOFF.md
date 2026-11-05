@@ -934,3 +934,34 @@ This is the final narrow documentation-only pass. Update the existing reconcilia
 ### Hard gates retained
 
 PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; registered PC1 NOT EXECUTED; controller training NOT AUTHORIZED / NOT STARTED. No model/API calls, local model inference, production runtime, signing-key access, PC1, baseline experiments or Formal G3 efficacy.
+
+
+---
+
+## 29. R26 Adaptive-Operator Algorithm Pilot — User Priority (2026-11-05)
+
+**User instruction:** "抓紧做算法实验".  
+**Decision:** Pause R1.2 documentation consistency work and prioritize a bounded algorithm pilot. R1.2 is paused, not accepted or closed.
+
+- Experimental branch: `r26-algorithm-pilot`
+- Base: `aa16c23101c1b387e8617910601da9a5d96231c1`
+- Executor prompt: `planner/GLEPPO_R26_ALGORITHM_PILOT_PROMPT.md`
+- Prompt commit: `a2e6bda538389f418445b844eafcf5a0684cb845`
+- Current scope: unregistered development pilot; Family A/B train/validation only; StubLLM only.
+- Arms: five fixed operators, uniform random, B2 rule, LinUCB, tabular Q-learning.
+- Config: μ=8, λ=4, T=15, n_eval=2, seeds 11/22; 12 train tasks + 6 validation tasks; 9 arms; 324 episodes; 44,064 planned candidate-replica slots.
+- Before running comparisons, fix action-dependent offspring replicate_id and separate crossover mate RNG from parent-selection RNG on this isolated branch.
+- LinUCB/Q-learning train on TRAIN only and freeze on validation. Best fixed operator selected on TRAIN only.
+- PPO is deliberately deferred until an adaptive policy shows signal beyond Random and Rule.
+
+### Evidence and limitations
+
+This is not registered PC1, not Formal G3, not Family-C generalization, and not publication-confirmatory evidence. StubLLM is deterministic and does not establish real Qwen/LLM Agent performance.
+
+No Family C task payload/gold may be read or loaded. Do not run PC1, Formal G3, production Qwen, local model inference, model/API calls or PPO training. No main update/merge. Do not execute unrelated audit/helper scripts.
+
+### Current next gate
+
+**Action-independent paired seeds + RNG separation → 324-episode StubLLM pilot → Planner review of raw measured results.**
+
+R1.2 remains `PAUSED_BY_USER_PRIORITY`; resume only after the pilot is reported or the user reprioritizes.

@@ -124,7 +124,7 @@ Use only manifest-verified files:
 Small, fast pilot subset:
 - TRAIN: first 7 train_A tasks (covers TA1–TA7) + first 5 train_B tasks (covers TB1–TB5): 12 tasks.
 - VALIDATION: first 3 val_A tasks + first 3 val_B tasks: 6 tasks.
-- Evolution seeds: 11 and 22 for the initial screen.
+- TRAIN evolution seeds: 11 and 22; VALIDATION evolution seeds: 1011 and 1022. Use the same validation task/seed pairs across all arms.
 - Config: `mu=8, lam=4, T=15, n_eval=2`; all arms identical.
 - Expected planned slots per episode: 16 initialization + 120 offspring = 136 candidate-replica slots.
 - Nine arms × 12 TRAIN tasks × 2 seeds = 216 TRAIN episodes.
@@ -134,7 +134,7 @@ Small, fast pilot subset:
 - Same ordered task IDs, seeds, initial genotypes, μ/λ/T/n_eval and stopping semantics for every arm.
 - No early stopping in this pilot; every episode runs T=15 generations.
 
-The LinUCB/Q-learning controller is trained across the 12 TRAIN tasks for each seed, then frozen and evaluated on the six validation tasks for that same seed. Validation must never update controller parameters.
+The LinUCB/Q-learning controller is trained across the 12 TRAIN tasks for each training seed, then frozen and evaluated on the six validation tasks with the corresponding validation seed (11 → 1011; 22 → 1022). Validation must never update controller parameters. Validation must never update controller parameters.
 
 ## 7. Outputs and analysis
 

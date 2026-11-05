@@ -897,3 +897,40 @@ PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; 
 ## R1.1 ECOS Protocol Correction Complete (2026-11-05)
 
 R1.1 corrective pass complete (F1-F10). Three deliverables updated in place. Awaiting Planner independent review.
+
+
+---
+
+## 28. R26 ECOS Protocol R1.1 — Planner REQUEST_CHANGES (2026-11-05)
+
+**Reviewed R1.1 Executor commit:** `728bc356bbd4b776839d5f185eb6a2084f0f4de8`  
+**Planner review:** `research/R26_ECOS_PROTOCOL_R1_1_PLANNER_REVIEW.md`  
+**Planner review commit:** `afc22a00415604c7784dd3e9b071942db14790eb`  
+**Decision:** REQUEST_CHANGES. R1.1 fixed the central scientific issues, but the protocol and durable status are not yet internally consistent.
+
+Accepted R1.1 corrections: exact 32 feature names; budget_used_frac defect; no current controller consumption of the vector; reward non-equivalence; action-dependent seed path; Phase 1/R4 sampling redesign; actual split assignments; 204 maximum evaluation slots; R24 budget scope unresolved; B6 mandatory; B5 external; gamma amendment requirement; INCONCLUSIVE → SR1 STOP.
+
+Remaining narrow findings:
+
+1. The active A–K matrix in the reconciliation report still contains superseded R1 conclusions (reward, gamma, PC1 projection, seed independence, R24 Confirm, B6 tier, budget, inconclusive rule).
+2. Feature details mark most missing values as zero, but most state_vector inputs are required and have no imputation; source range for state_vector is lines 48–152.
+3. PC1 R4 exact PASS/FAIL/INCONCLUSIVE CI rule is not fully machine-readable or stated in full.
+4. Four non-Family-C split hashes are omitted from JSON; Markdown hashes are abbreviated. Manifest blob SHA and absent generator Git SHA need explicit provenance.
+5. Core baseline fairness (initialization, seeds, state visibility, budget, stopping and cost ledgers) is not specified.
+6. Operator LLM-call counts need source qualification; prompt_local_edit is current deterministic 0-call.
+7. status.json retains stale R1 key decisions and marks R1.1 corrective task as still issued; latest plan/handoff need synchronized gate/provenance.
+8. The R1→R1.1 compare range includes 15 unrelated scripts. No source/tests/data files changed in that range, but scripts are outside the documentation-only scope. Do not execute or edit them.
+
+The review report contains the detailed evidence.
+
+### R1.2 final documentation consistency task
+
+Executor prompt: `planner/GLEPPO_R26_ECOS_PROTOCOL_R1_2_FINAL_DOC_CORRECTIVE_PROMPT.md`.
+
+This is the final narrow documentation-only pass. Update the existing reconciliation, canonical Markdown/JSON, status, latest plan and handoff. Do not change source, tests, scripts, data, manifest or historical protocols. Do not execute project code or scripts.
+
+**Next gate:** R1.2 completion → Planner review. No experiment authorization is implied.
+
+### Hard gates retained
+
+PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; registered PC1 NOT EXECUTED; controller training NOT AUTHORIZED / NOT STARTED. No model/API calls, local model inference, production runtime, signing-key access, PC1, baseline experiments or Formal G3 efficacy.

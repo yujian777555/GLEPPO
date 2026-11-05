@@ -856,3 +856,7 @@ The new contract must remain **PROPOSED / NOT APPROVED**. Preserve historical do
 PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; registered PC1 NOT EXECUTED; controller training NOT AUTHORIZED / NOT STARTED. No model/API calls, production runtime, signing-key access, PC1, Family C, training, Formal G3 efficacy or baseline experiment during reconciliation.
 
 **Next gate:** Reconciliation Executor completion → Planner independent review. No experiment authorization is implied.
+
+## R26 ECOS Protocol Reconciliation (2026-11-05)
+
+三份交付物已创建：差异矩阵 + 拟议合同 + JSON 镜像。文档专用，无实验/训练授权。等待 Planner 复核。

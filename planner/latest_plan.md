@@ -79,3 +79,18 @@ Phase 1、R24、PC1 R4 和 active shared code 尚未形成单一可执行协议�
 - 不混用其他项目的代码、数据或报告。
 
 **下一关口：** Protocol reconciliation Executor completion → Planner independent review。只有新协议经 Planner 独立审查后，才讨论后续授权门槛；本阶段本身不授予任何实验权限。
+
+---
+
+## R26 ECOS Protocol Reconciliation (2026-11-05)
+
+文档专用阶段完成。交付物：
+- research/R26_ECOS_PROTOCOL_RECONCILIATION.md（差异矩阵，A-K 全维度）
+- research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.md（拟议合同）
+- research/ECOS_CANONICAL_PROTOCOL_R1_PROPOSED.json（机器可读镜像）
+
+关键决策：共享 reward（Phase 1 + 实现一致）、γ=0.95（R24 γ=0.99 为错误）、32 维 state、5 算子、tiered baselines。
+
+未解决：特征归一化常数、R24 confirm ≠ Family C、种子 schema 双路径、无 controller 实现。
+
+**状态：** PROPOSED / NOT APPROVED。等待 Planner 独立复核。

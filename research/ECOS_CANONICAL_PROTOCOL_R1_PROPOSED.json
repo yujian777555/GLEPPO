@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "document_id": "ECOS_CANONICAL_PROTOCOL_R1_PROPOSED",
+  "version": "ECOS-CANONICAL-R1-PROPOSED",
+  "date": "2026-11-05",
+  "status": "PROPOSED_NOT_APPROVED",
+  "requires_planner_approval": true,
+
+  "units": {
+    "operator_decision": {"definition": "Select one of 5 operators at generation start", "budget_ledger": null},
+    "generation": {"definition": "Apply operator to lambda offspring, evaluate, select", "lambda": 4, "n_eval": 3, "budget_ledger": "candidate_task_evaluation"},
+    "evolution_episode": {"definition": "T generations on one task", "T": 15, "budget_ledger": "candidate_task_evaluation"},
+    "task_instance": {"definition": "{task_id, family, template_id, seed, input, gold}"},
+    "evaluation_replica": {"definition": "One genotype execution on one task", "budget_ledger": "candidate_task_evaluation"},
+    "rollout": {"definition": "H-step trajectory under fixed policy (PC1)", "horizon": 3},
+    "pc1_state_action_record": {"definition": "(state, action) with reward trace", "budget_ledger": "pc1_planned_slots"},
+    "ctx_slot": {"definition": "One candidate-task evaluation slot", "budget_ledger": "candidate_task_evaluation"}
+  },
+
+  "state": {
+    "dimension": 32,
+    "source": "gleppo/features.py",
+    "blocks": {
+      "A_execution_outcomes": {"dims": 12, "features": ["best_success","mean_success","succ_gap","fail_format_rate","fail_tool_rate","fail_wrong_rate","fail_timeout_rate","valid_rate","mean_turns","mean_tool_calls","parent_last_delta"]},
+      "B_population_operator_history": {"dims": 12, "features": ["diversity_tool_jaccard","diversity_workflow_jaccard","diversity_prompt_minhash","op_compressed_5means","op_entropy","best","mean","age"]},
+      "C_progress": {"dims": 8, "features": ["gen_t_over_T","stagnation_over_T","budget_used_frac","best_ever_delta","recency_top2","improve_last_3"]}
+    },
+    "normalization": {"method": "clip01", "range": [0, 1], "fitting_source": "UNRESOLVED"},
+    "gold_exclusion": true,
+    "pc1_state_is_projection": true
+  },
+
+  "action": {
+    "count": 5,
+    "operators": [
+      {"id": 1, "name": "prompt_local_edit", "llm_calls": "0-1"},
+      {"id": 2, "name": "prompt_critique_rewrite", "llm_calls": 2},
+      {"id": 3, "name": "tool_subset_edit", "llm_calls": 0},
+      {"id": 4, "name": "workflow_step_edit", "llm_calls": 0},
+      {"id": 5, "name": "crossover", "llm_calls": 0}
+    ],
+    "selection_frequency": "one_per_generation",
+    "application_scope": "all_lambda_offspring",
+    "fallback": "invalid_offspring_dropped",
+    "action_in_eval_seed": false
+  },
+
+  "reward": {
+    "formula": "clip(delta_best + 0.1 * valid_rate + 0.25 * delta_mean, -0.5, 1.0)",
+    "weights": {"w_best": 1.0, "w_valid": 0.1, "w_mean": 0.25},
+    "clip": {"lo": -0.5, "hi": 1.0},
+    "source": "gleppo/reward.py:generation_reward",
+    "attribution": "per_generation",
+    "r24_reconciliation": "R24 effective_success(child)-effective_success(parent) is simplified description of delta_best; shared function is canonical"
+  },
+
+  "discount": {
+    "gamma": 0.95,
+    "gae_lambda": 0.95,
+    "ppo_config": {
+      "learning_rate": 0.0003,
+      "clip_epsilon": 0.2,
+      "entropy_coefficient": 0.01,
+      "value_coefficient": 0.5,
+      "max_grad_norm": 0.5
+    },
+    "source": {"gamma": "Phase 1 + gleppo/reward.py", "gae_lambda": "R24", "ppo_config": "R24"},
+    "r24_gamma_error": "R24 gamma=0.99 is preregistration error; 0.95 is canonical"
+  },
+
+  "data_split": {
+    "train": {"tasks": 400, "families": ["A", "B"], "seeds": {"A": [0, 199], "B": [0, 199]}, "purpose": "controller_training"},
+    "validation": {"tasks": 100, "families": ["A_val", "B_val"], "seeds": [1000, 1049], "purpose": "hyperparameter_selection"},
+    "confirm_r24": {"tasks": 12, "note": "R24 confirm is NOT Family C; additional validation split"},
+    "family_c_held_out": {"tasks": 100, "seeds": [0, 99], "purpose": "one_time_final_eval", "access": "NEVER_LOADED_OR_TUNED"}
+  },
+
+  "baselines": {
+    "mandatory": ["B0_prompt_local_edit", "B0b_prompt_critique_rewrite", "B1_random", "B2_rule", "B3c_LinUCB", "ECOS_PPO"],
+    "strong": ["B3a_UCB1", "B3b_EXP3", "B3d_neural_bandit", "B6_Q_learning"],
+    "optional": ["B4_continuous_knob", "B5_FM_rewrite", "A0_no_execution_features", "A1_fitness_only", "A2_no_operator_history", "A3_myopic_reward"],
+    "fairness": {"identical_state": true, "identical_action_set": true, "identical_budget": true, "identical_seeds": true},
+    "r21_c1_note": "R21-C1 is DAC comparison, NOT operator comparison"
+  },
+
+  "outcomes": {
+    "primary": {"metric": "Succ_C_best", "population": "Family C", "estimand": "paired_difference", "ci": "95% paired bootstrap", "multiplicity": "Holm-Bonferroni"},
+    "secondary": ["Succ_C_mean", "final_agent_success", "answer_correctness", "format_compliance"],
+    "pc1_diagnostic": {"D_threshold": 0.15, "advantage_threshold": 0.02, "pass_rule": "D >= 0.15 AND advantage >= 0.02 with CI"},
+    "training_reward": "discounted_return",
+    "safety": ["format_error", "tool_error", "wrong_answer", "timeout", "invalid_genotype"]
+  },
+
+  "budgets": {
+    "candidate_task_evaluation": {"unit": "executions_per_task", "value": 180, "formula": "T * lambda * n_eval = 15 * 4 * 3"},
+    "controller_training": {"episodes": 1000, "gpu_hours": 10, "model_calls": 5000, "tokens": 1000000, "wall_clock_hours": 24},
+    "pc1_planned_slots": {"total": 45440, "q_slots": 36000, "extra_slots": 4000, "collection_slots": 5440, "hard_cap": 50000},
+    "rule": "never_add_incomparable_units"
+  },
+
+  "seeds": {
+    "canonical_schema": {
+      "version": "crn-v3",
+      "base_tag": "typed_none_empty_or_value",
+      "fields": ["task_id", "state_id", "rollout_id", "replicate_id", "replica_index"],
+      "encoding": "typed_json",
+      "action_genotype_excluded": true
+    },
+    "operator_rng_separate": true,
+    "current_state": "TWO_INDEPENDENT_PATHS_EXIST_UNIFICATION_DEFERRED",
+    "implementation_gap": true
+  },
+
+  "stop_rules": {
+    "pc1_fail": {"condition": "D < 0.15 OR advantage < 0.02", "action": "STOP_PPO_HYPOTHESIS"},
+    "pc1_inconclusive": {"condition": "CI overlaps threshold", "action": "ONE_ADDITIONAL_DIAGNOSTIC_THEN_STOP"},
+    "training_stop": {"conditions": ["budget_exhausted", "no_improvement_100_episodes", "validation_degradation"]},
+    "validation_degradation": {"condition": "val_reward_declining_10_consecutive_episodes"},
+    "protocol_amendment": {"condition": "any_change_to_reward_gamma_thresholds_budget", "requires": "PLANNER_APPROVAL"}
+  },
+
+  "gates": {
+    "pc1": ["pc1_pass", "planner_approval", "independent_review", "production_runtime"],
+    "training": ["r21_c1_accept", "pc1_pass", "g3_pass", "planner_approval"],
+    "held_out": ["controller_frozen"]
+  },
+
+  "unresolved": [
+    "exact_32_feature_normalization_constants",
+    "r24_confirm_vs_family_c_task_identity_table",
+    "seed_schema_unification_requires_code_change",
+    "no_controller_implementation_exists"
+  ],
+
+  "authorization": {
+    "authorized": ["documentation", "reconciliation", "proposed_contract_creation"],
+    "not_authorized": ["pc1_execution", "family_c_access", "controller_training", "formal_g3", "model_api_calls", "production_runtime", "baseline_experiments", "code_test_changes"]
+  }
+}

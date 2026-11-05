@@ -201,3 +201,60 @@ Protocol drift exists across Phase 1 design, R24 preregistration, PC1 R4 proposa
 
 **AUTHORIZED:** Documentation, reconciliation, proposed contract creation.
 **NOT AUTHORIZED:** PC1 execution, Family C access, controller training, Formal G3, model/API calls, production runtime, baseline experiments, any code/test changes.
+
+---
+
+## R1.1 Corrections (2026-11-05)
+
+Planner R1 review: REQUEST_CHANGES. R1.1 corrections applied in place.
+
+### F1: 32-D State Schema
+- Corrected to exact 32 FEATURE_NAMES from features.py:13-22 (was 25 in R1)
+- Added per-feature formula, source, range, clipping, missing-value, timing
+- Documented budget_used_frac SOURCE DEFECT (computed from gen_t/T, same as gen_frac)
+- Corrected integration status: evolution.py does NOT call state_vector; no controller consumes 32-D
+- StateActionRecord stores state_id, NOT 32-dim vector
+
+### F2: Reward Conflict
+- R24 effective_success(child)-effective_success(parent) is NOT equivalent to shared reward
+- Shared reward proposed as preferred objective but requires formal amendment
+- PC1 reward provenance: r_hat/q_hat consume pre-populated gen_rewards, do NOT call generation_reward
+
+### F3: Seed Call-Path Defect
+- evolution.py passes replicate_id=stable_seed(episode_id,t,j,operator_name) — operator/action indirectly changes eval seed
+- CRN pairing NOT enforced across operator arms
+- Future tests documented
+
+### F4: PC1 Sampling
+- Phase 1: >=200 states, >=20 rollouts, h=5 vs R4: 100 states, 3 Q-rollouts, h=3
+- R4 is MATERIALLY REDESIGNED, not Phase 1 implementation
+- Sample-size/horizon UNRESOLVED
+- Full R4 statistics restored (D=0.15, adv=0.02, CI margins, 40 clusters, bootstrap 10000/seed 20261027)
+- INCONCLUSIVE → SR1 STOP (removed "one additional diagnostic")
+
+### F5: Split Provenance
+- Phase 1 text inconsistency documented (template ranges overlap)
+- Actual assignments: Train A: TA1-TA7, Val A: TA8-TA12, Train B: TB1-TB5, Val B: TB6-TB9
+- Manifest hashes recorded
+- R24 Confirm: UNMATERIALIZED distinct split, NOT Family C
+
+### F6: Budget
+- Corrected to 24 init + 180 offspring = 204 total (was 180, omitted init)
+- "32 initialization slots" was incorrect
+- Early termination NOT implemented in evolution.run_episode
+
+### F7: R24 Resource Scope
+- Call/token scope UNRESOLVED
+- Separate ledgers proposed
+
+### F8: Baselines
+- Q-learning (B6) mandatory per Phase 1 §4.5
+- B5 FM-rewrite: external reference, NOT identical-action fairness
+
+### F9: Stop Rules
+- INCONCLUSIVE → SR1 STOP preserved
+- Validation degradation: NEW operationalization proposed
+- γ=0.95 supersedes R24 only after amendment (NOT declared error)
+
+### F10: JSON
+- Schema 1.1 with 32 feature labels, all PC1 parameters, accurate budget, template IDs

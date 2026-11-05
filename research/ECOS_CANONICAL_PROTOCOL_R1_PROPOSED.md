@@ -1,9 +1,10 @@
-# ECOS Canonical Protocol — R1 Proposed
+# ECOS Canonical Protocol — R1.1 Proposed
 
-**Version:** ECOS-CANONICAL-R1-PROPOSED
+**Version:** ECOS-CANONICAL-R1.1-PROPOSED
 **Date:** 2026-11-05
 **Status:** PROPOSED / NOT APPROVED
-**Requires:** Planner approval + independent review before any execution
+**Revision:** R1.1 (corrects R1 at commit 7423d5f)
+**Requires:** Planner approval + independent review + formal amendment before execution
 
 ---
 
@@ -11,167 +12,135 @@
 
 | Unit | Definition | Budget Ledger |
 |---|---|---|
-| Operator decision | Select one of 5 operators at start of generation | N/A (decision, not cost) |
-| Generation | Apply operator to λ=4 offspring, evaluate n_eval=3 each, (μ+λ) elitist selection | Candidate-task evaluation (T×λ×n_eval) |
-| Evolution episode | T=15 generations on one training task instance | 180 evaluations per episode |
-| Task instance | {task_id, family, template_id, seed, input, gold} | N/A (data) |
-| Evaluation replica | One execution of one genotype on one task | 1 slot in evaluation budget |
-| Rollout | One trajectory of H=3 steps under fixed random policy (PC1 diagnostic) | PC1 planned slots |
-| PC1 state-action record | (state, action) pair with reward trace from PC1 collection | PC1 planned slots |
-| CTX slot | One candidate-task evaluation slot | BudgetLedger planned_slots |
-| Model call | One LLM inference call | Controller-training model_calls |
-| Token | One input+output token | Controller-training tokens |
-| Wall-clock | Wall time elapsed | Controller-training wall_clock |
-| GPU-hour | GPU time elapsed | Controller-training gpu_hours |
+| Operator decision | Select one of 5 operators at start of generation | N/A |
+| Generation | Apply operator to λ=4 offspring, evaluate n_eval=3 each, (μ+λ) elitist selection | Candidate-task evaluation |
+| Evolution episode | T=15 generations + initialization (μ=8) on one training task | Candidate-task evaluation |
+| Task instance | {task_id, family, template_id, seed, input, gold} | N/A |
+| Evaluation replica | One execution of one genotype on one task | Candidate-task evaluation |
+| Rollout | H=3 trajectory under fixed policy (PC1 diagnostic only) | PC1 planned slots |
+| PC1 state-action record | (state_id, action) with reward trace. **NOT a 32-dim vector.** | PC1 planned slots |
+| CTX slot | One candidate-task evaluation slot | BudgetLedger |
 
-**Nesting:** Operator decision → Generation → Episode → Task instance. Evaluation replica nested in generation. PC1 records are diagnostic samples.
+**Integration status:** `evolution.py` does NOT import/call `state_vector`. `run_episode` receives external `operator_schedule(t,pop,history)`. No committed PPO controller consumes the 32-D vector. `StateActionRecord` stores `state_id`, not the 32-D vector.
 
-## B. State Contract
+## B. State Contract (32-D)
 
-**Dimension:** 32 (STATE_DIM in gleppo/features.py)
+**Source:** gleppo/features.py:13-22 (FEATURE_NAMES), state_vector() at lines 43-117
 
-| Block | Dims | Features |
-|---|---|---|
-| A: Execution outcomes | 12 | best_success, mean_success, succ_gap, fail_format_rate, fail_tool_rate, fail_wrong_rate, fail_timeout_rate, valid_rate, mean_turns, mean_tool_calls, parent_last_delta (packed) |
-| B: Population/operator history | 12 | diversity (3: tool Jaccard, workflow Jaccard, prompt MinHash), op_count/mean_delta (5+5→compressed 5 means + 1 entropy), best/mean/age |
-| C: Progress | 8 | gen_t/T, stagnation_rounds/T, budget_used_frac, best_ever_delta, recency top-2 (2), improve_last_3 |
+| Index | Name | Formula | Range | Clipping | Missing | Notes |
+|---|---|---|---|---|---|---|
+| 0 | best_success | clip01(best_success) | [0,1] | clip01 | 0.0 | |
+| 1 | mean_success | clip01(mean_success) | [0,1] | clip01 | 0.0 | |
+| 2 | succ_gap | clip01(best - mean) | [0,1] | clip01 | 0.0 | |
+| 3 | fail_format_rate | clip01(fail_rates['format_error']) | [0,1] | clip01 | 0.0 | |
+| 4 | fail_tool_rate | clip01(fail_rates['tool_error']) | [0,1] | clip01 | 0.0 | |
+| 5 | fail_wrong_rate | clip01(fail_rates['wrong_answer']) | [0,1] | clip01 | 0.0 | |
+| 6 | fail_timeout_rate | clip01(fail_rates['timeout']) | [0,1] | clip01 | 0.0 | |
+| 7 | valid_rate | clip01(valid_rate) | [0,1] | clip01 | 0.0 | |
+| 8 | mean_turns | clip01(mean_turns / 24.0) | [0,1] | clip01 after /24 | 0.0 | |
+| 9 | mean_tool_calls | clip01(mean_tool_calls / 8.0) | [0,1] | clip01 after /8 | 0.0 | |
+| 10 | parent_last_delta | clip(delta, -1, 1) | [-1,1] | clip [-1,1] | 0.0 | |
+| 11 | recent_eval_coverage | clip01(coverage) | [0,1] | clip01 | 0.0 | |
+| 12 | div_tools | clip01(mean Jaccard distance, tool sets) | [0,1] | clip01 | 0.0 | |
+| 13 | div_workflow | clip01(mean Jaccard distance, workflows) | [0,1] | clip01 | 0.0 | |
+| 14 | div_prompt | clip01(mean Jaccard distance, 8-gram MinHash) | [0,1] | clip01 | 0.0 | |
+| 15 | op_usage_entropy | clip01(entropy / log(5)) | [0,1] | clip01 after /log(5) | 0.0 | |
+| 16 | op_mean_delta_1 | clip(op_delta[prompt_local_edit], -1, 1) | [-1,1] | clip [-1,1] | 0.0 | |
+| 17 | op_mean_delta_2 | clip(op_delta[prompt_critique_rewrite], -1, 1) | [-1,1] | clip [-1,1] | 0.0 | |
+| 18 | op_mean_delta_3 | clip(op_delta[tool_subset_edit], -1, 1) | [-1,1] | clip [-1,1] | 0.0 | |
+| 19 | op_mean_delta_4 | clip(op_delta[workflow_step_edit], -1, 1) | [-1,1] | clip [-1,1] | 0.0 | |
+| 20 | op_mean_delta_5 | clip(op_delta[crossover], -1, 1) | [-1,1] | clip [-1,1] | 0.0 | |
+| 21 | op_unobserved_frac | clip01(unobserved / 5) | [0,1] | clip01 | N/A | |
+| 22 | age_best | clip01(age_best / max(1,T)) | [0,1] | clip01 after /T | 0.0 | |
+| 23 | pop_size_norm | clip01(pop_size_norm) | [0,1] | clip01 | 0.0 | **UNRESOLVED normalization source** |
+| 24 | gen_frac | clip01(gen_t / max(1,T)) | [0,1] | clip01 after /T | 0.0 | |
+| 25 | stagnation_frac | clip01(stagnation / max(1,T)) | [0,1] | clip01 after /T | 0.0 | |
+| 26 | budget_used_frac | clip01(gen_t / max(1,T)) | [0,1] | clip01 after /T | 0.0 | **SOURCE DEFECT: same as gen_frac; no budget input** |
+| 27 | best_delta_since_start | clip(delta, -1, 1) | [-1,1] | clip [-1,1] | 0.0 | |
+| 28 | improve_last_3_frac | clip01(frac) | [0,1] | clip01 | 0.0 | |
+| 29 | recency_top1 | clip01((1/gap[0]) / T) | [0,1] | clip01 | 0.0 | |
+| 30 | recency_top2 | clip01((1/gap[1]) / T) | [0,1] | clip01 | 0.0 | |
+| 31 | offspring_valid_last | clip01(frac) | [0,1] | clip01 | 0.0 | |
 
-- **Normalization:** _clip01() to [0,1]. Exact fitting constants UNRESOLVED.
-- **Decision-time availability:** All features from current and past generations only.
-- **Gold exclusion:** Never in state, genotype, or operator prompts.
-- **PC1 state:** Diagnostic projection; not identical to 32-dim controller state.
+**Source defects:**
+- `budget_used_frac` (index 26) is computed from `gen_t/T`, identical to `gen_frac` (index 24). No budget-used input exists. Must be fixed in future code.
+- `pop_size_norm` normalization source undocumented.
 
 ## C. Action Contract
 
-| ID | Name | Semantics |
-|---|---|---|
-| 1 | prompt_local_edit | 1-3 sentence edit to system_prompt (template or 1 paraphrase call) |
-| 2 | prompt_critique_rewrite | Full system_prompt rewrite from failure trace (2 LLM calls) |
-| 3 | tool_subset_edit | Add one missing tool OR drop one (alternating) |
-| 4 | workflow_step_edit | Change one non-finalize step's type/tool/prompt_slot |
-| 5 | crossover | Prompt sentence union + tool union + workflow alternation |
+5 operators: prompt_local_edit (1), prompt_critique_rewrite (2), tool_subset_edit (3), workflow_step_edit (4), crossover (5). One per generation, applied to all λ=4 offspring. Invalid → drop.
 
-- **Selection:** One operator per generation, applied to all λ=4 offspring.
-- **Fallback:** Invalid offspring dropped (counted in valid_rate). No parent re-credit.
-- **RNG:** Operator generation RNG separate from evaluation RNG. Action/genotype excluded from evaluation seed.
+**Seed defect:** `evolution.py` passes `replicate_id=stable_seed(episode_id,t,j,operator_name)` to `effective_seed_parts`. Since `replicate_id` enters the seed, operator/action **indirectly** changes the evaluation seed. CRN pairing is **NOT** enforced across operator arms. Must be fixed in future code.
 
 ## D. Reward Contract
 
-**Canonical formula (ONE shared reward):**
+**Proposed formula (supersedes R24 only after formal amendment):**
 
 ```
 r_t = clip(Δbest + 0.1 × valid_rate + 0.25 × Δmean, -0.5, 1.0)
 ```
 
-- **Source:** gleppo/reward.py:generation_reward()
-- **Weights:** w_best=1.0, w_valid=0.1, w_mean=0.25
-- **Clip:** [-0.5, 1.0]
-- **Attribution:** Per generation (controller); per (state, action) (PC1 diagnostic)
-- **R24 reconciliation:** R24's effective_success(child) − effective_success(parent) is a simplified description of Δbest. The shared function is canonical.
+**R24 conflict:** `effective_success(child) − effective_success(parent)` is NOT equivalent. No source defines `effective_success` as the combination of population-best delta, valid_rate, and population-mean delta. R24 preserved unchanged. This choice requires formal protocol amendment before execution.
 
-## E. Discounting and Return
+**PC1 reward provenance:** `pc1.py:523-549` `compute_q_hat`/`compute_r_hat` consume pre-populated `gen_rewards`; they do NOT call `generation_reward`. The import/self-test is NOT proof of estimator reward identity. Record schema cannot verify the reward function used.
 
-| Parameter | Value | Source |
-|---|---|---|
-| Gamma (γ) | 0.95 | Phase 1 §3.4 + gleppo/reward.py |
-| GAE lambda (λ) | 0.95 | R24 (compatible with γ=0.95) |
-| PPO learning rate | 3e-4 | R24 |
-| PPO clip epsilon | 0.2 | R24 |
-| Entropy coefficient | 0.01 | R24 |
-| Value coefficient | 0.5 | R24 |
-| Max grad norm | 0.5 | R24 |
+## E. Discounting
 
-**R24 gamma=0.99 is a preregistration error.** γ=0.95 is canonical (Phase 1 + implementation agree).
+γ=0.95 (proposed; Phase 1 + shared code). R24 γ=0.99 conflicts — superseded only after formal amendment (NOT declared a proven error). GAE λ=0.95 and PPO config proposed only; no controller code implements them. Architecture, observation integration, rollout collection, advantage normalization, optimizer/update cadence: UNRESOLVED.
 
 ## F. Data Split
 
-| Split | Tasks | Purpose | Access |
-|---|---|---|---|
-| Train A+B | 400 (seeds A:[0,199], B:[0,199]) | Controller training | Full |
-| Val A_val+B_val | 100 (seeds [1000,1049]) | Hyperparameter selection | Full |
-| Confirm (R24) | 12 (4 tasks × 3 seeds) | Additional validation | Full |
-| Family C (held-out) | 100 (seeds [0,99]) | One-time final eval | **NEVER loaded/tuned** |
+| Split | N | Templates | Seeds | SHA256 |
+|---|---|---|---|---|
+| Train A | 200 | TA1-TA7 | 0-199 | bc8e6225... |
+| Train B | 200 | TB1-TB5 | 0-199 | c5b0d99d... |
+| Val A | 50 | TA8-TA12 | 1000-1049 | 01591cb9... |
+| Val B | 50 | TB6-TB9 | 1000-1049 | 6300f14a... |
+| Family C (held-out) | 100 | TC1-TC5 | 0-99 | 67109af7... |
+| R24 Confirm | 12 | UNMATERIALIZED | — | — |
 
-**R24 "confirm" ≠ Family C.** R24 confirm is a third validation split. Family C is the held-out test.
+**Phase 1 text inconsistency:** PHASE1_DESIGN.md:298-301 template ranges overlap despite disjointness requirement. Actual committed assignments in tasks.py/manifest.json are disjoint.
 
-**Task identities:** Templates TA1-TA8, TB1-TB6, TC1-TC5. Exact manifest must be committed before training.
+**R24 Confirm** is 4 tasks × 3 seeds labelled "Final evaluation". NOT Family C. No committed manifest. Unmaterialized distinct split — cannot be used until formal amendment.
 
 ## G. Baselines
 
-| Tier | Baselines | Purpose |
+| Tier | Baselines | Notes |
 |---|---|---|
-| **Mandatory** | B0 (fixed=prompt_local_edit), B0b (fixed=prompt_critique_rewrite), B1 (random), B2 (rule), B3c (LinUCB), ECOS (PPO) | Core adaptive-vs-fixed comparison |
-| **Strong** | B3a (UCB1), B3b (EXP3), B3d (Neural bandit), B6 (Q-learning) | Bandit/RL comparisons |
-| **Optional** | B4 (continuous knob), B5 (FM rewrite), A0-A3 (ablations) | Mechanism claims |
+| **Mandatory** | B0, B0b, B1, B2, B3c (LinUCB), B6 (Q-learning), ECOS (PPO) | Phase 1 §4.5 mandates Q-learning |
+| **Strong** | B3a (UCB1), B3b (EXP3), B3d (Neural bandit) | |
+| **Optional** | B4 (continuous knob) | |
+| **External reference** | B5 (FM rewrite) | Outside 5-op action set; NOT identical-action fairness |
+| **Ablations** | A0-A3 | |
 
-**Fairness:** Identical state, action set, initialization, seeds, budget (T×λ×n_eval), stopping rule, model-call accounting.
-
-**R21-C1 is DAC comparison, NOT operator comparison.**
+Best fixed operator: selected on validation only, frozen, then compared on Family C. R21-C1 is DAC comparison, NOT operator comparison.
 
 ## H. Outcomes
 
-| Endpoint | Definition | Analysis |
+Primary: Succ_C(best) on Family C, paired bootstrap CI, Holm-Bonferroni. PC1: D≥0.15 AND advantage≥0.02 with CI margins 0.10/0.01, cluster bootstrap 10000 resamples seed 20261027, 40 collection-episode clusters.
+
+**INCONCLUSIVE → SR1 STOP** (no additional diagnostic without amendment).
+
+## I. Budget
+
+| Component | Formula | Slots |
 |---|---|---|
-| **Primary** | Succ_C(best) on Family C | Paired bootstrap CI, Holm-Bonferroni |
-| Secondary | Succ_C(mean), final agent success | Descriptive |
-| PC1 diagnostic | D (disagreement), advantage | PASS if D≥0.15 AND adv≥0.02 |
-| Training reward | Σ γ^t r_t (discounted return) | Learning curve |
-| Safety | format_error, tool_error, wrong_answer, timeout, invalid_genotype | Failure rates |
-| Cost | T×λ×n_eval per task | Budget accounting |
+| Initialization | μ × n_eval = 8 × 3 | **24** |
+| Offspring (max) | T × λ × n_eval = 15 × 4 × 3 | **180** |
+| **Total (max)** | 24 + 180 | **204** |
 
-**Primary estimand:** Paired difference in Succ_C(best) between ECOS and best baseline. Analysis unit = task instance.
+Previous 180 omitted initialization. "32 initialization slots" was incorrect. Planned vs actual vs cache-bundle distinctions apply. **Early termination** (Phase 1 §3.5: best_success ≥ 0.95 or env exception) NOT implemented in `evolution.run_episode` — protocol/source discrepancy.
 
-## I. Budget Ledgers
+R24 limits (1000 episodes, 10 GPU-h, 5000 calls, 1M tokens, 24h): scope unresolved. Propose separate ledgers for agent execution / operator generation / controller training / evaluations / PC1 slots / GPU-wall / retries-cache.
 
-| Ledger | Units | Value | Stage |
-|---|---|---|---|
-| Candidate-task evaluation | Executions/task | T×λ×n_eval = 180 | Training/eval |
-| Controller training | Episodes | 1000 | Training |
-| Controller training | GPU hours | 10 | Training |
-| Controller training | Model calls | 5000 | Training |
-| Controller training | Tokens | 1M | Training |
-| Controller training | Wall clock | 24 hours | Training |
-| PC1 planned slots | Evaluation slots | 45,440 | PC1 diagnostic |
-| PC1 hard cap | Evaluation slots | 50,000 | PC1 guard |
+## J. Seeds
 
-**Never add incomparable units.** Planned slots ≠ actual CTX ≠ calls ≠ tokens.
+Two independent paths with defects. `replicate_id` includes `operator_name` (indirect action dependence). CRN pairing NOT enforced. Future tests: same inputs → same seed across operators; field-change → seed-change; override collision-free; operator RNG separate.
 
-## J. Seeds and Reproducibility
+## K. Stop Rules
 
-**Proposed canonical seed schema:**
-
-```json
-{
-  "version": "crn-v3",
-  "base_tag": ["none"] | ["empty"] | ["value", "override"],
-  "task_id": "string",
-  "state_id": "string",
-  "rollout_id": "int",
-  "replicate_id": "int",
-  "replica_index": "int"
-}
-```
-
-- **Encoding:** Typed JSON (collision-free)
-- **Action/genotype:** NEVER in evaluation seed
-- **Operator RNG:** Separate (operator_rng_seed)
-- **Current state:** TWO independent paths exist (crn_seed in pc1.py, effective_seed_parts in evaluator.py). Unification deferred to code phase.
-
-## K. Stop Rules and Gates
-
-| Rule | Condition | Action |
-|---|---|---|
-| PC1 FAIL | D < 0.15 OR advantage < 0.02 (with CI) | STOP PPO hypothesis (SR1) |
-| PC1 INCONCLUSIVE | CI overlaps threshold | One additional diagnostic permitted, then STOP if still inconclusive |
-| Training stop | Budget exhausted OR no improvement 100 episodes OR validation degradation | Stop training |
-| Validation degradation | Val reward declining ≥10 consecutive episodes | Stop training |
-| Protocol amendment | Any change to reward/gamma/thresholds/budget | Requires Planner approval |
-| PC1 gate | PC1 PASS + Planner approval + independent review + production runtime | May proceed to training |
-| Training gate | All R24 prerequisites (R21-C1 accept + PC1 + G3 + Planner) | May start training |
-| Held-out gate | Controller frozen | One-time Family C evaluation |
-
-**No post-hoc threshold changes. No gate passed merely because report is labelled ready.**
+PC1 FAIL → SR1 STOP. PC1 INCONCLUSIVE → SR1 STOP (no additional diagnostic). Training: budget / no-improvement-100 / validation-degradation (NEW operationalization proposed). Protocol amendment requires Planner approval.
 
 ---
 
-*Status: PROPOSED / NOT APPROVED. Requires Planner decision.*
+*Status: PROPOSED / NOT APPROVED. Requires Planner decision and formal amendment.*

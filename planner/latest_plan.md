@@ -94,3 +94,7 @@ Phase 1、R24、PC1 R4 和 active shared code 尚未形成单一可执行协议�
 未解决：特征归一化常数、R24 confirm ≠ Family C、种子 schema 双路径、无 controller 实现。
 
 **状态：** PROPOSED / NOT APPROVED。等待 Planner 独立复核。
+
+## R1.1 纠正完成 (2026-11-05)
+
+R1 未被接受。R1.1 纠正完成：32 特征精确 schema、reward 冲突声明、种子 call-path 缺陷、PC1 采样差异、预算 204、模板 provenance、baseline 分层。等待 Planner 复核。

@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-05",
-  "phase": "R26_ECOS_PROTOCOL_RECONCILIATION_COMPLETE",
-  "state": "R26_ECOS_PROTOCOL_RECONCILIATION_READY_FOR_PLANNER_REVIEW",
+  "phase": "R26_ECOS_PROTOCOL_R1_1_COMPLETE",
+  "state": "R26_ECOS_PROTOCOL_R1_1_READY_FOR_PLANNER_REVIEW",
   "reviewed_commit": "4d2ff06ee01146533501589b264d33ddd30ffcbe",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "ECOS Protocol Reconciliation complete. Awaiting Planner independent review.",
-  "next_gate": "PLANNER_REVIEW_OF_ECOS_PROTOCOL -> (ONLY_IF_ACCEPTED) next authorization gate",
+  "current_task": "R1.1 corrective pass complete. Awaiting Planner review.",
+  "next_gate": "PLANNER_REVIEW_OF_ECOS_PROTOCOL_R1_1",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -1952,6 +1952,20 @@
     "provenance": {
       "r2_1_1_work_commit": "362f343f43befc7f43c00ba5edd1059b01d523d1",
       "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e"
-    }
+    },
+    "r1_decision": "REQUEST_CHANGES",
+    "r1_1_status": "CORRECTIVE_PASS_COMPLETE_AWAITING_REVIEW",
+    "r1_1_corrections": [
+      "F1_32_feature_schema_exact",
+      "F2_reward_conflict_not_equivalent",
+      "F3_seed_call_path_defect",
+      "F4_pc1_sampling_redesigned",
+      "F5_split_template_provenance",
+      "F6_budget_204_24_180",
+      "F7_r24_scope_unresolved",
+      "F8_q_learning_mandatory_b5_external",
+      "F9_inconclusive_sr1_stop",
+      "F10_json_schema_1_1"
+    ]
   }
 }

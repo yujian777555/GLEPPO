@@ -860,3 +860,7 @@ PC1 BLOCKED; R4 PROPOSED / NOT APPROVED; Formal G3 FAIL; Family C NOT ACCESSED; 
 ## R26 ECOS Protocol Reconciliation (2026-11-05)
 
 三份交付物已创建：差异矩阵 + 拟议合同 + JSON 镜像。文档专用，无实验/训练授权。等待 Planner 复核。
+
+## R1.1 ECOS Protocol Correction (2026-11-05)
+
+Planner R1: REQUEST_CHANGES. R1.1 corrective pass complete (F1-F10). Three deliverables updated in place. Awaiting Planner independent review.

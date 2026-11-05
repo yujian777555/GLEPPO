@@ -1,139 +1,822 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "document_id": "ECOS_CANONICAL_PROTOCOL_R1_PROPOSED",
-  "version": "ECOS-CANONICAL-R1-PROPOSED",
+  "version": "ECOS-CANONICAL-R1.1-PROPOSED",
   "date": "2026-11-05",
   "status": "PROPOSED_NOT_APPROVED",
+  "revision": "R1.1",
   "requires_planner_approval": true,
-
+  "supersedes": "ECOS-CANONICAL-R1-PROPOSED (7423d5f)",
   "units": {
-    "operator_decision": {"definition": "Select one of 5 operators at generation start", "budget_ledger": null},
-    "generation": {"definition": "Apply operator to lambda offspring, evaluate, select", "lambda": 4, "n_eval": 3, "budget_ledger": "candidate_task_evaluation"},
-    "evolution_episode": {"definition": "T generations on one task", "T": 15, "budget_ledger": "candidate_task_evaluation"},
-    "task_instance": {"definition": "{task_id, family, template_id, seed, input, gold}"},
-    "evaluation_replica": {"definition": "One genotype execution on one task", "budget_ledger": "candidate_task_evaluation"},
-    "rollout": {"definition": "H-step trajectory under fixed policy (PC1)", "horizon": 3},
-    "pc1_state_action_record": {"definition": "(state, action) with reward trace", "budget_ledger": "pc1_planned_slots"},
-    "ctx_slot": {"definition": "One candidate-task evaluation slot", "budget_ledger": "candidate_task_evaluation"}
+    "operator_decision": {
+      "definition": "Select one of 5 operators at generation start",
+      "budget_ledger": null
+    },
+    "generation": {
+      "definition": "Apply operator to lambda offspring, evaluate, select",
+      "lambda": 4,
+      "n_eval": 3,
+      "budget_ledger": "candidate_task_evaluation"
+    },
+    "evolution_episode": {
+      "definition": "T=15 generations on one task; includes initialization",
+      "T": 15,
+      "mu": 8,
+      "budget_ledger": "candidate_task_evaluation"
+    },
+    "task_instance": {
+      "definition": "{task_id, family, template_id, seed, input, gold}"
+    },
+    "evaluation_replica": {
+      "definition": "One genotype execution on one task",
+      "budget_ledger": "candidate_task_evaluation"
+    },
+    "rollout": {
+      "definition": "H-step trajectory under fixed policy (PC1 diagnostic)",
+      "horizon": 3
+    },
+    "pc1_state_action_record": {
+      "definition": "(state_id, action) with reward trace; NOT 32-dim vector",
+      "budget_ledger": "pc1_planned_slots"
+    },
+    "ctx_slot": {
+      "definition": "One candidate-task evaluation slot",
+      "budget_ledger": "candidate_task_evaluation"
+    }
   },
-
   "state": {
     "dimension": 32,
-    "source": "gleppo/features.py",
-    "blocks": {
-      "A_execution_outcomes": {"dims": 12, "features": ["best_success","mean_success","succ_gap","fail_format_rate","fail_tool_rate","fail_wrong_rate","fail_timeout_rate","valid_rate","mean_turns","mean_tool_calls","parent_last_delta"]},
-      "B_population_operator_history": {"dims": 12, "features": ["diversity_tool_jaccard","diversity_workflow_jaccard","diversity_prompt_minhash","op_compressed_5means","op_entropy","best","mean","age"]},
-      "C_progress": {"dims": 8, "features": ["gen_t_over_T","stagnation_over_T","budget_used_frac","best_ever_delta","recency_top2","improve_last_3"]}
-    },
-    "normalization": {"method": "clip01", "range": [0, 1], "fitting_source": "UNRESOLVED"},
-    "gold_exclusion": true,
-    "pc1_state_is_projection": true
+    "source": "gleppo/features.py:13-22 (FEATURE_NAMES), state_vector() at lines 43-117",
+    "integration_status": "NOT_CONSUMED_BY_CONTROLLER",
+    "integration_notes": [
+      "evolution.py does NOT import/call state_vector; run_episode receives external operator_schedule(t,pop,history)",
+      "No committed PPO controller consumes the 32-D vector",
+      "StateActionRecord in pc1.py stores state_id, NOT the 32-D vector; it is NOT a projection of controller state"
+    ],
+    "feature_names_ordered": [
+      "best_success",
+      "mean_success",
+      "succ_gap",
+      "fail_format_rate",
+      "fail_tool_rate",
+      "fail_wrong_rate",
+      "fail_timeout_rate",
+      "valid_rate",
+      "mean_turns",
+      "mean_tool_calls",
+      "parent_last_delta",
+      "recent_eval_coverage",
+      "div_tools",
+      "div_workflow",
+      "div_prompt",
+      "op_usage_entropy",
+      "op_mean_delta_1",
+      "op_mean_delta_2",
+      "op_mean_delta_3",
+      "op_mean_delta_4",
+      "op_mean_delta_5",
+      "op_unobserved_frac",
+      "age_best",
+      "pop_size_norm",
+      "gen_frac",
+      "stagnation_frac",
+      "budget_used_frac",
+      "best_delta_since_start",
+      "improve_last_3_frac",
+      "recency_top1",
+      "recency_top2",
+      "offspring_valid_last"
+    ],
+    "features_detail": [
+      {
+        "index": 0,
+        "name": "best_success",
+        "formula": "clip01(best_success)",
+        "source": "population best eval success",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 1,
+        "name": "mean_success",
+        "formula": "clip01(mean_success)",
+        "source": "population mean eval success",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 2,
+        "name": "succ_gap",
+        "formula": "clip01(best_success - mean_success)",
+        "source": "derived",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 3,
+        "name": "fail_format_rate",
+        "formula": "clip01(fail_rates['format_error'])",
+        "source": "failure histogram",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 4,
+        "name": "fail_tool_rate",
+        "formula": "clip01(fail_rates['tool_error'])",
+        "source": "failure histogram",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 5,
+        "name": "fail_wrong_rate",
+        "formula": "clip01(fail_rates['wrong_answer'])",
+        "source": "failure histogram",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 6,
+        "name": "fail_timeout_rate",
+        "formula": "clip01(fail_rates['timeout'])",
+        "source": "failure histogram",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 7,
+        "name": "valid_rate",
+        "formula": "clip01(valid_rate)",
+        "source": "last offspring batch validity",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 8,
+        "name": "mean_turns",
+        "formula": "clip01(mean_turns / 24.0)",
+        "source": "population mean interpreter turns",
+        "range": "[0,1] after /24",
+        "clipping": "clip01 after /24",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 9,
+        "name": "mean_tool_calls",
+        "formula": "clip01(mean_tool_calls / 8.0)",
+        "source": "population mean tool calls",
+        "range": "[0,1] after /8",
+        "clipping": "clip01 after /8",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 10,
+        "name": "parent_last_delta",
+        "formula": "clip(parent_last_delta, -1, 1)",
+        "source": "last operator success delta",
+        "range": "[-1,1]",
+        "clipping": "clip to [-1,1]",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 11,
+        "name": "recent_eval_coverage",
+        "formula": "clip01(recent_eval_coverage)",
+        "source": "recent evaluation coverage",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 12,
+        "name": "div_tools",
+        "formula": "clip01(mean pairwise Jaccard distance over tool sets)",
+        "source": "population tool sets",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 13,
+        "name": "div_workflow",
+        "formula": "clip01(mean pairwise Jaccard distance over workflows)",
+        "source": "population workflows",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 14,
+        "name": "div_prompt",
+        "formula": "clip01(mean pairwise Jaccard distance over prompt 8-gram MinHash)",
+        "source": "population prompts",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 15,
+        "name": "op_usage_entropy",
+        "formula": "clip01(entropy(op_usage) / log(5))",
+        "source": "operator usage counts",
+        "range": "[0,1]",
+        "clipping": "clip01 after /log(5)",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 16,
+        "name": "op_mean_delta_1",
+        "formula": "clip(op_mean_delta['prompt_local_edit'], -1, 1)",
+        "source": "operator mean delta",
+        "range": "[-1,1]",
+        "clipping": "clip to [-1,1]",
+        "missing": "0.0 (counted in op_unobserved_frac)",
+        "timing": "per generation"
+      },
+      {
+        "index": 17,
+        "name": "op_mean_delta_2",
+        "formula": "clip(op_mean_delta['prompt_critique_rewrite'], -1, 1)",
+        "source": "operator mean delta",
+        "range": "[-1,1]",
+        "clipping": "clip to [-1,1]",
+        "missing": "0.0 (counted in op_unobserved_frac)",
+        "timing": "per generation"
+      },
+      {
+        "index": 18,
+        "name": "op_mean_delta_3",
+        "formula": "clip(op_mean_delta['tool_subset_edit'], -1, 1)",
+        "source": "operator mean delta",
+        "range": "[-1,1]",
+        "clipping": "clip to [-1,1]",
+        "missing": "0.0 (counted in op_unobserved_frac)",
+        "timing": "per generation"
+      },
+      {
+        "index": 19,
+        "name": "op_mean_delta_4",
+        "formula": "clip(op_mean_delta['workflow_step_edit'], -1, 1)",
+        "source": "operator mean delta",
+        "range": "[-1,1]",
+        "clipping": "clip to [-1,1]",
+        "missing": "0.0 (counted in op_unobserved_frac)",
+        "timing": "per generation"
+      },
+      {
+        "index": 20,
+        "name": "op_mean_delta_5",
+        "formula": "clip(op_mean_delta['crossover'], -1, 1)",
+        "source": "operator mean delta",
+        "range": "[-1,1]",
+        "clipping": "clip to [-1,1]",
+        "missing": "0.0 (counted in op_unobserved_frac)",
+        "timing": "per generation"
+      },
+      {
+        "index": 21,
+        "name": "op_unobserved_frac",
+        "formula": "clip01(unobserved_count / 5)",
+        "source": "count of operators with delta=None",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "N/A",
+        "timing": "per generation"
+      },
+      {
+        "index": 22,
+        "name": "age_best",
+        "formula": "clip01(age_best / max(1, T))",
+        "source": "generations since best improvement",
+        "range": "[0,1]",
+        "clipping": "clip01 after /T",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 23,
+        "name": "pop_size_norm",
+        "formula": "clip01(pop_size_norm)",
+        "source": "UNRESOLVED — input, normalization source not documented",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation",
+        "note": "NORMALIZATION_SOURCE_UNRESOLVED"
+      },
+      {
+        "index": 24,
+        "name": "gen_frac",
+        "formula": "clip01(gen_t / max(1, T))",
+        "source": "generation progress",
+        "range": "[0,1]",
+        "clipping": "clip01 after /T",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 25,
+        "name": "stagnation_frac",
+        "formula": "clip01(stagnation / max(1, T))",
+        "source": "stagnation rounds",
+        "range": "[0,1]",
+        "clipping": "clip01 after /T",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 26,
+        "name": "budget_used_frac",
+        "formula": "clip01(gen_t / max(1, T))",
+        "source": "SAME AS gen_frac — SOURCE DEFECT",
+        "range": "[0,1]",
+        "clipping": "clip01 after /T",
+        "missing": "0.0",
+        "timing": "per generation",
+        "note": "SOURCE_DEFECT: features.py computes budget_used_frac from gen_t/T, not from actual budget use. No budget-used input exists. Must be fixed in future code."
+      },
+      {
+        "index": 27,
+        "name": "best_delta_since_start",
+        "formula": "clip(best_delta_since_start, -1, 1)",
+        "source": "best improvement since start",
+        "range": "[-1,1]",
+        "clipping": "clip to [-1,1]",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 28,
+        "name": "improve_last_3_frac",
+        "formula": "clip01(improve_last_3_frac)",
+        "source": "fraction of last 3 gens with improvement",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 29,
+        "name": "recency_top1",
+        "formula": "clip01((1/gap[0]) / T)",
+        "source": "inverse recency gap / T",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 30,
+        "name": "recency_top2",
+        "formula": "clip01((1/gap[1]) / T)",
+        "source": "inverse recency gap / T",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      },
+      {
+        "index": 31,
+        "name": "offspring_valid_last",
+        "formula": "clip01(offspring_valid_last)",
+        "source": "last offspring batch valid fraction",
+        "range": "[0,1]",
+        "clipping": "clip01",
+        "missing": "0.0",
+        "timing": "per generation"
+      }
+    ],
+    "source_defects": [
+      "budget_used_frac (index 26) computed from gen_t/T, identical to gen_frac (index 24); no actual budget-used input exists in features.py"
+    ],
+    "gold_exclusion": true
   },
-
   "action": {
     "count": 5,
     "operators": [
-      {"id": 1, "name": "prompt_local_edit", "llm_calls": "0-1"},
-      {"id": 2, "name": "prompt_critique_rewrite", "llm_calls": 2},
-      {"id": 3, "name": "tool_subset_edit", "llm_calls": 0},
-      {"id": 4, "name": "workflow_step_edit", "llm_calls": 0},
-      {"id": 5, "name": "crossover", "llm_calls": 0}
+      {
+        "id": 1,
+        "name": "prompt_local_edit",
+        "llm_calls": "0-1"
+      },
+      {
+        "id": 2,
+        "name": "prompt_critique_rewrite",
+        "llm_calls": 2
+      },
+      {
+        "id": 3,
+        "name": "tool_subset_edit",
+        "llm_calls": 0
+      },
+      {
+        "id": 4,
+        "name": "workflow_step_edit",
+        "llm_calls": 0
+      },
+      {
+        "id": 5,
+        "name": "crossover",
+        "llm_calls": 0
+      }
     ],
     "selection_frequency": "one_per_generation",
     "application_scope": "all_lambda_offspring",
     "fallback": "invalid_offspring_dropped",
-    "action_in_eval_seed": false
+    "action_in_eval_seed_direct": false,
+    "action_in_eval_seed_indirect": true,
+    "seed_defect_note": "evolution.py passes replicate_id=stable_seed(episode_id,t,j,operator_name) to effective_seed_parts; operator/action indirectly changes evaluation seed. CRN pairing NOT enforced across operator arms."
   },
-
   "reward": {
     "formula": "clip(delta_best + 0.1 * valid_rate + 0.25 * delta_mean, -0.5, 1.0)",
-    "weights": {"w_best": 1.0, "w_valid": 0.1, "w_mean": 0.25},
-    "clip": {"lo": -0.5, "hi": 1.0},
+    "weights": {
+      "w_best": 1.0,
+      "w_valid": 0.1,
+      "w_mean": 0.25
+    },
+    "clip": {
+      "lo": -0.5,
+      "hi": 1.0
+    },
     "source": "gleppo/reward.py:generation_reward",
     "attribution": "per_generation",
-    "r24_reconciliation": "R24 effective_success(child)-effective_success(parent) is simplified description of delta_best; shared function is canonical"
+    "r24_conflict": "R24 effective_success(child)-effective_success(parent) is NOT equivalent to shared reward. No source defines effective_success as the combination of population-best delta, valid_rate and population-mean delta.",
+    "resolution": "Shared Phase 1/code reward is proposed as preferred future objective. This SUPERSEDES R24 reward description only after formal protocol amendment and Planner approval. R24 preserved unchanged.",
+    "pc1_reward_provenance": {
+      "estimator_source": "pc1.py:523-549 compute_q_hat/compute_r_hat consume pre-populated gen_rewards",
+      "note": "They do NOT call generation_reward. The import/self-test is NOT proof of estimator reward identity.",
+      "record_schema_limitation": "StateActionRecord stores reward traces but cannot verify the reward function used to produce them",
+      "future_requirement": "Implement explicit reward provenance tracking in record schema"
+    }
   },
-
   "discount": {
-    "gamma": 0.95,
-    "gae_lambda": 0.95,
-    "ppo_config": {
+    "gamma_proposed": 0.95,
+    "gamma_source": "Phase 1 §3.4 + gleppo/reward.py GAMMA=0.95",
+    "r24_gamma": 0.99,
+    "r24_gamma_note": "R24 gamma=0.99 conflicts with shared implementation. gamma=0.95 SUPERSEDES R24 only after formal amendment. NOT declared a proven error.",
+    "gae_lambda_proposed": 0.95,
+    "ppo_config_proposed": {
       "learning_rate": 0.0003,
       "clip_epsilon": 0.2,
       "entropy_coefficient": 0.01,
       "value_coefficient": 0.5,
       "max_grad_norm": 0.5
     },
-    "source": {"gamma": "Phase 1 + gleppo/reward.py", "gae_lambda": "R24", "ppo_config": "R24"},
-    "r24_gamma_error": "R24 gamma=0.99 is preregistration error; 0.95 is canonical"
+    "ppo_config_status": "PROPOSED_ONLY_NO_CONTROLLER_CODE",
+    "unresolved": [
+      "architecture",
+      "observation_integration",
+      "rollout_collection",
+      "advantage_normalization",
+      "optimizer_update_cadence"
+    ]
   },
-
   "data_split": {
-    "train": {"tasks": 400, "families": ["A", "B"], "seeds": {"A": [0, 199], "B": [0, 199]}, "purpose": "controller_training"},
-    "validation": {"tasks": 100, "families": ["A_val", "B_val"], "seeds": [1000, 1049], "purpose": "hyperparameter_selection"},
-    "confirm_r24": {"tasks": 12, "note": "R24 confirm is NOT Family C; additional validation split"},
-    "family_c_held_out": {"tasks": 100, "seeds": [0, 99], "purpose": "one_time_final_eval", "access": "NEVER_LOADED_OR_TUNED"}
+    "train": {
+      "n": 400,
+      "splits": {
+        "train_A": {
+          "n": 200,
+          "family": "A",
+          "seed_start": 0,
+          "templates": [
+            "TA1",
+            "TA2",
+            "TA3",
+            "TA4",
+            "TA5",
+            "TA6",
+            "TA7"
+          ]
+        },
+        "train_B": {
+          "n": 200,
+          "family": "B",
+          "seed_start": 0,
+          "templates": [
+            "TB1",
+            "TB2",
+            "TB3",
+            "TB4",
+            "TB5"
+          ]
+        }
+      }
+    },
+    "validation": {
+      "n": 100,
+      "splits": {
+        "val_A": {
+          "n": 50,
+          "family": "A",
+          "seed_start": 1000,
+          "templates": [
+            "TA8",
+            "TA9",
+            "TA10",
+            "TA11",
+            "TA12"
+          ]
+        },
+        "val_B": {
+          "n": 50,
+          "family": "B",
+          "seed_start": 1000,
+          "templates": [
+            "TB6",
+            "TB7",
+            "TB8",
+            "TB9"
+          ]
+        }
+      }
+    },
+    "family_c_held_out": {
+      "n": 100,
+      "family": "C",
+      "seed_start": 0,
+      "templates": [
+        "TC1",
+        "TC2",
+        "TC3",
+        "TC4",
+        "TC5"
+      ],
+      "sha256": "67109af7d01e262f6c03ea75e27959e5136e2ce1700c56957f27853320a6bcb9",
+      "access": "NEVER_LOADED_OR_TUNED"
+    },
+    "r24_confirm": {
+      "n": 12,
+      "description": "4 tasks x 3 seeds, labelled 'Final evaluation'",
+      "status": "UNMATERIALIZED_DISTINCT_SPLIT",
+      "note": "NOT Family C. No committed manifest/task identities. Cannot be used until formal amendment."
+    },
+    "manifest": {
+      "path": "data/manifest.json",
+      "version": "manifest-v1",
+      "generator": "gleppo.tasks.generate_split",
+      "created_at": "2026-10-27T11:49:04Z"
+    },
+    "phase1_text_inconsistency": "PHASE1_DESIGN.md:298-301 lists template ranges that overlap despite disjointness requirement. Actual committed assignments in tasks.py/manifest.json are disjoint: Train A: TA1-TA7, Val A: TA8-TA12, Train B: TB1-TB5, Val B: TB6-TB9."
   },
-
   "baselines": {
-    "mandatory": ["B0_prompt_local_edit", "B0b_prompt_critique_rewrite", "B1_random", "B2_rule", "B3c_LinUCB", "ECOS_PPO"],
-    "strong": ["B3a_UCB1", "B3b_EXP3", "B3d_neural_bandit", "B6_Q_learning"],
-    "optional": ["B4_continuous_knob", "B5_FM_rewrite", "A0_no_execution_features", "A1_fitness_only", "A2_no_operator_history", "A3_myopic_reward"],
-    "fairness": {"identical_state": true, "identical_action_set": true, "identical_budget": true, "identical_seeds": true},
-    "r21_c1_note": "R21-C1 is DAC comparison, NOT operator comparison"
+    "mandatory": [
+      "B0_prompt_local_edit",
+      "B0b_prompt_critique_rewrite",
+      "B1_random",
+      "B2_rule",
+      "B3c_LinUCB",
+      "B6_Q_learning",
+      "ECOS_PPO"
+    ],
+    "strong": [
+      "B3a_UCB1",
+      "B3b_EXP3",
+      "B3d_neural_bandit"
+    ],
+    "optional": [
+      "B4_continuous_knob"
+    ],
+    "external_reference": [
+      "B5_FM_rewrite"
+    ],
+    "ablations": [
+      "A0_no_execution_features",
+      "A1_fitness_only",
+      "A2_no_operator_history",
+      "A3_myopic_reward"
+    ],
+    "q_learning_note": "Phase 1 §4.5 explicitly includes Q-learning as B6. Mandatory unless formally amended.",
+    "b5_note": "B5 FM-rewrite is external strategy outside 5-operator action set. NOT identical action-set fairness. Separate from core comparisons.",
+    "fixed_selection": "Best fixed operator selected on validation only, then frozen. Compare on Family C once controller is frozen.",
+    "r21_c1_note": "R21-C1 is DAC comparison, NOT operator/controller comparison"
   },
-
   "outcomes": {
-    "primary": {"metric": "Succ_C_best", "population": "Family C", "estimand": "paired_difference", "ci": "95% paired bootstrap", "multiplicity": "Holm-Bonferroni"},
-    "secondary": ["Succ_C_mean", "final_agent_success", "answer_correctness", "format_compliance"],
-    "pc1_diagnostic": {"D_threshold": 0.15, "advantage_threshold": 0.02, "pass_rule": "D >= 0.15 AND advantage >= 0.02 with CI"},
+    "primary": {
+      "metric": "Succ_C_best",
+      "population": "Family C",
+      "estimand": "paired_difference",
+      "ci": "95% paired bootstrap",
+      "multiplicity": "Holm-Bonferroni"
+    },
+    "secondary": [
+      "Succ_C_mean",
+      "final_agent_success",
+      "answer_correctness",
+      "format_compliance"
+    ],
+    "pc1_diagnostic": {
+      "D_threshold": 0.15,
+      "advantage_threshold": 0.02,
+      "ci_margin_D": 0.1,
+      "ci_margin_advantage": 0.01,
+      "pass_rule": "point estimates meet thresholds AND 95% CI lower bounds exclude registered margins",
+      "fail_rule": "CI upper bounds below thresholds",
+      "inconclusive_rule": "otherwise → SR1 STOP (no additional diagnostic without amendment)"
+    },
     "training_reward": "discounted_return",
-    "safety": ["format_error", "tool_error", "wrong_answer", "timeout", "invalid_genotype"]
+    "safety": [
+      "format_error",
+      "tool_error",
+      "wrong_answer",
+      "timeout",
+      "invalid_genotype"
+    ]
   },
-
+  "pc1_sampling": {
+    "phase1_design": {
+      "min_states": 200,
+      "rollouts_per_state_action": 20,
+      "horizon": 5,
+      "source": "PHASE1_DESIGN.md:253-263"
+    },
+    "r4_proposal": {
+      "n_states": 100,
+      "q_rollouts": 3,
+      "horizon": 3,
+      "extra_immediate": 1,
+      "n_eval": 2,
+      "clusters": 40,
+      "source": "PC1_PROTOCOL_R4_PROPOSED.md"
+    },
+    "reconciliation": "R4 is a MATERIALLY REDESIGNED proposal, not a direct implementation of Phase 1 sample design. Sample-size/horizon decision UNRESOLVED pending statistical justification. Do not assert statistical adequacy without evidence.",
+    "r4_statistics": {
+      "D_threshold": 0.15,
+      "advantage_threshold": 0.02,
+      "ci_margin_D": 0.1,
+      "ci_margin_advantage": 0.01,
+      "clusters": 40,
+      "cluster_unit": "collection_episode",
+      "bootstrap": {
+        "resamples": 10000,
+        "seed": 20261027,
+        "method": "cluster_bootstrap_by_episode"
+      }
+    },
+    "status": "PROPOSED_NOT_APPROVED"
+  },
   "budgets": {
-    "candidate_task_evaluation": {"unit": "executions_per_task", "value": 180, "formula": "T * lambda * n_eval = 15 * 4 * 3"},
-    "controller_training": {"episodes": 1000, "gpu_hours": 10, "model_calls": 5000, "tokens": 1000000, "wall_clock_hours": 24},
-    "pc1_planned_slots": {"total": 45440, "q_slots": 36000, "extra_slots": 4000, "collection_slots": 5440, "hard_cap": 50000},
+    "candidate_task_evaluation": {
+      "init_slots": 24,
+      "init_formula": "mu * n_eval = 8 * 3",
+      "max_offspring_slots": 180,
+      "offspring_formula": "T * lambda * n_eval = 15 * 4 * 3",
+      "max_total_slots": 204,
+      "total_formula": "24 + 180",
+      "note": "Previous 180 figure omitted initialization. '32 initialization slots' statement was incorrect. Actual init = mu * n_eval = 24.",
+      "planned_vs_actual": "Planned slots are conservative upper bound. Actual = uncached replica executions. Cache hits are bundle-level (1 bundle = n_eval replicas).",
+      "early_termination": "Phase 1 §3.5 defines early stop at best_success >= 0.95 or env exception. NOT implemented in evolution.run_episode. Protocol/source discrepancy."
+    },
+    "controller_training": {
+      "episodes": 1000,
+      "gpu_hours": 10,
+      "model_calls": 5000,
+      "tokens": 1000000,
+      "wall_clock_hours": 24,
+      "scope": "UNRESOLVED — R24 does not define which model-call types are included",
+      "proposed_separate_ledgers": [
+        "agent_execution_llm_calls_tokens",
+        "operator_generation_llm_calls_tokens",
+        "controller_training_compute",
+        "candidate_task_evaluations_replicas",
+        "pc1_planned_slots",
+        "gpu_hours_wall_clock",
+        "retries_failures_cache"
+      ]
+    },
+    "pc1_planned_slots": {
+      "total": 45440,
+      "q_slots": 36000,
+      "extra_slots": 4000,
+      "collection_slots": 5440,
+      "hard_cap": 50000
+    },
     "rule": "never_add_incomparable_units"
   },
-
   "seeds": {
-    "canonical_schema": {
+    "canonical_schema_proposed": {
       "version": "crn-v3",
       "base_tag": "typed_none_empty_or_value",
-      "fields": ["task_id", "state_id", "rollout_id", "replicate_id", "replica_index"],
+      "fields": [
+        "task_id",
+        "state_id",
+        "rollout_id",
+        "replicate_id",
+        "replica_index"
+      ],
       "encoding": "typed_json",
       "action_genotype_excluded": true
     },
-    "operator_rng_separate": true,
-    "current_state": "TWO_INDEPENDENT_PATHS_EXIST_UNIFICATION_DEFERRED",
+    "current_state": "TWO_INDEPENDENT_PATHS_WITH_DEFECT",
+    "defects": [
+      "crn_seed (pc1.py:230-239) serializes ['crn-v2', task_id, state_id, rollout_id, replicate_id]",
+      "effective_seed_parts (evaluator.py:57-76) serializes [base_tag, task_id, state_id, rollout_id, replicate_id, replica_index] + 'SEED' prefix, no version tag",
+      "evolution.py passes replicate_id=stable_seed(episode_id,t,j,operator_name) so operator/action INDIRECTLY changes evaluation seed",
+      "CRN pairing NOT enforced across operator arms"
+    ],
+    "future_tests_required": [
+      "same task/state/rollout/replicate/replica → same evaluation seed across all actions/operators",
+      "changing each declared seed field changes the seed",
+      "absent/empty/literal override values collision-free",
+      "operator-generation RNG separate and action-specific"
+    ],
     "implementation_gap": true
   },
-
   "stop_rules": {
-    "pc1_fail": {"condition": "D < 0.15 OR advantage < 0.02", "action": "STOP_PPO_HYPOTHESIS"},
-    "pc1_inconclusive": {"condition": "CI overlaps threshold", "action": "ONE_ADDITIONAL_DIAGNOSTIC_THEN_STOP"},
-    "training_stop": {"conditions": ["budget_exhausted", "no_improvement_100_episodes", "validation_degradation"]},
-    "validation_degradation": {"condition": "val_reward_declining_10_consecutive_episodes"},
-    "protocol_amendment": {"condition": "any_change_to_reward_gamma_thresholds_budget", "requires": "PLANNER_APPROVAL"}
+    "pc1_fail": {
+      "condition": "D < 0.15 OR advantage < 0.02 (with CI)",
+      "action": "STOP_PPO_HYPOTHESIS (SR1)"
+    },
+    "pc1_inconclusive": {
+      "condition": "CI overlaps threshold",
+      "action": "SR1 STOP (no additional diagnostic without amendment)"
+    },
+    "training_stop": {
+      "conditions": [
+        "budget_exhausted",
+        "no_improvement_100_episodes",
+        "validation_degradation"
+      ]
+    },
+    "validation_degradation": {
+      "condition": "NEW_PROPOSAL: val reward declining ≥10 consecutive episodes",
+      "status": "NEW_OPERATIONAL_THRESHOLD_NOT_IN_R24",
+      "note": "R24 says 'validation degradation' but does not operationalize it. This is a new proposal requiring rationale or left unresolved."
+    },
+    "protocol_amendment": {
+      "condition": "any_change_to_reward_gamma_thresholds_budget",
+      "requires": "PLANNER_APPROVAL"
+    }
   },
-
   "gates": {
-    "pc1": ["pc1_pass", "planner_approval", "independent_review", "production_runtime"],
-    "training": ["r21_c1_accept", "pc1_pass", "g3_pass", "planner_approval"],
-    "held_out": ["controller_frozen"]
+    "pc1": [
+      "pc1_pass",
+      "planner_approval",
+      "independent_review",
+      "production_runtime"
+    ],
+    "training": [
+      "r21_c1_accept",
+      "pc1_pass",
+      "g3_pass",
+      "planner_approval"
+    ],
+    "held_out": [
+      "controller_frozen"
+    ]
   },
-
   "unresolved": [
-    "exact_32_feature_normalization_constants",
-    "r24_confirm_vs_family_c_task_identity_table",
+    "pop_size_norm_normalization_source",
+    "budget_used_frac_source_defect",
+    "r24_confirm_vs_family_c_task_identity",
     "seed_schema_unification_requires_code_change",
-    "no_controller_implementation_exists"
+    "no_controller_implementation",
+    "r24_resource_limit_call_type_scope",
+    "pc1_sample_size_phase1_vs_r4_justification",
+    "validation_degradation_operationalization",
+    "ppo_architecture_observation_rollout_advantage_optimizer_semantics",
+    "pc1_reward_provenance_verification"
   ],
-
   "authorization": {
-    "authorized": ["documentation", "reconciliation", "proposed_contract_creation"],
-    "not_authorized": ["pc1_execution", "family_c_access", "controller_training", "formal_g3", "model_api_calls", "production_runtime", "baseline_experiments", "code_test_changes"]
+    "authorized": [
+      "documentation",
+      "reconciliation",
+      "proposed_contract_creation"
+    ],
+    "not_authorized": [
+      "pc1_execution",
+      "family_c_access",
+      "controller_training",
+      "formal_g3",
+      "model_api_calls",
+      "production_runtime",
+      "baseline_experiments",
+      "code_test_changes"
+    ]
   }
 }

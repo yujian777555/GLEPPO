@@ -3,8 +3,8 @@
   "repository": "yujian777555/GLEPPO",
   "default_branch": "main",
   "updated_at": "2026-11-04",
-  "phase": "GLEPPO_R26_STAGE1I_R2_1_COMPLETE",
-  "state": "R26_STAGE1I_R2_1_READY_FOR_PLANNER_REVIEW",
+  "phase": "GLEPPO_R26_STAGE1I_R2_1_REQUEST_CHANGES_R2_1_1",
+  "state": "R26_STAGE1I_R2_1_STRUCTURAL_REVIEW_ACCEPTED_EVIDENCE_AND_PROVENANCE_CLOSEOUT_REQUIRED",
   "reviewed_commit": "4d2ff06ee01146533501589b264d33ddd30ffcbe",
   "implementation_status": "R3_EXECUTED_VERIFIED_REVIEWED",
   "experimental_status": "R3_PILOT_COMPLETE_NEGATIVE_BOTH_OPERATORS",
@@ -33,8 +33,8 @@
       "Implement PC1 runner and test the statistical path only on synthetic fixtures; do not execute registered PC1."
     ]
   },
-  "current_task": "Stage 1I-R2.1 complete. Awaiting Planner independent review.",
-  "next_gate": "PLANNER_INDEPENDENT_REVIEW_OF_STAGE1I_R2_1 -> (ONLY_IF_ACCEPTED) R26_ECOS_PROTOCOL_RECONCILIATION",
+  "current_task": "Stage 1I-R2.1 Planner review: capture actual 21-case validator stdout/exit code, remove unsupported R41 uncovered condition, and complete R2.1 provenance in a narrow R2.1.1 closeout.",
+  "next_gate": "STAGE1I_R2_1_1_EXECUTOR_COMPLETION -> PLANNER_INDEPENDENT_REVIEW -> (ONLY_IF_ACCEPTED) R26_ECOS_PROTOCOL_RECONCILIATION",
   "hard_rules": [
     "No registered PC1 execution before trusted Planner approval, independent review approval, and production-runtime smoke/G3.",
     "No Family C loading, execution, or tuning.",
@@ -56,7 +56,10 @@
     "Stage 1I-R2 Planner decision is REQUEST_CHANGES; do not enter protocol reconciliation until R2.1 is independently accepted.",
     "R2 Executor-reported 28/12/1/1 dispositions are not accepted; expected corrected counts after R39/R41/R48 downgrades are 25/15/1/1.",
     "R39 must not claim a shared canonical helper: evaluator.effective_seed_parts and pc1.crn_seed currently use different serialized schemas.",
-    "No PC1, Family C, controller training, model/API calls or production runtime during R2.1."
+    "No PC1, Family C, controller training, model/API calls or production runtime during R2.1.",
+    "Stage 1I-R2.1 Planner review is REQUEST_CHANGES; only the three narrow R2.1.1 evidence/provenance corrections are permitted.",
+    "Do not repeat the 42-row audit; no production source or tests/ changes during R2.1.1.",
+    "No protocol reconciliation, PC1, Family C, controller training, model/API calls, production runtime or signing-key access during R2.1.1."
   ],
   "remediation_r2": {
     "date": "2026-10-27",
@@ -1590,9 +1593,9 @@
   },
   "latest_planner_verified_refs": {
     "branch": "r25-handoff",
-    "branch_head_before_status_update": "7289786783ba9c03a511a3c1ba65f3bcd86aa6b9",
+    "branch_head_before_status_update": "9b0cb88a69da2322ac9b3575704f896ca0ff0817",
     "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
-    "ahead_by_before_status_update": 232,
+    "ahead_by_before_status_update": 236,
     "behind_by": 0,
     "main_modified": false
   },
@@ -1793,7 +1796,7 @@
     "github_commit_status_entries": 0
   },
   "r26_stage1i_r2_1": {
-    "status": "EXECUTOR_COMPLETE_AWAITING_PLANNER_REVIEW",
+    "status": "EXECUTOR_COMPLETE_PLANNER_REQUEST_CHANGES_R2_1_1",
     "date": "2026-11-04",
     "disposition_corrections": [
       "R39->PARTIALLY_FIXED",
@@ -1815,7 +1818,11 @@
       "r2_work_commit": "34ba848c4b8cf4fa07c9583e049b0bb7b0635aab",
       "r2_provenance_followup": "da7a6c7bbd09f1ebca5bf6080dffc78e15615115",
       "r2_planner_review_parent": "f0569b1e0ab97372f5ae0bf86e564ae17bdca61f",
-      "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e"
+      "main_head": "6bad0b77835a2d00c62287c0c7d9d91d1d186d5e",
+      "r2_1_parent": "f0569b1e0ab97372f5ae0bf86e564ae17bdca61f",
+      "r2_1_work_commit": "5cbd5f605ac6d1df2e6f46e25c76f939163371ab",
+      "r2_1_work_commit_ahead_of_main": 234,
+      "r2_1_work_commit_behind_main": 0
     },
     "hard_boundaries": {
       "production_source_changes": false,
@@ -1828,6 +1835,29 @@
       "production_runtime_calls": 0,
       "main_modified": false
     },
-    "full_suite": "450/450_EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED"
+    "full_suite": "450/450_EXECUTOR_REPORTED_NOT_INDEPENDENTLY_REPRODUCED",
+    "planner_review": {
+      "date": "2026-11-05",
+      "verdict": "REQUEST_CHANGES",
+      "report": "research/R26_STAGE1I_R2_1_PLANNER_REVIEW.md",
+      "review_commit": "3fb54584a914e880f0b48896883a14e43a162217",
+      "reviewed_work_commit": "5cbd5f605ac6d1df2e6f46e25c76f939163371ab",
+      "blockers": [
+        "Actual 21-case self-test stdout and process exit code are not persisted; no CI run or combined status exists for the R2.1 work commit.",
+        "R41 uncovered_acceptance_conditions contains an item not present in the original five R41 acceptance criteria.",
+        "R2.1 work commit SHA is missing from status provenance and latest_planner_verified_refs is stale."
+      ]
+    }
+  },
+  "r26_stage1i_r2_1_1": {
+    "status": "PLANNER_REQUESTED_NARROW_CORRECTIVE_CLOSEOUT",
+    "executor_prompt": "planner/GLEPPO_R26_STAGE1I_R2_1_1_CORRECTIVE_EXECUTOR_PROMPT.md",
+    "scope": [
+      "Persist actual 21-case validator stdout and exit code",
+      "Remove unsupported raw-evidence identity item from R41 uncovered acceptance conditions",
+      "Record R2.1 work commit and refresh branch/main provenance"
+    ],
+    "no_production_source_or_tests_changes": true,
+    "no_pc1_family_c_or_training": true
   }
 }
